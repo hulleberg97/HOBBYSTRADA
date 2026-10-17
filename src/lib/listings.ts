@@ -1,5 +1,5 @@
 import seed from "@/data/listings.json";
-import { serverClient } from "./supabase";
+import { publicClient } from "./supabase";
 import type { Listing } from "./types";
 
 type Row = {
@@ -75,7 +75,7 @@ export function marketOrder(list: Listing[]) {
 }
 
 export async function getListings(): Promise<Listing[]> {
-  const db = await serverClient();
+  const db = publicClient();
   if (!db) return marketOrder(seedListings.filter((l) => l.status === "active"));
   const { data, error } = await db.from("listings").select(PUBLIC_COLUMNS).eq("status", "active");
   if (error) {
@@ -86,9 +86,10 @@ export async function getListings(): Promise<Listing[]> {
 }
 
 export async function getListing(slug: string): Promise<Listing | null> {
-  const db = await serverClient();
+  const db = publicClient();
   if (!db) return seedListings.find((l) => l.slug === slug) ?? null;
-  const { data } = await db.from("listings").select(PUBLIC_COLUMNS).eq("slug", slug).maybeSingle();
+  const { data, error } = await db.from("listings").select(PUBLIC_COLUMNS).eq("slug", slug).maybeSingle();
+  if (error) return seedListings.find((l) => l.slug === slug) ?? null;
   return data ? fromRow(data as Row) : null;
 }
 

@@ -1,9 +1,16 @@
 import { createBrowserClient, createServerClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 
 export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 export const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export const hasSupabase = Boolean(supabaseUrl && supabaseAnonKey);
+
+/** Klient uten innlogging, for offentlige data. Virker også mens siden bygges. */
+export function publicClient() {
+  if (!hasSupabase) return null;
+  return createClient(supabaseUrl!, supabaseAnonKey!, { auth: { persistSession: false } });
+}
 
 export function browserClient() {
   if (!hasSupabase) return null;
