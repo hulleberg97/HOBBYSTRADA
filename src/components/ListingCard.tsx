@@ -28,9 +28,7 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
           )}
         </div>
         <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
-          {listing.featured && (
-            <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">Fremhevet</span>
-          )}
+          {listing.featured && <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">Fremhevet</span>}
           <span
             data-state={listing.status}
             className={`rounded-full px-2.5 py-1 text-[11px] font-semibold text-white data-[state=active]:bg-emerald-600 data-[state=sold]:bg-slate-700 ${listing.featured ? "hidden sm:inline" : ""}`}

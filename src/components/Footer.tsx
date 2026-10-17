@@ -48,9 +48,7 @@ export function Footer() {
                 />
               </span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-              Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.
-            </p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.</p>
             <LangToggle dark className="mt-6" />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">

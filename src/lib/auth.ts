@@ -8,3 +8,9 @@ export async function getUser() {
   const meta = data.user.user_metadata ?? {};
   return { id: data.user.id, email: data.user.email ?? "", name: (meta.username as string) || (meta.name as string) || data.user.email || "" };
 }
+
+/** Administrator er brukeren med samme e-post som ADMIN_EMAIL. */
+export function isAdmin(user: { email: string } | null) {
+  const admin = process.env.ADMIN_EMAIL?.toLowerCase();
+  return Boolean(user && admin && user.email.toLowerCase() === admin);
+}

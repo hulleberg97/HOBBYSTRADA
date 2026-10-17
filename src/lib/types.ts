@@ -1,4 +1,4 @@
-export type ListingStatus = "active" | "sold" | "hidden";
+export type ListingStatus = "pending" | "active" | "sold" | "hidden" | "rejected";
 
 export type Listing = {
   id?: string;
@@ -19,6 +19,7 @@ export type Listing = {
   description: string;
   price: number;
   featured: boolean;
+  frontpage?: boolean;
   image: string | null;
   images?: string[];
   seller: string;

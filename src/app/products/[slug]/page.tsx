@@ -1,0 +1,257 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+  ArrowUpRightIcon,
+  AwardIcon,
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EyeIcon,
+  HandCoinsIcon,
+  HashIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+} from "lucide-react";
+import { CardArt } from "@/components/CardArt";
+import { ContactCard } from "@/components/ContactCard";
+import { ListingCard } from "@/components/ListingCard";
+import { getListing, getListings } from "@/lib/listings";
+import { formatPrice } from "@/lib/format";
+import type { Listing } from "@/lib/types";
+
+export const revalidate = 60;
+
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const l = await getListing((await params).slug);
+  if (!l) return { title: "Fant ikke annonsen" };
+  return {
+    title: l.title,
+    description: `${l.title} – ${formatPrice(l.price)}. ${l.description.split("\n")[0]}`,
+    openGraph: { title: l.title, images: l.image ? [l.image] : undefined },
+  };
+}
+
+function similar(all: Listing[], l: Listing) {
+  const others = all.filter((x) => x.slug !== l.slug);
+  const score = (x: Listing) =>
+    Number(x.featured) * 3 + Number(x.player === l.player) * 4 + Number(x.club === l.club) * 2 + x.types.filter((t) => l.types.includes(t)).length;
+  return [...others].sort((a, b) => score(b) - score(a)).slice(0, 4);
+}
+
+export default async function ListingPage({ params }: Props) {
+  const l = await getListing((await params).slug);
+  if (!l) notFound();
+  const all = await getListings();
+
+  const facts: [typeof HashIcon, string, string][] = [];
+  facts.push([HashIcon, "Kortnummer", l.cardNumber ?? l.numbered ?? "Ikke oppgitt"]);
+  facts.push([AwardIcon, "Gradering", l.grading ?? "Ikke oppgitt"]);
+  facts.push(l.condition ? [SparklesIcon, "Tilstand", l.condition] : [CalendarIcon, "Sesong", l.season ?? "—"]);
+
+  const rows: [string, string | null][] = [
+    ["Spiller", l.player],
+    ["Klubb", [l.club, l.league].filter(Boolean).join(" · ") || null],
+    ["Sett", l.set],
+    ["Sesong", l.season],
+    ["Kortnummer", l.cardNumber],
+    ["Nummerert", l.numbered],
+    ["Produsent", l.producer],
+    ["Type", l.types.join(" / ")],
+    ["Gradering", l.grading],
+    ["Tilstand", l.condition],
+  ];
+
+  return (
+    <div className="bg-white">
+      <div className="mx-auto max-w-[1320px] px-4 pb-28 pt-4 sm:px-6 lg:px-8 lg:pb-20">
+        <div className="flex items-center justify-between gap-4">
+          <nav aria-label="Brødsmuler" className="flex min-w-0 items-center gap-1 text-sm text-slate-500">
+            <Link
+              className="mr-1 inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-1 font-medium text-primary hover:bg-slate-100 sm:hidden"
+              href="/products"
+            >
+              <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
+              Tilbake
+            </Link>
+            <Link className="hidden shrink-0 hover:text-slate-900 sm:inline" href="/">
+              Forsiden
+            </Link>
+            <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
+            <Link className="hidden shrink-0 hover:text-slate-900 sm:inline" href="/products">
+              Markedet
+            </Link>
+            <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
+            <span className="hidden truncate text-slate-900 sm:inline">{l.player}</span>
+          </nav>
+          {(l.cardNumber || l.numbered) && (
+            <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">Kortnr. {l.cardNumber ?? l.numbered}</span>
+          )}
+        </div>
+        <div className="mt-5 grid gap-8 lg:mt-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <div>
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
+                <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
+                  {l.featured && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>}
+                  <span className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${l.status === "sold" ? "bg-slate-700" : "bg-emerald-600"}`}>
+                    {l.status === "sold" ? "Solgt" : "Aktiv"}
+                  </span>
+                </div>
+                {l.grading && (
+                  <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
+                    <ShieldCheckIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                    {l.grading}
+                  </span>
+                )}
+                <div className="px-10 pb-10 pt-16 sm:px-20 sm:pb-14 sm:pt-20">
+                  <div className="mx-auto w-full max-w-[300px] sm:max-w-[340px]">
+                    <div className="rounded-[18px] border border-white bg-gradient-to-br from-white via-slate-100 to-white p-3 shadow-2xl shadow-slate-900/30">
+                      <div className="aspect-[5/7] overflow-hidden rounded-[10px] bg-primary">
+                        {l.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img alt={l.title} src={l.image} className="h-full w-full object-cover" />
+                        ) : (
+                          <CardArt listing={l} square detail />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {(l.images?.length ?? 0) > 1 && (
+                <ul className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-6">
+                  {l.images!.map((src) => (
+                    <li key={src}>
+                      <a href={src} target="_blank" rel="noopener" className="block aspect-square overflow-hidden rounded-xl ring-1 ring-slate-200">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="h-full w-full object-cover" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p className="mt-3 text-center text-xs text-slate-500">{l.image ? "Bilde fra selger" : "Illustrasjon – selger har ikke lastet opp bilde ennå"}</p>
+            </div>
+          </div>
+          <div className="min-w-0">
+            <div className="flex flex-wrap gap-1.5">
+              {l.types.map((t) => (
+                <span key={t} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+            <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">{l.player}</h1>
+            <p className="mt-2 text-base text-slate-600 sm:text-lg">
+              {l.set}
+              {(l.club || l.league) && <span className="text-slate-400"> · {[l.club, l.league].filter(Boolean).join(" · ")}</span>}
+            </p>
+            <dl className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
+              {facts.map(([Icon, label, value]) => (
+                <div key={label} className="rounded-2xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200 sm:p-4">
+                  <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />
+                  <dt className="mt-2 text-[11px] text-slate-500 sm:text-xs">{label}</dt>
+                  <dd className="mt-0.5 text-sm font-semibold leading-snug text-slate-900">{value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-6">
+              <div>
+                <ContactCard listing={l} />
+                <div className="mt-4 rounded-3xl bg-slate-50 p-5 ring-1 ring-inset ring-slate-200">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+                    <ShieldCheckIcon className="h-4 w-4 text-primary" aria-hidden="true" />
+                    Handle trygt
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-slate-600">Du avtaler betaling og frakt direkte med selgeren.</p>
+                  <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+                    {(
+                      [
+                        [EyeIcon, "Se kortet før du betaler"],
+                        [HandCoinsIcon, "Bruk Vipps ved overlevering"],
+                        [ShieldCheckIcon, "Aldri forskudd til ukjente"],
+                      ] as const
+                    ).map(([Icon, text]) => (
+                      <li key={text} className="flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-medium text-slate-700 ring-1 ring-slate-200">
+                        <Icon className="h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {!l.featured && l.status === "active" && (
+                  <Link
+                    className="mt-4 flex items-center justify-between gap-3 rounded-3xl bg-amber-50 px-5 py-4 ring-1 ring-inset ring-accent/40 transition hover:ring-accent"
+                    href={`/annonseloft?annonse=${l.slug}`}
+                  >
+                    <span>
+                      <span className="block text-sm font-semibold text-slate-900">Er dette din annonse?</span>
+                      <span className="block text-xs text-slate-600">Løft den til toppen av markedet med gullmerke.</span>
+                    </span>
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-3.5 py-2 text-xs font-semibold text-accent-foreground">
+                      Løft annonsen
+                      <ArrowUpRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                    </span>
+                  </Link>
+                )}
+              </div>
+            </div>
+            {l.description && (
+              <section className="mt-10">
+                <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Beskrivelse fra selger</h2>
+                <div className="mt-3 space-y-3 text-[15px] leading-relaxed text-slate-700">
+                  {l.description
+                    .split(/\n+/)
+                    .filter(Boolean)
+                    .map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                </div>
+              </section>
+            )}
+            <section className="mt-10">
+              <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Kortdata</h2>
+              <dl className="mt-3 overflow-hidden rounded-2xl ring-1 ring-slate-200">
+                {rows
+                  .filter(([, v]) => v)
+                  .map(([k, v], i) => (
+                    <div
+                      key={k}
+                      className={`grid grid-cols-[120px_1fr] gap-4 px-4 py-3 text-sm sm:grid-cols-[160px_1fr] ${i % 2 ? "bg-white" : "bg-slate-50"}`}
+                    >
+                      <dt className="text-slate-500">{k}</dt>
+                      <dd className="font-medium text-slate-900">{v}</dd>
+                    </div>
+                  ))}
+              </dl>
+            </section>
+          </div>
+        </div>
+        <section className="mt-16 border-t border-slate-200 pt-10 lg:mt-20">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[28px]">Lignende annonser</h2>
+              <p className="mt-1 text-sm text-slate-500">Flere kort fra samlere i markedet</p>
+            </div>
+            <Link className="inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/products">
+              Se alle
+              <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-4">
+            {similar(all, l).map((x) => (
+              <ListingCard key={x.slug} listing={x} />
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+export async function generateStaticParams() {
+  return (await getListings()).map((l) => ({ slug: l.slug }));
+}

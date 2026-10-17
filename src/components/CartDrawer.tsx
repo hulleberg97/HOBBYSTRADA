@@ -45,11 +45,13 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
               <ShoppingBagIcon className="h-7 w-7 text-slate-500" strokeWidth={1.5} aria-hidden="true" />
             </span>
             <p className="mt-5 font-heading text-xl font-bold tracking-[-0.02em] text-primary">Handlekurven er tom</p>
-            <p className="mt-1.5 max-w-[280px] text-sm leading-relaxed text-slate-500">
-              Finn kortet du har lett etter blant annonsene i markedet.
-            </p>
+            <p className="mt-1.5 max-w-[280px] text-sm leading-relaxed text-slate-500">Finn kortet du har lett etter blant annonsene i markedet.</p>
             <div className="mt-6 flex w-full max-w-[280px] flex-col gap-2">
-              <Link onClick={onClose} className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-black" href="/products">
+              <Link
+                onClick={onClose}
+                className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-black"
+                href="/products"
+              >
                 Utforsk markedet
               </Link>
               <Link

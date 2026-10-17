@@ -2,32 +2,25 @@ import { initials } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
 /** Tegnet kort som vises når selgeren ikke har lastet opp bilde. */
-export function CardArt({ listing, square = false }: { listing: Listing; square?: boolean }) {
+export function CardArt({ listing, square = false, detail = false }: { listing: Listing; square?: boolean; detail?: boolean }) {
   const isAuto = listing.types.includes("Autograf");
   const hasSwatch = listing.types.includes("Patch") || listing.types.includes("Relic");
   const isRookie = listing.types.includes("Rookie");
   const label = listing.types.filter((t) => t !== "Rookie").join(" / ");
   const corner = listing.cardNumber ?? listing.numbered ?? "RAW";
   return (
-    <div
-      className={`relative flex h-full w-full flex-col rounded-[6px] bg-[#0d2238] p-[6%] text-white ${square ? "!rounded-none" : ""}`}
-      aria-hidden="true"
-    >
+    <div className={`relative flex h-full w-full flex-col rounded-[6px] bg-[#0d2238] p-[6%] text-white ${square ? "!rounded-none" : ""}`} aria-hidden="true">
       <div className="flex items-center justify-between rounded-[2px] bg-[#f4f3ee] px-2 py-1 text-[#0d2238]">
         <span className="font-mono-data text-[9px] font-semibold uppercase tracking-wider">{listing.producer}</span>
         <span className="font-mono-data text-[9px] font-semibold uppercase tracking-wider">{corner}</span>
       </div>
       <div
-        className={`relative mt-[6%] flex flex-1 flex-col justify-between overflow-hidden rounded-[2px] border border-white/15 p-[8%] ${isAuto ? "bg-[#122c4a]" : "bg-[#0f2a40]"}`}
+        className={`relative mt-[6%] flex flex-1 flex-col justify-between overflow-hidden rounded-[2px] border border-white/15 p-[8%] ${isAuto ? "bg-[#122c4a]" : detail ? "bg-[#11304f]" : "bg-[#0f2a40]"}`}
       >
         {isAuto && <div className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-[#d8b264]"></div>}
         <div className="flex items-start justify-between gap-2">
           <p className="font-mono-data text-[8px] uppercase tracking-[0.14em] text-[#d8b264]">{label}</p>
-          {isRookie && (
-            <span className="rounded-[2px] border border-[#d8b264]/70 px-1 font-mono-data text-[8px] font-semibold text-[#d8b264]">
-              RC
-            </span>
-          )}
+          {isRookie && <span className="rounded-[2px] border border-[#d8b264]/70 px-1 font-mono-data text-[8px] font-semibold text-[#d8b264]">RC</span>}
         </div>
         <div className="flex items-center gap-[8%]">
           <span className="font-heading text-[clamp(1.75rem,5vw,4rem)] font-semibold leading-none tracking-[-0.04em] text-white">

@@ -1,0 +1,56 @@
+import { NextResponse } from "next/server";
+import { getListing } from "@/lib/listings";
+import { adminClient } from "@/lib/supabase-admin";
+import { sendEmail } from "@/lib/email";
+
+const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+
+export async function POST(req: Request) {
+  const body = await req.json().catch(() => null);
+  if (!body) return NextResponse.json({ error: "Ugyldig forespørsel." }, { status: 400 });
+  if (body.website) return NextResponse.json({ ok: true }); // felle for roboter
+
+  const name = clean(body.name, 100);
+  const email = clean(body.email, 320);
+  const message = clean(body.message, 1500);
+  if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) {
+    return NextResponse.json({ error: "Fyll inn navn, en gyldig e-postadresse og en melding." }, { status: 400 });
+  }
+
+  const listing = await getListing(clean(body.listing, 200));
+  if (!listing || listing.status !== "active") return NextResponse.json({ error: "Annonsen finnes ikke lenger." }, { status: 404 });
+
+  const db = adminClient();
+  let sellerEmail = process.env.ADMIN_EMAIL ?? null;
+  if (db) {
+    const { error } = await db.from("messages").insert({
+      listing_slug: listing.slug,
+      seller_id: listing.ownerId ?? null,
+      sender_name: name,
+      sender_email: email,
+      body: message,
+    });
+    if (error) {
+      console.error("Kunne ikke lagre melding", error.message);
+      return NextResponse.json({ error: "Meldingen ble ikke sendt. Prøv igjen om litt." }, { status: 500 });
+    }
+    if (listing.ownerId) {
+      const { data } = await db.auth.admin.getUserById(listing.ownerId);
+      sellerEmail = data.user?.email ?? sellerEmail;
+    }
+  }
+
+  const mailed = sellerEmail
+    ? await sendEmail({
+        to: sellerEmail,
+        replyTo: email,
+        subject: `Ny melding om «${listing.title}»`,
+        text: `${name} (${email}) skriver om annonsen din:\n\n${message}\n\nSvar ved å svare på denne e-posten.\n\n${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/products/${listing.slug}`,
+      })
+    : false;
+
+  if (!db && !mailed) {
+    return NextResponse.json({ error: "Meldinger er ikke slått på ennå. Prøv igjen senere." }, { status: 503 });
+  }
+  return NextResponse.json({ ok: true });
+}

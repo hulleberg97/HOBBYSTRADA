@@ -12,6 +12,15 @@ const NAV = [
   { href: "/annonseloft", label: "Annonseløft", Icon: ZapIcon },
 ];
 
+const MOBILE_NAV = [
+  ["/products", "Markedet"],
+  ["/sell", "Legg ut kort"],
+  ["/annonseloft", "Annonseløft"],
+  ["/about", "Om oss"],
+  ["/faq", "Spørsmål og svar"],
+  ["/contact", "Kontakt"],
+];
+
 export function Header({ user }: { user: { name: string } | null }) {
   const router = useRouter();
   const path = usePathname();
@@ -113,21 +122,41 @@ export function Header({ user }: { user: { name: string } | null }) {
           </label>
         </form>
         {menu && (
-          <nav className="border-t border-slate-200 bg-white px-4 pb-5 pt-2 sm:px-6 xl:hidden" aria-label="Mobilmeny">
-            <ul className="divide-y divide-slate-100">
-              {[...NAV, { href: "/sell", label: "Legg ut kort", Icon: null }, { href: user ? "/account" : "/auth/login", label: user ? "Min side" : "Logg inn", Icon: CircleUserIcon }].map(
-                ({ href, label, Icon }) => (
-                  <li key={href}>
-                    <Link onClick={() => setMenu(false)} className="flex items-center gap-3 py-3.5 text-[15px] font-medium text-slate-800" href={href}>
-                      {Icon && <Icon className="h-[18px] w-[18px] text-slate-500" strokeWidth={1.75} aria-hidden="true" />}
-                      {label}
-                    </Link>
-                  </li>
-                ),
-              )}
-            </ul>
-            <LangToggle className="mt-4 lg:hidden" />
-          </nav>
+          <div className="border-t border-slate-200 bg-white px-4 pb-6 pt-2 xl:hidden">
+            <nav className="mx-auto flex max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
+              {MOBILE_NAV.map(([href, label]) => (
+                <Link
+                  key={href}
+                  onClick={() => setMenu(false)}
+                  className="flex items-center justify-between border-b border-slate-100 py-4 text-lg font-semibold tracking-tight last:border-0"
+                  href={href}
+                >
+                  {label}
+                  <span className="text-slate-400">›</span>
+                </Link>
+              ))}
+            </nav>
+            <div className="mx-auto mt-4 flex max-w-[1320px] items-center justify-between gap-3 sm:px-2 lg:hidden">
+              <span className="text-sm font-medium text-slate-600">Språk</span>
+              <LangToggle />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
+              <Link
+                onClick={() => setMenu(false)}
+                className="flex h-12 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold"
+                href={user ? "/account" : "/auth/login"}
+              >
+                {user ? "Min side" : "Logg inn"}
+              </Link>
+              <Link
+                onClick={() => setMenu(false)}
+                className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white"
+                href="/sell"
+              >
+                Legg ut kort
+              </Link>
+            </div>
+          </div>
         )}
       </header>
       <CartDrawer open={cart} onClose={() => setCart(false)} />

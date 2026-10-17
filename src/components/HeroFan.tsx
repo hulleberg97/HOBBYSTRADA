@@ -37,9 +37,7 @@ export function HeroFan({ listings }: { listings: Listing[] }) {
                 <div className="rounded-[4px] border-2 border-[#c8102e] bg-white px-[6%] py-[4%] text-[#0b1726]">
                   <div className="flex items-start justify-between gap-2">
                     <p className="min-w-0 truncate text-[clamp(6px,0.7vw,9px)] font-bold uppercase leading-tight tracking-wide">{l.set}</p>
-                    <p className="shrink-0 text-[clamp(6px,0.7vw,9px)] font-bold uppercase leading-tight">
-                      {l.cardNumber ? `#${l.cardNumber}` : ""}
-                    </p>
+                    <p className="shrink-0 text-[clamp(6px,0.7vw,9px)] font-bold uppercase leading-tight">{l.cardNumber ? `#${l.cardNumber}` : ""}</p>
                   </div>
                   <div className="mt-[3%] flex items-end justify-between gap-2">
                     <p className="min-w-0 truncate text-[clamp(7px,0.8vw,10px)] font-bold uppercase leading-tight">{l.player}</p>
