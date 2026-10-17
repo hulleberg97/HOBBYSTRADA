@@ -74,6 +74,10 @@ create table if not exists public.boost_orders (
   created_at timestamptz not null default now()
 );
 
+-- Tilganger: serveren (service_role) får alt. Virker også når «Automatically expose new tables» er slått av.
+grant usage on schema public to anon, authenticated, service_role;
+grant all on public.listings, public.messages, public.contact_messages, public.boost_orders to service_role;
+
 -- Sikkerhet: alle kan lese aktive og solgte annonser, men bare uten kontaktinformasjon.
 -- Alt annet går gjennom serveren med service-nøkkelen.
 alter table public.listings enable row level security;
