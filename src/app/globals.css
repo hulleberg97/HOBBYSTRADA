@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-ring: hsl(var(--ring));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-ink: hsl(var(--ink));
+  --color-ink-raised: hsl(var(--ink-raised));
+  --color-ink-soft: hsl(var(--ink-soft));
+  --color-gold-light: hsl(var(--gold-light));
+  --color-gold-deep: hsl(var(--gold-deep));
+  --font-body: var(--nf-inter), "Inter", system-ui, sans-serif;
+  --font-heading: var(--nf-space), "Space Grotesk", sans-serif;
+  --font-mono: var(--nf-mono), "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --background: 60 9% 93%;
+  --foreground: 210 45% 11%;
+  --muted: 60 8% 91%;
+  --muted-foreground: 212 16% 32%;
+  --accent: 40 62% 52%;
+  --accent-foreground: 210 60% 10%;
+  --border: 60 5% 78%;
+  --ring: 40 62% 52%;
+  --primary: 210 65% 12%;
+  --primary-foreground: 60 12% 96%;
+  --destructive: 0 70% 48%;
+  --destructive-foreground: 0 0% 100%;
+  --ink: 216 52% 5%;
+  --ink-raised: 214 45% 9%;
+  --ink-soft: 214 40% 14%;
+  --gold-light: 44 77% 85%;
+  --gold-deep: 40 56% 35%;
+}
+
+@layer base {
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility font-mono-data {
+  font-family: var(--font-mono);
+}
+
+@utility container-custom {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: calc(var(--spacing) * 4);
+  @media (width >= 40rem) {
+    padding-inline: calc(var(--spacing) * 6);
+  }
+  @media (width >= 64rem) {
+    padding-inline: calc(var(--spacing) * 8);
+  }
+}
+
+@utility bg-grid-navy {
+  background-image: linear-gradient(90deg, #ffffff0d 1px, #0000 1px), linear-gradient(#ffffff0d 1px, #0000 1px);
+  background-size: 48px 48px;
+}

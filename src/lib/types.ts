@@ -1,0 +1,30 @@
+export type ListingStatus = "active" | "sold" | "hidden";
+
+export type Listing = {
+  id?: string;
+  slug: string;
+  title: string;
+  player: string;
+  set: string | null;
+  season: string | null;
+  cardNumber: string | null;
+  numbered: string | null;
+  producer: string;
+  types: string[];
+  tag: string;
+  club: string | null;
+  league: string | null;
+  grading: string | null;
+  condition: string | null;
+  description: string;
+  price: number;
+  featured: boolean;
+  image: string | null;
+  images?: string[];
+  seller: string;
+  location: string | null;
+  createdAt: string;
+  bumpedAt?: string | null;
+  status: ListingStatus;
+  ownerId?: string | null;
+};
