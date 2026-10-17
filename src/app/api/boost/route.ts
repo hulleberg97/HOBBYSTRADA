@@ -3,6 +3,7 @@ import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { sendEmail } from "@/lib/email";
+import { createPayment, hasVipps } from "@/lib/vipps";
 
 const site = () => process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -33,38 +34,27 @@ export async function POST(req: Request) {
   const b = BOOSTS[plan];
   const { data: order, error } = await db
     .from("boost_orders")
-    .insert({ listing_id: listing.id, user_id: user.id, plan, amount: b.price, status: "pending" })
+    .insert({ listing_id: listing.id, user_id: user.id, buyer_email: user.email, plan, amount: b.price, status: "pending" })
     .select("id")
     .single();
   if (error) return NextResponse.json({ error: "Kunne ikke opprette bestillingen." }, { status: 500 });
 
-  const stripeKey = process.env.STRIPE_SECRET_KEY;
-  if (stripeKey) {
-    const form = new URLSearchParams({
-      mode: "payment",
-      success_url: `${site()}/account?loft=ok`,
-      cancel_url: `${site()}/annonseloft?annonse=${listing.slug}`,
-      customer_email: user.email,
-      "line_items[0][quantity]": "1",
-      "line_items[0][price_data][currency]": "nok",
-      "line_items[0][price_data][unit_amount]": String(b.price * 100),
-      "line_items[0][price_data][product_data][name]": `${b.name} – ${listing.title}`,
-      "metadata[order_id]": order.id,
-    });
-    const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-      method: "POST",
-      headers: { authorization: `Bearer ${stripeKey}`, "content-type": "application/x-www-form-urlencoded" },
-      body: form,
-    });
-    const session = await res.json();
-    if (!res.ok) {
-      console.error("Stripe-feil", session);
-      return NextResponse.json({ error: "Betalingen kunne ikke startes. Prøv igjen." }, { status: 502 });
+  if (hasVipps()) {
+    try {
+      const url = await createPayment({
+        reference: order.id,
+        amount: b.price,
+        description: `${b.name}: ${listing.title}`,
+        returnUrl: `${site()}/annonseloft/betaling?ordre=${order.id}`,
+      });
+      return NextResponse.json({ url });
+    } catch (e) {
+      console.error(e);
+      return NextResponse.json({ error: "Vipps-betalingen kunne ikke startes. Prøv igjen." }, { status: 502 });
     }
-    return NextResponse.json({ url: session.url });
   }
 
-  // Uten nettbetaling: varsle administrator, som aktiverer løftet manuelt etter betaling.
+  // Uten Vipps-avtale: varsle administrator, som sender Vipps-forespørsel og aktiverer løftet manuelt.
   if (process.env.ADMIN_EMAIL) {
     await sendEmail({
       to: process.env.ADMIN_EMAIL,
@@ -75,6 +65,6 @@ export async function POST(req: Request) {
   }
   return NextResponse.json({
     ok: true,
-    message: `Bestillingen er mottatt. Vi sender deg betalingsinformasjon på e-post, og løftet starter når ${b.price} kr er betalt.`,
+    message: `Bestillingen er mottatt. Du får en betalingsforespørsel på Vipps, og løftet starter når ${b.price} kr er betalt.`,
   });
 }

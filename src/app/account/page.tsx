@@ -11,7 +11,7 @@ import { OwnerListingRow } from "@/components/OwnerListingRow";
 export const metadata: Metadata = { title: "Min side" };
 export const dynamic = "force-dynamic";
 
-export default async function AccountPage({ searchParams }: { searchParams: Promise<{ loft?: string }> }) {
+export default async function AccountPage() {
   const user = await getUser();
   if (!user) redirect("/auth/login?next=/account");
   const db = adminClient();
@@ -20,7 +20,6 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const { data: messages } = db
     ? await db.from("messages").select("*").eq("seller_id", user.id).order("created_at", { ascending: false }).limit(50)
     : { data: [] };
-  const boosted = (await searchParams).loft === "ok";
 
   return (
     <div className="bg-white">
@@ -54,11 +53,6 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
       </section>
       <div className="mx-auto grid max-w-[1320px] gap-10 px-4 pb-24 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:px-8">
         <section>
-          {boosted && (
-            <p className="mb-6 rounded-2xl bg-emerald-50 p-4 text-sm text-emerald-800 ring-1 ring-inset ring-emerald-200">
-              Takk! Betalingen er mottatt, og løftet er aktivert på annonsen.
-            </p>
-          )}
           <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Annonsene mine</h2>
           {listings.length === 0 ? (
             <div className="mt-4 rounded-3xl bg-slate-50 px-6 py-12 text-center ring-1 ring-inset ring-slate-200">

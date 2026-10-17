@@ -66,6 +66,7 @@ create table if not exists public.boost_orders (
   id uuid primary key default gen_random_uuid(),
   listing_id uuid not null references public.listings(id) on delete cascade,
   user_id uuid references auth.users(id) on delete set null,
+  buyer_email text,
   plan text not null check (plan in ('top','featured','frontpage')),
   amount numeric(10,2) not null,
   status text not null default 'pending' check (status in ('pending','paid','cancelled')),

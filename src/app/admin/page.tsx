@@ -5,6 +5,7 @@ import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { fromRow } from "@/lib/listings";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
+import { hasVipps } from "@/lib/vipps";
 import { formatPrice } from "@/lib/format";
 import { ListingActions, MarkPaid } from "@/components/ListingActions";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
@@ -100,10 +101,10 @@ export default async function AdminPage() {
                       <Link href={`/products/${o.listings?.slug}`} className="underline">
                         {o.listings?.title}
                       </Link>{" "}
-                      · {date(o.created_at)}
+                      · {o.buyer_email} · {date(o.created_at)}
                     </p>
                   </div>
-                  <MarkPaid id={o.id} />
+                  <MarkPaid id={o.id} vipps={hasVipps()} />
                 </li>
               ))}
             </ul>

@@ -59,21 +59,39 @@ export function ListingActions({ id, actions }: { id: string; actions: Action[] 
   );
 }
 
-export function MarkPaid({ id }: { id: string }) {
+export function MarkPaid({ id, vipps }: { id: string; vipps: boolean }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
+  const [note, setNote] = useState("");
+  const run = async (check: boolean) => {
+    setBusy(true);
+    const res = await fetch(`/api/admin/boost/${id}${check ? "?check=1" : ""}`, { method: "POST" });
+    const { result } = await res.json().catch(() => ({}));
+    setBusy(false);
+    if (result === "waiting") setNote("Ikke betalt i Vipps ennå.");
+    else router.refresh();
+  };
   return (
-    <button
-      type="button"
-      disabled={busy}
-      onClick={async () => {
-        setBusy(true);
-        await fetch(`/api/admin/boost/${id}`, { method: "POST" });
-        router.refresh();
-      }}
-      className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-xs font-semibold text-white transition hover:bg-black disabled:opacity-50"
-    >
-      {busy ? "Aktiverer …" : "Betalt – aktiver løftet"}
-    </button>
+    <div className="flex flex-wrap items-center gap-2">
+      {vipps && (
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => run(true)}
+          className="inline-flex h-9 items-center rounded-full bg-slate-100 px-4 text-xs font-semibold text-slate-800 transition hover:bg-slate-200 disabled:opacity-50"
+        >
+          Sjekk Vipps
+        </button>
+      )}
+      <button
+        type="button"
+        disabled={busy}
+        onClick={() => run(false)}
+        className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-xs font-semibold text-white transition hover:bg-black disabled:opacity-50"
+      >
+        {busy ? "Et øyeblikk …" : "Betalt – aktiver løftet"}
+      </button>
+      {note && <p className="w-full text-xs text-slate-500">{note}</p>}
+    </div>
   );
 }
