@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ClockIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
@@ -14,11 +15,12 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
       >
         <div className="absolute inset-0 px-[14%] pb-[8%] pt-[18%] transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:px-[12%] sm:pt-[14%]">
           {listing.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               alt={listing.title}
-              loading="lazy"
               src={listing.image}
+              width={600}
+              height={840}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className="h-full w-full rounded-md object-cover shadow-[0_18px_30px_-18px_rgba(15,23,42,0.6)]"
             />
           ) : (

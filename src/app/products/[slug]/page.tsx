@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -31,6 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: l.title,
     description: `${l.title} – ${formatPrice(l.price)}. ${l.description.split("\n")[0]}`,
     openGraph: { title: l.title, images: l.image ? [l.image] : undefined },
+    alternates: { canonical: `/products/${l.slug}` },
   };
 }
 
@@ -64,8 +66,27 @@ export default async function ListingPage({ params }: Props) {
     ["Tilstand", l.condition],
   ];
 
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hobbystrada.vercel.app";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: l.title,
+    description: l.description || l.title,
+    image: l.image ? [l.image.startsWith("http") ? l.image : site + l.image] : undefined,
+    brand: { "@type": "Brand", name: l.producer },
+    offers: {
+      "@type": "Offer",
+      price: l.price,
+      priceCurrency: "NOK",
+      availability: l.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+      itemCondition: "https://schema.org/UsedCondition",
+      url: `${site}/products/${l.slug}`,
+    },
+  };
+
   return (
     <div className="bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <div className="mx-auto max-w-[1320px] px-4 pb-28 pt-4 sm:px-6 lg:px-8 lg:pb-20">
         <div className="flex items-center justify-between gap-4">
           <nav aria-label="Brødsmuler" className="flex min-w-0 items-center gap-1 text-sm text-slate-500">
@@ -111,8 +132,15 @@ export default async function ListingPage({ params }: Props) {
                     <div className="rounded-[18px] border border-white bg-gradient-to-br from-white via-slate-100 to-white p-3 shadow-2xl shadow-slate-900/30">
                       <div className="aspect-[5/7] overflow-hidden rounded-[10px] bg-primary">
                         {l.image ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img alt={l.title} src={l.image} className="h-full w-full object-cover" />
+                          <Image
+                            alt={l.title}
+                            src={l.image}
+                            width={800}
+                            height={1120}
+                            priority
+                            sizes="(max-width: 1024px) 80vw, 360px"
+                            className="h-full w-full object-cover"
+                          />
                         ) : (
                           <CardArt listing={l} square detail />
                         )}

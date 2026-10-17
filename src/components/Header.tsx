@@ -6,6 +6,7 @@ import { useState } from "react";
 import { CircleUserIcon, LayoutGridIcon, MenuIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
 import { LangToggle } from "./LangToggle";
 import { CartDrawer } from "./CartDrawer";
+import { useUser } from "./useUser";
 
 const NAV = [
   { href: "/products", label: "Markedet", Icon: LayoutGridIcon },
@@ -21,7 +22,8 @@ const MOBILE_NAV = [
   ["/contact", "Kontakt"],
 ];
 
-export function Header({ user }: { user: { name: string } | null }) {
+export function Header() {
+  const user = useUser();
   const router = useRouter();
   const path = usePathname();
   const [q, setQ] = useState("");

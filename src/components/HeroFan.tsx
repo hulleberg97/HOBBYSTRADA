@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CardArt } from "./CardArt";
 import type { Listing } from "@/lib/types";
@@ -27,7 +28,6 @@ export function HeroFan({ listings }: { listings: Listing[] }) {
         return (
           <Link
             key={l.slug}
-            aria-label={l.title}
             style={{ zIndex: p.z, transform: `translate(-50%, 0) translate(${p.x}, ${p.y}) rotate(${p.r})` }}
             className="group absolute left-1/2 top-2 w-[38%] origin-bottom sm:w-[36%]"
             href={`/products/${l.slug}`}
@@ -46,8 +46,15 @@ export function HeroFan({ listings }: { listings: Listing[] }) {
                 </div>
                 <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
                   {l.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img alt="" src={l.image} className="h-full w-full object-cover" />
+                    <Image
+                      alt=""
+                      src={l.image}
+                      width={400}
+                      height={560}
+                      priority
+                      sizes="(max-width: 640px) 38vw, 190px"
+                      className="h-full w-full object-cover"
+                    />
                   ) : (
                     <CardArt listing={l} square />
                   )}

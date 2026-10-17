@@ -5,7 +5,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { LangProvider } from "@/components/LangProvider";
 import { CookieConsent } from "@/components/CookieConsent";
-import { getUser } from "@/lib/auth";
 
 const inter = Inter({ variable: "--nf-inter", subsets: ["latin"] });
 const space = Space_Grotesk({ variable: "--nf-space", subsets: ["latin"] });
@@ -18,13 +17,12 @@ export const metadata: Metadata = {
   openGraph: { locale: "nb_NO", siteName: "HOBBYSTRADA", type: "website" },
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const user = await getUser();
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="nb" className={`${inter.variable} ${space.variable} ${mono.variable}`}>
       <body>
         <LangProvider>
-          <Header user={user ? { name: user.name } : null} />
+          <Header />
           <main className="min-h-screen">{children}</main>
           <Footer />
           <CookieConsent />

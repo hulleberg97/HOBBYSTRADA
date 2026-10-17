@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 
-const KEY = "cookie-consent";
 const EVENT = "open-cookie-settings";
 
 export function CookieButton() {
@@ -14,37 +13,16 @@ export function CookieButton() {
   );
 }
 
-const CHANGE = "cookie-consent-change";
-const subscribe = (cb: () => void) => {
-  window.addEventListener(CHANGE, cb);
-  return () => window.removeEventListener(CHANGE, cb);
-};
-const hasConsent = () => {
-  try {
-    return Boolean(localStorage.getItem(KEY));
-  } catch {
-    return true;
-  }
-};
-
-/** Siden bruker bare nødvendige informasjonskapsler (innlogging og språk). */
+/** Siden bruker bare nødvendige informasjonskapsler, så vi viser informasjonen bare når den blir bedt om. */
 export function CookieConsent() {
-  const consented = useSyncExternalStore(subscribe, hasConsent, () => true);
-  const [manual, setManual] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
-    const show = () => setManual(true);
+    const show = () => setOpen(true);
     window.addEventListener(EVENT, show);
     return () => window.removeEventListener(EVENT, show);
   }, []);
-  const open = !consented || manual;
   if (!open) return null;
-  const close = () => {
-    try {
-      localStorage.setItem(KEY, new Date().toISOString());
-    } catch {}
-    setManual(false);
-    window.dispatchEvent(new Event(CHANGE));
-  };
+  const close = () => setOpen(false);
   return (
     <div
       role="dialog"
@@ -63,7 +41,7 @@ export function CookieConsent() {
         onClick={close}
         className="mt-4 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
       >
-        Den er grei
+        Lukk
       </button>
     </div>
   );

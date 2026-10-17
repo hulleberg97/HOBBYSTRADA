@@ -20,7 +20,7 @@ export function LangToggle({ dark = false, className = "" }: { dark?: boolean; c
           key={l}
           type="button"
           aria-pressed={lang === l}
-          aria-label={l === "no" ? "Norsk" : "English"}
+          aria-label={l === "no" ? "NO – norsk" : "EN – English"}
           data-current={lang === l ? "true" : undefined}
           onClick={() => setLang(l)}
           className={btn}

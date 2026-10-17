@@ -21,6 +21,7 @@ export async function proxy(req: NextRequest) {
   return res;
 }
 
+// Bare sider som leser innloggingen på serveren. Resten mellomlagres og leser innloggingen i nettleseren.
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|img/|icon).*)"],
+  matcher: ["/account/:path*", "/admin/:path*", "/sell", "/api/:path*", "/auth/:path*", "/annonseloft/betaling"],
 };
