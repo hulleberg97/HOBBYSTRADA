@@ -119,15 +119,15 @@ export default function AboutPage() {
             <ul className="mt-5 divide-y divide-slate-100">
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">1</span>
-                <span className="pt-0.5">Se kortet før du betaler når det er mulig.</span>
+                <span className="pt-0.5">Be om bilder av kortet foran og bak før du betaler.</span>
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">2</span>
-                <span className="pt-0.5">Bruk Vipps ved overlevering.</span>
+                <span className="pt-0.5">Betal med Vipps, og sjekk at navnet stemmer med selgeren.</span>
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">3</span>
-                <span className="pt-0.5">Send aldri forskudd til noen du ikke kjenner.</span>
+                <span className="pt-0.5">Bruk frakt med sporing for dyrere kort.</span>
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">4</span>

@@ -55,7 +55,7 @@ const SECTIONS = [
     items: [
       [
         "Hvordan handler jeg trygt?",
-        "Se kortet før du betaler når det er mulig, bruk Vipps ved overlevering, og send aldri forskudd til noen du ikke kjenner.",
+        "Be om bilder eller video av kortet, gjerne med en lapp med dagens dato ved siden av. Betal med Vipps og sjekk at navnet stemmer med selgeren. Bruk frakt med sporing for dyrere kort, og vær ekstra varsom hvis prisen er langt under markedet.",
       ],
       ["Jeg ser en mistenkelig annonse. Hva gjør jeg?", "Trykk «Rapporter» på annonsen, eller kontakt oss med lenken til annonsen."],
     ],
