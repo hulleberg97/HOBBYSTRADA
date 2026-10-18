@@ -11,6 +11,7 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const plan = body.plan as BoostKey;
   if (!(plan in BOOSTS)) return NextResponse.json({ error: "Ukjent pakke." }, { status: 400 });
+  if (body.consent !== true) return NextResponse.json({ error: "Bekreft at løftet kan starte med en gang." }, { status: 400 });
 
   const db = adminClient();
   const user = await getUser();
@@ -32,12 +33,15 @@ export async function POST(req: Request) {
   }
 
   const b = BOOSTS[plan];
-  const { data: order, error } = await db
+  const row = { listing_id: listing.id, user_id: user.id, buyer_email: user.email, plan, amount: b.price, status: "pending" };
+  let { data: order, error } = await db
     .from("boost_orders")
-    .insert({ listing_id: listing.id, user_id: user.id, buyer_email: user.email, plan, amount: b.price, status: "pending" })
+    .insert({ ...row, consent_at: new Date().toISOString() })
     .select("id")
     .single();
-  if (error) return NextResponse.json({ error: "Kunne ikke opprette bestillingen." }, { status: 500 });
+  // Databasen mangler consent_at til supabase/003_juridisk.sql er kjørt.
+  if (error && /consent_at/.test(error.message)) ({ data: order, error } = await db.from("boost_orders").insert(row).select("id").single());
+  if (error || !order) return NextResponse.json({ error: "Kunne ikke opprette bestillingen." }, { status: 500 });
 
   if (hasVipps()) {
     try {

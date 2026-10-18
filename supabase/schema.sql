@@ -112,6 +112,22 @@ alter table public.listings add column if not exists sold_at timestamptz;
 grant select (sold_at) on public.listings to anon, authenticated;
 update public.listings set sold_at = updated_at where status = 'sold' and sold_at is null;
 
+-- Rapporterte annonser
+create table if not exists public.reports (
+  id uuid primary key default gen_random_uuid(),
+  listing_slug text not null,
+  reason text not null,
+  details text not null default '',
+  reporter_email text,
+  handled boolean not null default false,
+  created_at timestamptz not null default now()
+);
+alter table public.reports enable row level security;
+grant all on public.reports to service_role;
+
+-- Når kunden samtykket i at løftet starter straks (og angreretten faller bort)
+alter table public.boost_orders add column if not exists consent_at timestamptz;
+
 -- Bilder
 insert into storage.buckets (id, name, public) values ('listing-images', 'listing-images', true)
 on conflict (id) do nothing;

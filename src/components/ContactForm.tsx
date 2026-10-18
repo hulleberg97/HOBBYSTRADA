@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { CheckIcon, InfoIcon } from "lucide-react";
+import { ReportForm } from "./ReportForm";
 
 const field =
   "h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-[15px] text-slate-950 outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10";
@@ -31,6 +32,8 @@ export function ContactForm() {
       setState("error");
     }
   };
+
+  if (report) return <ReportForm slug={report} />;
 
   if (state === "sent") {
     return (

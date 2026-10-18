@@ -95,3 +95,22 @@ export function MarkPaid({ id, vipps }: { id: string; vipps: boolean }) {
     </div>
   );
 }
+
+export function ResolveReport({ id }: { id: string }) {
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
+  return (
+    <button
+      type="button"
+      disabled={busy}
+      onClick={async () => {
+        setBusy(true);
+        await fetch(`/api/admin/reports/${id}`, { method: "POST" });
+        router.refresh();
+      }}
+      className="inline-flex h-9 items-center rounded-full bg-slate-100 px-4 text-xs font-semibold text-slate-800 transition hover:bg-slate-200 disabled:opacity-50"
+    >
+      {busy ? "Lagrer …" : "Ferdig behandlet"}
+    </button>
+  );
+}

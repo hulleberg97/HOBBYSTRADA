@@ -22,8 +22,9 @@ export default function RefundPage() {
           title: "Annonseløft",
           body: (
             <p>
-              Annonseløft er en digital tjeneste som starter med en gang. Når løftet er aktivert, har du ikke angrerett. Hvis noe gikk galt med betalingen eller
-              løftet ikke ble aktivert, refunderer vi hele beløpet.
+              Annonseløft er en digital tjeneste som starter med en gang betalingen er gjennomført. Før du betaler, ber du uttrykkelig om at løftet starter
+              straks, og bekrefter at angreretten da faller bort (angrerettloven § 22). Hvis noe gikk galt med betalingen eller løftet ikke ble aktivert,
+              refunderer vi hele beløpet.
             </p>
           ),
         },

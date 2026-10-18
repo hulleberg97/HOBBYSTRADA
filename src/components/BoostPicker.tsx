@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ArrowUpToLineIcon, CheckIcon, CrownIcon, SparklesIcon } from "lucide-react";
@@ -17,11 +18,16 @@ export function BoostPicker() {
   const [listing, setListing] = useState(params.get("annonse") ?? "");
   const [busy, setBusy] = useState<BoostKey | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [consent, setConsent] = useState(false);
 
   const choose = async (key: BoostKey) => {
     if (!listing.trim()) {
       setMsg({ ok: false, text: "Skriv inn lenken til annonsen eller tittelen først." });
       document.getElementById("boost-listing")?.focus();
+      return;
+    }
+    if (!consent) {
+      setMsg({ ok: false, text: "Bekreft at løftet kan starte med en gang før du går videre." });
       return;
     }
     setBusy(key);
@@ -30,7 +36,7 @@ export function BoostPicker() {
       const res = await fetch("/api/boost", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ listing, plan: key }),
+        body: JSON.stringify({ listing, plan: key, consent }),
       });
       const data = await res.json().catch(() => ({}));
       if (data.url) {
@@ -61,6 +67,20 @@ export function BoostPicker() {
           onChange={(e) => setListing(e.target.value)}
         />
         <p className="mt-2 text-xs text-muted-foreground">Løftet aktiveres på annonsen etter at betalingen er gjennomført.</p>
+        <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]"
+          />
+          <span>
+            Jeg ber om at løftet starter med en gang etter betaling, og forstår at angreretten da faller bort.{" "}
+            <Link href="/refund-policy" target="_blank" className="font-medium text-foreground underline underline-offset-2">
+              Retur og refusjon
+            </Link>
+          </span>
+        </label>
         {msg && (
           <p role="status" className={`mt-3 rounded-lg px-3 py-2 text-sm ${msg.ok ? "bg-emerald-50 text-emerald-800" : "bg-destructive/5 text-destructive"}`}>
             {msg.text}

@@ -8,6 +8,7 @@ import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
 import { EditListing } from "@/components/EditListing";
 import { SavedSearches } from "@/components/SavedSearches";
+import { DeleteAccount } from "@/components/DeleteAccount";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 
 export const metadata: Metadata = { title: "Min side" };
@@ -137,6 +138,9 @@ export default async function AccountPage() {
               ))}
             </ul>
           )}
+          <div className="mt-10">
+            <DeleteAccount />
+          </div>
         </aside>
       </div>
     </div>

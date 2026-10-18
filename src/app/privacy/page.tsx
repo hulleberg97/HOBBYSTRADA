@@ -57,7 +57,25 @@ export default function PrivacyPage() {
         },
         {
           title: "Lagringstid",
-          body: <p>Annonser og meldinger slettes når du sletter dem eller kontoen din. Betalingsopplysninger oppbevares så lenge bokføringsloven krever.</p>,
+          body: (
+            <List
+              items={[
+                "Annonser og bilder: til du sletter dem eller kontoen din. Avviste annonser slettes etter 30 dager.",
+                "Meldinger og henvendelser: slettes automatisk etter 12 måneder.",
+                "Rapporter om annonser: slettes 12 måneder etter at de er behandlet.",
+                "Betalinger for annonseløft: så lenge bokføringsloven krever (5 år).",
+              ]}
+            />
+          ),
+        },
+        {
+          title: "Hvor dataene lagres",
+          body: (
+            <p>
+              Databasen og serverne som behandler opplysningene dine, ligger i EU (Frankfurt). Leverandørene våre har databehandleravtaler med oss og behandler
+              bare opplysningene på våre vegne.
+            </p>
+          ),
         },
         {
           title: "Dine rettigheter",

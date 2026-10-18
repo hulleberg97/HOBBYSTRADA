@@ -7,7 +7,7 @@ import { fromRow } from "@/lib/listings";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { hasVipps } from "@/lib/vipps";
 import { formatPrice } from "@/lib/format";
-import { ListingActions, MarkPaid } from "@/components/ListingActions";
+import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingActions";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 
 export const metadata: Metadata = { title: "Administrasjon", robots: { index: false } };
@@ -27,6 +27,14 @@ export default async function AdminPage() {
     db.from("contact_messages").select("*").order("created_at", { ascending: false }).limit(30),
     db.from("listings").select("*").in("status", ["active", "sold", "hidden"]).order("created_at", { ascending: false }),
   ]);
+
+  const { data: reports } = await db.from("reports").select("*").eq("handled", false).order("created_at", { ascending: false });
+  const { data: reported } = reports?.length
+    ? await db
+        .from("listings")
+        .select("id, slug, title, status")
+        .in("slug", [...new Set(reports.map((r) => r.listing_slug))])
+    : { data: [] };
 
   const h2 = "font-heading text-xl font-bold tracking-tight text-slate-950";
   const empty = "mt-4 rounded-3xl bg-slate-50 p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-200";
@@ -79,6 +87,50 @@ export default async function AdminPage() {
                       ]}
                     />
                   </OwnerListingRow>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+
+        <section>
+          <h2 className={h2}>Rapporterte annonser ({reports?.length ?? 0})</h2>
+          {!reports?.length ? (
+            <p className={empty}>Ingen nye rapporter.</p>
+          ) : (
+            <ul className="mt-4 space-y-3">
+              {reports.map((r) => {
+                const l = reported?.find((x) => x.slug === r.listing_slug);
+                return (
+                  <li key={r.id} className="rounded-3xl bg-white p-5 text-sm ring-1 ring-slate-200">
+                    <p className="text-xs text-slate-500">
+                      {date(r.created_at)}{" "}
+                      {r.reporter_email && (
+                        <>
+                          ·{" "}
+                          <a href={`mailto:${r.reporter_email}`} className="underline">
+                            {r.reporter_email}
+                          </a>
+                        </>
+                      )}
+                    </p>
+                    <p className="mt-1 font-semibold text-slate-950">{r.reason}</p>
+                    <p className="mt-0.5">
+                      {l ? (
+                        <Link href={`/products/${l.slug}`} className="underline">
+                          {l.title}
+                        </Link>
+                      ) : (
+                        <span className="text-slate-500">Annonsen er slettet</span>
+                      )}
+                      {l && l.status !== "active" && <span className="ml-2 text-xs text-slate-500">({l.status === "hidden" ? "skjult" : l.status})</span>}
+                    </p>
+                    {r.details && <p className="mt-2 whitespace-pre-line text-slate-700">{r.details}</p>}
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      {l && l.status === "active" && <ListingActions id={l.id} actions={[{ label: "Skjul annonsen", status: "hidden", tone: "danger" }]} />}
+                      <ResolveReport id={r.id} />
+                    </div>
+                  </li>
                 );
               })}
             </ul>
