@@ -95,20 +95,29 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
 
   useEffect(() => {
     const el = box.current;
-    if (!el || n < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || n < 2) return;
+    // Med «Reduser bevegelse» glir vifta saktere i stedet for å stå stille
+    const base = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? SPEED * 0.5 : SPEED;
     let shift = 0;
-    let speed = SPEED;
-    let paused = false;
+    let speed = base;
+    let onCard = false; // musen over et kort: stopp, så det er lett å trykke
+    let focused = false;
     let visible = true;
     let shown = 0;
     let last = performance.now();
     let raf = 0;
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
     io.observe(el);
-    const enter = () => (paused = true);
-    const leave = () => (paused = false);
-    el.addEventListener("pointerenter", enter);
-    el.addEventListener("pointerleave", leave);
+    // Bare en ekte mus stopper vifta; berøring på mobil skal ikke la den stå
+    const over = (e: PointerEvent) => {
+      if (e.pointerType === "mouse") onCard = Boolean((e.target as Element).closest?.("a"));
+    };
+    const out = () => (onCard = false);
+    // Bare tastaturfokus (Tab) stopper vifta, ikke fokus etter et museklikk
+    const enter = (e: FocusEvent) => (focused = Boolean((e.target as Element).matches?.(":focus-visible")));
+    const leave = () => (focused = false);
+    el.addEventListener("pointerover", over);
+    el.addEventListener("pointerleave", out);
     el.addEventListener("focusin", enter);
     el.addEventListener("focusout", leave);
 
@@ -117,7 +126,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
       if (!visible || document.hidden) return;
-      speed += ((paused ? 0 : SPEED) - speed) * (1 - Math.exp(-dt * 3));
+      speed += ((onCard || focused ? 0 : base) - speed) * (1 - Math.exp(-dt * 3));
       shift = (shift + speed * dt) % n;
       let nearest = 0;
       let best = 9;
@@ -146,8 +155,8 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
-      el.removeEventListener("pointerenter", enter);
-      el.removeEventListener("pointerleave", leave);
+      el.removeEventListener("pointerover", over);
+      el.removeEventListener("pointerleave", out);
       el.removeEventListener("focusin", enter);
       el.removeEventListener("focusout", leave);
     };
