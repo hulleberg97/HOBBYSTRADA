@@ -22,8 +22,6 @@ export type StageCard = {
   number: string;
   type: string;
   price: string;
-  /** Gradering, f.eks. «PSA 10». Tom for ugraderte kort. */
-  grade: string;
 };
 
 const CARD_W = 1.6;
@@ -48,61 +46,39 @@ function drawFront(ctx: CanvasRenderingContext2D, c: StageCard, img: HTMLImageEl
   const W = TEX_W;
   const H = TEX_H;
   const g = ctx.createLinearGradient(0, 0, W, H);
-  g.addColorStop(0, "#f5f7fa");
-  g.addColorStop(0.55, "#dde3ea");
-  g.addColorStop(1, "#eef1f5");
+  g.addColorStop(0, "#eef2f6");
+  g.addColorStop(0.55, "#d6dde5");
+  g.addColorStop(1, "#e8edf2");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
 
-  // Etikett: sett og nummer, spiller og type, strekkode og gradering eller hologram
+  // Plakett i HOBBYSTRADA-stil: mørkeblå med gullkant, H-merket, spiller og sett.
+  // Bevisst ulik graderingsetiketter, så kortet ikke ser gradert ut.
   const lx = 44;
   const ly = 44;
   const lw = W - 88;
-  const lh = 214;
-  ctx.fillStyle = "#ffffff";
+  const lh = 170;
+  const pg = ctx.createLinearGradient(0, ly, 0, ly + lh);
+  pg.addColorStop(0, "#1a2d52");
+  pg.addColorStop(1, "#0c1730");
+  ctx.fillStyle = pg;
   ctx.beginPath();
-  ctx.roundRect(lx, ly, lw, lh, 10);
+  ctx.roundRect(lx, ly, lw, lh, 18);
   ctx.fill();
-  ctx.strokeStyle = "#c8102e";
-  ctx.lineWidth = 8;
+  ctx.strokeStyle = "#cfa653";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.roundRect(lx + 10, ly + 10, lw - 20, lh - 20, 12);
   ctx.stroke();
-  ctx.fillStyle = "#0b1726";
+  drawMark(ctx, lx + 82, ly + lh / 2, 92, "#f7f3ea", "#cfa653");
   ctx.textBaseline = "middle";
-  ctx.font = `600 36px ${fontFamily}`;
-  ctx.textAlign = "right";
-  const num = c.number ? `#${c.number}` : "";
-  ctx.fillText(num, lx + lw - 30, ly + 46);
   ctx.textAlign = "left";
-  ctx.fillText(fit(ctx, c.set, lw - 90 - ctx.measureText(num).width), lx + 30, ly + 46);
-  ctx.font = `700 36px ${fontFamily}`;
-  ctx.textAlign = "right";
-  const type = c.type.toUpperCase();
-  ctx.fillText(type, lx + lw - 30, ly + 102);
-  const room = lw - 90 - ctx.measureText(type).width;
-  ctx.font = `800 50px ${fontFamily}`;
-  ctx.textAlign = "left";
-  ctx.fillText(fit(ctx, c.player, room), lx + 30, ly + 102);
-  // Strekkode (pynt)
-  let bx = lx + 30;
-  for (let i = 0; i < 46; i++) {
-    const w = 1 + ((i * 7) % 4);
-    ctx.fillRect(bx, ly + 150, w, 38);
-    bx += w + 2 + ((i * 3) % 3);
-  }
-  // Gradering, eller hologramstripe for ugraderte
-  if (c.grade) {
-    ctx.fillStyle = "#c8102e";
-    ctx.font = `800 52px ${fontFamily}`;
-    ctx.textAlign = "right";
-    ctx.fillText(c.grade.toUpperCase(), lx + lw - 30, ly + 168);
-  } else {
-    const hg = ctx.createLinearGradient(lx + lw - 210, 0, lx + lw - 30, 0);
-    ["#7cf7ff", "#b58cff", "#ff8fd0", "#ffd36e", "#7cf7ff"].forEach((col, i) => hg.addColorStop(i / 4, col));
-    ctx.fillStyle = hg;
-    ctx.beginPath();
-    ctx.roundRect(lx + lw - 210, ly + 150, 180, 38, 6);
-    ctx.fill();
-  }
+  ctx.fillStyle = "#f7f3ea";
+  ctx.font = `800 48px ${fontFamily}`;
+  ctx.fillText(fit(ctx, c.player, lw - 190), lx + 150, ly + 66);
+  ctx.fillStyle = "#e2c27a";
+  ctx.font = `600 32px ${fontFamily}`;
+  ctx.fillText(fit(ctx, c.set, lw - 190), lx + 150, ly + 116);
 
   // Fordypningen og kortet
   const wx = 70;
@@ -172,9 +148,9 @@ function drawBack(ctx: CanvasRenderingContext2D) {
   ctx.fillRect(0, 0, W, H);
   ctx.fillStyle = "#0f1f39";
   ctx.beginPath();
-  ctx.roundRect(44, 44, W - 88, 176, 10);
+  ctx.roundRect(44, 44, W - 88, 170, 18);
   ctx.fill();
-  drawMark(ctx, W / 2, 132, 110, "#f7f3ea", "#c9a24a");
+  drawMark(ctx, W / 2, 129, 100, "#f7f3ea", "#c9a24a");
   const g = ctx.createLinearGradient(0, 260, W, H);
   g.addColorStop(0, "#162a4c");
   g.addColorStop(1, "#0a1424");

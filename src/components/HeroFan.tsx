@@ -53,14 +53,12 @@ function Slab({ l }: { l: Listing }) {
           data-top={l.frontpage ? "true" : undefined}
           className="relative w-full rounded-[10px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.95),rgba(226,232,240,0.8)_45%,rgba(255,255,255,0.92))] p-[5%] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
         >
-          <div className="rounded-[3px] border-2 border-[#c8102e] bg-white px-[6%] py-[4%] text-[#0b1726]">
-            <div className="flex items-start justify-between gap-2">
-              <p className="min-w-0 truncate text-[8px] font-bold uppercase leading-tight tracking-wide sm:text-[9px]">{l.set}</p>
-              <p className="shrink-0 text-[8px] font-bold uppercase leading-tight sm:text-[9px]">{l.cardNumber ? `#${l.cardNumber}` : ""}</p>
-            </div>
-            <div className="mt-[3%] flex items-end justify-between gap-2">
-              <p className="min-w-0 truncate text-[9px] font-bold uppercase leading-tight sm:text-[10px]">{l.player}</p>
-              <p className="shrink-0 text-[9px] font-bold uppercase leading-tight sm:text-[10px]">{l.types[0]}</p>
+          {/* HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter */}
+          <div className="flex items-center gap-[6%] rounded-[6px] bg-[linear-gradient(180deg,#1a2d52,#0c1730)] px-[6%] py-[5%] ring-1 ring-inset ring-[#cfa653]/70">
+            <Mark className="h-[22px] w-auto shrink-0 sm:h-[26px]" cards="#f7f3ea" bar="#cfa653" />
+            <div className="min-w-0">
+              <p className="truncate text-[9px] font-extrabold uppercase leading-tight text-[#f7f3ea] sm:text-[10px]">{l.player}</p>
+              <p className="truncate text-[8px] font-semibold leading-tight text-[#e2c27a] sm:text-[9px]">{l.set}</p>
             </div>
           </div>
           <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[3px] bg-[#0d2238] ring-1 ring-black/10">

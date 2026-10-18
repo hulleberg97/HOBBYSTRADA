@@ -24,7 +24,6 @@ export default async function Page() {
     number: l.cardNumber ?? "",
     type: l.types[0] ?? "",
     price: formatPrice(l.price).replace(",00", ""),
-    grade: l.grading && !/ugradert|raw/i.test(l.grading) ? l.grading : "",
   }));
   const fallback = <HeroFan pinned={pinned} paid={paid} fill={fill} />;
   const buttons = (center: boolean) => (
