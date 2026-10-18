@@ -255,7 +255,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
 
     const n = Math.max(cards.length, 3);
     const step = (Math.PI * 2) / n;
-    const radius = Math.max(2.5, (CARD_W * 1.3) / Math.tan(Math.PI / n) / 2 + 1.0);
+    const radius = Math.max(3.3, (CARD_W * 1.3) / Math.tan(Math.PI / n) / 2 + 1.2);
     const ring = new THREE.Group();
     const stage = new THREE.Group();
     stage.add(ring);
@@ -497,9 +497,9 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       const h = el.clientHeight;
       renderer.setSize(w, h);
       camera.aspect = w / h;
-      const visH = Math.max(5.2, ((2 * radius + 1.4) / camera.aspect) * 0.9);
+      const visH = Math.max(5.6, ((2 * radius + 1.2) / camera.aspect) * 0.86);
       const d = visH / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-      camera.position.set(0, target.y + d * 0.2, target.z + d);
+      camera.position.set(0, target.y + d * 0.28, target.z + d);
       camera.lookAt(target);
       camera.updateProjectionMatrix();
       const fog = scene.fog as THREE.Fog;
