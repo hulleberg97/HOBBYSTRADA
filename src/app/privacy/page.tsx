@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, List } from "@/components/LegalPage";
+import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = { title: "Personvern" };
 
@@ -11,7 +12,12 @@ export default function PrivacyPage() {
       sections={[
         {
           title: "Hvem som er ansvarlig",
-          body: <p>HOBBYSTRADA er behandlingsansvarlig for personopplysningene som samles inn på denne nettsiden.</p>,
+          body: (
+            <p>
+              {COMPANY.name} (org.nr. {COMPANY.orgnr}), {COMPANY.street}, {COMPANY.postal}, er behandlingsansvarlig for personopplysningene som samles inn på
+              denne nettsiden. Du når oss på <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> eller via kontaktskjemaet.
+            </p>
+          ),
         },
         {
           title: "Hva vi samler inn",
@@ -73,8 +79,8 @@ export default function PrivacyPage() {
           title: "Hvor dataene lagres",
           body: (
             <p>
-              Databasen ligger i EU (Stockholm), og serverne som behandler opplysningene dine, ligger i EU (Frankfurt). Leverandørene våre har databehandleravtaler med oss og behandler
-              bare opplysningene på våre vegne.
+              Databasen ligger i EU (Stockholm), og serverne som behandler opplysningene dine, ligger i EU (Frankfurt). Leverandørene våre har
+              databehandleravtaler med oss og behandler bare opplysningene på våre vegne.
             </p>
           ),
         },

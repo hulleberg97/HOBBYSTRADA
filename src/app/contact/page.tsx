@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronRightIcon } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = { title: "Kontakt" };
 
@@ -21,6 +22,20 @@ export default function ContactPage() {
           <ContactForm />
         </Suspense>
         <aside className="space-y-4">
+          <div className="rounded-3xl bg-white p-6 ring-1 ring-slate-200">
+            <h2 className="font-heading text-lg font-bold tracking-tight text-slate-950">Firmaopplysninger</h2>
+            <address className="mt-3 space-y-1 text-[15px] not-italic leading-relaxed text-slate-700">
+              <p className="font-medium text-slate-900">{COMPANY.name}</p>
+              <p>Org.nr. {COMPANY.orgnr}</p>
+              <p>{COMPANY.street}</p>
+              <p>{COMPANY.postal}</p>
+              <p>
+                <a className="text-primary hover:underline" href={`mailto:${COMPANY.email}`}>
+                  {COMPANY.email}
+                </a>
+              </p>
+            </address>
+          </div>
           <div className="rounded-3xl bg-white p-6 ring-1 ring-slate-200">
             <h2 className="font-heading text-lg font-bold tracking-tight text-slate-950">Finn svar raskt</h2>
             <ul className="mt-3 divide-y divide-slate-100">

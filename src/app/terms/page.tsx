@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, List } from "@/components/LegalPage";
+import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = { title: "Vilkår" };
 
@@ -13,8 +14,9 @@ export default function TermsPage() {
           title: "Om tjenesten",
           body: (
             <p>
-              HOBBYSTRADA er en annonseplass for fotballkort. Vi formidler bare kontakt mellom kjøper og selger. Avtalen om kjøp inngås direkte mellom kjøper og
-              selger, og HOBBYSTRADA er ikke part i den.
+              HOBBYSTRADA drives av {COMPANY.name} (org.nr. {COMPANY.orgnr}), {COMPANY.street}, {COMPANY.postal}, e-post{" "}
+              <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>. HOBBYSTRADA er en annonseplass for fotballkort. Vi formidler bare kontakt mellom kjøper
+              og selger. Avtalen om kjøp inngås direkte mellom kjøper og selger, og HOBBYSTRADA er ikke part i den.
             </p>
           ),
         },
