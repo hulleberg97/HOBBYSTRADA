@@ -13,7 +13,10 @@ import {
   ShirtIcon,
   StarIcon,
 } from "lucide-react";
-import { HeroFan } from "@/components/HeroFan";
+import { HeroFan, fanCards } from "@/components/HeroFan";
+import { HeroStage } from "@/components/HeroStage";
+import type { StageCard } from "@/components/CardStage3D";
+import { formatPrice } from "@/lib/format";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
 
@@ -31,6 +34,16 @@ export default async function Home() {
   const fanPinned = all.filter((l) => l.fanSlot);
   const fanPaid = all.filter((l) => l.frontpage);
   const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))].slice(0, 10);
+  const stageCards: StageCard[] = fanCards(fanPinned, fanPaid, fanFill).map((l) => ({
+    slug: l.slug,
+    title: l.title,
+    image: l.image,
+    set: l.set ?? "",
+    player: l.player,
+    number: l.cardNumber ?? "",
+    type: l.types[0] ?? "",
+    price: formatPrice(l.price).replace(",00", ""),
+  }));
   return (
     <div className="bg-background">
       <section className="bg-background">
@@ -44,7 +57,7 @@ export default async function Home() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
             ></div>
-            <div className="relative grid items-center gap-6 px-6 pb-8 pt-10 sm:px-10 sm:pb-12 sm:pt-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-4 lg:px-16 lg:py-16">
+            <div className="relative grid items-center gap-2 px-6 pt-10 sm:px-10 sm:pt-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-0 lg:py-10 lg:pl-16 lg:pr-4">
               <div className="min-w-0">
                 {/* Antallet vises først når det er stort nok til å imponere */}
                 {all.length >= 20 && (
@@ -75,7 +88,7 @@ export default async function Home() {
                   </Link>
                 </div>
               </div>
-              <HeroFan pinned={fanPinned} paid={fanPaid} fill={fanFill} />
+              <HeroStage cards={stageCards} fallback={<HeroFan pinned={fanPinned} paid={fanPaid} fill={fanFill} />} />
             </div>
           </div>
         </div>
