@@ -13,10 +13,8 @@ import {
   ShirtIcon,
   StarIcon,
 } from "lucide-react";
-import { HeroFan, fanCards } from "@/components/HeroFan";
-import { HeroStage } from "@/components/HeroStage";
-import type { StageCard } from "@/components/CardStage3D";
-import { formatPrice } from "@/lib/format";
+import { HeroFan } from "@/components/HeroFan";
+import { fanCards } from "@/lib/fan";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
 
@@ -34,16 +32,7 @@ export default async function Home() {
   const fanPinned = all.filter((l) => l.fanSlot);
   const fanPaid = all.filter((l) => l.frontpage);
   const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))].slice(0, 10);
-  const stageCards: StageCard[] = fanCards(fanPinned, fanPaid, fanFill).map((l) => ({
-    slug: l.slug,
-    title: l.title,
-    image: l.image,
-    set: l.set ?? "",
-    player: l.player,
-    number: l.cardNumber ?? "",
-    type: l.types[0] ?? "",
-    price: formatPrice(l.price).replace(",00", ""),
-  }));
+  const fanList = fanCards(fanPinned, fanPaid, fanFill);
   return (
     <div className="bg-background">
       <section className="bg-background">
@@ -88,7 +77,7 @@ export default async function Home() {
                   </Link>
                 </div>
               </div>
-              <HeroStage cards={stageCards} fallback={<HeroFan pinned={fanPinned} paid={fanPaid} fill={fanFill} />} />
+              <HeroFan cards={fanList} />
             </div>
           </div>
         </div>

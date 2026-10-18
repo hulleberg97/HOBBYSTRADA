@@ -1,28 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { CrownIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRightIcon, CrownIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
+import { formatPrice } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
-const MAX_CARDS = 10;
+const SPEED = 0.17; // kort per sekund: ett nytt kort i midten omtrent hvert 6. sekund
+const EDGE = 2.45; // kort lenger ut enn dette er skjult (der hopper de rundt til andre siden)
 
-/**
- * Kortene i karusellen, i rekkefølgen de vises frem. Kort admin har festet står på sin faste plass (1 = først).
- * Toppannonser er med hele perioden – er de flere enn de ledige plassene, utvides karusellen. Resten er de nyeste.
- */
-export function fanCards(pinned: Listing[], paid: Listing[], fill: Listing[]) {
-  const taken = new Set(pinned.map((l) => l.slug));
-  const free = 5 - pinned.length;
-  const extra = paid.length > free ? paid.slice(0, MAX_CARDS - pinned.length) : [...paid, ...fill];
-  const candidates = extra.filter((l, i, all) => !taken.has(l.slug) && all.findIndex((x) => x.slug === l.slug) === i);
-  const size = Math.max(5, pinned.length + Math.min(candidates.length, MAX_CARDS - pinned.length));
-  const ranked: (Listing | undefined)[] = Array(size).fill(undefined);
-  for (const l of pinned) if (l.fanSlot) ranked[l.fanSlot - 1] = l;
-  for (let i = 0; i < size; i++) if (!ranked[i]) ranked[i] = candidates.shift();
-  return ranked.filter(Boolean) as Listing[];
-}
-
-/** H-symbolet (to kort med gullstrek), preget i gullholderen og på baksiden. */
+/** H-symbolet (to kort med gullstrek). */
 function Mark({ className, cards, bar }: { className?: string; cards: string; bar: string }) {
   return (
     <svg viewBox="12 6 76 88" className={className} aria-hidden="true">
@@ -37,89 +26,200 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
   );
 }
 
-const GOLD = "bg-[linear-gradient(180deg,#f2dc9b_0%,#d6b25f_35%,#b08a3a_70%,#8a6a26_100%)]";
+/** Plassering langs buen for et kort som står p plasser fra midten (kan være desimaltall). */
+function place(p: number) {
+  const a = Math.abs(p);
+  const x = 47 * p - p * a;
+  const y = 8 * p * p + 2 * a;
+  const lift = Math.max(0, 1 - a);
+  const fade = a < 1.9 ? 1 : Math.max(0, 1 - (a - 1.9) / (EDGE - 1.9));
+  return {
+    transform: `translate(-50%, 0) translate(${x}%, ${y - lift * 10}px) rotate(${8 * p}deg) scale(${1 + 0.06 * lift})`,
+    zIndex: 100 - Math.round(a * 10),
+    opacity: fade,
+    dim: (0.3 * Math.min(a, 2)) / 2,
+    gloss: Math.max(0, 1 - a / 0.55),
+    glossX: -p * 170,
+  };
+}
 
-/** Kortet i plastholder, stående i en gullholder – forsiden og baksiden. */
+/** Avstand fra midten for kort i, gitt hvor langt vifta har glidd. */
+function offsetOf(i: number, shift: number, n: number) {
+  let p = (((i - shift) % n) + n) % n;
+  if (p >= n / 2) p -= n;
+  return p;
+}
+
+/** Kortet i plastholder med HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter. */
 function Slab({ l }: { l: Listing }) {
   return (
-    <>
-      <div className="absolute inset-0 [backface-visibility:hidden]">
-        {l.frontpage && (
-          <span className="absolute -right-2 -top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-2 ring-white/80">
-            <CrownIcon className="h-3.5 w-3.5" aria-label="Toppannonse" />
-          </span>
+    <div
+      data-top={l.frontpage ? "true" : undefined}
+      style={{ WebkitBoxReflect: "below 8px linear-gradient(transparent 72%, rgba(255,255,255,0.16))" } as React.CSSProperties}
+      className="relative w-full rounded-[12px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(226,232,240,0.82)_45%,rgba(255,255,255,0.94))] p-[5%] shadow-[0_30px_60px_-25px_rgba(2,6,23,0.8)] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
+    >
+      <div className="flex items-center gap-[6%] rounded-[6px] bg-[linear-gradient(180deg,#1a2d52,#0c1730)] px-[6%] py-[5%] ring-1 ring-inset ring-[#cfa653]/70">
+        <Mark className="h-[20px] w-auto shrink-0 sm:h-[26px]" cards="#f7f3ea" bar="#cfa653" />
+        <div className="min-w-0">
+          <p className="truncate text-[9px] font-extrabold uppercase leading-tight text-[#f7f3ea] sm:text-[10px]">{l.player}</p>
+          <p className="truncate text-[8px] font-semibold leading-tight text-[#e2c27a] sm:text-[9px]">{l.set}</p>
+        </div>
+      </div>
+      <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
+        {l.image ? (
+          <Image alt="" src={l.image} width={400} height={560} priority sizes="(max-width: 640px) 40vw, 200px" className="h-full w-full object-cover" />
+        ) : (
+          <CardArt listing={l} square />
         )}
-        <div
-          data-top={l.frontpage ? "true" : undefined}
-          className="relative w-full rounded-[10px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.95),rgba(226,232,240,0.8)_45%,rgba(255,255,255,0.92))] p-[5%] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
-        >
-          {/* HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter */}
-          <div className="flex items-center gap-[6%] rounded-[6px] bg-[linear-gradient(180deg,#1a2d52,#0c1730)] px-[6%] py-[5%] ring-1 ring-inset ring-[#cfa653]/70">
-            <Mark className="h-[22px] w-auto shrink-0 sm:h-[26px]" cards="#f7f3ea" bar="#cfa653" />
-            <div className="min-w-0">
-              <p className="truncate text-[9px] font-extrabold uppercase leading-tight text-[#f7f3ea] sm:text-[10px]">{l.player}</p>
-              <p className="truncate text-[8px] font-semibold leading-tight text-[#e2c27a] sm:text-[9px]">{l.set}</p>
-            </div>
-          </div>
-          <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[3px] bg-[#0d2238] ring-1 ring-black/10">
-            {l.image ? (
-              <Image alt="" src={l.image} width={400} height={560} priority sizes="170px" className="h-full w-full object-cover" />
-            ) : (
-              <CardArt listing={l} square />
-            )}
-          </div>
-        </div>
-        <div className={`mx-[6%] flex h-[26px] items-center justify-center rounded-b-md ${GOLD} shadow-[inset_0_1px_0_rgba(255,255,255,.5)] sm:h-[34px]`}>
-          <Mark className="h-[60%] opacity-80" cards="#7a5a1c" bar="#f6e3a6" />
-        </div>
       </div>
-      <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-        <div className="flex aspect-[0.66] w-full items-center justify-center rounded-[10px] border border-white/20 bg-[linear-gradient(160deg,#16294a,#0b1628)]">
-          <Mark className="w-[38%] opacity-90" cards="#f7f3ea" bar="#c9a24a" />
-        </div>
-        <div className={`mx-[6%] h-[26px] rounded-b-md ${GOLD} sm:h-[34px]`} />
-      </div>
-    </>
+      {l.frontpage && (
+        <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-2 ring-white/80">
+          <CrownIcon className="h-3.5 w-3.5" aria-label="Toppannonse" />
+        </span>
+      )}
+    </div>
   );
 }
 
 /**
- * Karusellen på forsiden: kortene står i gullholdere i en ring og snurrer sakte, så de vises frem ett og ett.
- * Stopper når musepekeren er over, og står stille for dem som har slått av animasjoner.
+ * Vifta på forsiden: kortene står i en bue og glir sakte og kontinuerlig bortover, så hvert kort passerer midten.
+ * Kortet i midten løftes litt, får spotlys og en glans som glir over. Stopper når musepekeren er over.
  */
-export function HeroFan({ pinned, paid, fill }: { pinned: Listing[]; paid: Listing[]; fill: Listing[] }) {
-  const cards = fanCards(pinned, paid, fill);
-  const n = Math.max(cards.length, 3);
-  // Avstand fra midten slik at kortene får litt luft mellom seg (i kortbredder)
-  const radius = 0.72 / Math.tan(Math.PI / n);
+export function HeroFan({ cards: list }: { cards: Listing[] }) {
+  // Med færre enn fem kort gjentas de, så buen alltid er full
+  const cards = list.length && list.length < 5 ? Array.from({ length: Math.ceil(5 / list.length) }, () => list).flat() : list;
+  const n = cards.length;
+  const refs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const box = useRef<HTMLDivElement>(null);
+  const [center, setCenter] = useState(0);
+
+  useEffect(() => {
+    const el = box.current;
+    if (!el || n < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let shift = 0;
+    let speed = SPEED;
+    let paused = false;
+    let visible = true;
+    let shown = 0;
+    let last = performance.now();
+    let raf = 0;
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+    io.observe(el);
+    const enter = () => (paused = true);
+    const leave = () => (paused = false);
+    el.addEventListener("pointerenter", enter);
+    el.addEventListener("pointerleave", leave);
+    el.addEventListener("focusin", enter);
+    el.addEventListener("focusout", leave);
+
+    const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      if (!visible || document.hidden) return;
+      speed += ((paused ? 0 : SPEED) - speed) * (1 - Math.exp(-dt * 3));
+      shift = (shift + speed * dt) % n;
+      let nearest = 0;
+      let best = 9;
+      refs.current.forEach((node, i) => {
+        if (!node) return;
+        const p = offsetOf(i, shift, n);
+        const s = place(p);
+        node.style.transform = s.transform;
+        node.style.zIndex = String(s.zIndex);
+        node.style.opacity = String(s.opacity);
+        node.style.pointerEvents = s.opacity < 0.3 ? "none" : "";
+        node.style.setProperty("--dim", String(s.dim));
+        node.style.setProperty("--gloss", String(s.gloss));
+        node.style.setProperty("--gloss-x", `${s.glossX}%`);
+        if (Math.abs(p) < best) {
+          best = Math.abs(p);
+          nearest = i;
+        }
+      });
+      if (nearest !== shown && best < 0.5) {
+        shown = nearest;
+        setCenter(nearest);
+      }
+    };
+    raf = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      el.removeEventListener("pointerenter", enter);
+      el.removeEventListener("pointerleave", leave);
+      el.removeEventListener("focusin", enter);
+      el.removeEventListener("focusout", leave);
+    };
+  }, [n]);
+
+  const c = cards[center];
   return (
-    <div className="group/fan relative mx-auto h-[300px] w-full max-w-[600px] [--w:112px] [perspective:1400px] sm:h-[400px] sm:[--w:158px] lg:h-[420px] lg:[--w:176px]">
+    <div ref={box} className="relative mx-auto h-[330px] w-full max-w-[600px] [--w:38%] sm:h-[430px] sm:[--w:34%] lg:h-[470px]">
+      {/* Spotlys bak kortet i midten, og gyllent lys på gulvet */}
       <div
         aria-hidden="true"
-        className="absolute bottom-[1%] left-1/2 h-[54px] w-[80%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(214,178,95,.4),rgba(214,178,95,.1)_60%,transparent)] blur-[2px]"
+        className="pointer-events-none absolute left-1/2 top-[-12%] h-[105%] w-[62%] -translate-x-1/2 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(255,241,214,0.22),rgba(255,241,214,0.06)_55%,transparent_80%)] [clip-path:polygon(38%_0,62%_0,100%_100%,0_100%)]"
       />
-      {/* Ringen skyves bakover, så kortet foran står i vanlig størrelse */}
       <div
-        style={{ transform: `translateZ(calc(var(--w) * ${(-radius).toFixed(3)}))` }}
-        className="absolute left-1/2 top-[2%] h-full w-[var(--w)] -translate-x-1/2 [transform-style:preserve-3d]"
-      >
-        <div
-          style={{ animationDuration: `${n * 6}s` }}
-          className="absolute inset-0 animate-[fan-spin_30s_linear_infinite] [transform-style:preserve-3d] group-hover/fan:[animation-play-state:paused] motion-reduce:animate-none"
-        >
-          {cards.map((l, i) => (
-            <Link
-              key={l.slug}
-              href={`/products/${l.slug}`}
-              aria-label={l.title}
-              style={{ transform: `rotateY(${(360 / n) * i}deg) translateZ(calc(var(--w) * ${radius.toFixed(3)}))` }}
-              className="absolute inset-x-0 top-0 aspect-[0.58] [transform-style:preserve-3d]"
-            >
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-[9%] left-1/2 h-[60px] w-[70%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(214,178,95,0.45),rgba(214,178,95,0.12)_60%,transparent)]"
+      />
+      {cards.map((l, i) => {
+        const s = place(offsetOf(i, 0, n));
+        return (
+          <Link
+            key={`${l.slug}-${i}`}
+            ref={(node) => {
+              refs.current[i] = node;
+            }}
+            href={`/products/${l.slug}`}
+            aria-label={l.title}
+            style={
+              {
+                transform: s.transform,
+                zIndex: s.zIndex,
+                opacity: s.opacity,
+                "--dim": s.dim,
+                "--gloss": s.gloss,
+                "--gloss-x": `${s.glossX}%`,
+              } as React.CSSProperties
+            }
+            className="group absolute left-1/2 top-[4%] w-[var(--w)] origin-bottom will-change-transform"
+          >
+            <div className="relative transition-transform duration-300 ease-out group-hover:-translate-y-3">
               <Slab l={l} />
-            </Link>
-          ))}
+              {/* Glans som glir over kortet når det passerer midten */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[12px]" style={{ opacity: "var(--gloss)" }}>
+                <div
+                  className="absolute inset-y-[-20%] left-[35%] w-[30%] rotate-[18deg] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent)] mix-blend-soft-light"
+                  style={{ transform: "translateX(var(--gloss-x)) rotate(18deg)" }}
+                />
+              </div>
+              {/* Kortene på sidene dempes litt, så midten er i fokus */}
+              <div className="pointer-events-none absolute inset-0 rounded-[12px] bg-[#0b1426]" style={{ opacity: "var(--dim)" }} />
+            </div>
+          </Link>
+        );
+      })}
+      {c && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[200] flex justify-center px-4">
+          <Link
+            key={`${c.slug}-${center}`}
+            href={`/products/${c.slug}`}
+            className="pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-black/45 py-2 pl-5 pr-2 text-left text-white ring-1 ring-inset ring-[#cfa653]/40 backdrop-blur-md"
+          >
+            <span className="min-w-0">
+              <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{c.player}</span>
+              <span className="block truncate text-[11px] text-white/60 sm:text-xs">{c.set}</span>
+            </span>
+            <span className="shrink-0 font-heading text-sm font-semibold text-[#f2dc9b] sm:text-base">{formatPrice(c.price).replace(",00", "")}</span>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
+              <ArrowRightIcon className="h-4 w-4" aria-label="Se kortet" />
+            </span>
+          </Link>
         </div>
-      </div>
+      )}
     </div>
   );
 }

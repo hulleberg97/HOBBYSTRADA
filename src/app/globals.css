@@ -93,15 +93,6 @@
   letter-spacing: var(--tw-tracking, -0.01em);
 }
 
-/* Kortkarusellen på forsiden snurrer sakte rundt */
-@keyframes fan-spin {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(-360deg);
-  }
-}
 @keyframes stage-in {
   from {
     opacity: 0;
