@@ -214,6 +214,9 @@ function lightCone(top: number, bottom: number, height: number, strength: number
   return new THREE.Mesh(new THREE.CylinderGeometry(top, bottom, height, 48, 1, true), mat);
 }
 
+// Én enkel maske (ingen sammensetting), så den virker likt i Safari, Chrome og Firefox
+const EDGE_FADE = "radial-gradient(ellipse 58% 60% at 50% 48%, #000 62%, transparent 100%)";
+
 const DWELL = 3.4; // sekunder hvert kort står i fokus
 const TURN = 1.4; // sekunder på å snu til neste
 
@@ -226,6 +229,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
   const box = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [focus, setFocus] = useState(0);
+  const [broken, setBroken] = useState(false);
   const supported = useSyncExternalStore(
     () => () => {},
     webglOk,
@@ -239,8 +243,14 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     fontFamily = getComputedStyle(document.body).fontFamily || fontFamily;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.5 : 2));
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    } catch {
+      queueMicrotask(() => setBroken(true));
+      return;
+    }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -437,7 +447,11 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     track(markTex);
     const markMat = track(new THREE.MeshStandardMaterial({ map: markTex, transparent: true, metalness: 0.9, roughness: 0.4 }));
     const markGeo = track(new THREE.PlaneGeometry(0.17, 0.17));
-    const { tex: backTex } = canvasTexture(TEX_W, TEX_H, drawBack);
+    const sc = mobile ? 0.55 : 1; // mindre teksturer på mobil sparer minne
+    const { tex: backTex } = canvasTexture(Math.round(TEX_W * sc), Math.round(TEX_H * sc), (cx) => {
+      cx.scale(sc, sc);
+      drawBack(cx);
+    });
     backTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
     track(backTex);
     const backMat = track(new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.5, color: 0x9aa4b4 }));
@@ -481,7 +495,10 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const anisotropy = renderer.capabilities.getMaxAnisotropy();
 
     cards.forEach((c, i) => {
-      const { tex, ctx } = canvasTexture(TEX_W, TEX_H, (cx) => drawFront(cx, c, null));
+      const { tex, ctx } = canvasTexture(Math.round(TEX_W * sc), Math.round(TEX_H * sc), (cx) => {
+        cx.scale(sc, sc);
+        drawFront(cx, c, null);
+      });
       tex.anisotropy = anisotropy;
       track(tex);
       if (c.image) {
@@ -737,6 +754,9 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       }
     };
     const cv = renderer.domElement;
+    // Mister nettleseren 3D-konteksten (f.eks. lite minne på telefonen), vis vanlig karusell i stedet
+    const onLost = () => setBroken(true);
+    cv.addEventListener("webglcontextlost", onLost);
     cv.addEventListener("pointermove", onMove);
     cv.addEventListener("pointerdown", onDown);
     window.addEventListener("pointerup", onUp);
@@ -821,6 +841,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       window.removeEventListener("pointerup", onUp);
       cv.removeEventListener("pointerleave", onLeave);
       cv.removeEventListener("click", onClick);
+      cv.removeEventListener("webglcontextlost", onLost);
       window.removeEventListener("scroll", onScroll);
       scene.environment?.dispose();
       disposables.forEach((d) => d.dispose());
@@ -828,19 +849,14 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     };
   }, [cards, router, supported]);
 
-  if (!supported) return <>{fallback}</>;
+  if (!supported || broken) return <>{fallback}</>;
   const c = cards[focus] ?? cards[0];
   return (
     <div className="relative">
       {/* Kantene tones ut, så 3D-feltet glir over i bakgrunnen uten synlige kanter */}
       <div
         ref={box}
-        style={{
-          maskImage:
-            "linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 80%, transparent)",
-          maskComposite: "intersect",
-          WebkitMaskComposite: "source-in",
-        }}
+        style={{ maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE }}
         className="relative h-[380px] w-full sm:h-[480px] lg:h-[540px]"
         aria-label="Utvalgte kort"
         role="img"
