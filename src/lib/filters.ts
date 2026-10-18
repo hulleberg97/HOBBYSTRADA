@@ -13,9 +13,12 @@ export function matches(l: Listing, q: string) {
   return terms.every((t) => hay.includes(t) || (t === "autograf" && hay.includes("autograph")));
 }
 
-export const TYPES = ["Autograf", "Relic", "Patch", "Rookie", "Nummerert", "Base"];
+export const TYPES = ["Autograf", "Patch", "Rookie", "Nummerert", "Base"];
+export const typeLabel = (t: string) => (t === "Patch" ? "Patch / relic" : t);
 
-export const hasType = (l: Listing, t: string) => (t === "Nummerert" ? Boolean(l.numbered) || l.types.includes(t) : l.types.includes(t));
+// «Patch» dekker også eldre annonser merket «Relic» – det er samme type kort
+export const hasType = (l: Listing, t: string) =>
+  t === "Nummerert" ? Boolean(l.numbered) || l.types.includes(t) : t === "Patch" ? l.types.includes("Patch") || l.types.includes("Relic") : l.types.includes(t);
 
 const LINES = [
   "Topps Chrome",

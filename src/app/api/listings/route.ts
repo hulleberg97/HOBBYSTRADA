@@ -8,11 +8,14 @@ import { sendEmail } from "@/lib/email";
 const TYPE_MAP: Record<string, string> = {
   Autograf: "Autograf",
   Patch: "Patch",
-  Relic: "Relic",
-  "Relic / patch": "Relic",
+  Relic: "Patch",
+  "Patch / relic": "Patch",
+  "Relic / patch": "Patch",
   Rookie: "Rookie",
   Nummerert: "Nummerert",
   "Base / innstikk": "Base",
+  Base: "Base",
+  Base: "Base",
   Annet: "Annet",
 };
 const MAX_BYTES = 4 * 1024 * 1024;

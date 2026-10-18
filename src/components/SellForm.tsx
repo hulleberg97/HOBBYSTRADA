@@ -10,7 +10,7 @@ const label = "mb-1.5 block font-mono-data text-[11px] uppercase tracking-[0.14e
 const field =
   "h-11 w-full rounded-lg border border-border bg-white px-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-foreground/40 focus:ring-2 focus:ring-ring/30";
 
-const TYPES = ["Autograf", "Patch", "Relic", "Rookie", "Nummerert", "Base / innstikk", "Annet"];
+const TYPES = ["Autograf", "Patch / relic", "Rookie", "Nummerert", "Base", "Annet"];
 const GRADERS = ["Ugradert (raw)", "PSA", "BGS", "SGC", "CGC", "Annet"];
 const CONDITIONS = ["Mint", "Near Mint", "Excellent", "Very Good", "Brukt"];
 const MAX_MB = 10;

@@ -15,7 +15,7 @@ import {
   XIcon,
 } from "lucide-react";
 import { ListingCard } from "./ListingCard";
-import { EMPTY, TYPES, activeCount, applyFilters, parseFilters, sortListings, toQuery, type Filters } from "@/lib/filters";
+import { EMPTY, TYPES, typeLabel, activeCount, applyFilters, parseFilters, sortListings, toQuery, type Filters } from "@/lib/filters";
 import { FilterPanel } from "./FilterPanel";
 import { SearchSuggest } from "./SearchSuggest";
 import { SaveSearchButton } from "./SaveSearchButton";
@@ -209,7 +209,7 @@ export function Market({ listings }: { listings: Listing[] }) {
                   onClick={() => toggle(t)}
                   className="shrink-0 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-700 transition hover:border-slate-400 aria-pressed:border-primary aria-pressed:bg-primary/5 aria-pressed:text-primary aria-pressed:ring-1 aria-pressed:ring-primary"
                 >
-                  {t}
+                  {typeLabel(t)}
                 </button>
               </li>
             ))}

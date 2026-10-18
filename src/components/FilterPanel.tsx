@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { XIcon } from "lucide-react";
-import { TYPES, activeCount, facet, type Filters } from "@/lib/filters";
+import { TYPES, typeLabel, activeCount, facet, type Filters } from "@/lib/filters";
 import type { Listing } from "@/lib/types";
 
 const RUNS = [1, 5, 10, 25, 50, 99];
@@ -116,8 +116,8 @@ export function FilterPanel({
             <p className={label}>Korttype</p>
             <div className="flex flex-wrap gap-2">
               {TYPES.map((t) => (
-                <button key={t} type="button" aria-pressed={f.types.includes(t)} onClick={() => toggleType(t)} className={chip}>
-                  {t}
+                <button key={typeLabel(t)} type="button" aria-pressed={f.types.includes(t)} onClick={() => toggleType(t)} className={chip}>
+                  {typeLabel(t)}
                 </button>
               ))}
             </div>
