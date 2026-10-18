@@ -80,7 +80,14 @@ export default async function AccountPage() {
                     l.status !== "rejected" &&
                     l.status !== "sold" && (
                       <div className="mt-2">
-                        <EditListing id={l.id!} price={l.price} location={l.location} condition={l.condition} description={l.description} />
+                        <EditListing
+                          id={l.id!}
+                          price={l.price}
+                          location={l.location}
+                          condition={l.condition}
+                          description={l.description}
+                          images={l.images ?? (l.image ? [l.image] : [])}
+                        />
                       </div>
                     )
                   }
