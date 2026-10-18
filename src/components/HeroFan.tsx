@@ -11,13 +11,10 @@ const POSITIONS = [
   { x: "88%", y: "34px", r: "16deg", z: 1 },
 ];
 
-/** Velger fem kort: et kort med bilde i midten, fremhevede rundt. */
+/** De fem nyeste annonsene: den nyeste i midten, de neste på hver side, de eldste ytterst. */
 export function pickFan(list: Listing[]) {
-  const center = list.find((l) => l.image) ?? list[0];
-  const rest = list.filter((l) => l !== center);
-  const sides = [...rest.filter((l) => l.featured), ...rest.filter((l) => !l.featured)].slice(0, 4);
-  const [a, b, c, d] = [sides[2], sides[0], sides[1], sides[3]];
-  return [a, b, center, c, d].filter(Boolean) as Listing[];
+  const [first, second, third, fourth, fifth] = [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return [fourth, second, first, third, fifth].filter(Boolean) as Listing[];
 }
 
 export function HeroFan({ listings }: { listings: Listing[] }) {
