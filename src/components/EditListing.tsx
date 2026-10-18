@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { ImagePlusIcon, PencilIcon, StarIcon, XIcon } from "lucide-react";
 import { resizeImage } from "@/lib/resize";
+import { CLUBS, LEAGUES } from "@/lib/clubs";
 
 const field =
   "h-11 w-full rounded-lg border border-border bg-white px-3 text-sm text-foreground outline-none transition focus:border-foreground/40 focus:ring-2 focus:ring-ring/30";
@@ -12,10 +13,19 @@ const CONDITIONS = ["Mint", "Near Mint / Mint", "Excellent", "Very Good", "Brukt
 
 const MAX_IMAGES = 6;
 
-type Props = { id: string; price: number; location: string | null; condition: string | null; description: string; images: string[] };
+type Props = {
+  id: string;
+  price: number;
+  location: string | null;
+  condition: string | null;
+  description: string;
+  images: string[];
+  club: string | null;
+  league: string | null;
+};
 type Pic = { kind: "keep"; url: string } | { kind: "add"; url: string; file: File };
 
-export function EditListing({ id, price, location, condition, description, images }: Props) {
+export function EditListing({ id, price, location, condition, description, images, club, league }: Props) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -124,6 +134,41 @@ export function EditListing({ id, price, location, condition, description, image
         <select id={`cond-${id}`} name="condition" defaultValue={condition ?? "Near Mint / Mint"} className={field}>
           {[...new Set([...(condition ? [condition] : []), ...CONDITIONS])].map((c) => (
             <option key={c}>{c}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label htmlFor={`club-${id}`} className={label}>
+          Klubb / landslag
+        </label>
+        <input
+          id={`club-${id}`}
+          name="club"
+          list={`clubs-${id}`}
+          maxLength={60}
+          defaultValue={club ?? ""}
+          autoComplete="off"
+          className={field}
+          onChange={(e) => {
+            const l = CLUBS[e.target.value];
+            const sel = e.currentTarget.form?.elements.namedItem("league") as HTMLSelectElement | null;
+            if (l && sel) sel.value = l;
+          }}
+        />
+        <datalist id={`clubs-${id}`}>
+          {Object.keys(CLUBS).map((c) => (
+            <option key={c} value={c} />
+          ))}
+        </datalist>
+      </div>
+      <div>
+        <label htmlFor={`league-${id}`} className={label}>
+          Liga
+        </label>
+        <select id={`league-${id}`} name="league" defaultValue={league ?? ""} className={field}>
+          <option value="">Velg liga</option>
+          {[...new Set([...(league ? [league] : []), ...LEAGUES])].map((l) => (
+            <option key={l}>{l}</option>
           ))}
         </select>
       </div>

@@ -87,6 +87,8 @@ export default async function AccountPage() {
                           condition={l.condition}
                           description={l.description}
                           images={l.images ?? (l.image ? [l.image] : [])}
+                          club={l.club}
+                          league={l.league}
                         />
                       </div>
                     )

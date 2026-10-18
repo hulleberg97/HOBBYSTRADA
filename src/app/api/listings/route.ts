@@ -92,6 +92,8 @@ export async function POST(req: Request) {
     player,
     set_name: set,
     season: str(f, "season", 20) || null,
+    club: str(f, "club", 60) || null,
+    league: str(f, "league", 40) || null,
     card_number: code,
     numbered: num,
     producer: set.split(" ")[0] || "Topps",

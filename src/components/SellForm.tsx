@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRightIcon, CameraIcon, CheckIcon, ImagePlusIcon, XIcon } from "lucide-react";
 import { formatPrice } from "@/lib/format";
+import { CLUBS, LEAGUES } from "@/lib/clubs";
 import { resizeImage } from "@/lib/resize";
 
 const label = "mb-1.5 block font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground";
@@ -98,6 +99,8 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
     player: "",
     set: "",
     season: "",
+    club: "",
+    league: "",
     code: "",
     num: "",
     grader: "Ugradert (raw)",
@@ -210,6 +213,42 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                 Sett *
               </label>
               <input id="s-set" name="set" required maxLength={100} placeholder="Topps Chrome UCC" className={field} value={v.set} onChange={set("set")} />
+            </div>
+            <div>
+              <label htmlFor="s-club" className={label}>
+                Klubb / landslag
+              </label>
+              <input
+                id="s-club"
+                name="club"
+                list="s-clubs"
+                maxLength={60}
+                placeholder="F.eks. Manchester City"
+                autoComplete="off"
+                className={field}
+                value={v.club}
+                onChange={(e) => {
+                  const club = e.target.value;
+                  // Kjent klubb: fyll inn ligaen automatisk
+                  setV({ ...v, club, league: CLUBS[club] ?? v.league });
+                }}
+              />
+              <datalist id="s-clubs">
+                {Object.keys(CLUBS).map((c) => (
+                  <option key={c} value={c} />
+                ))}
+              </datalist>
+            </div>
+            <div>
+              <label htmlFor="s-league" className={label}>
+                Liga
+              </label>
+              <select id="s-league" name="league" className={field} value={v.league} onChange={set("league")}>
+                <option value="">Velg liga</option>
+                {LEAGUES.map((l) => (
+                  <option key={l}>{l}</option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="s-season" className={label}>

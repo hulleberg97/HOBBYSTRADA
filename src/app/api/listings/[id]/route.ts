@@ -25,7 +25,7 @@ async function load(id: string) {
 export async function PATCH(req: Request, { params }: Ctx) {
   const r = await load((await params).id);
   if (r.error) return r.error;
-  const { status, price, description, location, condition, fanSlot } = await req.json().catch(() => ({}));
+  const { status, price, description, location, condition, fanSlot, club, league } = await req.json().catch(() => ({}));
   const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (status) {
     const allowed = r.admin ? ADMIN_STATUSES : OWNER_STATUSES;
@@ -46,6 +46,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
   }
   if (typeof description === "string") patch.description = description.trim().slice(0, 1500);
   if (typeof condition === "string" && condition.trim()) patch.condition = condition.trim().slice(0, 40);
+  if (typeof club === "string") patch.club = club.trim().slice(0, 60) || null;
+  if (typeof league === "string") patch.league = league.trim().slice(0, 40) || null;
   if (typeof location === "string") {
     if (!location.trim()) return NextResponse.json({ error: "Sted kan ikke være tomt." }, { status: 400 });
     patch.location = location.trim().slice(0, 60);
