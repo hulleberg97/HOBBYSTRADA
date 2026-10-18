@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRightIcon, CameraIcon, CheckIcon, ImagePlusIcon, XIcon } from "lucide-react";
 import { formatPrice } from "@/lib/format";
 import { CLUBS, LEAGUES } from "@/lib/clubs";
+import { CONDITIONS, conditionLabel } from "@/lib/conditions";
 import { resizeImage } from "@/lib/resize";
 
 const label = "mb-1.5 block font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground";
@@ -13,7 +14,6 @@ const field =
 
 const TYPES = ["Autograf", "Patch / relic", "Rookie", "Nummerert", "Base", "Annet"];
 const GRADERS = ["Ugradert (raw)", "PSA", "BGS", "SGC", "CGC", "Annet"];
-const CONDITIONS = ["Mint", "Near Mint", "Excellent", "Very Good", "Brukt"];
 const MAX_MB = 10;
 
 type Photo = { file: File; url: string };
@@ -105,7 +105,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
     num: "",
     grader: "Ugradert (raw)",
     grade: "",
-    cond: "Near Mint",
+    cond: "Near Mint / Mint",
     price: "",
   });
   const [types, setTypes] = useState<string[]>([]);
@@ -335,9 +335,12 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               </label>
               <select id="s-cond" name="cond" className={field} value={v.cond} onChange={set("cond")}>
                 {CONDITIONS.map((c) => (
-                  <option key={c}>{c}</option>
+                  <option key={c.value} value={c.value}>
+                    {c.no === c.en ? c.no : `${c.no} – ${c.en}`}
+                  </option>
                 ))}
               </select>
+              <p className="mt-1.5 text-xs text-muted-foreground">{CONDITIONS.find((c) => c.value === v.cond)?.hint}</p>
             </div>
             <div className="sm:col-span-3">
               <label htmlFor="s-price" className={label}>
@@ -518,7 +521,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
           <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-white/10 font-mono-data text-[11px]">
             {[
               ["Type", typeLabel],
-              ["Tilstand", v.grader === GRADERS[0] ? v.cond : `${v.grader} ${v.grade}`.trim()],
+              ["Tilstand", v.grader === GRADERS[0] ? (conditionLabel(v.cond) ?? "") : `${v.grader} ${v.grade}`.trim()],
               ["Sesong", v.season || "—"],
               ["Pris", v.price ? formatPrice(Number(v.price)) : "— kr"],
             ].map(([k, val]) => (

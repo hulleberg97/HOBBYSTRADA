@@ -5,11 +5,11 @@ import { useRef, useState } from "react";
 import { ImagePlusIcon, PencilIcon, StarIcon, XIcon } from "lucide-react";
 import { resizeImage } from "@/lib/resize";
 import { CLUBS, LEAGUES } from "@/lib/clubs";
+import { CONDITIONS, conditionLabel } from "@/lib/conditions";
 
 const field =
   "h-11 w-full rounded-lg border border-border bg-white px-3 text-sm text-foreground outline-none transition focus:border-foreground/40 focus:ring-2 focus:ring-ring/30";
 const label = "mb-1.5 block font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground";
-const CONDITIONS = ["Mint", "Near Mint / Mint", "Excellent", "Very Good", "Brukt"];
 
 const MAX_IMAGES = 6;
 
@@ -132,8 +132,11 @@ export function EditListing({ id, price, location, condition, description, image
           Tilstand
         </label>
         <select id={`cond-${id}`} name="condition" defaultValue={condition ?? "Near Mint / Mint"} className={field}>
-          {[...new Set([...(condition ? [condition] : []), ...CONDITIONS])].map((c) => (
-            <option key={c}>{c}</option>
+          {condition && !CONDITIONS.some((c) => c.value === condition) && <option value={condition}>{conditionLabel(condition)}</option>}
+          {CONDITIONS.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.no === c.en ? c.no : `${c.no} – ${c.en}`}
+            </option>
           ))}
         </select>
       </div>

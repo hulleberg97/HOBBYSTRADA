@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { conditionLabel } from "@/lib/conditions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -52,7 +53,7 @@ export default async function ListingPage({ params }: Props) {
   const facts: [typeof HashIcon, string, string][] = [];
   facts.push([HashIcon, "Kortnummer", l.cardNumber ?? l.numbered ?? "Ikke oppgitt"]);
   facts.push([AwardIcon, "Gradering", l.grading ?? "Ikke oppgitt"]);
-  facts.push(l.condition ? [SparklesIcon, "Tilstand", l.condition] : [CalendarIcon, "Sesong", l.season ?? "—"]);
+  facts.push(l.condition ? [SparklesIcon, "Tilstand", conditionLabel(l.condition)!] : [CalendarIcon, "Sesong", l.season ?? "—"]);
 
   const rows: [string, string | null][] = [
     ["Spiller", l.player],
@@ -64,7 +65,7 @@ export default async function ListingPage({ params }: Props) {
     ["Produsent", l.producer],
     ["Type", l.types.join(" / ")],
     ["Gradering", l.grading],
-    ["Tilstand", l.condition],
+    ["Tilstand", conditionLabel(l.condition)],
   ];
 
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hobbystrada.vercel.app";
