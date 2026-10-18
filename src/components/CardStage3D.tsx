@@ -218,8 +218,7 @@ function lightCone(top: number, bottom: number, height: number, strength: number
 // Én enkel maske (ingen sammensetting), så den virker likt i Safari, Chrome og Firefox
 const EDGE_FADE = "radial-gradient(ellipse 58% 60% at 50% 48%, #000 62%, transparent 100%)";
 
-const DWELL = 3.4; // sekunder hvert kort står i fokus
-const TURN = 1.4; // sekunder på å snu til neste
+const SPEED = 0.2; // radianer per sekund: en jevn, rolig snurr
 
 /**
  * Kortene i ekte 3D, i bane rundt en sokkel i midten. Et lysrigg med flomlys over ringen lyser opp kortene
@@ -231,6 +230,7 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
   const router = useRouter();
   const [focus, setFocus] = useState(0);
   const [broken, setBroken] = useState<string | false>(false);
+  const [ready, setReady] = useState(false);
   const supported = useSyncExternalStore(
     () => () => {},
     webglOk,
@@ -449,7 +449,7 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     track(markTex);
     const markMat = track(new THREE.MeshStandardMaterial({ map: markTex, transparent: true, metalness: 0.9, roughness: 0.4 }));
     const markGeo = track(new THREE.PlaneGeometry(0.17, 0.17));
-    const sc = mobile ? 0.55 : 1; // mindre teksturer på mobil sparer minne
+    const sc = mobile ? 0.55 : 0.8; // mindre teksturer på mobil sparer minne
     const { tex: backTex } = canvasTexture(Math.round(TEX_W * sc), Math.round(TEX_H * sc), (cx) => {
       cx.scale(sc, sc);
       drawBack(cx);
@@ -511,7 +511,8 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
           drawFront(ctx, c, img);
           tex.needsUpdate = true;
         };
-        img.src = c.image;
+        // Komprimert og i passe størrelse fra Next sin bildetjeneste, så kortene lastes raskt
+        img.src = `/_next/image?url=${encodeURIComponent(c.image)}&w=640&q=75`;
       }
       const faceMat = track(
         // Naturlig lys på kortet, men matt papir og lav miljørefleks, så fargene ikke blekes
@@ -561,8 +562,9 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     });
 
     // ── Gulv: speil på PC, slør som toner ut, og lys under fokusplassen
+    let mirror: Reflector | null = null;
     if (!mobile) {
-      const mirror = new Reflector(track(new THREE.CircleGeometry(radius + 6, 64)), {
+      mirror = new Reflector(track(new THREE.CircleGeometry(radius + 6, 64)), {
         textureWidth: Math.min(640, Math.round(el.clientWidth * 0.6)),
         textureHeight: Math.min(640, Math.round(el.clientWidth * 0.6)),
         color: 0x2c3442,
@@ -683,22 +685,12 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     const ro = new ResizeObserver(resize);
     ro.observe(el);
 
-    // ── Bevegelse: kortene snur seg frem ett og ett. Hold over stopper, dra snurrer, scroll går videre.
+    // ── Bevegelse: ringen snurrer jevnt og kontinuerlig. Hold over bremser, dra snurrer selv, scroll gir fart.
     let lastShine: string | null = null;
-    let index = 0; // kortet som står i fokus
     let shown = -1;
     let angle = 0; // ringens vinkel
-    let from = 0;
-    let goal = 0;
-    let turning = 0; // 0–1 mens ringen snur
-    let timer = 0;
-    const turnTo = (i: number) => {
-      index = i;
-      from = angle;
-      goal = -i * step;
-      turning = 0.0001;
-    };
-    const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    let speed = still ? 0 : SPEED;
+    let firstFrame = true;
 
     const pointer = new THREE.Vector2(9, 9);
     const tilt = { x: 0, y: 0 };
@@ -718,20 +710,17 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
         const dx = e.clientX - lastX;
         moved += Math.abs(dx);
         angle += dx * 0.005;
+        speed = (dx * 0.005) / 0.016;
         lastX = e.clientX;
       }
     };
     const onDown = (e: PointerEvent) => {
       dragging = true;
-      turning = 0;
       moved = 0;
       lastX = e.clientX;
     };
     const onUp = () => {
-      if (!dragging) return;
       dragging = false;
-      turnTo(Math.round(-angle / step));
-      timer = 0;
     };
     const onLeave = () => {
       pointer.set(9, 9);
@@ -741,16 +730,10 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     const onClick = () => {
       if (hovered && moved < 6) router.push(`/products/${hovered}`);
     };
-    let scrolled = 0;
     let lastScroll = window.scrollY;
     const onScroll = () => {
-      scrolled += window.scrollY - lastScroll;
+      speed -= Math.max(-0.6, Math.min(0.6, (window.scrollY - lastScroll) * 0.004));
       lastScroll = window.scrollY;
-      if (Math.abs(scrolled) > 160 && !turning) {
-        turnTo(index + Math.sign(scrolled));
-        scrolled = 0;
-        timer = 0;
-      }
     };
     const cv = renderer.domElement;
     // Mister nettleseren 3D-konteksten (f.eks. lite minne på telefonen), vis vanlig karusell i stedet
@@ -771,13 +754,39 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     const white = new THREE.Color(0xffffff);
     const dim = new THREE.Color(0x5b6578);
     let raf = 0;
+    // Automatisk kvalitet: mål bildefrekvensen de første sekundene og skru av det tyngste ved behov
+    let level = 0;
+    let frames = 0;
+    let frameTime = 0;
+    const lowerQuality = () => {
+      level++;
+      if (level === 1) {
+        // Glød og speil er dyrest
+        composer = null;
+        if (mirror) mirror.visible = false;
+      } else if (level === 2) {
+        renderer.shadowMap.enabled = false;
+        key.castShadow = false;
+        renderer.setPixelRatio(1);
+        resize();
+      }
+    };
     const loop = () => {
       raf = requestAnimationFrame(loop);
       const dt = Math.min(clock.getDelta(), 0.05);
       if (!visible) return;
+      if (level < 2 && clock.elapsedTime > 1) {
+        frames++;
+        frameTime += dt;
+        if (frames === 90) {
+          if (frameTime / frames > 1 / 48) lowerQuality();
+          frames = 0;
+          frameTime = 0;
+        }
+      }
       const t = clock.elapsedTime;
 
-      if (pointer.x < 2 && (pointerMoved || turning > 0)) {
+      if (pointer.x < 2 && (pointerMoved || Math.abs(speed) > 0.01)) {
         ray.setFromCamera(pointer, camera);
         const h = ray.intersectObjects(hit, false)[0];
         hovered = (h?.object.userData.slug as string) ?? null;
@@ -785,19 +794,14 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
       } else if (pointer.x >= 2) hovered = null;
       cv.style.cursor = hovered ? "pointer" : dragging ? "grabbing" : "grab";
 
-      if (turning > 0) {
-        turning = Math.min(1, turning + dt / TURN);
-        angle = from + (goal - from) * ease(turning);
-        if (turning >= 1) turning = 0;
-      } else if (!dragging && !hovered && !still) {
-        timer += dt;
-        if (timer > DWELL) {
-          timer = 0;
-          turnTo(index + 1);
-        }
+      const smooth = 1 - Math.exp(-dt * 6);
+      if (!dragging) {
+        // Farten glir mykt mot målet: stopp når musen er over et kort, ellers jevn snurr
+        const want = still || hovered ? 0 : -SPEED;
+        speed += (want - speed) * (1 - Math.exp(-dt * 1.8));
+        angle += speed * dt;
       }
       ring.rotation.y = angle;
-      const smooth = 1 - Math.exp(-dt * 6);
       stage.rotation.x += (tilt.x - stage.rotation.x) * smooth * 0.5;
       stage.rotation.y += (tilt.y - stage.rotation.y) * smooth * 0.5;
       podium.rotation.y = top.rotation.z = -angle * 0.25;
@@ -817,8 +821,8 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
         it.card.position.z = k * 0.35;
         it.card.scale.setScalar(1 + k * 0.1);
         it.face.color.copy(dim).lerp(white, 0.5 + 0.5 * Math.max(0, f));
-        // Glans: når kortet når fronten glir en blank stripe over det, og igjen midt i visningen
-        if (f > 0.985 && it.shine >= 1 && turning === 0 && !dragging && (it.slug !== lastShine || (timer > DWELL * 0.5 && timer < DWELL * 0.56))) {
+        // Glans: en blank stripe glir over kortet når det passerer midten
+        if (f > 0.97 && it.shine >= 1 && it.slug !== lastShine) {
           it.shine = 0;
           lastShine = it.slug;
         }
@@ -836,6 +840,10 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
       dust.position.y = Math.sin(t * 0.2) * 0.08;
       if (composer) composer.render();
       else renderer.render(scene, camera);
+      if (firstFrame) {
+        firstFrame = false;
+        setReady(true);
+      }
     };
     loop();
 
@@ -874,11 +882,20 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
       <div
         ref={box}
         style={{ maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE }}
-        className="relative h-[380px] w-full sm:h-[480px] lg:h-[540px]"
+        data-ready={ready ? "true" : undefined}
+        className="relative h-[380px] w-full opacity-0 transition-opacity duration-700 data-[ready=true]:opacity-100 sm:h-[480px] lg:h-[540px]"
         aria-label="Utvalgte kort"
         role="img"
       />
-      {c && (
+      {/* Vanlig karusell vises med en gang, og tones ut når 3D er klar */}
+      <div
+        aria-hidden={ready}
+        data-ready={ready ? "true" : undefined}
+        className="absolute inset-0 flex items-center transition-opacity duration-700 data-[ready=true]:pointer-events-none data-[ready=true]:opacity-0"
+      >
+        <div className="w-full">{fallback}</div>
+      </div>
+      {c && ready && (
         <div key={c.slug} className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center px-4 sm:bottom-5">
           <Link
             href={`/products/${c.slug}`}
