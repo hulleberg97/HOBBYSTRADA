@@ -40,13 +40,16 @@ export default async function Home() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
             ></div>
-            <div className="relative grid items-center gap-6 px-6 pb-8 pt-10 sm:px-10 sm:pb-12 sm:pt-14 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:px-16 lg:py-16">
+            <div className="relative grid items-center gap-6 px-6 pb-8 pt-10 sm:px-10 sm:pb-12 sm:pt-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-4 lg:px-16 lg:py-16">
               <div className="min-w-0">
-                <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
-                  {all.length} aktive annonser nå
-                </p>
-                <h1 className="mt-5 font-heading text-[clamp(2.6rem,6.2vw,5.5rem)] font-bold leading-[0.95] tracking-[-0.045em]">
+                {/* Antallet vises først når det er stort nok til å imponere */}
+                {all.length >= 20 && (
+                  <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    {all.length} aktive annonser nå
+                  </p>
+                )}
+                <h1 className="font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
                   Fotballkort.
                   <br />
                   <span className="text-gold-light">Kjøp og selg.</span>

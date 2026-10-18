@@ -14,14 +14,15 @@ const POSITIONS = [
 /** De fem nyeste annonsene: den nyeste i midten, de neste på hver side, de eldste ytterst. */
 export function pickFan(list: Listing[]) {
   const [first, second, third, fourth, fifth] = [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-  return [fourth, second, first, third, fifth].filter(Boolean) as Listing[];
+  // Hver annonse beholder plassen sin, så den nyeste alltid står i midten selv med få annonser.
+  return [fourth, second, first, third, fifth].flatMap((l, slot) => (l ? [{ listing: l, slot }] : []));
 }
 
 export function HeroFan({ listings }: { listings: Listing[] }) {
   return (
-    <div className="relative mx-auto h-[280px] w-full max-w-[520px] sm:h-[380px] lg:h-[440px]">
-      {pickFan(listings).map((l, i) => {
-        const p = POSITIONS[i];
+    <div className="relative mx-auto h-[280px] w-full max-w-[520px] sm:h-[400px] lg:h-[480px] lg:max-w-[600px]">
+      {pickFan(listings).map(({ listing: l, slot }) => {
+        const p = POSITIONS[slot];
         return (
           <Link
             key={l.slug}
