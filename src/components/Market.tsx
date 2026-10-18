@@ -12,61 +12,72 @@ import {
   SearchIcon,
   ShieldCheckIcon,
   SlidersHorizontalIcon,
+  XIcon,
 } from "lucide-react";
 import { ListingCard } from "./ListingCard";
-import { matches } from "@/lib/listings";
+import { EMPTY, TYPES, activeCount, applyFilters, parseFilters, sortListings, toQuery, type Filters } from "@/lib/filters";
+import { FilterPanel } from "./FilterPanel";
+import { SearchSuggest } from "./SearchSuggest";
 import type { Listing } from "@/lib/types";
 
 const PAGE_SIZE = 13;
-const TYPES = ["Autograf", "Relic", "Patch", "Rookie", "Nummerert", "Base"];
-const PRICES: Record<string, [number, number]> = {
-  "0-300": [0, 300],
+const PRICES: Record<string, [number | null, number | null]> = {
+  "0-300": [null, 300],
   "300-700": [300, 700],
   "700-1000": [700, 1000],
-  "1000-": [1000, Infinity],
+  "1000-": [1000, null],
 };
-
-const hasType = (l: Listing, t: string) => (t === "Nummerert" ? Boolean(l.numbered) || l.types.includes(t) : l.types.includes(t));
 
 export function Market({ listings }: { listings: Listing[] }) {
   const router = useRouter();
   const params = useSearchParams();
-  const q = params.get("q") ?? "";
-  const [input, setInput] = useState(q);
-  const [price, setPrice] = useState("");
-  const [sort, setSort] = useState("newest");
-  const [types, setTypes] = useState<string[]>([]);
-  const [page, setPage] = useState(1);
+  const f = useMemo(() => parseFilters(new URLSearchParams(params.toString())), [params]);
+  const [input, setInput] = useState(f.q);
+  const [prevQ, setPrevQ] = useState(f.q);
+  if (f.q !== prevQ) {
+    setPrevQ(f.q);
+    setInput(f.q);
+  }
+  const [panel, setPanel] = useState(false);
 
-  const result = useMemo(() => {
-    let list = listings.filter((l) => (!q || matches(l, q)) && types.every((t) => hasType(l, t)));
-    if (price) {
-      const [min, max] = PRICES[price];
-      list = list.filter((l) => l.price >= min && l.price < max);
-    }
-    if (sort === "price-low") list = [...list].sort((a, b) => a.price - b.price);
-    if (sort === "price-high") list = [...list].sort((a, b) => b.price - a.price);
-    if (sort === "name") list = [...list].sort((a, b) => a.title.localeCompare(b.title, "nb"));
-    return list;
-  }, [listings, q, types, price, sort]);
+  const go = (next: Filters) => {
+    const qs = toQuery(next);
+    router.replace(qs ? `/products?${qs}` : "/products", { scroll: false });
+  };
+  const update = (patch: Partial<Filters>) => go({ ...f, ...patch, page: patch.page ?? 1 });
 
+  const result = useMemo(() => sortListings(applyFilters(listings, f), f.sort), [listings, f]);
   const pages = Math.max(1, Math.ceil(result.length / PAGE_SIZE));
-  const current = Math.min(page, pages);
+  const current = Math.min(f.page, pages);
   const shown = result.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
+  const priceKey = Object.entries(PRICES).find(([, [min, max]]) => min === f.min && max === f.max)?.[0] ?? (f.min !== null || f.max !== null ? "custom" : "");
+  const count = activeCount(f);
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPage(1);
-    router.replace(input.trim() ? `/products?q=${encodeURIComponent(input.trim())}` : "/products", { scroll: false });
+  const submit = (e?: React.FormEvent, term = input) => {
+    e?.preventDefault();
+    update({ q: term.trim() });
   };
-  const toggle = (t: string) => {
-    setPage(1);
-    setTypes((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]));
-  };
-  const goto = (p: number) => {
-    setPage(p);
+  const toggle = (t: string) => update({ types: f.types.includes(t) ? f.types.filter((x) => x !== t) : [...f.types, t] });
+  const goto = (page: number) => {
+    go({ ...f, page });
     document.getElementById("annonser")?.scrollIntoView({ behavior: "smooth" });
   };
+  const chips: [string, Partial<Filters>][] = [
+    ...(f.q ? [[`«${f.q}»`, { q: "" }] as [string, Partial<Filters>]] : []),
+    ...f.types.map((t) => [t, { types: f.types.filter((x) => x !== t) }] as [string, Partial<Filters>]),
+    ...(
+      [
+        [f.club, { club: "" }],
+        [f.league, { league: "" }],
+        [f.line, { line: "" }],
+        [f.grader && (f.grader === "raw" ? "Ugradert" : f.grader), { grader: "" }],
+        [f.min !== null || f.max !== null ? `${f.min ?? 0}–${f.max ?? "∞"} kr` : "", { min: null, max: null }],
+        [f.run !== null ? (f.run === 1 ? "1/1" : `Opplag ≤ /${f.run}`) : "", { run: null }],
+        [f.place, { place: "" }],
+        [f.photo ? "Med bilde" : "", { photo: false }],
+      ] as [string, Partial<Filters>][]
+    ).filter(([l]) => l),
+  ];
   const pagerBtn =
     "flex h-10 min-w-10 items-center justify-center rounded-lg border border-border bg-white px-3 font-mono-data text-sm transition hover:border-foreground/40 disabled:cursor-not-allowed disabled:opacity-40 data-[current=true]:border-primary data-[current=true]:bg-primary data-[current=true]:text-primary-foreground";
 
@@ -95,12 +106,16 @@ export function Market({ listings }: { listings: Listing[] }) {
               <label htmlFor="market-search" className="sr-only">
                 Søk etter spiller eller sett
               </label>
-              <input
-                id="market-search"
-                placeholder="Søk etter spiller, sett eller kortnummer"
-                className="min-w-0 flex-1 bg-transparent text-[15px] text-slate-900 placeholder:text-slate-400 focus:outline-none"
+              <SearchSuggest
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={setInput}
+                onPick={(v) => submit(undefined, v)}
+                listClassName="-left-10"
+                inputProps={{
+                  id: "market-search",
+                  placeholder: "Søk etter spiller, sett eller kortnummer",
+                  className: "w-full bg-transparent text-[15px] text-slate-900 placeholder:text-slate-400 focus:outline-none",
+                }}
               />
               <button type="submit" className="h-11 shrink-0 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-primary/90">
                 Søk
@@ -115,22 +130,30 @@ export function Market({ listings }: { listings: Listing[] }) {
             <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <li>
                 <button
-                  aria-current={types.length === 0 ? "true" : undefined}
-                  onClick={() => {
-                    setTypes([]);
-                    setPage(1);
-                  }}
+                  aria-current={count === 0 && !f.q ? "true" : undefined}
+                  onClick={() => go({ ...EMPTY, sort: f.sort })}
                   className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 aria-[current=true]:border-primary aria-[current=true]:bg-primary aria-[current=true]:text-white"
                 >
                   <LayoutGridIcon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                   Alle kort
                 </button>
               </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setPanel(true)}
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400"
+                >
+                  <SlidersHorizontalIcon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
+                  Flere filtre
+                  {count > 0 && <span className="ml-0.5 rounded-full bg-primary px-1.5 font-mono-data text-[11px] text-white">{count}</span>}
+                </button>
+              </li>
             </ul>
           </nav>
           <div className="flex flex-wrap items-center gap-2 md:justify-end md:gap-3">
             <p className="w-full text-sm text-slate-500 md:hidden" aria-live="polite">
-              {result.length} annonser
+              {result.length} {result.length === 1 ? "annonse" : "annonser"}
             </p>
             <div className="relative shrink-0">
               <label htmlFor="products-price" className="sr-only">
@@ -138,11 +161,11 @@ export function Market({ listings }: { listings: Listing[] }) {
               </label>
               <select
                 id="products-price"
-                value={price}
-                data-active={price ? "true" : undefined}
+                value={priceKey}
+                data-active={priceKey ? "true" : undefined}
                 onChange={(e) => {
-                  setPrice(e.target.value);
-                  setPage(1);
+                  const [min, max] = PRICES[e.target.value] ?? [null, null];
+                  if (e.target.value !== "custom") update({ min, max });
                 }}
                 className="h-10 appearance-none rounded-full border border-slate-200 bg-white pl-4 pr-9 text-sm font-medium text-slate-800 hover:border-slate-400 focus:border-primary focus:outline-none data-[active=true]:border-primary data-[active=true]:text-primary"
               >
@@ -151,6 +174,7 @@ export function Market({ listings }: { listings: Listing[] }) {
                 <option value="300-700">300–700 kr</option>
                 <option value="700-1000">700–1 000 kr</option>
                 <option value="1000-">Over 1 000 kr</option>
+                {priceKey === "custom" && <option value="custom">{`${f.min ?? 0}–${f.max ?? "∞"} kr`}</option>}
               </select>
               <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
             </div>
@@ -160,8 +184,8 @@ export function Market({ listings }: { listings: Listing[] }) {
               </label>
               <select
                 id="products-sort"
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
+                value={f.sort}
+                onChange={(e) => update({ sort: e.target.value, page: f.page })}
                 className="h-10 appearance-none rounded-full border border-slate-200 bg-white pl-4 pr-9 text-sm font-medium text-slate-800 hover:border-slate-400 focus:border-primary focus:outline-none"
               >
                 <option value="newest">Nyeste først</option>
@@ -182,7 +206,7 @@ export function Market({ listings }: { listings: Listing[] }) {
               <li key={t}>
                 <button
                   type="button"
-                  aria-pressed={types.includes(t)}
+                  aria-pressed={f.types.includes(t)}
                   onClick={() => toggle(t)}
                   className="shrink-0 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-700 transition hover:border-slate-400 aria-pressed:border-primary aria-pressed:bg-primary/5 aria-pressed:text-primary aria-pressed:ring-1 aria-pressed:ring-primary"
                 >
@@ -195,11 +219,35 @@ export function Market({ listings }: { listings: Listing[] }) {
       </div>
       <div id="annonser" className="mx-auto max-w-[1320px] scroll-mt-40 px-4 pb-20 pt-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-center gap-2 md:gap-3">
-          <h2 className="hidden font-heading text-xl font-bold tracking-tight text-slate-950 md:block">{q ? `Treff for «${q}»` : "Alle annonser"}</h2>
+          <h2 className="hidden font-heading text-xl font-bold tracking-tight text-slate-950 md:block">
+            {f.q ? `Treff for «${f.q}»` : count ? "Filtrerte annonser" : "Alle annonser"}
+          </h2>
           <span className="hidden text-sm text-slate-500 md:inline" aria-live="polite">
             {result.length} treff
           </span>
         </div>
+        {chips.length > 0 && (
+          <div className="-mt-2 mb-6 flex flex-wrap items-center gap-2">
+            {chips.map(([l, patch]) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => update(patch)}
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary/5 px-3 py-1.5 text-[13px] font-medium text-primary ring-1 ring-inset ring-primary/30 transition hover:bg-primary/10"
+              >
+                {l}
+                <XIcon className="h-3.5 w-3.5" aria-label="Fjern" />
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => go({ ...EMPTY, sort: f.sort })}
+              className="px-2 text-[13px] font-medium text-slate-500 underline underline-offset-2 hover:text-primary"
+            >
+              Nullstill alle
+            </button>
+          </div>
+        )}
         {shown.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
             {shown.map((l) => (
@@ -235,6 +283,15 @@ export function Market({ listings }: { listings: Listing[] }) {
             </nav>
           </div>
         )}
+        <FilterPanel
+          open={panel}
+          onClose={() => setPanel(false)}
+          listings={listings}
+          f={f}
+          update={update}
+          reset={() => go({ ...EMPTY, q: f.q, sort: f.sort })}
+          resultCount={result.length}
+        />
         <section className="mt-16 grid gap-6 overflow-hidden rounded-3xl bg-slate-50 p-6 ring-1 ring-inset ring-slate-200 sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <p className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">

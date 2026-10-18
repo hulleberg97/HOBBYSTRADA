@@ -7,6 +7,7 @@ import { CircleUserIcon, LayoutGridIcon, MenuIcon, SearchIcon, ShoppingBagIcon, 
 import { LangToggle } from "./LangToggle";
 import { CartDrawer } from "./CartDrawer";
 import { useUser } from "./useUser";
+import { SearchSuggest } from "./SearchSuggest";
 
 const NAV = [
   { href: "/products", label: "Markedet", Icon: LayoutGridIcon },
@@ -30,10 +31,13 @@ export function Header() {
   const [menu, setMenu] = useState(false);
   const [cart, setCart] = useState(false);
 
+  const go = (term: string) => {
+    router.push(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search");
+    setMenu(false);
+  };
   const search = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(q.trim() ? `/search?q=${encodeURIComponent(q.trim())}` : "/search");
-    setMenu(false);
+    go(q);
   };
 
   return (
@@ -54,11 +58,15 @@ export function Header() {
             <label className="relative block">
               <span className="sr-only">Søk etter spiller, sett eller kort</span>
               <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
-              <input
-                placeholder="Søk i alle annonser"
-                className="h-12 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] text-primary outline-none transition placeholder:text-slate-500 hover:border-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10"
+              <SearchSuggest
                 value={q}
-                onChange={(e) => setQ(e.target.value)}
+                onChange={setQ}
+                onPick={go}
+                inputProps={{
+                  placeholder: "Søk i alle annonser",
+                  className:
+                    "h-12 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] text-primary outline-none transition placeholder:text-slate-500 hover:border-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10",
+                }}
               />
             </label>
           </form>
@@ -115,11 +123,15 @@ export function Header() {
           <label className="relative block">
             <span className="sr-only">Søk etter spiller, sett eller kort</span>
             <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
-            <input
-              placeholder="Søk etter Messi eller Topps Chrome"
-              className="h-11 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] outline-none placeholder:text-slate-500 focus:border-primary"
+            <SearchSuggest
               value={q}
-              onChange={(e) => setQ(e.target.value)}
+              onChange={setQ}
+              onPick={go}
+              inputProps={{
+                placeholder: "Søk etter Messi eller Topps Chrome",
+                className:
+                  "h-11 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] outline-none placeholder:text-slate-500 focus:border-primary",
+              }}
             />
           </label>
         </form>

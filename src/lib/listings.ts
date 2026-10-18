@@ -97,16 +97,8 @@ export function newest(list: Listing[]) {
   return [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
-const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
-
-export function matches(l: Listing, q: string) {
-  const hay = norm([l.title, l.player, l.set, l.club, l.league, l.cardNumber, l.numbered, l.types.join(" "), l.season].filter(Boolean).join(" "));
-  const terms = norm(q).split(/\s+/).filter(Boolean);
-  if (q.trim() === "/") return Boolean(l.numbered);
-  if (/^rc$/i.test(q.trim())) return l.types.includes("Rookie") || / RC\b/.test(l.title);
-  if (/^relic$/i.test(q.trim())) return l.types.includes("Relic") || l.types.includes("Patch");
-  return terms.every((t) => hay.includes(t) || (t === "autograf" && hay.includes("autograph")));
-}
+export { matches } from "./filters";
+import { matches } from "./filters";
 
 export type Category = { key: string; label: string; href: string; count: (l: Listing[]) => number };
 
