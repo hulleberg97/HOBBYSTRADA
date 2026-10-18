@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
 import { formatPrice, timeAgo } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
-import { VerifiedBadge } from "./VerifiedBadge";
+import { VerifiedBadge, VippsButton } from "./VerifiedBadge";
 import { useUser } from "./useUser";
 import type { Listing } from "@/lib/types";
 
@@ -17,6 +17,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
+  const [vippsNeeded, setVippsNeeded] = useState(false);
   const [shared, setShared] = useState(false);
   const [barOpen, setBarOpen] = useState(false);
   const [mode, setMode] = useState<"question" | "offer">("question");
@@ -51,6 +52,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
         body: JSON.stringify({ listing: l.slug, ...Object.fromEntries(f) }),
       });
       const data = await res.json().catch(() => ({}));
+      setVippsNeeded(Boolean(data.vipps));
       if (!res.ok) throw new Error(data.error || "Meldingen ble ikke sendt. Prøv igjen om litt.");
       router.push(`/meldinger/${data.id}`);
     } catch (err) {
@@ -201,6 +203,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                   />
                   <p className="text-xs text-slate-500">Meldingen sendes i chatten på HOBBYSTRADA. E-postadressen din deles ikke med selgeren.</p>
                   {state === "error" && <p className="text-sm text-destructive">{error}</p>}
+                  {vippsNeeded && <VippsButton href={`/auth/vipps?next=${encodeURIComponent(`/products/${l.slug}`)}`} label="Bekreft med Vipps" />}
                   <button
                     type="submit"
                     disabled={state === "sending"}

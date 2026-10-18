@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUser } from "@/lib/auth";
+import { getUser, needsVipps } from "@/lib/auth";
 import { addMessage, getConversation, MAX_MESSAGE } from "@/lib/chat";
 
 type Ctx = { params: Promise<{ id: string }> };
@@ -17,6 +17,7 @@ export async function GET(req: Request, { params }: Ctx) {
 export async function POST(req: Request, { params }: Ctx) {
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "Logg inn." }, { status: 401 });
+  if (await needsVipps(user.id)) return NextResponse.json({ error: "Bekreft deg med Vipps for å sende meldinger.", vipps: true }, { status: 403 });
   const body = await req.json().catch(() => null);
   const message = typeof body?.message === "string" ? body.message.trim().slice(0, MAX_MESSAGE) : "";
   if (!message) return NextResponse.json({ error: "Skriv en melding." }, { status: 400 });

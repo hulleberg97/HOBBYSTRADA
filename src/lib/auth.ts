@@ -31,3 +31,9 @@ export async function getVerification(userId: string) {
   if (error || !data?.verified_at) return null;
   return { name: data.verified_name as string, at: data.verified_at as string };
 }
+
+/** Med Vipps slått på må alle være verifisert med Vipps for å legge ut kort og sende meldinger. */
+export async function needsVipps(userId: string) {
+  const { hasVippsLogin } = await import("./vipps-login");
+  return hasVippsLogin() && !(await getVerification(userId));
+}

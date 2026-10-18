@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUser } from "@/lib/auth";
+import { getUser, needsVipps } from "@/lib/auth";
 import { getListing } from "@/lib/listings";
 import { addMessage, adminUserId, MAX_MESSAGE, openConversation } from "@/lib/chat";
 
@@ -9,6 +9,7 @@ const clean = (v: unknown) => (typeof v === "string" ? v.trim().slice(0, MAX_MES
 export async function POST(req: Request) {
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "Logg inn for å sende melding." }, { status: 401 });
+  if (await needsVipps(user.id)) return NextResponse.json({ error: "Bekreft deg med Vipps for å sende meldinger.", vipps: true }, { status: 403 });
   const body = await req.json().catch(() => null);
   const message = clean(body?.message);
   if (!message) return NextResponse.json({ error: "Skriv en melding." }, { status: 400 });
