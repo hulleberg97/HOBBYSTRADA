@@ -8,6 +8,10 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { Reflector } from "three/addons/objects/Reflector.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
 export type StageCard = {
   slug: string;
@@ -18,6 +22,8 @@ export type StageCard = {
   number: string;
   type: string;
   price: string;
+  /** Gradering, f.eks. «PSA 10». Tom for ugraderte kort. */
+  grade: string;
 };
 
 const CARD_W = 1.6;
@@ -48,11 +54,11 @@ function drawFront(ctx: CanvasRenderingContext2D, c: StageCard, img: HTMLImageEl
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
 
-  // Etikett
+  // Etikett: sett og nummer, spiller og type, strekkode og gradering eller hologram
   const lx = 44;
   const ly = 44;
   const lw = W - 88;
-  const lh = 176;
+  const lh = 214;
   ctx.fillStyle = "#ffffff";
   ctx.beginPath();
   ctx.roundRect(lx, ly, lw, lh, 10);
@@ -62,19 +68,41 @@ function drawFront(ctx: CanvasRenderingContext2D, c: StageCard, img: HTMLImageEl
   ctx.stroke();
   ctx.fillStyle = "#0b1726";
   ctx.textBaseline = "middle";
-  ctx.font = `600 40px ${fontFamily}`;
-  ctx.textAlign = "left";
-  ctx.fillText(fit(ctx, c.set, lw - 230), lx + 30, ly + 54);
+  ctx.font = `600 36px ${fontFamily}`;
   ctx.textAlign = "right";
-  ctx.fillText(c.number ? `#${c.number}` : "", lx + lw - 30, ly + 56);
-  ctx.font = `700 40px ${fontFamily}`;
+  const num = c.number ? `#${c.number}` : "";
+  ctx.fillText(num, lx + lw - 30, ly + 46);
+  ctx.textAlign = "left";
+  ctx.fillText(fit(ctx, c.set, lw - 90 - ctx.measureText(num).width), lx + 30, ly + 46);
+  ctx.font = `700 36px ${fontFamily}`;
   ctx.textAlign = "right";
   const type = c.type.toUpperCase();
-  ctx.fillText(type, lx + lw - 30, ly + 120);
+  ctx.fillText(type, lx + lw - 30, ly + 102);
   const room = lw - 90 - ctx.measureText(type).width;
-  ctx.font = `800 52px ${fontFamily}`;
+  ctx.font = `800 50px ${fontFamily}`;
   ctx.textAlign = "left";
-  ctx.fillText(fit(ctx, c.player, room), lx + 30, ly + 120);
+  ctx.fillText(fit(ctx, c.player, room), lx + 30, ly + 102);
+  // Strekkode (pynt)
+  let bx = lx + 30;
+  for (let i = 0; i < 46; i++) {
+    const w = 1 + ((i * 7) % 4);
+    ctx.fillRect(bx, ly + 150, w, 38);
+    bx += w + 2 + ((i * 3) % 3);
+  }
+  // Gradering, eller hologramstripe for ugraderte
+  if (c.grade) {
+    ctx.fillStyle = "#c8102e";
+    ctx.font = `800 52px ${fontFamily}`;
+    ctx.textAlign = "right";
+    ctx.fillText(c.grade.toUpperCase(), lx + lw - 30, ly + 168);
+  } else {
+    const hg = ctx.createLinearGradient(lx + lw - 210, 0, lx + lw - 30, 0);
+    ["#7cf7ff", "#b58cff", "#ff8fd0", "#ffd36e", "#7cf7ff"].forEach((col, i) => hg.addColorStop(i / 4, col));
+    ctx.fillStyle = hg;
+    ctx.beginPath();
+    ctx.roundRect(lx + lw - 210, ly + 150, 180, 38, 6);
+    ctx.fill();
+  }
 
   // Fordypningen og kortet
   const wx = 70;
@@ -242,8 +270,15 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     el.appendChild(renderer.domElement);
     renderer.domElement.style.touchAction = "pan-y";
+    const rich = !mobile; // skygger, glød og speil bare på PC
+    if (rich) {
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    }
 
+    const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
     const scene = new THREE.Scene();
+    if (rich) scene.background = new THREE.Color(BG);
     const pmrem = new THREE.PMREMGenerator(renderer);
     const room = new RoomEnvironment();
     scene.environment = pmrem.fromScene(room, 0.03).texture;
@@ -263,10 +298,46 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
 
     // ── Sokkelen i midten: sort lakk med gullkant, H-merket i gull og en glødende ring rundt
     const black = track(new THREE.MeshPhysicalMaterial({ color: 0x0a0f18, metalness: 0.6, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.08 }));
-    const gold = track(new THREE.MeshStandardMaterial({ color: 0xcfa653, metalness: 1, roughness: 0.2, envMapIntensity: 1.3 }));
+    // Børstet gull: fine, vannrette striper i ruheten
+    const { tex: brush } = canvasTexture(256, 256, (ctx) => {
+      ctx.fillStyle = "#9a9a9a";
+      ctx.fillRect(0, 0, 256, 256);
+      for (let y = 0; y < 256; y++) {
+        const v = 120 + Math.floor(Math.random() * 110);
+        ctx.fillStyle = `rgb(${v},${v},${v})`;
+        ctx.fillRect(0, y, 256, 1);
+      }
+    });
+    brush.colorSpace = THREE.NoColorSpace;
+    brush.wrapS = brush.wrapT = THREE.RepeatWrapping;
+    brush.repeat.set(2, 6);
+    track(brush);
+    const gold = track(
+      new THREE.MeshPhysicalMaterial({
+        color: 0xcfa653,
+        metalness: 1,
+        roughness: 0.38,
+        roughnessMap: brush,
+        clearcoat: 0.4,
+        clearcoatRoughness: 0.15,
+        envMapIntensity: 1.4,
+      }),
+    );
     const podR = radius * 0.5;
     const podium = new THREE.Mesh(track(new THREE.CylinderGeometry(podR, podR * 1.04, 0.42, 96)), black);
     podium.position.y = 0.21;
+    podium.castShadow = podium.receiveShadow = true;
+    // Øverste trinn med eget gullinnlegg
+    const tierR = podR * 0.8;
+    const tier = new THREE.Mesh(track(new THREE.CylinderGeometry(tierR, tierR, 0.12, 96)), black);
+    tier.position.y = 0.48;
+    tier.castShadow = tier.receiveShadow = true;
+    const tierRim = new THREE.Mesh(track(new THREE.TorusGeometry(tierR + 0.004, 0.016, 16, 128)), gold);
+    tierRim.rotation.x = Math.PI / 2;
+    tierRim.position.y = 0.54;
+    const inlay = new THREE.Mesh(track(new THREE.RingGeometry(podR * 0.86, podR * 0.875, 128)), gold);
+    inlay.rotation.x = -Math.PI / 2;
+    inlay.position.y = 0.4215;
     const rim = new THREE.Mesh(track(new THREE.TorusGeometry(podR + 0.01, 0.022, 16, 128)), gold);
     rim.rotation.x = Math.PI / 2;
     rim.position.y = 0.42;
@@ -290,24 +361,30 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     });
     track(topTex);
     const top = new THREE.Mesh(
-      track(new THREE.CircleGeometry(podR - 0.005, 96)),
+      track(new THREE.CircleGeometry(tierR - 0.004, 96)),
       track(new THREE.MeshPhysicalMaterial({ map: topTex, metalness: 0.5, roughness: 0.3, clearcoat: 1 })),
     );
     top.rotation.x = -Math.PI / 2;
-    top.position.y = 0.4215;
+    top.position.y = 0.5415;
+    top.receiveShadow = true;
     const glowRing = new THREE.Mesh(
       track(new THREE.RingGeometry(podR * 1.08, podR * 1.16, 128)),
       track(new THREE.MeshBasicMaterial({ color: 0xe9c46a, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false })),
     );
     glowRing.rotation.x = -Math.PI / 2;
     glowRing.position.y = 0.006;
-    scene.add(podium, rim, rimLow, top, glowRing);
+    (glowRing.material as THREE.MeshBasicMaterial).color.multiplyScalar(rich ? 2.2 : 1);
+    scene.add(podium, rim, rimLow, tier, tierRim, inlay, top, glowRing);
 
     // ── Lysriggen: en ring av flomlys over banen, som peker ned på kortene
     const RIG_Y = 6.2;
     const rigLights = mobile ? 4 : 8;
-    const rigMat = track(new THREE.MeshBasicMaterial({ color: 0xfff4dc }));
-    const rigGeo = track(new THREE.BoxGeometry(0.34, 0.06, 0.2));
+    const housingMat = track(new THREE.MeshStandardMaterial({ color: 0x1b2230, metalness: 0.85, roughness: 0.35 }));
+    const housingGeo = track(new THREE.CylinderGeometry(0.15, 0.19, 0.26, 32, 1, true));
+    housingGeo.rotateX(Math.PI / 2);
+    const backCapGeo = track(new THREE.CircleGeometry(0.15, 32));
+    const lensGeo = track(new THREE.CircleGeometry(0.165, 32));
+    const lensMat = track(new THREE.MeshBasicMaterial({ color: new THREE.Color(0xfff1d6).multiplyScalar(rich ? 6 : 1.2), toneMapped: !rich, fog: false }));
     const rigFrame = new THREE.Mesh(
       track(new THREE.TorusGeometry(radius, 0.03, 8, 128)),
       track(new THREE.MeshStandardMaterial({ color: 0x1a2232, metalness: 0.8, roughness: 0.4 })),
@@ -319,13 +396,21 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       const a = (i / rigLights) * Math.PI * 2 + Math.PI / rigLights;
       const x = Math.sin(a) * radius;
       const z = Math.cos(a) * radius;
-      const lamp = new THREE.Mesh(rigGeo, rigMat);
+      // Lampehus som peker ned på banen, med lysende linse
+      const lamp = new THREE.Group();
+      const housing = new THREE.Mesh(housingGeo, housingMat);
+      const cap = new THREE.Mesh(backCapGeo, housingMat);
+      cap.position.z = -0.13;
+      cap.rotation.y = Math.PI;
+      const lens = new THREE.Mesh(lensGeo, lensMat);
+      lens.position.z = 0.11;
+      lamp.add(housing, cap, lens);
       lamp.position.set(x, RIG_Y, z);
-      lamp.lookAt(0, RIG_Y, 0);
-      const light = new THREE.SpotLight(0xfff1d6, 26, 14, Math.PI / 7, 0.8, 1.5);
+      lamp.lookAt(x * 0.92, 1.2, z * 0.92);
+      const light = new THREE.SpotLight(0xfff1d6, rich ? 20 : 26, 14, Math.PI / 7, 0.8, 1.5);
       light.position.set(x, RIG_Y, z);
       light.target.position.set(x * 0.92, 1.2, z * 0.92);
-      const cone = lightCone(0.12, 1.25, RIG_Y - 0.2, 0.06);
+      const cone = lightCone(0.12, 1.25, RIG_Y - 0.2, rich ? 0.022 : 0.06);
       cone.position.set(x * 0.96, RIG_Y / 2, z * 0.96);
       track(cone.geometry);
       track(cone.material as THREE.Material);
@@ -334,14 +419,23 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
 
     // ── Fokuslyset: en sterk spot på plassen foran
     const front = new THREE.Vector3(0, 0, radius);
-    const key = new THREE.SpotLight(0xfff6e6, 90, 16, Math.PI / 9, 0.7, 1.6);
+    const key = new THREE.SpotLight(0xfff6e6, rich ? 70 : 90, 16, Math.PI / 9, 0.7, 1.6);
     key.position.set(0, 7.2, radius + 1.2);
     key.target.position.set(0, 1.3, radius);
-    const keyCone = lightCone(0.2, 1.7, 7, 0.16);
+    if (rich) {
+      key.castShadow = true;
+      key.shadow.mapSize.set(2048, 2048);
+      key.shadow.bias = -0.0004;
+      key.shadow.normalBias = 0.02;
+      key.shadow.radius = 5;
+      key.shadow.camera.near = 2;
+      key.shadow.camera.far = 14;
+    }
+    const keyCone = lightCone(0.2, 1.7, 7, rich ? 0.075 : 0.16);
     keyCone.position.set(0, 3.5, radius + 0.15);
     track(keyCone.geometry);
     track(keyCone.material as THREE.Material);
-    const back = new THREE.DirectionalLight(0xf2d48a, 0.9);
+    const back = new THREE.DirectionalLight(0xf2d48a, rich ? 0.5 : 0.9);
     back.position.set(0, 4, -8);
     scene.add(key, key.target, keyCone, back, new THREE.AmbientLight(0x6f84a8, 0.14));
 
@@ -369,7 +463,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const { tex: backTex } = canvasTexture(TEX_W, TEX_H, drawBack);
     backTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
     track(backTex);
-    const backMat = track(new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.45 }));
+    const backMat = track(new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.5, color: 0x9aa4b4 }));
     const { tex: shadowTex } = canvasTexture(128, 128, (ctx) => {
       const g = ctx.createRadialGradient(64, 64, 4, 64, 64, 64);
       g.addColorStop(0, "rgba(0,0,0,0.65)");
@@ -384,7 +478,28 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const PLATE_H = 0.05;
     const BLOCK_H = 0.24;
     const cardY = PLATE_H + BLOCK_H - 0.07 + CARD_H / 2;
-    const items: { holder: THREE.Group; card: THREE.Group; face: THREE.MeshPhysicalMaterial; slug: string; angle: number; lift: number }[] = [];
+    const items: {
+      holder: THREE.Group;
+      card: THREE.Group;
+      face: THREE.MeshPhysicalMaterial;
+      glare: THREE.MeshBasicMaterial;
+      slug: string;
+      angle: number;
+      lift: number;
+      sweep: number;
+    }[] = [];
+    // Diagonal lysstripe som flyttes over kortet
+    const { tex: glareTex } = canvasTexture(512, 512, (ctx) => {
+      ctx.translate(256, 256);
+      ctx.rotate(-0.5);
+      const g = ctx.createLinearGradient(-90, 0, 90, 0);
+      g.addColorStop(0, "rgba(255,255,255,0)");
+      g.addColorStop(0.5, "rgba(255,250,235,0.9)");
+      g.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(-90, -600, 180, 1200);
+    });
+    track(glareTex);
     const hit: THREE.Object3D[] = [];
     const anisotropy = renderer.capabilities.getMaxAnisotropy();
 
@@ -418,18 +533,29 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       const backFace = new THREE.Mesh(faceGeo, backMat);
       backFace.position.z = -DEPTH / 2 + 0.012;
       backFace.rotation.y = Math.PI;
+      face.castShadow = backFace.castShadow = true;
+      // Lysglimtet som glir over kortet når det kommer frem
+      const glareMap = track(glareTex.clone());
+      glareMap.needsUpdate = true;
+      const glareMat = track(
+        new THREE.MeshBasicMaterial({ map: glareMap, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }),
+      );
+      const glare = new THREE.Mesh(faceGeo, glareMat);
+      glare.position.z = DEPTH / 2 - 0.006;
       const shell = new THREE.Mesh(glassGeo, glass);
       shell.renderOrder = 2;
-      card.add(face, backFace, shell);
+      card.add(face, backFace, glare, shell);
       card.position.y = cardY;
       for (const m of [face, backFace, shell]) {
         m.userData.slug = c.slug;
         hit.push(m);
       }
       const plate = new THREE.Mesh(plateGeo, gold);
+      plate.castShadow = plate.receiveShadow = true;
       plate.position.y = PLATE_H / 2;
       plate.scale.z = 0.62;
       const block = new THREE.Mesh(blockGeo, gold);
+      block.castShadow = block.receiveShadow = true;
       block.position.y = PLATE_H + BLOCK_H / 2;
       const mark = new THREE.Mesh(markGeo, markMat);
       mark.position.set(0, PLATE_H + BLOCK_H / 2, 0.172);
@@ -441,7 +567,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       holder.position.set(Math.sin(a) * radius, 0, Math.cos(a) * radius);
       holder.rotation.y = a;
       ring.add(holder);
-      items.push({ holder, card, face: faceMat, slug: c.slug, angle: a, lift: 0 });
+      items.push({ holder, card, face: faceMat, glare: glareMat, slug: c.slug, angle: a, lift: 0, sweep: 1 });
     });
 
     // ── Gulv: speil på PC, slør som toner ut, og lys under fokusplassen
@@ -488,14 +614,70 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     pool.rotation.x = -Math.PI / 2;
     pool.position.set(0, 0.007, radius);
     scene.add(veil, pool);
+    if (rich) {
+      const catcher = new THREE.Mesh(track(new THREE.PlaneGeometry(radius * 4, radius * 4)), track(new THREE.ShadowMaterial({ opacity: 0.55 })));
+      catcher.rotation.x = -Math.PI / 2;
+      catcher.position.y = 0.008;
+      catcher.receiveShadow = true;
+      scene.add(catcher);
+    }
+
+    // Støv som svever i lysstrålene
+    const DUST = rich ? 420 : 120;
+    const dustPos = new Float32Array(DUST * 3);
+    for (let i = 0; i < DUST; i++) {
+      const r = Math.sqrt(Math.random()) * 1.7;
+      const a = Math.random() * Math.PI * 2;
+      dustPos[i * 3] = Math.cos(a) * r;
+      dustPos[i * 3 + 1] = 0.3 + Math.random() * 6;
+      dustPos[i * 3 + 2] = radius + Math.sin(a) * r;
+    }
+    const dustGeo = track(new THREE.BufferGeometry());
+    dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
+    const { tex: dotTex } = canvasTexture(64, 64, (ctx) => {
+      const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0, "rgba(255,244,220,1)");
+      g.addColorStop(1, "rgba(255,244,220,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 64, 64);
+    });
+    track(dotTex);
+    const dust = new THREE.Points(
+      dustGeo,
+      track(
+        new THREE.PointsMaterial({
+          size: 0.035,
+          map: dotTex,
+          transparent: true,
+          opacity: 0.55,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          fog: false,
+        }),
+      ),
+    );
+    scene.add(dust);
+
+    // Glød rundt lys og gullkanter (bare på PC)
+    let composer: EffectComposer | null = null;
+    let bloom: UnrealBloomPass | null = null;
+    if (rich) {
+      composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      bloom = new UnrealBloomPass(new THREE.Vector2(el.clientWidth, el.clientHeight), 0.35, 0.3, 1.7);
+      composer.addPass(bloom);
+      composer.addPass(new OutputPass());
+      disposables.push(composer, bloom);
+    }
 
     // ── Kamera: litt ovenfra, så sokkelen og banen synes, med kortet foran i fokus
-    const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
     const target = new THREE.Vector3(0, 1.35, front.z * 0.42);
     const resize = () => {
       const w = el.clientWidth;
       const h = el.clientHeight;
       renderer.setSize(w, h);
+      composer?.setPixelRatio(renderer.getPixelRatio());
+      composer?.setSize(w, h);
       camera.aspect = w / h;
       const visH = Math.max(5.6, ((2 * radius + 1.2) / camera.aspect) * 0.86);
       const d = visH / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
@@ -635,12 +817,21 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
         it.card.position.z = k * 0.35;
         it.card.scale.setScalar(1 + k * 0.1);
         it.face.color.copy(dim).lerp(white, 0.35 + 0.65 * Math.max(0, f));
+        // Lysglimt: starter når kortet når fronten, glir over på ett sekund
+        if (f > 0.97 && it.sweep >= 1 && turning === 0 && !dragging) it.sweep = 0;
+        if (f < 0.5) it.sweep = 1;
+        if (it.sweep < 1) it.sweep = Math.min(1, it.sweep + dt / 1.1);
+        it.glare.opacity = it.sweep < 1 ? Math.sin(it.sweep * Math.PI) * 0.22 : 0;
+        (it.glare.map as THREE.Texture).offset.x = 0.9 - it.sweep * 1.8;
       });
       if (best !== shown && bestF > 0.92) {
         shown = best;
         setFocus(best);
       }
-      renderer.render(scene, camera);
+      dust.rotation.y = t * 0.01;
+      dust.position.y = Math.sin(t * 0.2) * 0.08;
+      if (composer) composer.render();
+      else renderer.render(scene, camera);
     };
     loop();
 
