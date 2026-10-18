@@ -128,6 +128,22 @@ grant all on public.reports to service_role;
 -- Når kunden samtykket i at løftet starter straks (og angreretten faller bort)
 alter table public.boost_orders add column if not exists consent_at timestamptz;
 
+-- Bekreftet identitet fra Vipps, én rad per bruker
+create table if not exists public.profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  vipps_sub text unique,
+  verified_name text,
+  phone text,
+  verified_at timestamptz,
+  created_at timestamptz not null default now()
+);
+alter table public.profiles enable row level security;
+grant all on public.profiles to service_role;
+
+-- Merke på annonsen: selgeren er verifisert med Vipps
+alter table public.listings add column if not exists seller_verified boolean not null default false;
+grant select (seller_verified) on public.listings to anon, authenticated;
+
 -- Bilder
 insert into storage.buckets (id, name, public) values ('listing-images', 'listing-images', true)
 on conflict (id) do nothing;

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { browserClient } from "@/lib/supabase";
+import { VippsButton } from "./VerifiedBadge";
 
 const field =
   "w-full border-b border-foreground/20 bg-transparent px-0 py-3 text-sm placeholder:text-muted-foreground focus:border-foreground focus:outline-none transition-colors";
@@ -20,9 +21,14 @@ const COPY: Record<Mode, { title: string; lead: string; submit: string }> = {
   reset: { title: "Nytt passord", lead: "Velg et nytt passord for kontoen din", submit: "Lagre passord" },
 };
 
-export function AuthForm({ mode }: { mode: Mode }) {
+export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean }) {
   const router = useRouter();
-  const next = useSearchParams().get("next") ?? "/account";
+  const params = useSearchParams();
+  const next = params.get("next") ?? "/account";
+  const vippsError = {
+    vipps: "Innloggingen med Vipps ble avbrutt eller feilet. Prøv igjen.",
+    "vipps-koblet": "Denne Vipps-kontoen er allerede koblet til en annen bruker.",
+  }[params.get("feil") ?? ""];
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [done, setDone] = useState("");
@@ -89,69 +95,80 @@ export function AuthForm({ mode }: { mode: Mode }) {
           {done ? (
             <p className="rounded-2xl bg-emerald-50 p-4 text-center text-sm text-emerald-800 ring-1 ring-inset ring-emerald-200">{done}</p>
           ) : (
-            <form className="space-y-5" onSubmit={submit}>
-              {mode === "register" && (
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="first_name" className={label}>
-                      Fornavn
-                    </label>
-                    <input id="first_name" name="first_name" type="text" required autoComplete="given-name" className={field} placeholder="Ola" />
-                  </div>
-                  <div>
-                    <label htmlFor="last_name" className={label}>
-                      Etternavn
-                    </label>
-                    <input id="last_name" name="last_name" type="text" required autoComplete="family-name" className={field} placeholder="Nordmann" />
+            <>
+              {vipps && (mode === "login" || mode === "register") && (
+                <div className="mb-8">
+                  {vippsError && <p className="mb-3 text-sm text-destructive">{vippsError}</p>}
+                  <VippsButton href={`/auth/vipps?next=${encodeURIComponent(next)}`} label={mode === "login" ? "Logg inn med Vipps" : "Fortsett med Vipps"} />
+                  <div className="mt-6 flex items-center gap-3 text-xs uppercase tracking-widest text-muted-foreground">
+                    <span className="h-px flex-1 bg-foreground/15"></span>eller med e-post<span className="h-px flex-1 bg-foreground/15"></span>
                   </div>
                 </div>
               )}
-              {mode !== "reset" && (
-                <div>
-                  <label htmlFor="email" className={label}>
-                    E-post
-                  </label>
-                  <input id="email" name="email" type="email" required autoComplete="email" className={field} placeholder="deg@eksempel.no" />
-                </div>
-              )}
-              {mode !== "forgot" && (
-                <div>
-                  <label htmlFor="password" className={label}>
-                    Passord
-                  </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
-                    minLength={mode === "login" ? undefined : 8}
-                    autoComplete={mode === "login" ? "current-password" : "new-password"}
-                    className={field}
-                    placeholder={mode === "login" ? "Ditt passord" : "Minst 8 tegn"}
-                  />
-                </div>
-              )}
-              {mode === "login" && (
-                <div className="flex items-center justify-between">
-                  <Link className="ml-auto text-xs text-muted-foreground transition-colors hover:text-foreground" href="/auth/forgot-password">
-                    Glemt passord?
-                  </Link>
-                </div>
-              )}
-              {mode === "register" && (
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  Ved å opprette konto godtar du{" "}
-                  <Link href="/terms" target="_blank" className="underline underline-offset-2">
-                    vilkårene
-                  </Link>
-                  . HOBBYSTRADA er en annonseplass og ikke part i handel mellom brukerne.
-                </p>
-              )}
-              {error && <p className="text-sm text-destructive">{error}</p>}
-              <button type="submit" disabled={busy} className={button}>
-                {busy ? "Et øyeblikk …" : c.submit}
-              </button>
-            </form>
+              <form className="space-y-5" onSubmit={submit}>
+                {mode === "register" && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="first_name" className={label}>
+                        Fornavn
+                      </label>
+                      <input id="first_name" name="first_name" type="text" required autoComplete="given-name" className={field} placeholder="Ola" />
+                    </div>
+                    <div>
+                      <label htmlFor="last_name" className={label}>
+                        Etternavn
+                      </label>
+                      <input id="last_name" name="last_name" type="text" required autoComplete="family-name" className={field} placeholder="Nordmann" />
+                    </div>
+                  </div>
+                )}
+                {mode !== "reset" && (
+                  <div>
+                    <label htmlFor="email" className={label}>
+                      E-post
+                    </label>
+                    <input id="email" name="email" type="email" required autoComplete="email" className={field} placeholder="deg@eksempel.no" />
+                  </div>
+                )}
+                {mode !== "forgot" && (
+                  <div>
+                    <label htmlFor="password" className={label}>
+                      Passord
+                    </label>
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                      minLength={mode === "login" ? undefined : 8}
+                      autoComplete={mode === "login" ? "current-password" : "new-password"}
+                      className={field}
+                      placeholder={mode === "login" ? "Ditt passord" : "Minst 8 tegn"}
+                    />
+                  </div>
+                )}
+                {mode === "login" && (
+                  <div className="flex items-center justify-between">
+                    <Link className="ml-auto text-xs text-muted-foreground transition-colors hover:text-foreground" href="/auth/forgot-password">
+                      Glemt passord?
+                    </Link>
+                  </div>
+                )}
+                {mode === "register" && (
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    Ved å opprette konto godtar du{" "}
+                    <Link href="/terms" target="_blank" className="underline underline-offset-2">
+                      vilkårene
+                    </Link>
+                    . HOBBYSTRADA er en annonseplass og ikke part i handel mellom brukerne.
+                  </p>
+                )}
+                {error && <p className="text-sm text-destructive">{error}</p>}
+                <button type="submit" disabled={busy} className={button}>
+                  {busy ? "Et øyeblikk …" : c.submit}
+                </button>
+              </form>
+            </>
           )}
           {mode === "login" && (
             <p className="mt-8 text-center text-sm text-muted-foreground">

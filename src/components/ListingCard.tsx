@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ClockIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
 import { FavoriteButton } from "./FavoriteButton";
+import { VerifiedBadge } from "./VerifiedBadge";
 import { formatPrice, timeAgo } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
@@ -60,6 +61,7 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
           )}
           <div className={`mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
+            {listing.sellerVerified && <VerifiedBadge compact />}
             <span className="inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
               <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>

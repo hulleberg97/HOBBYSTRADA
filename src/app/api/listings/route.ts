@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUser } from "@/lib/auth";
+import { getUser, getVerification } from "@/lib/auth";
+import { hasVippsLogin } from "@/lib/vipps-login";
 import { adminClient } from "@/lib/supabase-admin";
 import { slugify } from "@/lib/format";
 import { sendEmail } from "@/lib/email";
@@ -26,6 +27,10 @@ export async function POST(req: Request) {
   const f = await req.formData();
   if (f.get("_hp")) return NextResponse.json({ ok: true });
   const user = await getUser();
+  const verified = user ? await getVerification(user.id) : null;
+  if (hasVippsLogin() && !verified) {
+    return NextResponse.json({ error: "Bekreft deg med Vipps før du legger ut kort." }, { status: 403 });
+  }
 
   const player = str(f, "player", 80);
   const set = str(f, "set", 100);
@@ -66,7 +71,7 @@ export async function POST(req: Request) {
     images.push(db.storage.from("listing-images").getPublicUrl(path).data.publicUrl);
   }
 
-  const { error } = await db.from("listings").insert({
+  const row = {
     slug,
     title,
     player,
@@ -89,7 +94,10 @@ export async function POST(req: Request) {
     contact_email: email,
     contact_phone: str(f, "phone", 20) || null,
     status: "pending",
-  });
+  };
+  let { error } = await db.from("listings").insert({ ...row, seller_verified: Boolean(verified) });
+  // Databasen mangler seller_verified til supabase/004_vipps.sql er kjørt.
+  if (error && /seller_verified/.test(error.message)) ({ error } = await db.from("listings").insert(row));
   if (error) {
     console.error("Kunne ikke lagre annonse", error.message);
     return NextResponse.json({ error: "Annonsen ble ikke lagret. Prøv igjen." }, { status: 500 });

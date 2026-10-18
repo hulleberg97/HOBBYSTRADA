@@ -23,6 +23,7 @@ export type Listing = {
   image: string | null;
   images?: string[];
   seller: string;
+  sellerVerified?: boolean;
   location: string | null;
   createdAt: string;
   bumpedAt?: string | null;

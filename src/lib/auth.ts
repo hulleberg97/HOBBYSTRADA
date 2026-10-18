@@ -14,3 +14,13 @@ export function isAdmin(user: { email: string } | null) {
   const admin = process.env.ADMIN_EMAIL?.toLowerCase();
   return Boolean(user && admin && user.email.toLowerCase() === admin);
 }
+
+/** Bekreftet identitet fra Vipps, eller null. Tåler at profiles-tabellen ikke finnes ennå. */
+export async function getVerification(userId: string) {
+  const { adminClient } = await import("./supabase-admin");
+  const db = adminClient();
+  if (!db) return null;
+  const { data, error } = await db.from("profiles").select("verified_name, verified_at").eq("id", userId).maybeSingle();
+  if (error || !data?.verified_at) return null;
+  return { name: data.verified_name as string, at: data.verified_at as string };
+}

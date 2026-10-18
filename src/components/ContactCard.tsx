@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { CheckIcon, ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
 import { formatPrice, timeAgo } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
+import { VerifiedBadge } from "./VerifiedBadge";
 import type { Listing } from "@/lib/types";
 
 const input =
@@ -92,9 +93,12 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-xs text-slate-500">Selger</p>
-            <Link href={`/selger/${l.ownerId ?? "hobbystrada"}`} className="block truncate text-sm font-semibold text-slate-900 hover:underline">
-              {l.seller}
-            </Link>
+            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <Link href={`/selger/${l.ownerId ?? "hobbystrada"}`} className="truncate text-sm font-semibold text-slate-900 hover:underline">
+                {l.seller}
+              </Link>
+              {l.sellerVerified && <VerifiedBadge />}
+            </span>
             <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1">
                 <MapPinIcon className="h-3.5 w-3.5" aria-hidden="true" />

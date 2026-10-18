@@ -23,6 +23,7 @@ type Row = {
   featured_until: string | null;
   images: string[] | null;
   seller_name: string;
+  seller_verified?: boolean;
   location: string | null;
   created_at: string;
   updated_at?: string;
@@ -56,6 +57,7 @@ export function fromRow(r: Row): Listing {
     image: r.images?.[0] ?? null,
     images: r.images ?? [],
     seller: r.seller_name,
+    sellerVerified: Boolean(r.seller_verified),
     location: r.location,
     createdAt: r.created_at,
     soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
@@ -65,8 +67,22 @@ export function fromRow(r: Row): Listing {
   };
 }
 
-export const PUBLIC_COLUMNS =
+const BASE_COLUMNS =
   "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at";
+let hasVerifiedColumn = true;
+/** Offentlige kolonner. seller_verified kommer med supabase/004_vipps.sql; før det hentes annonsene uten. */
+export const publicColumns = () => (hasVerifiedColumn ? `${BASE_COLUMNS}, seller_verified` : BASE_COLUMNS);
+export const PUBLIC_COLUMNS = BASE_COLUMNS;
+
+/** Kjører spørringen, og prøver igjen uten seller_verified hvis databasen ikke er oppdatert ennå. */
+async function withColumns<T>(run: (cols: string) => PromiseLike<{ data: T; error: { message: string } | null }>) {
+  const res = await run(publicColumns());
+  if (res.error && hasVerifiedColumn && /seller_verified/.test(res.error.message)) {
+    hasVerifiedColumn = false;
+    return run(publicColumns());
+  }
+  return res;
+}
 
 const seedListings = (seed as Listing[]).map((l) => ({ ...l, images: l.image ? [l.image] : [] }));
 
@@ -79,20 +95,20 @@ export function marketOrder(list: Listing[]) {
 export async function getListings(): Promise<Listing[]> {
   const db = publicClient();
   if (!db) return marketOrder(seedListings.filter((l) => l.status === "active"));
-  const { data, error } = await db.from("listings").select(PUBLIC_COLUMNS).eq("status", "active");
+  const { data, error } = await withColumns((cols) => db.from("listings").select(cols).eq("status", "active"));
   if (error) {
     console.error("Kunne ikke hente annonser", error.message);
     return marketOrder(seedListings);
   }
-  return marketOrder((data as Row[]).map(fromRow));
+  return marketOrder((data as unknown as Row[]).map(fromRow));
 }
 
 export async function getListing(slug: string): Promise<Listing | null> {
   const db = publicClient();
   if (!db) return seedListings.find((l) => l.slug === slug) ?? null;
-  const { data, error } = await db.from("listings").select(PUBLIC_COLUMNS).eq("slug", slug).maybeSingle();
+  const { data, error } = await withColumns((cols) => db.from("listings").select(cols).eq("slug", slug).maybeSingle());
   if (error) return seedListings.find((l) => l.slug === slug) ?? null;
-  return data ? fromRow(data as Row) : null;
+  return data ? fromRow(data as unknown as Row) : null;
 }
 
 /** Alle aktive og solgte annonser fra én selger. «hobbystrada» er annonsene uten eier (lagt ut av HOBBYSTRADA). */
@@ -100,20 +116,23 @@ export async function getSellerListings(sellerId: string): Promise<Listing[]> {
   const db = publicClient();
   const own = sellerId === "hobbystrada";
   if (!db) return own ? marketOrder(seedListings) : [];
-  let query = db.from("listings").select(PUBLIC_COLUMNS).in("status", ["active", "sold"]);
-  query = own ? query.is("owner_id", null) : query.eq("owner_id", sellerId);
-  const { data, error } = await query.order("created_at", { ascending: false });
+  const { data, error } = await withColumns((cols) => {
+    const query = db.from("listings").select(cols).in("status", ["active", "sold"]);
+    return (own ? query.is("owner_id", null) : query.eq("owner_id", sellerId)).order("created_at", { ascending: false });
+  });
   if (error) return own ? marketOrder(seedListings) : [];
-  return (data as Row[]).map(fromRow);
+  return (data as unknown as Row[]).map(fromRow);
 }
 
 /** Solgte kort, nyeste salg først. Brukes i prisarkivet. */
 export async function getSoldListings(): Promise<Listing[]> {
   const db = publicClient();
   if (!db) return [];
-  const { data, error } = await db.from("listings").select(PUBLIC_COLUMNS).eq("status", "sold").order("updated_at", { ascending: false }).limit(500);
+  const { data, error } = await withColumns((cols) =>
+    db.from("listings").select(cols).eq("status", "sold").order("updated_at", { ascending: false }).limit(500),
+  );
   if (error) return [];
-  return (data as Row[]).map(fromRow);
+  return (data as unknown as Row[]).map(fromRow);
 }
 
 export function newest(list: Listing[]) {

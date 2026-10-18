@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { SellForm } from "@/components/SellForm";
-import { getUser } from "@/lib/auth";
+import { getUser, getVerification } from "@/lib/auth";
+import { hasVippsLogin } from "@/lib/vipps-login";
+import { VippsButton } from "@/components/VerifiedBadge";
 
 export const metadata: Metadata = { title: "Legg ut kort" };
 
@@ -13,6 +15,7 @@ const STEPS = [
 
 export default async function SellPage() {
   const user = await getUser();
+  const mustVerify = hasVippsLogin() && !(user && (await getVerification(user.id)));
   return (
     <>
       <section className="border-b border-border">
@@ -40,7 +43,20 @@ export default async function SellPage() {
         </div>
       </section>
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <SellForm user={user ? { name: user.name, email: user.email } : null} />
+        {mustVerify ? (
+          <div className="mx-auto max-w-md rounded-md border border-border bg-white p-6 text-center sm:p-8">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight">Bekreft deg med Vipps</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Alle selgere bekrefter navnet sitt med Vipps. Det gjør markedet tryggere for kjøperne, og annonsene dine får merket «Verifisert med Vipps».
+            </p>
+            <div className="mt-6">
+              <VippsButton href="/auth/vipps?next=/sell" label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">Vi får bare navnet, telefonnummeret og e-posten din fra Vipps. Telefonnummeret vises aldri.</p>
+          </div>
+        ) : (
+          <SellForm user={user ? { name: user.name, email: user.email } : null} />
+        )}
       </section>
     </>
   );

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CalendarIcon, MapPinIcon, PackageCheckIcon, TagIcon, type LucideIcon } from "lucide-react";
 import { ListingCard } from "@/components/ListingCard";
+import { VerifiedBadge } from "@/components/VerifiedBadge";
 import { getSellerListings } from "@/lib/listings";
 import { adminClient } from "@/lib/supabase-admin";
 
@@ -21,7 +22,7 @@ async function load(id: string) {
     const { data } = (await adminClient()?.auth.admin.getUserById(id)) ?? { data: null };
     if (data?.user?.created_at) since = data.user.created_at;
   }
-  return { name, since, listings };
+  return { name, since, listings, verified: listings.some((l) => l.sellerVerified) };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -51,7 +52,10 @@ export default async function SellerPage({ params }: Props) {
           </span>
           <div className="min-w-0">
             <p className="text-sm font-medium text-slate-500">Selger</p>
-            <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[40px]">{s.name}</h1>
+            <div className="mt-1 flex flex-wrap items-center gap-3">
+              <h1 className="font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[40px]">{s.name}</h1>
+              {s.verified && <VerifiedBadge />}
+            </div>
             <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
               {facts.map(([Icon, text]) => (
                 <li key={text} className="inline-flex items-center gap-1.5">

@@ -21,6 +21,7 @@ export default function PrivacyPage() {
               <List
                 items={[
                   "Konto: e-post, brukernavn og passord (lagres kryptert).",
+                  "Vipps (hvis du logger inn eller bekrefter deg med Vipps): navn, telefonnummer og e-post. Navnet brukes til merket «Verifisert med Vipps»; telefonnummeret vises aldri.",
                   "Annonser: kortdata, pris, sted, bilder og kontaktinformasjonen du oppgir.",
                   "Meldinger: navn, e-post og innholdet i meldinger sendt til selgere eller til oss.",
                   "Teknisk: informasjonskapsler som holder deg innlogget og husker språkvalg.",

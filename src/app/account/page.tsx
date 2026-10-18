@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MailIcon, PlusIcon, ZapIcon } from "lucide-react";
-import { getUser, isAdmin } from "@/lib/auth";
+import { getUser, getVerification, isAdmin } from "@/lib/auth";
+import { hasVippsLogin } from "@/lib/vipps-login";
+import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
 import { adminClient } from "@/lib/supabase-admin";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
@@ -18,6 +20,7 @@ export default async function AccountPage() {
   const user = await getUser();
   if (!user) redirect("/auth/login?next=/account");
   const db = adminClient();
+  const verification = await getVerification(user.id);
   const { data: rows } = db ? await db.from("listings").select("*").eq("owner_id", user.id).order("created_at", { ascending: false }) : { data: [] };
   const listings = (rows ?? []).map(fromRow);
   const { data: searches } = db
@@ -34,7 +37,10 @@ export default async function AccountPage() {
           <div>
             <p className="text-sm font-medium text-slate-500">Min side</p>
             <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Hei, {user.name}</h1>
-            <p className="mt-2 text-sm text-slate-600">{user.email}</p>
+            <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+              {user.email}
+              {verification && <VerifiedBadge />}
+            </p>
           </div>
           <div className="flex flex-wrap gap-2">
             {isAdmin(user) && (
@@ -108,6 +114,13 @@ export default async function AccountPage() {
           )}
         </section>
         <aside>
+          {hasVippsLogin() && !verification && (
+            <div className="mb-10 rounded-3xl bg-white p-5 ring-1 ring-slate-200">
+              <h2 className="font-semibold text-slate-950">Bekreft deg med Vipps</h2>
+              <p className="mt-1 mb-4 text-sm text-slate-600">Du må være verifisert for å legge ut kort. Annonsene dine får merket «Verifisert med Vipps».</p>
+              <VippsButton href="/auth/vipps?next=/account" label="Bekreft med Vipps" />
+            </div>
+          )}
           <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Varsler om nye kort</h2>
           <SavedSearches items={searches ?? []} />
           <h2 className="mt-10 font-heading text-xl font-bold tracking-tight text-slate-950">Meldinger</h2>
