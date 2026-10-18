@@ -225,11 +225,11 @@ const TURN = 1.4; // sekunder på å snu til neste
  * når de passerer, og kortet som kommer foran stopper, løftes frem og får fullt lys. Navn og pris vises under.
  * Hold over for å stoppe, dra for å snurre selv, trykk for å åpne annonsen.
  */
-export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback: React.ReactNode }) {
+export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCard[]; fallback: React.ReactNode; debug?: boolean }) {
   const box = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [focus, setFocus] = useState(0);
-  const [broken, setBroken] = useState(false);
+  const [broken, setBroken] = useState<string | false>(false);
   const supported = useSyncExternalStore(
     () => () => {},
     webglOk,
@@ -247,7 +247,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     } catch {
-      queueMicrotask(() => setBroken(true));
+      queueMicrotask(() => setBroken("Nettleseren klarte ikke å starte 3D."));
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 2));
@@ -755,7 +755,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     };
     const cv = renderer.domElement;
     // Mister nettleseren 3D-konteksten (f.eks. lite minne på telefonen), vis vanlig karusell i stedet
-    const onLost = () => setBroken(true);
+    const onLost = () => setBroken("Nettleseren mistet 3D-visningen (lite grafikkminne).");
     cv.addEventListener("webglcontextlost", onLost);
     cv.addEventListener("pointermove", onMove);
     cv.addEventListener("pointerdown", onDown);
@@ -849,7 +849,17 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     };
   }, [cards, router, supported]);
 
-  if (!supported || broken) return <>{fallback}</>;
+  if (!supported || broken) {
+    if (!debug) return <>{fallback}</>;
+    return (
+      <div>
+        <p className="mb-2 rounded-lg bg-amber-400/15 px-3 py-2 text-center text-xs text-amber-200">
+          Viser vanlig karusell: {broken || "3D (WebGL) er slått av eller ikke støttet i denne nettleseren."}
+        </p>
+        {fallback}
+      </div>
+    );
+  }
   const c = cards[focus] ?? cards[0];
   return (
     <div className="relative">

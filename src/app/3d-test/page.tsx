@@ -53,7 +53,7 @@ export default async function Page() {
               <p className="mt-5 text-[15px] leading-relaxed text-white/85 sm:text-lg">Markedsplassen for fotballkort.</p>
               {buttons(false)}
             </div>
-            <CardStage3D cards={cards} fallback={fallback} />
+            <CardStage3D cards={cards} fallback={fallback} debug />
           </div>
         </div>
       </section>
@@ -71,7 +71,7 @@ export default async function Page() {
             {buttons(true)}
           </div>
           <div className="mt-2">
-            <CardStage3D cards={cards} fallback={fallback} />
+            <CardStage3D cards={cards} fallback={fallback} debug />
           </div>
         </div>
       </section>
