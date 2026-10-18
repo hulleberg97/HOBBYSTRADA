@@ -9,6 +9,7 @@ const COLS = [
       ["/products", "Alle kort"],
       ["/search?q=autograf", "Autografkort"],
       ["/search?q=relic", "Relic og patch"],
+      ["/solgt", "Solgte kort"],
       ["/search", "Søk"],
     ],
   },

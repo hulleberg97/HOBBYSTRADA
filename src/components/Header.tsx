@@ -20,6 +20,7 @@ const MOBILE_NAV = [
   ["/sell", "Legg ut kort"],
   ["/annonseloft", "Annonseløft"],
   ["/favoritter", "Favoritter"],
+  ["/solgt", "Solgte kort"],
   ["/about", "Om oss"],
   ["/faq", "Spørsmål og svar"],
   ["/contact", "Kontakt"],

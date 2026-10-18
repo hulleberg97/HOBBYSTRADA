@@ -25,6 +25,7 @@ type Row = {
   seller_name: string;
   location: string | null;
   created_at: string;
+  updated_at?: string;
   bumped_until: string | null;
   frontpage_until: string | null;
   status: Listing["status"];
@@ -57,6 +58,7 @@ export function fromRow(r: Row): Listing {
     seller: r.seller_name,
     location: r.location,
     createdAt: r.created_at,
+    soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
     bumpedAt: r.bumped_until && new Date(r.bumped_until) > new Date() ? r.bumped_until : null,
     status: r.status,
     ownerId: r.owner_id,
@@ -64,7 +66,7 @@ export function fromRow(r: Row): Listing {
 }
 
 export const PUBLIC_COLUMNS =
-  "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at";
+  "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at";
 
 const seedListings = (seed as Listing[]).map((l) => ({ ...l, images: l.image ? [l.image] : [] }));
 
@@ -102,6 +104,15 @@ export async function getSellerListings(sellerId: string): Promise<Listing[]> {
   query = own ? query.is("owner_id", null) : query.eq("owner_id", sellerId);
   const { data, error } = await query.order("created_at", { ascending: false });
   if (error) return own ? marketOrder(seedListings) : [];
+  return (data as Row[]).map(fromRow);
+}
+
+/** Solgte kort, nyeste salg først. Brukes i prisarkivet. */
+export async function getSoldListings(): Promise<Listing[]> {
+  const db = publicClient();
+  if (!db) return [];
+  const { data, error } = await db.from("listings").select(PUBLIC_COLUMNS).eq("status", "sold").order("updated_at", { ascending: false }).limit(500);
+  if (error) return [];
   return (data as Row[]).map(fromRow);
 }
 

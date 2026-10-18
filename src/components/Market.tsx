@@ -226,6 +226,9 @@ export function Market({ listings }: { listings: Listing[] }) {
           <span className="hidden text-sm text-slate-500 md:inline" aria-live="polite">
             {result.length} treff
           </span>
+          <Link href="/solgt" className="ml-auto text-sm font-medium text-slate-600 underline-offset-4 hover:text-primary hover:underline">
+            Se hva kort har solgt for
+          </Link>
         </div>
         {chips.length > 0 && (
           <div className="-mt-2 mb-6 flex flex-wrap items-center gap-2">

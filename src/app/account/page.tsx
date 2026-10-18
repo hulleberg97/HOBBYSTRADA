@@ -71,7 +71,8 @@ export default async function AccountPage() {
                   key={l.slug}
                   listing={l}
                   extra={
-                    l.status !== "rejected" && (
+                    l.status !== "rejected" &&
+                    l.status !== "sold" && (
                       <div className="mt-2">
                         <EditListing id={l.id!} price={l.price} location={l.location} condition={l.condition} description={l.description} />
                       </div>

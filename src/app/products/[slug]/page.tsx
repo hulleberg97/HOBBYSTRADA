@@ -17,7 +17,7 @@ import { CardArt } from "@/components/CardArt";
 import { Gallery } from "@/components/Gallery";
 import { ContactCard } from "@/components/ContactCard";
 import { ListingCard } from "@/components/ListingCard";
-import { getListing, getListings } from "@/lib/listings";
+import { getListing, getListings, getSoldListings } from "@/lib/listings";
 import { formatPrice } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
@@ -46,7 +46,8 @@ function similar(all: Listing[], l: Listing) {
 export default async function ListingPage({ params }: Props) {
   const l = await getListing((await params).slug);
   if (!l) notFound();
-  const all = await getListings();
+  const [all, soldAll] = await Promise.all([getListings(), getSoldListings()]);
+  const history = soldAll.filter((x) => x.slug !== l.slug && x.player === l.player).slice(0, 5);
 
   const facts: [typeof HashIcon, string, string][] = [];
   facts.push([HashIcon, "Kortnummer", l.cardNumber ?? l.numbered ?? "Ikke oppgitt"]);
@@ -259,6 +260,35 @@ export default async function ListingPage({ params }: Props) {
             </section>
           </div>
         </div>
+        {history.length > 0 && (
+          <section className="mt-16 border-t border-slate-200 pt-10 lg:mt-20">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[28px]">Prishistorikk for {l.player}</h2>
+                <p className="mt-1 text-sm text-slate-500">Kort av samme spiller som er solgt på HOBBYSTRADA</p>
+              </div>
+              <Link className="inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/solgt">
+                Prisarkivet
+                <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <ul className="mt-6 divide-y divide-slate-100 overflow-hidden rounded-2xl ring-1 ring-slate-200">
+              {history.map((h) => (
+                <li key={h.slug} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-4 py-3 text-sm">
+                  <Link href={`/products/${h.slug}`} className="min-w-0 font-medium text-slate-900 hover:underline">
+                    {h.title}
+                  </Link>
+                  <span className="flex items-center gap-4 tabular-nums">
+                    <span className="text-slate-500">
+                      {new Date(h.soldAt ?? h.createdAt).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })}
+                    </span>
+                    <span className="font-semibold text-slate-950">{formatPrice(h.price)}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <section className="mt-16 border-t border-slate-200 pt-10 lg:mt-20">
           <div className="flex items-end justify-between gap-4">
             <div>

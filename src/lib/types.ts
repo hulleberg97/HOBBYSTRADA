@@ -26,6 +26,7 @@ export type Listing = {
   location: string | null;
   createdAt: string;
   bumpedAt?: string | null;
+  soldAt?: string | null;
   status: ListingStatus;
   ownerId?: string | null;
 };
