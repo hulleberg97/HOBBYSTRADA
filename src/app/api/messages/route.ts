@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getListing } from "@/lib/listings";
 import { adminClient } from "@/lib/supabase-admin";
 import { sendEmail } from "@/lib/email";
+import { formatPrice } from "@/lib/format";
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -17,6 +18,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Fyll inn navn, en gyldig e-postadresse og en melding." }, { status: 400 });
   }
 
+  const offer = body.offer ? Number(String(body.offer).replace(/\D/g, "")) : null;
+  if (offer !== null && !(offer > 0)) return NextResponse.json({ error: "Skriv inn budet i hele kroner." }, { status: 400 });
+  const text = offer ? `Bud: ${formatPrice(offer)}\n\n${message}` : message;
   const listing = await getListing(clean(body.listing, 200));
   if (!listing || listing.status !== "active") return NextResponse.json({ error: "Annonsen finnes ikke lenger." }, { status: 404 });
 
@@ -28,7 +32,7 @@ export async function POST(req: Request) {
       seller_id: listing.ownerId ?? null,
       sender_name: name,
       sender_email: email,
-      body: message,
+      body: text,
     });
     if (error) {
       console.error("Kunne ikke lagre melding", error.message);
@@ -44,8 +48,8 @@ export async function POST(req: Request) {
     ? await sendEmail({
         to: sellerEmail,
         replyTo: email,
-        subject: `Ny melding om «${listing.title}»`,
-        text: `${name} (${email}) skriver om annonsen din:\n\n${message}\n\nSvar ved å svare på denne e-posten.\n\n${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/products/${listing.slug}`,
+        subject: offer ? `Nytt bud på «${listing.title}»: ${formatPrice(offer)}` : `Ny melding om «${listing.title}»`,
+        text: `${name} (${email}) skriver om annonsen din:\n\n${text}\n\nSvar ved å svare på denne e-posten.\n\n${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/products/${listing.slug}`,
       })
     : false;
 

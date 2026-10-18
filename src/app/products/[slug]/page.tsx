@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -15,6 +14,7 @@ import {
   SparklesIcon,
 } from "lucide-react";
 import { CardArt } from "@/components/CardArt";
+import { Gallery } from "@/components/Gallery";
 import { ContactCard } from "@/components/ContactCard";
 import { ListingCard } from "@/components/ListingCard";
 import { getListing, getListings } from "@/lib/listings";
@@ -114,52 +114,53 @@ export default async function ListingPage({ params }: Props) {
         <div className="mt-5 grid gap-8 lg:mt-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
           <div className="lg:sticky lg:top-24 lg:self-start">
             <div>
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
-                <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
-                  {l.featured && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>}
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${l.status === "sold" ? "bg-slate-700" : "bg-emerald-600"}`}>
-                    {l.status === "sold" ? "Solgt" : "Aktiv"}
-                  </span>
-                </div>
-                {l.grading && (
-                  <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
-                    <ShieldCheckIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-                    {l.grading}
-                  </span>
-                )}
-                <div className="px-10 pb-10 pt-16 sm:px-20 sm:pb-14 sm:pt-20">
-                  <div className="mx-auto w-full max-w-[300px] sm:max-w-[340px]">
-                    <div className="rounded-[18px] border border-white bg-gradient-to-br from-white via-slate-100 to-white p-3 shadow-2xl shadow-slate-900/30">
-                      <div className="aspect-[5/7] overflow-hidden rounded-[10px] bg-primary">
-                        {l.image ? (
-                          <Image
-                            alt={l.title}
-                            src={l.image}
-                            width={800}
-                            height={1120}
-                            priority
-                            sizes="(max-width: 1024px) 80vw, 360px"
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <CardArt listing={l} square detail />
+              {l.images?.length ? (
+                <Gallery
+                  images={l.images}
+                  title={l.title}
+                  badges={
+                    <>
+                      <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
+                        {l.featured && (
+                          <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>
                         )}
+                        <span className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${l.status === "sold" ? "bg-slate-700" : "bg-emerald-600"}`}>
+                          {l.status === "sold" ? "Solgt" : "Aktiv"}
+                        </span>
+                      </div>
+                      {l.grading && (
+                        <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
+                          <ShieldCheckIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                          {l.grading}
+                        </span>
+                      )}
+                    </>
+                  }
+                />
+              ) : (
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
+                  <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
+                    {l.featured && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>}
+                    <span className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${l.status === "sold" ? "bg-slate-700" : "bg-emerald-600"}`}>
+                      {l.status === "sold" ? "Solgt" : "Aktiv"}
+                    </span>
+                  </div>
+                  {l.grading && (
+                    <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
+                      <ShieldCheckIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                      {l.grading}
+                    </span>
+                  )}
+                  <div className="px-10 pb-10 pt-16 sm:px-20 sm:pb-14 sm:pt-20">
+                    <div className="mx-auto w-full max-w-[300px] sm:max-w-[340px]">
+                      <div className="rounded-[18px] border border-white bg-gradient-to-br from-white via-slate-100 to-white p-3 shadow-2xl shadow-slate-900/30">
+                        <div className="aspect-[5/7] overflow-hidden rounded-[10px] bg-primary">
+                          <CardArt listing={l} square detail />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              {(l.images?.length ?? 0) > 1 && (
-                <ul className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-6">
-                  {l.images!.map((src) => (
-                    <li key={src}>
-                      <a href={src} target="_blank" rel="noopener" className="block aspect-square overflow-hidden rounded-xl ring-1 ring-slate-200">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={src} alt="" className="h-full w-full object-cover" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
               )}
               <p className="mt-3 text-center text-xs text-slate-500">{l.image ? "Bilde fra selger" : "Illustrasjon – selger har ikke lastet opp bilde ennå"}</p>
             </div>

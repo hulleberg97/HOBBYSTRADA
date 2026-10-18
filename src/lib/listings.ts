@@ -93,6 +93,18 @@ export async function getListing(slug: string): Promise<Listing | null> {
   return data ? fromRow(data as Row) : null;
 }
 
+/** Alle aktive og solgte annonser fra én selger. «hobbystrada» er annonsene uten eier (lagt ut av HOBBYSTRADA). */
+export async function getSellerListings(sellerId: string): Promise<Listing[]> {
+  const db = publicClient();
+  const own = sellerId === "hobbystrada";
+  if (!db) return own ? marketOrder(seedListings) : [];
+  let query = db.from("listings").select(PUBLIC_COLUMNS).in("status", ["active", "sold"]);
+  query = own ? query.is("owner_id", null) : query.eq("owner_id", sellerId);
+  const { data, error } = await query.order("created_at", { ascending: false });
+  if (error) return own ? marketOrder(seedListings) : [];
+  return (data as Row[]).map(fromRow);
+}
+
 export function newest(list: Listing[]) {
   return [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }

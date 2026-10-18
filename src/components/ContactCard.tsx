@@ -16,6 +16,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
   const [error, setError] = useState("");
   const [shared, setShared] = useState(false);
   const [barOpen, setBarOpen] = useState(false);
+  const [mode, setMode] = useState<"question" | "offer">("question");
   const card = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,7 +92,9 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-xs text-slate-500">Selger</p>
-            <p className="truncate text-sm font-semibold text-slate-900">{l.seller}</p>
+            <Link href={`/selger/${l.ownerId ?? "hobbystrada"}`} className="block truncate text-sm font-semibold text-slate-900 hover:underline">
+              {l.seller}
+            </Link>
             <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1">
                 <MapPinIcon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -122,10 +125,44 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                 {state === "sent" ? (
                   <div className="flex items-start gap-3 rounded-2xl bg-emerald-50 p-4 text-sm text-emerald-800 ring-1 ring-inset ring-emerald-200">
                     <CheckIcon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                    <p>Meldingen er sendt. Selgeren svarer deg på e-post.</p>
+                    <p>{mode === "offer" ? "Budet er sendt." : "Meldingen er sendt."} Selgeren svarer deg på e-post.</p>
                   </div>
                 ) : (
                   <form className="grid gap-3" onSubmit={send}>
+                    <div role="tablist" aria-label="Type melding" className="grid grid-cols-2 gap-1 rounded-full bg-slate-100 p-1 text-sm font-semibold">
+                      {(
+                        [
+                          ["question", "Still et spørsmål"],
+                          ["offer", "Gi bud"],
+                        ] as const
+                      ).map(([k, label]) => (
+                        <button
+                          key={k}
+                          type="button"
+                          role="tab"
+                          aria-selected={mode === k}
+                          onClick={() => setMode(k)}
+                          className="h-9 rounded-full text-slate-600 transition aria-selected:bg-white aria-selected:text-primary aria-selected:shadow-sm"
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                    {mode === "offer" && (
+                      <div className="relative">
+                        <input
+                          name="offer"
+                          required
+                          inputMode="numeric"
+                          maxLength={9}
+                          aria-label="Ditt bud i kroner"
+                          placeholder={`Ditt bud (prisantydning ${formatPrice(l.price)})`}
+                          className={`${input} h-11 pr-12 font-mono-data`}
+                          onChange={(e) => (e.target.value = e.target.value.replace(/\D/g, ""))}
+                        />
+                        <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 font-mono-data text-xs text-slate-500">kr</span>
+                      </div>
+                    )}
                     <div className="grid gap-3 sm:grid-cols-2">
                       <input name="name" required maxLength={100} placeholder="Navn" autoComplete="name" aria-label="Navn" className={`${input} h-11`} />
                       <input
@@ -146,7 +183,12 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                       maxLength={1500}
                       aria-label="Melding"
                       className={`${input} py-3`}
-                      defaultValue={`Hei! Er «${l.title}» fortsatt til salgs?`}
+                      key={mode}
+                      defaultValue={
+                        mode === "offer"
+                          ? `Hei! Jeg vil gjerne by på «${l.title}». Gi meg beskjed om budet passer.`
+                          : `Hei! Er «${l.title}» fortsatt til salgs?`
+                      }
                     />
                     <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" type="text" style={{ position: "absolute", left: "-9999px" }} />
                     {state === "error" && <p className="text-sm text-destructive">{error}</p>}
@@ -155,7 +197,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                       disabled={state === "sending"}
                       className="flex h-11 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
                     >
-                      {state === "sending" ? "Sender …" : "Send melding"}
+                      {state === "sending" ? "Sender …" : mode === "offer" ? "Send bud" : "Send melding"}
                     </button>
                   </form>
                 )}
