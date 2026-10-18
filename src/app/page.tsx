@@ -27,6 +27,9 @@ export default async function Home() {
     .slice(0, 4);
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
   const c = categoryCounts(all);
+  // Kortvifta: alle toppannonser, deretter de nyeste – helst med ekte bilde
+  const fanPaid = all.filter((l) => l.frontpage);
+  const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))].slice(0, 10);
   return (
     <div className="bg-background">
       <section className="bg-background">
@@ -71,7 +74,7 @@ export default async function Home() {
                   </Link>
                 </div>
               </div>
-              <HeroFan listings={all} />
+              <HeroFan paid={fanPaid} fill={fanFill} />
             </div>
           </div>
         </div>
@@ -383,7 +386,7 @@ export default async function Home() {
               <ul className="mt-6 space-y-2.5">
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Fast plass i toppen av forsiden
+                  Plass i kortvifta øverst på forsiden
                 </li>
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />

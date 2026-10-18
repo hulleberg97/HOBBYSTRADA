@@ -10,7 +10,7 @@ import { formatPrice } from "@/lib/format";
 const PLANS: { key: BoostKey; Icon: typeof SparklesIcon; perks: string[]; popular?: boolean }[] = [
   { key: "top", Icon: ArrowUpToLineIcon, perks: ["Først i markedslisten", "Før alle nye annonser", "Varer i 3 dager"] },
   { key: "featured", Icon: SparklesIcon, perks: ["Gullmerket «Fremhevet»", "Egen seksjon på forsiden", "Først i markedet", "Varer i 7 dager"], popular: true },
-  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Fast plass på forsiden", "Maksimal synlighet", "Varer i 30 dager"] },
+  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Plass i kortvifta på forsiden", "Maksimal synlighet", "Varer i 30 dager"] },
 ];
 
 export function BoostPicker() {

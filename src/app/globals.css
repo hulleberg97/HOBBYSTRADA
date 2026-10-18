@@ -92,3 +92,16 @@
   line-height: var(--tw-leading, 1.2);
   letter-spacing: var(--tw-tracking, -0.01em);
 }
+
+/* Kortvifta: myk inngang når kortene roterer */
+@keyframes fan-in {
+  from {
+    opacity: 0.35;
+    transform: translateY(10px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[fan-in_\.6s_ease-out\] {
+    animation: none;
+  }
+}
