@@ -25,7 +25,7 @@ async function load(id: string) {
 export async function PATCH(req: Request, { params }: Ctx) {
   const r = await load((await params).id);
   if (r.error) return r.error;
-  const { status, price, description, location, condition } = await req.json().catch(() => ({}));
+  const { status, price, description, location, condition, fanSlot } = await req.json().catch(() => ({}));
   const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (status) {
     const allowed = r.admin ? ADMIN_STATUSES : OWNER_STATUSES;
@@ -35,7 +35,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
       return NextResponse.json({ error: "Annonsen venter på godkjenning." }, { status: 403 });
     }
     patch.status = status;
-    if (status === "sold") Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null, sold_at: new Date().toISOString() });
+    if (status === "sold")
+      Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null, fan_slot: null, sold_at: new Date().toISOString() });
     if (status === "active") patch.sold_at = null;
   }
   if (price !== undefined) {
@@ -48,6 +49,13 @@ export async function PATCH(req: Request, { params }: Ctx) {
   if (typeof location === "string") {
     if (!location.trim()) return NextResponse.json({ error: "Sted kan ikke være tomt." }, { status: 400 });
     patch.location = location.trim().slice(0, 60);
+  }
+  if (fanSlot !== undefined) {
+    if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort til vifta." }, { status: 403 });
+    if (fanSlot !== null && ![1, 2, 3, 4, 5].includes(fanSlot)) return NextResponse.json({ error: "Ugyldig plass." }, { status: 400 });
+    // Plassen kan bare ha ett kort: frigjør den først.
+    if (fanSlot !== null) await r.db.from("listings").update({ fan_slot: null }).eq("fan_slot", fanSlot).neq("id", r.listing.id);
+    patch.fan_slot = fanSlot;
   }
   let { error } = await r.db.from("listings").update(patch).eq("id", r.listing.id);
   // Databasen er ikke oppdatert med prisarkivet ennå (supabase/002_nye_funksjoner.sql): lagre uten sold_at.

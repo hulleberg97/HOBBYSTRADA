@@ -16,32 +16,37 @@ const POSITIONS = [
 ];
 const ROTATE_MS = 7000;
 
-/** Fem kort: det første i midten, de neste på hver side, de siste ytterst. Hvert kort beholder plassen sin, også med færre enn fem. */
-export function pickFan(list: Listing[]) {
-  const [first, second, third, fourth, fifth] = list;
+/** Fem kort i rangering (1 = midten, 2 venstre, 3 høyre, 4 og 5 ytterst). Tomme plasser hoppes over. */
+export function pickFan(ranked: (Listing | undefined)[]) {
+  const [first, second, third, fourth, fifth] = ranked;
   return [fourth, second, first, third, fifth].flatMap((l, slot) => (l ? [{ listing: l, slot }] : []));
 }
 
 /**
- * Kortvifta på forsiden. Toppannonser har plass hele perioden; er de flere enn fem, roterer de.
- * Ledige plasser fylles med de nyeste annonsene.
+ * Kortvifta på forsiden. Kort admin har festet står på sin faste plass. Toppannonser har plass hele perioden;
+ * er de flere enn de ledige plassene, roterer de. Resten fylles med de nyeste annonsene.
  */
-export function HeroFan({ paid, fill }: { paid: Listing[]; fill: Listing[] }) {
+export function HeroFan({ pinned, paid, fill }: { pinned: Listing[]; paid: Listing[]; fill: Listing[] }) {
   const [offset, setOffset] = useState(0);
-  const rotating = paid.length > 5;
+  const free = 5 - pinned.length;
+  const rotating = free > 0 && paid.length > free;
   useEffect(() => {
     if (!rotating) return;
     const t = setInterval(() => setOffset((o) => (o + 1) % paid.length), ROTATE_MS);
     return () => clearInterval(t);
   }, [rotating, paid.length]);
 
-  const shown = rotating
-    ? Array.from({ length: 5 }, (_, i) => paid[(offset + i) % paid.length])
-    : [...paid, ...fill.filter((l) => !paid.some((p) => p.slug === l.slug))].slice(0, 5);
+  const taken = new Set(pinned.map((l) => l.slug));
+  const candidates = rotating
+    ? Array.from({ length: free }, (_, i) => paid[(offset + i) % paid.length])
+    : [...paid, ...fill].filter((l, i, all) => !taken.has(l.slug) && all.findIndex((x) => x.slug === l.slug) === i);
+  const ranked: (Listing | undefined)[] = Array(5).fill(undefined);
+  for (const l of pinned) if (l.fanSlot) ranked[l.fanSlot - 1] = l;
+  for (let i = 0; i < 5; i++) if (!ranked[i]) ranked[i] = candidates.shift();
 
   return (
     <div className="relative mx-auto h-[280px] w-full max-w-[520px] sm:h-[400px] lg:h-[480px] lg:max-w-[600px]">
-      {pickFan(shown).map(({ listing: l, slot }) => {
+      {pickFan(ranked).map(({ listing: l, slot }) => {
         const p = POSITIONS[slot];
         return (
           <Link

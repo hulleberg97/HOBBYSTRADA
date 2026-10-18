@@ -24,6 +24,7 @@ type Row = {
   images: string[] | null;
   seller_name: string;
   seller_verified?: boolean;
+  fan_slot?: number | null;
   location: string | null;
   created_at: string;
   updated_at?: string;
@@ -58,6 +59,7 @@ export function fromRow(r: Row): Listing {
     images: r.images ?? [],
     seller: r.seller_name,
     sellerVerified: Boolean(r.seller_verified),
+    fanSlot: r.fan_slot ?? null,
     location: r.location,
     createdAt: r.created_at,
     soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
@@ -68,7 +70,7 @@ export function fromRow(r: Row): Listing {
 }
 
 const BASE_COLUMNS =
-  "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at";
+  "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at, fan_slot";
 let hasVerifiedColumn = true;
 /** Offentlige kolonner. seller_verified kommer med supabase/004_vipps.sql; før det hentes annonsene uten. */
 export const publicColumns = () => (hasVerifiedColumn ? `${BASE_COLUMNS}, seller_verified` : BASE_COLUMNS);

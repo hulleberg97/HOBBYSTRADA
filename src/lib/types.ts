@@ -30,4 +30,6 @@ export type Listing = {
   soldAt?: string | null;
   status: ListingStatus;
   ownerId?: string | null;
+  /** Fast plass i kortvifta på forsiden (1 = midten), satt av admin */
+  fanSlot?: number | null;
 };

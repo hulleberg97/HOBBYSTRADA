@@ -28,6 +28,7 @@ export default async function Home() {
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
   const c = categoryCounts(all);
   // Kortvifta: alle toppannonser, deretter de nyeste – helst med ekte bilde
+  const fanPinned = all.filter((l) => l.fanSlot);
   const fanPaid = all.filter((l) => l.frontpage);
   const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))].slice(0, 10);
   return (
@@ -74,7 +75,7 @@ export default async function Home() {
                   </Link>
                 </div>
               </div>
-              <HeroFan paid={fanPaid} fill={fanFill} />
+              <HeroFan pinned={fanPinned} paid={fanPaid} fill={fanFill} />
             </div>
           </div>
         </div>

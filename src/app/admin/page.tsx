@@ -9,6 +9,7 @@ import { hasVipps } from "@/lib/vipps";
 import { formatPrice } from "@/lib/format";
 import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingActions";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
+import { FanSlotSelect } from "@/components/FanSlotSelect";
 
 export const metadata: Metadata = { title: "Administrasjon", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -234,6 +235,7 @@ export default async function AdminPage() {
                       { label: "Slett", del: true, tone: "danger" as const },
                     ]}
                   />
+                  {l.status === "active" && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
                 </OwnerListingRow>
               );
             })}
