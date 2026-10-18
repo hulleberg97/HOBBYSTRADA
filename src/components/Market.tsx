@@ -97,8 +97,8 @@ export function Market({ listings }: { listings: Listing[] }) {
           <div className="pointer-events-none absolute -bottom-32 right-1/3 h-64 w-64 rounded-full bg-white/5 blur-2xl" aria-hidden="true"></div>
           <div className="relative flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
-              <h1 className="font-heading text-3xl font-bold tracking-[-0.03em] sm:text-[44px] sm:leading-[1.05]">Markedet</h1>
-              <p className="mt-3 text-[15px] leading-relaxed text-white/75">Fotballkort fra samlere i hele Norge. Kjøp direkte fra selgeren.</p>
+              <h1 className="font-heading text-3xl font-bold tracking-[-0.03em] sm:text-[44px] sm:leading-[1.05]">Finn ditt neste kort</h1>
+              <p className="mt-3 text-[15px] leading-relaxed text-white/75">Fotballkort fra samlere i hele Norge.</p>
             </div>
             <form role="search" onSubmit={submit} className="flex h-14 w-full items-center gap-2 rounded-full bg-white pl-5 pr-1.5 shadow-lg lg:w-[420px]">
               <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
