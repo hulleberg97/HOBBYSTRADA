@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ClockIcon } from "lucide-react";
+import { ClockIcon, CrownIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
@@ -34,7 +34,12 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
             )}
           </div>
           <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
-            {listing.featured && <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">Fremhevet</span>}
+            {listing.featured && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">
+                {listing.frontpage && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
+                {listing.frontpage ? "Toppannonse" : "Fremhevet"}
+              </span>
+            )}
             <span
               data-state={listing.status}
               className={`rounded-full px-2.5 py-1 text-[11px] font-semibold text-white data-[state=active]:bg-emerald-600 data-[state=sold]:bg-slate-700 ${listing.featured ? "hidden sm:inline" : ""}`}

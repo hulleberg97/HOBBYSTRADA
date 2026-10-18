@@ -86,10 +86,10 @@ async function withColumns<T>(run: (cols: string) => PromiseLike<{ data: T; erro
 
 const seedListings = (seed as Listing[]).map((l) => ({ ...l, images: l.image ? [l.image] : [] }));
 
-/** Markedsrekkefølge: løftede annonser («Topp av listen») først, deretter nyeste. */
+/** Markedsrekkefølge: Toppannonse, så Fremhevet, så Topp av listen, så resten. Nyeste først innen hver gruppe. */
 export function marketOrder(list: Listing[]) {
-  const key = (l: Listing) => l.bumpedAt ?? l.createdAt;
-  return [...list].sort((a, b) => key(b).localeCompare(key(a)));
+  const tier = (l: Listing) => (l.frontpage ? 3 : l.featured ? 2 : l.bumpedAt ? 1 : 0);
+  return [...list].sort((a, b) => tier(b) - tier(a) || b.createdAt.localeCompare(a.createdAt));
 }
 
 export async function getListings(): Promise<Listing[]> {
