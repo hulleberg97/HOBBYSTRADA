@@ -19,11 +19,11 @@ async function load(id: string) {
   return { db, listing, admin };
 }
 
-/** Endre status: selger kan merke som solgt, skjule eller aktivere igjen. Admin kan også godkjenne og avvise. */
+/** Endre annonsen: pris, tekst, sted og tilstand, eller status (solgt, skjult, aktiv). Admin kan også godkjenne og avvise. */
 export async function PATCH(req: Request, { params }: Ctx) {
   const r = await load((await params).id);
   if (r.error) return r.error;
-  const { status, price } = await req.json().catch(() => ({}));
+  const { status, price, description, location, condition } = await req.json().catch(() => ({}));
   const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (status) {
     const allowed = r.admin ? ADMIN_STATUSES : OWNER_STATUSES;
@@ -39,6 +39,12 @@ export async function PATCH(req: Request, { params }: Ctx) {
     const p = Number(price);
     if (!(p > 0)) return NextResponse.json({ error: "Ugyldig pris." }, { status: 400 });
     patch.price = p;
+  }
+  if (typeof description === "string") patch.description = description.trim().slice(0, 1500);
+  if (typeof condition === "string" && condition.trim()) patch.condition = condition.trim().slice(0, 40);
+  if (typeof location === "string") {
+    if (!location.trim()) return NextResponse.json({ error: "Sted kan ikke være tomt." }, { status: 400 });
+    patch.location = location.trim().slice(0, 60);
   }
   const { error } = await r.db.from("listings").update(patch).eq("id", r.listing.id);
   if (error) return NextResponse.json({ error: "Kunne ikke lagre endringen." }, { status: 500 });

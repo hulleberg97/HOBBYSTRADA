@@ -6,6 +6,7 @@ import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
+import { EditListing } from "@/components/EditListing";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 
 export const metadata: Metadata = { title: "Min side" };
@@ -62,7 +63,17 @@ export default async function AccountPage() {
           ) : (
             <ul className="mt-4 space-y-3">
               {listings.map((l) => (
-                <OwnerListingRow key={l.slug} listing={l}>
+                <OwnerListingRow
+                  key={l.slug}
+                  listing={l}
+                  extra={
+                    l.status !== "rejected" && (
+                      <div className="mt-2">
+                        <EditListing id={l.id!} price={l.price} location={l.location} condition={l.condition} description={l.description} />
+                      </div>
+                    )
+                  }
+                >
                   <ListingActions
                     id={l.id!}
                     actions={[
