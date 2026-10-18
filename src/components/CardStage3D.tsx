@@ -56,12 +56,14 @@ function drawFront(ctx: CanvasRenderingContext2D, c: StageCard, img: HTMLImageEl
   ctx.fillText(fit(ctx, c.set, lw - 230), lx + 30, ly + 54);
   ctx.textAlign = "right";
   ctx.fillText(c.number ? `#${c.number}` : "", lx + lw - 30, ly + 56);
-  ctx.font = `800 56px ${fontFamily}`;
-  ctx.textAlign = "left";
-  ctx.fillText(fit(ctx, c.player, lw - 290), lx + 30, ly + 120);
-  ctx.textAlign = "right";
   ctx.font = `700 40px ${fontFamily}`;
-  ctx.fillText(c.type.toUpperCase(), lx + lw - 30, ly + 120);
+  ctx.textAlign = "right";
+  const type = c.type.toUpperCase();
+  ctx.fillText(type, lx + lw - 30, ly + 120);
+  const room = lw - 90 - ctx.measureText(type).width;
+  ctx.font = `800 52px ${fontFamily}`;
+  ctx.textAlign = "left";
+  ctx.fillText(fit(ctx, c.player, room), lx + 30, ly + 120);
 
   // Fordypningen og kortet
   const wx = 70;
@@ -216,7 +218,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
 
     // Lys: en smal spot rett ovenfra på kortet foran, som i en monter. Resten ligger i halvmørke.
     const front = new THREE.Vector3(0, 0, radius);
-    const spot = new THREE.SpotLight(0xfff6e6, 140, 16, Math.PI / 8, 0.75, 1.6);
+    const spot = new THREE.SpotLight(0xfff6e6, 85, 16, Math.PI / 8, 0.75, 1.6);
     spot.position.set(0, 7.5, radius + 0.6);
     spot.target.position.set(0, 1.2, radius);
     const rim = new THREE.DirectionalLight(0xf2d48a, 1.1);
@@ -267,8 +269,8 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
         clearcoat: 1,
         clearcoatRoughness: 0.02,
         transparent: true,
-        opacity: 0.16,
-        envMapIntensity: 3,
+        opacity: 0.09,
+        envMapIntensity: 2.4,
         depthWrite: false,
       }),
     );
