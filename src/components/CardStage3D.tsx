@@ -191,8 +191,9 @@ function lightCone(top: number, bottom: number, height: number, strength: number
     transparent: true,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
-    side: THREE.DoubleSide,
-    uniforms: { color: { value: new THREE.Color(0xfff1d6) }, strength: { value: strength } },
+    // Bare innsiden av kjeglen tegnes, så lyset ligger bak kortet og ikke som et slør foran det
+    side: THREE.BackSide,
+    uniforms: { color: { value: new THREE.Color(0xfff1d6) }, strength: { value: strength * 1.6 } },
     vertexShader: `
       varying float vY; varying vec3 vN; varying vec3 vView;
       void main() {
