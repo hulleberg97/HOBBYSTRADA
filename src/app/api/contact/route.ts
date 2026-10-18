@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
 import { sendEmail } from "@/lib/email";
+import { getUser } from "@/lib/auth";
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -8,8 +9,10 @@ export async function POST(req: Request) {
   const b = await req.json().catch(() => null);
   if (!b) return NextResponse.json({ error: "Ugyldig forespørsel." }, { status: 400 });
   if (b._hp) return NextResponse.json({ ok: true });
-  const name = [clean(b.first_name, 100), clean(b.last_name, 99)].filter(Boolean).join(" ");
-  const email = clean(b.email, 320);
+  // Innlogget: navn og e-post hentes fra kontoen, ikke fra skjemaet.
+  const user = await getUser();
+  const name = user ? user.fullName.slice(0, 200) : [clean(b.first_name, 100), clean(b.last_name, 99)].filter(Boolean).join(" ");
+  const email = user ? user.email : clean(b.email, 320);
   const topic = clean(b.topic, 60) || "Annet";
   const message = clean(b.message, 4900);
   if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) {

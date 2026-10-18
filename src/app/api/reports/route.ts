@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
 import { sendEmail } from "@/lib/email";
+import { getUser } from "@/lib/auth";
 import { getListing } from "@/lib/listings";
 import { REPORT_REASONS } from "@/lib/reports";
 
@@ -12,7 +13,7 @@ export async function POST(req: Request) {
   if (b._hp) return NextResponse.json({ ok: true });
   const reason = clean(b.reason, 80);
   const details = clean(b.details, 2000);
-  const email = clean(b.email, 320) || null;
+  const email = (await getUser())?.email || clean(b.email, 320) || null;
   if (!REPORT_REASONS.includes(reason)) return NextResponse.json({ error: "Velg hva som er galt." }, { status: 400 });
   if (email && !/^\S+@\S+\.\S+$/.test(email)) return NextResponse.json({ error: "E-postadressen ser ikke riktig ut." }, { status: 400 });
   const listing = await getListing(clean(b.listing, 200));

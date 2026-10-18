@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { CheckIcon, FlagIcon } from "lucide-react";
 import { REPORT_REASONS } from "@/lib/reports";
+import { useUser } from "./useUser";
 
 const field =
   "h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-[15px] text-slate-950 outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10";
@@ -12,6 +13,7 @@ const label = "mb-1.5 block text-sm font-medium text-slate-800";
 export function ReportForm({ slug }: { slug: string }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
+  const user = useUser();
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,12 +76,18 @@ export function ReportForm({ slug }: { slug: string }) {
           </label>
           <textarea id="report-details" name="details" rows={4} maxLength={2000} className={`${field} h-auto resize-y py-3`} />
         </div>
-        <div>
-          <label htmlFor="report-email" className={label}>
-            Din e-post (valgfritt, hvis vi skal kunne svare deg)
-          </label>
-          <input id="report-email" name="email" type="email" maxLength={320} autoComplete="email" className={field} />
-        </div>
+        {user ? (
+          <p className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600 ring-1 ring-inset ring-slate-200">
+            Sendes fra <span className="font-semibold text-slate-900">{user.fullName}</span> ({user.email}). Vi kan svare deg på e-post.
+          </p>
+        ) : (
+          <div>
+            <label htmlFor="report-email" className={label}>
+              Din e-post (valgfritt, hvis vi skal kunne svare deg)
+            </label>
+            <input id="report-email" name="email" type="email" maxLength={320} autoComplete="email" className={field} />
+          </div>
+        )}
       </div>
       <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px" }} name="_hp" />
       {state === "error" && <p className="mt-4 text-sm text-destructive">{error}</p>}

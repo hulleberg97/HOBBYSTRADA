@@ -1,4 +1,5 @@
 import { serverClient } from "./supabase";
+import { displayName } from "./user-name";
 
 export async function getUser() {
   const db = await serverClient();
@@ -6,7 +7,12 @@ export async function getUser() {
   const { data } = await db.auth.getUser();
   if (!data.user) return null;
   const meta = data.user.user_metadata ?? {};
-  return { id: data.user.id, email: data.user.email ?? "", name: (meta.username as string) || (meta.name as string) || data.user.email || "" };
+  return {
+    id: data.user.id,
+    email: data.user.email ?? "",
+    name: (meta.username as string) || (meta.name as string) || data.user.email || "",
+    fullName: displayName(meta, data.user.email),
+  };
 }
 
 /** Administrator er brukeren med samme e-post som ADMIN_EMAIL. */

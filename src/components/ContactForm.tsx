@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { CheckIcon, InfoIcon } from "lucide-react";
 import { ReportForm } from "./ReportForm";
+import { useUser } from "./useUser";
 
 const field =
   "h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-[15px] text-slate-950 outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10";
@@ -14,6 +15,7 @@ export function ContactForm() {
   const report = params.get("rapport");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
+  const user = useUser();
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,24 +56,34 @@ export function ContactForm() {
         Gjelder det et bestemt kort? Kontakt selgeren direkte fra annonsen – vi er ikke part i handelen.
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="contact-first-name" className={label}>
-            Fornavn
-          </label>
-          <input id="contact-first-name" name="first_name" type="text" required maxLength={100} className={field} autoComplete="given-name" />
-        </div>
-        <div>
-          <label htmlFor="contact-last-name" className={label}>
-            Etternavn
-          </label>
-          <input id="contact-last-name" name="last_name" type="text" maxLength={99} className={field} autoComplete="family-name" />
-        </div>
-        <div>
-          <label htmlFor="contact-email" className={label}>
-            E-post
-          </label>
-          <input id="contact-email" name="email" type="email" required maxLength={320} className={field} autoComplete="email" />
-        </div>
+        {user ? (
+          <div className="sm:col-span-2">
+            <p className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600 ring-1 ring-inset ring-slate-200">
+              Sendes fra <span className="font-semibold text-slate-900">{user.fullName}</span> ({user.email}). Vi svarer deg på e-post.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div>
+              <label htmlFor="contact-first-name" className={label}>
+                Fornavn
+              </label>
+              <input id="contact-first-name" name="first_name" type="text" required maxLength={100} className={field} autoComplete="given-name" />
+            </div>
+            <div>
+              <label htmlFor="contact-last-name" className={label}>
+                Etternavn
+              </label>
+              <input id="contact-last-name" name="last_name" type="text" maxLength={99} className={field} autoComplete="family-name" />
+            </div>
+            <div>
+              <label htmlFor="contact-email" className={label}>
+                E-post
+              </label>
+              <input id="contact-email" name="email" type="email" required maxLength={320} className={field} autoComplete="email" />
+            </div>
+          </>
+        )}
         <div>
           <label htmlFor="contact-topic" className={label}>
             Emne

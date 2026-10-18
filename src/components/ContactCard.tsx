@@ -6,6 +6,7 @@ import { CheckIcon, ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Ic
 import { formatPrice, timeAgo } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
+import { useUser } from "./useUser";
 import type { Listing } from "@/lib/types";
 
 const input =
@@ -19,6 +20,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
   const [barOpen, setBarOpen] = useState(false);
   const [mode, setMode] = useState<"question" | "offer">("question");
   const card = useRef<HTMLDivElement>(null);
+  const user = useUser();
 
   useEffect(() => {
     const el = card.current;
@@ -167,19 +169,25 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                         <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 font-mono-data text-xs text-slate-500">kr</span>
                       </div>
                     )}
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <input name="name" required maxLength={100} placeholder="Navn" autoComplete="name" aria-label="Navn" className={`${input} h-11`} />
-                      <input
-                        name="email"
-                        required
-                        maxLength={320}
-                        placeholder="E-post"
-                        autoComplete="email"
-                        aria-label="E-post"
-                        className={`${input} h-11`}
-                        type="email"
-                      />
-                    </div>
+                    {user ? (
+                      <p className="rounded-xl bg-slate-50 px-3.5 py-2.5 text-sm text-slate-600">
+                        Sendes fra <span className="font-semibold text-slate-900">{user.fullName}</span> ({user.email}). Selgeren svarer deg på e-post.
+                      </p>
+                    ) : (
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <input name="name" required maxLength={100} placeholder="Navn" autoComplete="name" aria-label="Navn" className={`${input} h-11`} />
+                        <input
+                          name="email"
+                          required
+                          maxLength={320}
+                          placeholder="E-post"
+                          autoComplete="email"
+                          aria-label="E-post"
+                          className={`${input} h-11`}
+                          type="email"
+                        />
+                      </div>
+                    )}
                     <textarea
                       name="message"
                       required
