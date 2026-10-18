@@ -90,17 +90,15 @@ export function Market({ listings }: { listings: Listing[] }) {
             Forside
           </Link>
           <span aria-hidden="true">/</span>
-          <span className="text-slate-900">Alle kort</span>
+          <span className="text-slate-900">Markedet</span>
         </nav>
         <section className="relative overflow-hidden rounded-3xl bg-primary px-6 py-9 text-white sm:px-10 sm:py-12">
           <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>
           <div className="pointer-events-none absolute -bottom-32 right-1/3 h-64 w-64 rounded-full bg-white/5 blur-2xl" aria-hidden="true"></div>
           <div className="relative flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
-              <h1 className="font-heading text-3xl font-bold tracking-[-0.03em] sm:text-[44px] sm:leading-[1.05]">Alle kort til salgs</h1>
-              <p className="mt-3 text-[15px] leading-relaxed text-white/75">
-                Autografkort, relic og patch, rookies og nummererte kort fra Topps Chrome, Museum Collection og Inception, lagt ut av samlere i hele Norge.
-              </p>
+              <h1 className="font-heading text-3xl font-bold tracking-[-0.03em] sm:text-[44px] sm:leading-[1.05]">Markedet</h1>
+              <p className="mt-3 text-[15px] leading-relaxed text-white/75">Fotballkort fra samlere i hele Norge. Kjøp direkte fra selgeren.</p>
             </div>
             <form role="search" onSubmit={submit} className="flex h-14 w-full items-center gap-2 rounded-full bg-white pl-5 pr-1.5 shadow-lg lg:w-[420px]">
               <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
