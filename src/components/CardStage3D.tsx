@@ -403,7 +403,7 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
 
     // ── Fokuslyset: en sterk spot på plassen foran
     const front = new THREE.Vector3(0, 0, radius);
-    const key = new THREE.SpotLight(0xfff6e6, rich ? 48 : 90, 16, Math.PI / 9, 0.7, 1.6);
+    const key = new THREE.SpotLight(0xfff6e6, rich ? 30 : 45, 16, Math.PI / 9, 0.7, 1.6);
     key.position.set(0, 7.2, radius + 1.2);
     key.target.position.set(0, 1.3, radius);
     if (rich) {
@@ -421,7 +421,11 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     track(keyCone.material as THREE.Material);
     const back = new THREE.DirectionalLight(0xf2d48a, rich ? 0.5 : 0.9);
     back.position.set(0, 4, -8);
-    scene.add(key, key.target, keyCone, back, new THREE.AmbientLight(0x6f84a8, 0.14));
+    // Jevnt, mykt fyllys forfra, som lyset fra et vindu i et galleri
+    const frontFill = new THREE.DirectionalLight(0xfff8ee, 1.15);
+    frontFill.position.set(0, 2.5, radius + 9);
+    frontFill.target.position.set(0, 1.4, radius);
+    scene.add(key, key.target, keyCone, back, frontFill, frontFill.target, new THREE.AmbientLight(0x6f84a8, 0.22));
 
     // ── Kortene
     const glassGeo = track(new RoundedBoxGeometry(CARD_W, CARD_H, DEPTH, 5, 0.06));
@@ -470,13 +474,28 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     const items: {
       holder: THREE.Group;
       card: THREE.Group;
-      face: THREE.MeshBasicMaterial;
+      face: THREE.MeshStandardMaterial;
+      gloss: THREE.MeshBasicMaterial;
+      shine: number;
       slug: string;
       angle: number;
       lift: number;
     }[] = [];
     const hit: THREE.Object3D[] = [];
     const anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const { tex: glossTex } = canvasTexture(512, 512, (ctx) => {
+      ctx.translate(256, 256);
+      ctx.rotate(-0.45);
+      const g = ctx.createLinearGradient(-60, 0, 60, 0);
+      g.addColorStop(0, "rgba(255,255,255,0)");
+      g.addColorStop(0.42, "rgba(255,255,255,0.35)");
+      g.addColorStop(0.5, "rgba(255,255,255,1)");
+      g.addColorStop(0.58, "rgba(255,255,255,0.35)");
+      g.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(-60, -700, 120, 1400);
+    });
+    track(glossTex);
 
     cards.forEach((c, i) => {
       const { tex, ctx } = canvasTexture(Math.round(TEX_W * sc), Math.round(TEX_H * sc), (cx) => {
@@ -495,8 +514,8 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
         img.src = c.image;
       }
       const faceMat = track(
-        // Uten lys og fargejustering: kortet vises med sine ekte farger, aldri bleket av spot eller glans
-        new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }),
+        // Naturlig lys på kortet, men matt papir og lav miljørefleks, så fargene ikke blekes
+        new THREE.MeshStandardMaterial({ map: tex, roughness: 0.62, metalness: 0, envMapIntensity: 0.35 }),
       );
       const holder = new THREE.Group();
       const card = new THREE.Group();
@@ -506,9 +525,16 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
       backFace.position.z = -DEPTH / 2 + 0.012;
       backFace.rotation.y = Math.PI;
       face.castShadow = backFace.castShadow = true;
+      const glossMap = track(glossTex.clone());
+      glossMap.needsUpdate = true;
+      const glossMat = track(
+        new THREE.MeshBasicMaterial({ map: glossMap, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }),
+      );
+      const gloss = new THREE.Mesh(faceGeo, glossMat);
+      gloss.position.z = DEPTH / 2 - 0.004;
       const shell = new THREE.Mesh(glassGeo, glass);
       shell.renderOrder = 2;
-      card.add(face, backFace, shell);
+      card.add(face, backFace, gloss, shell);
       card.position.y = cardY;
       for (const m of [face, backFace, shell]) {
         m.userData.slug = c.slug;
@@ -531,7 +557,7 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
       holder.position.set(Math.sin(a) * radius, 0, Math.cos(a) * radius);
       holder.rotation.y = a;
       ring.add(holder);
-      items.push({ holder, card, face: faceMat, slug: c.slug, angle: a, lift: 0 });
+      items.push({ holder, card, face: faceMat, gloss: glossMat, shine: 1, slug: c.slug, angle: a, lift: 0 });
     });
 
     // ── Gulv: speil på PC, slør som toner ut, og lys under fokusplassen
@@ -658,6 +684,7 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
     ro.observe(el);
 
     // ── Bevegelse: kortene snur seg frem ett og ett. Hold over stopper, dra snurrer, scroll går videre.
+    let lastShine: string | null = null;
     let index = 0; // kortet som står i fokus
     let shown = -1;
     let angle = 0; // ringens vinkel
@@ -789,7 +816,17 @@ export function CardStage3D({ cards, fallback, debug = false }: { cards: StageCa
         it.card.position.y = cardY + it.lift + k * 0.12 + (still ? 0 : Math.sin(t + i * 1.3) * 0.02);
         it.card.position.z = k * 0.35;
         it.card.scale.setScalar(1 + k * 0.1);
-        it.face.color.copy(dim).lerp(white, 0.55 + 0.45 * Math.max(0, f));
+        it.face.color.copy(dim).lerp(white, 0.5 + 0.5 * Math.max(0, f));
+        // Glans: når kortet når fronten glir en blank stripe over det, og igjen midt i visningen
+        if (f > 0.985 && it.shine >= 1 && turning === 0 && !dragging && (it.slug !== lastShine || (timer > DWELL * 0.5 && timer < DWELL * 0.56))) {
+          it.shine = 0;
+          lastShine = it.slug;
+        }
+        if (f < 0.6 && lastShine === it.slug) lastShine = null;
+        if (it.shine < 1) it.shine = Math.min(1, it.shine + dt / 1.3);
+        const sw = it.shine < 1 ? Math.sin(it.shine * Math.PI) : 0;
+        it.gloss.opacity = sw * 0.32;
+        (it.gloss.map as THREE.Texture).offset.x = 0.95 - it.shine * 1.9;
       });
       if (best !== shown && bestF > 0.92) {
         shown = best;
