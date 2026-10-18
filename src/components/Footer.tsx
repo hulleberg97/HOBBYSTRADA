@@ -42,7 +42,7 @@ export function Footer() {
           <div>
             <Link className="inline-block" aria-label="HOBBYSTRADA" href="/">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/logo-hvit.svg" alt="HOBBYSTRADA" width={231} height={34} className="h-[34px] w-auto" />
+              <img src="/brand/logo-hvit.svg" alt="HOBBYSTRADA" width={205} height={34} className="h-[34px] w-auto" />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.</p>
             <LangToggle dark className="mt-6" />

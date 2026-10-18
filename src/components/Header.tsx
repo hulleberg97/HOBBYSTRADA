@@ -50,7 +50,7 @@ export function Header() {
         <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
           <Link className="flex shrink-0 items-center gap-2" href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={231} height={34} className="h-[26px] w-auto sm:h-[34px]" />
+            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={205} height={34} className="h-[26px] w-auto sm:h-[34px]" />
           </Link>
           <form className="hidden max-w-[480px] flex-1 md:block" role="search" onSubmit={search}>
             <label className="relative block">
