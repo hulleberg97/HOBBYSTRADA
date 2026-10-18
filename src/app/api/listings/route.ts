@@ -15,7 +15,6 @@ const TYPE_MAP: Record<string, string> = {
   Nummerert: "Nummerert",
   "Base / innstikk": "Base",
   Base: "Base",
-  Base: "Base",
   Annet: "Annet",
 };
 const MAX_BYTES = 4 * 1024 * 1024;
