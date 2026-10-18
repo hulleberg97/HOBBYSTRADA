@@ -15,6 +15,9 @@ const POSITIONS = [
   { x: "88%", y: "34px", r: "16deg", z: 1 },
 ];
 const ROTATE_MS = 7000;
+const SPIN_MS = 4000;
+// Karusellen: midten → høyre → ytterst høyre → (bak) ytterst venstre → venstre → midten
+const CYCLE = [2, 3, 4, 0, 1];
 
 /** Fem kort i rangering (1 = midten, 2 venstre, 3 høyre, 4 og 5 ytterst). Tomme plasser hoppes over. */
 export function pickFan(ranked: (Listing | undefined)[]) {
@@ -28,6 +31,13 @@ export function pickFan(ranked: (Listing | undefined)[]) {
  */
 export function HeroFan({ pinned, paid, fill }: { pinned: Listing[]; paid: Listing[]; fill: Listing[] }) {
   const [offset, setOffset] = useState(0);
+  const [turn, setTurn] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(() => setTurn((n) => n + 1), SPIN_MS);
+    return () => clearInterval(t);
+  }, [paused]);
   const free = 5 - pinned.length;
   const rotating = free > 0 && paid.length > free;
   useEffect(() => {
@@ -45,14 +55,24 @@ export function HeroFan({ pinned, paid, fill }: { pinned: Listing[]; paid: Listi
   for (let i = 0; i < 5; i++) if (!ranked[i]) ranked[i] = candidates.shift();
 
   return (
-    <div className="relative mx-auto h-[280px] w-full max-w-[520px] sm:h-[400px] lg:h-[480px] lg:max-w-[600px]">
-      {pickFan(ranked).map(({ listing: l, slot }) => {
+    <div
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      className="relative mx-auto h-[280px] w-full max-w-[520px] sm:h-[400px] lg:h-[480px] lg:max-w-[600px]"
+    >
+      {pickFan(ranked).map(({ listing: l, slot: home }) => {
+        const step = (CYCLE.indexOf(home) + turn) % 5;
+        const slot = CYCLE[step];
         const p = POSITIONS[slot];
+        // Kortet som går fra ytterst høyre til ytterst venstre, glir bak de andre.
+        const z = step === 3 ? 0 : p.z;
         return (
           <Link
             key={l.slug}
-            style={{ zIndex: p.z, transform: `translate(-50%, 0) translate(${p.x}, ${p.y}) rotate(${p.r})` }}
-            className="group absolute left-1/2 top-2 w-[38%] origin-bottom sm:w-[36%]"
+            style={{ zIndex: z, transform: `translate(-50%, 0) translate(${p.x}, ${p.y}) rotate(${p.r})` }}
+            className="group absolute left-1/2 top-2 w-[38%] origin-bottom transition-transform duration-[900ms] ease-[cubic-bezier(.4,0,.2,1)] will-change-transform sm:w-[36%]"
             href={`/products/${l.slug}`}
           >
             <div key={offset} className="animate-[fan-in_.6s_ease-out] transition-transform duration-300 ease-out group-hover:-translate-y-4">
