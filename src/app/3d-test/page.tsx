@@ -60,7 +60,7 @@ export default async function Page() {
         Variant B · «studio» i full bredde, som i videoen
       </p>
       <section className="mx-auto max-w-[1320px] px-4 pt-3 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[20px] bg-[radial-gradient(80%_60%_at_50%_0%,#24365a_0%,#0e1a2f_45%,#070d18_100%)] text-white sm:rounded-[28px]">
+        <div className="relative overflow-hidden rounded-[20px] bg-[radial-gradient(70%_55%_at_50%_0%,#22355a_0%,#0b1426_70%)] text-white sm:rounded-[28px]">
           <div className="relative px-6 pt-12 text-center sm:pt-16">
             <h2 className="font-heading text-[clamp(2.2rem,5vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.04em]">
               Fotballkort. <span className="text-gold-light">Kjøp og selg.</span>
