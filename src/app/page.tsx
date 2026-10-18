@@ -145,24 +145,26 @@ export default async function Home() {
           </ul>
         </div>
       </section>
-      <section className="bg-background">
-        <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Fremhevede annonser</h2>
-              <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Løftet av selgerne – vises først i markedet</p>
+      {featured.length > 0 && (
+        <section className="bg-background">
+          <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+            <div className="flex items-end justify-between gap-6">
+              <div>
+                <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Fremhevede annonser</h2>
+                <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Løftet av selgerne – vises først i markedet</p>
+              </div>
+              <Link
+                className="inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
+                href="/products"
+              >
+                Se alle
+                <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </div>
-            <Link
-              className="inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
-              href="/products"
-            >
-              Se alle
-              <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <ListingGrid listings={featured} />
           </div>
-          <ListingGrid listings={featured} />
-        </div>
-      </section>
+        </section>
+      )}
       <section className="border-y border-slate-300/70 bg-white">
         <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <div className="flex items-end justify-between gap-6">
