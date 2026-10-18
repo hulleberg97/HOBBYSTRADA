@@ -5,11 +5,11 @@ import { useState } from "react";
 
 const SLOTS = [
   ["", "Ikke festet"],
-  ["1", "1 · Midten"],
-  ["2", "2 · Venstre"],
-  ["3", "3 · Høyre"],
-  ["4", "4 · Ytterst venstre"],
-  ["5", "5 · Ytterst høyre"],
+  ["1", "1 · Vises først"],
+  ["2", "2"],
+  ["3", "3"],
+  ["4", "4"],
+  ["5", "5"],
 ];
 
 /** Admin: fest annonsen til en fast plass i kortvifta på forsiden. */

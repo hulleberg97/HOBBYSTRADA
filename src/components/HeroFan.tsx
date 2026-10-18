@@ -1,122 +1,127 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { CrownIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
 import type { Listing } from "@/lib/types";
 
-const POSITIONS = [
-  { x: "-88%", y: "34px", r: "-16deg", z: 1 },
-  { x: "-46%", y: "10px", r: "-8deg", z: 2 },
-  { x: "0%", y: "0px", r: "0deg", z: 5 },
-  { x: "46%", y: "10px", r: "8deg", z: 3 },
-  { x: "88%", y: "34px", r: "16deg", z: 1 },
-];
-const ROTATE_MS = 7000;
-const SPIN_MS = 4000;
-// Karusellen: midten → høyre → ytterst høyre → (bak) ytterst venstre → venstre → midten
-const CYCLE = [2, 3, 4, 0, 1];
+const MAX_CARDS = 10;
 
-/** Fem kort i rangering (1 = midten, 2 venstre, 3 høyre, 4 og 5 ytterst). Tomme plasser hoppes over. */
-export function pickFan(ranked: (Listing | undefined)[]) {
-  const [first, second, third, fourth, fifth] = ranked;
-  return [fourth, second, first, third, fifth].flatMap((l, slot) => (l ? [{ listing: l, slot }] : []));
+/**
+ * Kortene i karusellen, i rekkefølgen de vises frem. Kort admin har festet står på sin faste plass (1 = først).
+ * Toppannonser er med hele perioden – er de flere enn de ledige plassene, utvides karusellen. Resten er de nyeste.
+ */
+export function fanCards(pinned: Listing[], paid: Listing[], fill: Listing[]) {
+  const taken = new Set(pinned.map((l) => l.slug));
+  const free = 5 - pinned.length;
+  const extra = paid.length > free ? paid.slice(0, MAX_CARDS - pinned.length) : [...paid, ...fill];
+  const candidates = extra.filter((l, i, all) => !taken.has(l.slug) && all.findIndex((x) => x.slug === l.slug) === i);
+  const size = Math.max(5, pinned.length + Math.min(candidates.length, MAX_CARDS - pinned.length));
+  const ranked: (Listing | undefined)[] = Array(size).fill(undefined);
+  for (const l of pinned) if (l.fanSlot) ranked[l.fanSlot - 1] = l;
+  for (let i = 0; i < size; i++) if (!ranked[i]) ranked[i] = candidates.shift();
+  return ranked.filter(Boolean) as Listing[];
+}
+
+/** H-symbolet (to kort med gullstrek), preget i gullholderen og på baksiden. */
+function Mark({ className, cards, bar }: { className?: string; cards: string; bar: string }) {
+  return (
+    <svg viewBox="12 6 76 88" className={className} aria-hidden="true">
+      <g transform="rotate(-7 31 50)">
+        <rect x="17" y="12" width="28" height="76" rx="7" fill={cards} />
+      </g>
+      <g transform="rotate(7 69 50)">
+        <rect x="55" y="12" width="28" height="76" rx="7" fill={cards} />
+      </g>
+      <rect x="33" y="43" width="34" height="14" rx="3" fill={bar} />
+    </svg>
+  );
+}
+
+const GOLD = "bg-[linear-gradient(180deg,#f2dc9b_0%,#d6b25f_35%,#b08a3a_70%,#8a6a26_100%)]";
+
+/** Kortet i plastholder, stående i en gullholder – forsiden og baksiden. */
+function Slab({ l }: { l: Listing }) {
+  return (
+    <>
+      <div className="absolute inset-0 [backface-visibility:hidden]">
+        {l.frontpage && (
+          <span className="absolute -right-2 -top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-2 ring-white/80">
+            <CrownIcon className="h-3.5 w-3.5" aria-label="Toppannonse" />
+          </span>
+        )}
+        <div
+          data-top={l.frontpage ? "true" : undefined}
+          className="relative w-full rounded-[10px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.95),rgba(226,232,240,0.8)_45%,rgba(255,255,255,0.92))] p-[5%] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
+        >
+          <div className="rounded-[3px] border-2 border-[#c8102e] bg-white px-[6%] py-[4%] text-[#0b1726]">
+            <div className="flex items-start justify-between gap-2">
+              <p className="min-w-0 truncate text-[8px] font-bold uppercase leading-tight tracking-wide sm:text-[9px]">{l.set}</p>
+              <p className="shrink-0 text-[8px] font-bold uppercase leading-tight sm:text-[9px]">{l.cardNumber ? `#${l.cardNumber}` : ""}</p>
+            </div>
+            <div className="mt-[3%] flex items-end justify-between gap-2">
+              <p className="min-w-0 truncate text-[9px] font-bold uppercase leading-tight sm:text-[10px]">{l.player}</p>
+              <p className="shrink-0 text-[9px] font-bold uppercase leading-tight sm:text-[10px]">{l.types[0]}</p>
+            </div>
+          </div>
+          <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[3px] bg-[#0d2238] ring-1 ring-black/10">
+            {l.image ? (
+              <Image alt="" src={l.image} width={400} height={560} priority sizes="170px" className="h-full w-full object-cover" />
+            ) : (
+              <CardArt listing={l} square />
+            )}
+          </div>
+        </div>
+        <div className={`mx-[6%] flex h-[26px] items-center justify-center rounded-b-md ${GOLD} shadow-[inset_0_1px_0_rgba(255,255,255,.5)] sm:h-[34px]`}>
+          <Mark className="h-[60%] opacity-80" cards="#7a5a1c" bar="#f6e3a6" />
+        </div>
+      </div>
+      <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div className="flex aspect-[0.66] w-full items-center justify-center rounded-[10px] border border-white/20 bg-[linear-gradient(160deg,#16294a,#0b1628)]">
+          <Mark className="w-[38%] opacity-90" cards="#f7f3ea" bar="#c9a24a" />
+        </div>
+        <div className={`mx-[6%] h-[26px] rounded-b-md ${GOLD} sm:h-[34px]`} />
+      </div>
+    </>
+  );
 }
 
 /**
- * Kortvifta på forsiden. Kort admin har festet står på sin faste plass. Toppannonser har plass hele perioden;
- * er de flere enn de ledige plassene, roterer de. Resten fylles med de nyeste annonsene.
+ * Karusellen på forsiden: kortene står i gullholdere i en ring og snurrer sakte, så de vises frem ett og ett.
+ * Stopper når musepekeren er over, og står stille for dem som har slått av animasjoner.
  */
 export function HeroFan({ pinned, paid, fill }: { pinned: Listing[]; paid: Listing[]; fill: Listing[] }) {
-  const [offset, setOffset] = useState(0);
-  const [turn, setTurn] = useState(0);
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setTurn((n) => n + 1), SPIN_MS);
-    return () => clearInterval(t);
-  }, [paused]);
-  const free = 5 - pinned.length;
-  const rotating = free > 0 && paid.length > free;
-  useEffect(() => {
-    if (!rotating) return;
-    const t = setInterval(() => setOffset((o) => (o + 1) % paid.length), ROTATE_MS);
-    return () => clearInterval(t);
-  }, [rotating, paid.length]);
-
-  const taken = new Set(pinned.map((l) => l.slug));
-  const candidates = rotating
-    ? Array.from({ length: free }, (_, i) => paid[(offset + i) % paid.length])
-    : [...paid, ...fill].filter((l, i, all) => !taken.has(l.slug) && all.findIndex((x) => x.slug === l.slug) === i);
-  const ranked: (Listing | undefined)[] = Array(5).fill(undefined);
-  for (const l of pinned) if (l.fanSlot) ranked[l.fanSlot - 1] = l;
-  for (let i = 0; i < 5; i++) if (!ranked[i]) ranked[i] = candidates.shift();
-
+  const cards = fanCards(pinned, paid, fill);
+  const n = Math.max(cards.length, 3);
+  // Avstand fra midten slik at kortene får litt luft mellom seg (i kortbredder)
+  const radius = 0.72 / Math.tan(Math.PI / n);
   return (
-    <div
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-      className="relative mx-auto h-[280px] w-full max-w-[520px] sm:h-[400px] lg:h-[480px] lg:max-w-[600px]"
-    >
-      {pickFan(ranked).map(({ listing: l, slot: home }) => {
-        const step = (CYCLE.indexOf(home) + turn) % 5;
-        const slot = CYCLE[step];
-        const p = POSITIONS[slot];
-        // Kortet som går fra ytterst høyre til ytterst venstre, glir bak de andre.
-        const z = step === 3 ? 0 : p.z;
-        return (
-          <Link
-            key={l.slug}
-            style={{ zIndex: z, transform: `translate(-50%, 0) translate(${p.x}, ${p.y}) rotate(${p.r})` }}
-            className="group absolute left-1/2 top-2 w-[38%] origin-bottom transition-transform duration-[900ms] ease-[cubic-bezier(.4,0,.2,1)] will-change-transform sm:w-[36%]"
-            href={`/products/${l.slug}`}
-          >
-            <div key={offset} className="animate-[fan-in_.6s_ease-out] transition-transform duration-300 ease-out group-hover:-translate-y-4">
-              {l.frontpage && (
-                <span
-                  className={`absolute -top-2 z-10 flex ${slot < 2 ? "-left-2" : "-right-2"} h-7 w-7 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-2 ring-white/80`}
-                >
-                  <CrownIcon className="h-3.5 w-3.5" aria-label="Toppannonse" />
-                </span>
-              )}
-              <div
-                data-top={l.frontpage ? "true" : undefined}
-                className="relative w-full rounded-[12px] border border-white/60 data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70 bg-[linear-gradient(160deg,rgba(255,255,255,0.92),rgba(226,232,240,0.78)_45%,rgba(255,255,255,0.9))] p-[5%] shadow-[0_30px_60px_-25px_rgba(2,6,23,0.75)]"
-              >
-                <div className="rounded-[4px] border-2 border-[#c8102e] bg-white px-[6%] py-[4%] text-[#0b1726]">
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="min-w-0 truncate text-[clamp(6px,0.7vw,9px)] font-bold uppercase leading-tight tracking-wide">{l.set}</p>
-                    <p className="shrink-0 text-[clamp(6px,0.7vw,9px)] font-bold uppercase leading-tight">{l.cardNumber ? `#${l.cardNumber}` : ""}</p>
-                  </div>
-                  <div className="mt-[3%] flex items-end justify-between gap-2">
-                    <p className="min-w-0 truncate text-[clamp(7px,0.8vw,10px)] font-bold uppercase leading-tight">{l.player}</p>
-                    <p className="shrink-0 text-[clamp(7px,0.8vw,10px)] font-bold uppercase leading-tight">{l.types[0]}</p>
-                  </div>
-                </div>
-                <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
-                  {l.image ? (
-                    <Image
-                      alt=""
-                      src={l.image}
-                      width={400}
-                      height={560}
-                      priority
-                      sizes="(max-width: 640px) 38vw, 190px"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <CardArt listing={l} square />
-                  )}
-                </div>
-              </div>
-            </div>
-          </Link>
-        );
-      })}
+    <div className="group/fan relative mx-auto h-[300px] w-full max-w-[600px] [--w:112px] [perspective:1400px] sm:h-[400px] sm:[--w:158px] lg:h-[420px] lg:[--w:176px]">
+      <div
+        aria-hidden="true"
+        className="absolute bottom-[1%] left-1/2 h-[54px] w-[80%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(214,178,95,.4),rgba(214,178,95,.1)_60%,transparent)] blur-[2px]"
+      />
+      {/* Ringen skyves bakover, så kortet foran står i vanlig størrelse */}
+      <div
+        style={{ transform: `translateZ(calc(var(--w) * ${(-radius).toFixed(3)}))` }}
+        className="absolute left-1/2 top-[2%] h-full w-[var(--w)] -translate-x-1/2 [transform-style:preserve-3d]"
+      >
+        <div
+          style={{ animationDuration: `${n * 6}s` }}
+          className="absolute inset-0 animate-[fan-spin_30s_linear_infinite] [transform-style:preserve-3d] group-hover/fan:[animation-play-state:paused] motion-reduce:animate-none"
+        >
+          {cards.map((l, i) => (
+            <Link
+              key={l.slug}
+              href={`/products/${l.slug}`}
+              aria-label={l.title}
+              style={{ transform: `rotateY(${(360 / n) * i}deg) translateZ(calc(var(--w) * ${radius.toFixed(3)}))` }}
+              className="absolute inset-x-0 top-0 aspect-[0.58] [transform-style:preserve-3d]"
+            >
+              <Slab l={l} />
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

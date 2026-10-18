@@ -93,15 +93,12 @@
   letter-spacing: var(--tw-tracking, -0.01em);
 }
 
-/* Kortvifta: myk inngang når kortene roterer */
-@keyframes fan-in {
+/* Kortkarusellen på forsiden snurrer sakte rundt */
+@keyframes fan-spin {
   from {
-    opacity: 0.35;
-    transform: translateY(10px);
+    transform: rotateY(0deg);
   }
-}
-@media (prefers-reduced-motion: reduce) {
-  .animate-\[fan-in_\.6s_ease-out\] {
-    animation: none;
+  to {
+    transform: rotateY(-360deg);
   }
 }
