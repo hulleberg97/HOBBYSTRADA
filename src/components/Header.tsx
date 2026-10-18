@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
+import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, MessageCircleIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
 import { FavoriteCount } from "./FavoriteButton";
 import { LangToggle } from "./LangToggle";
 import { CartDrawer } from "./CartDrawer";
 import { useUser } from "./useUser";
 import { SearchSuggest } from "./SearchSuggest";
+import { UnreadBadge } from "./UnreadBadge";
 
 const NAV = [
   { href: "/products", label: "Markedet", Icon: LayoutGridIcon },
@@ -97,6 +98,16 @@ export function Header() {
               <CircleUserIcon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
               {user ? "Min side" : "Logg inn"}
             </Link>
+            {user && (
+              <Link
+                href="/meldinger"
+                aria-label="Meldinger"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
+              >
+                <MessageCircleIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                <UnreadBadge />
+              </Link>
+            )}
             <Link
               href="/favoritter"
               aria-label="Favoritter"
@@ -149,7 +160,7 @@ export function Header() {
         {menu && (
           <div className="border-t border-slate-200 bg-white px-4 pb-6 pt-2 xl:hidden">
             <nav className="mx-auto flex max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
-              {MOBILE_NAV.map(([href, label]) => (
+              {(user ? [["/meldinger", "Meldinger"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
                 <Link
                   key={href}
                   onClick={() => setMenu(false)}

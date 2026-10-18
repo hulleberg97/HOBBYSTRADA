@@ -22,7 +22,12 @@ export default function TermsPage() {
         },
         {
           title: "Konto",
-          body: <p>Du må være minst 18 år, eller ha samtykke fra foresatte, for å legge ut annonser. Du er ansvarlig for det som skjer på kontoen din.</p>,
+          body: (
+            <p>
+              Du må ha en konto for å legge ut annonser og sende meldinger. Du må være minst 18 år, eller ha samtykke fra foresatte. Du er ansvarlig for det som
+              skjer på kontoen din. Meldinger skal handle om handel med kort; trakassering, spam og forsøk på svindel fører til at kontoen stenges.
+            </p>
+          ),
         },
         {
           title: "Regler for annonser",

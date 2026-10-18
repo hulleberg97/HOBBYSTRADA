@@ -20,7 +20,9 @@ export async function DELETE() {
   if (listingError) return NextResponse.json({ error: "Kunne ikke slette annonsene. Prøv igjen." }, { status: 500 });
   await db.from("boost_orders").update({ buyer_email: null }).eq("user_id", user.id);
 
-  // Meldinger til brukeren og lagrede søk slettes automatisk sammen med kontoen.
+  // I samtaler vises brukeren som «Slettet bruker». Lagrede søk slettes automatisk sammen med kontoen.
+  await db.from("conversations").update({ buyer_name: "Slettet bruker" }).eq("buyer_id", user.id);
+  await db.from("conversations").update({ seller_name: "Slettet bruker" }).eq("seller_id", user.id);
   const { error } = await db.auth.admin.deleteUser(user.id);
   if (error) return NextResponse.json({ error: "Kunne ikke slette kontoen. Prøv igjen." }, { status: 500 });
 

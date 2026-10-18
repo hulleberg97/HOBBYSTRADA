@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { ACCESS_COOKIE, accessToken, sitePassword } from "@/lib/private";
 
 // Sider som leser innloggingen på serveren. Resten mellomlagres og leser innloggingen i nettleseren.
-const AUTH_PATHS = ["/account", "/admin", "/sell", "/api/", "/auth/", "/annonseloft/betaling"];
+const AUTH_PATHS = ["/account", "/meldinger", "/admin", "/sell", "/api/", "/auth/", "/annonseloft/betaling"];
 // Åpne selv i lukket modus: passordsiden, cron-jobben (har egen nøkkel) og lenker fra e-post og Vipps.
 const OPEN_PATHS = ["/privat", "/api/privat", "/api/cron/", "/auth/callback", "/auth/vipps/callback", "/robots.txt"];
 

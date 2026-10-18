@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { MailIcon, PlusIcon, ZapIcon } from "lucide-react";
+import { MessageCircleIcon, PlusIcon, ZapIcon } from "lucide-react";
 import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
@@ -12,6 +12,7 @@ import { EditListing } from "@/components/EditListing";
 import { SavedSearches } from "@/components/SavedSearches";
 import { DeleteAccount } from "@/components/DeleteAccount";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
+import { unreadCount } from "@/lib/chat";
 
 export const metadata: Metadata = { title: "Min side" };
 export const dynamic = "force-dynamic";
@@ -26,9 +27,7 @@ export default async function AccountPage() {
   const { data: searches } = db
     ? await db.from("saved_searches").select("id, label, query").eq("user_id", user.id).order("created_at", { ascending: false })
     : { data: [] };
-  const { data: messages } = db
-    ? await db.from("messages").select("*").eq("seller_id", user.id).order("created_at", { ascending: false }).limit(50)
-    : { data: [] };
+  const unread = await unreadCount(user.id);
 
   return (
     <div className="bg-white">
@@ -124,33 +123,18 @@ export default async function AccountPage() {
           <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Varsler om nye kort</h2>
           <SavedSearches items={searches ?? []} />
           <h2 className="mt-10 font-heading text-xl font-bold tracking-tight text-slate-950">Meldinger</h2>
-          {(messages ?? []).length === 0 ? (
-            <p className="mt-4 rounded-3xl bg-slate-50 p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-200">
-              Når kjøpere sender deg meldinger, vises de her og sendes til e-posten din.
-            </p>
-          ) : (
-            <ul className="mt-4 space-y-3">
-              {messages!.map((m) => (
-                <li key={m.id} className="rounded-3xl bg-white p-5 ring-1 ring-slate-200">
-                  <p className="text-xs text-slate-500">
-                    {new Date(m.created_at).toLocaleString("nb-NO", { dateStyle: "medium", timeStyle: "short" })} ·{" "}
-                    <Link href={`/products/${m.listing_slug}`} className="underline">
-                      annonsen
-                    </Link>
-                  </p>
-                  <p className="mt-1 font-semibold text-slate-950">{m.sender_name}</p>
-                  <p className="mt-2 whitespace-pre-line text-sm text-slate-700">{m.body}</p>
-                  <a
-                    href={`mailto:${m.sender_email}?subject=${encodeURIComponent("Svar på meldingen din")}`}
-                    className="mt-3 inline-flex h-9 items-center gap-2 rounded-full bg-primary px-4 text-xs font-semibold text-white"
-                  >
-                    <MailIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                    Svar {m.sender_email}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
+          <Link
+            href="/meldinger"
+            className="mt-4 flex items-center justify-between gap-3 rounded-3xl bg-white p-5 ring-1 ring-slate-200 transition hover:ring-slate-300"
+          >
+            <span>
+              <span className="block font-semibold text-slate-950">Gå til meldingene dine</span>
+              <span className="mt-0.5 block text-sm text-slate-600">
+                {unread ? `${unread} ${unread === 1 ? "samtale" : "samtaler"} med nye meldinger` : "Chat med kjøpere og selgere"}
+              </span>
+            </span>
+            <MessageCircleIcon className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
+          </Link>
           <div className="mt-10">
             <DeleteAccount />
           </div>

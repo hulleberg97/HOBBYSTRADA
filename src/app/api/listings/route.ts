@@ -27,7 +27,8 @@ export async function POST(req: Request) {
   const f = await req.formData();
   if (f.get("_hp")) return NextResponse.json({ ok: true });
   const user = await getUser();
-  const verified = user ? await getVerification(user.id) : null;
+  if (!user) return NextResponse.json({ error: "Logg inn for å legge ut kort." }, { status: 401 });
+  const verified = await getVerification(user.id);
   if (hasVippsLogin() && !verified) {
     return NextResponse.json({ error: "Bekreft deg med Vipps før du legger ut kort." }, { status: 403 });
   }
@@ -37,8 +38,8 @@ export async function POST(req: Request) {
   const price = Number(str(f, "price", 9));
   const username = str(f, "username", 40);
   const location = str(f, "location", 60);
-  const email = user?.email ?? str(f, "email", 320);
-  const name = user?.name ?? str(f, "name", 100);
+  const email = user.email;
+  const name = user.name;
   if (!player || !set || !price || price < 1 || !username || !location || !email || !name || !f.get("confirm")) {
     return NextResponse.json({ error: "Fyll inn alle feltene som er merket med *." }, { status: 400 });
   }
@@ -89,7 +90,7 @@ export async function POST(req: Request) {
     images,
     seller_name: username,
     location,
-    owner_id: user?.id ?? null,
+    owner_id: user.id,
     contact_name: name,
     contact_email: email,
     contact_phone: str(f, "phone", 20) || null,

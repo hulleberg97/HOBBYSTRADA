@@ -12,7 +12,7 @@ const SECTIONS = [
     items: [
       [
         "Hvordan kjøper jeg et kort?",
-        "Åpne annonsen og trykk «Send melding til selger». Dere avtaler pris, betaling og frakt eller overlevering direkte med hverandre.",
+        "Logg inn, åpne annonsen og trykk «Send melding til selger». Dere chatter under Meldinger og avtaler pris, betaling og frakt eller overlevering direkte med hverandre.",
       ],
       [
         "Kan jeg betale for kortet her på siden?",

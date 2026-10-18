@@ -3,7 +3,7 @@ import { adminClient } from "@/lib/supabase-admin";
 
 /**
  * Daglig opprydding (Vercel Cron, kl. 03:17 UTC). Sletter data vi ikke lenger trenger:
- * - meldinger og henvendelser eldre enn 12 måneder
+ * - meldinger, samtaler og henvendelser eldre enn 12 måneder
  * - avviste annonser (med bilder) eldre enn 30 dager
  * - rapporter som er ferdigbehandlet for over 12 måneder siden
  */
@@ -22,6 +22,7 @@ export async function GET(req: Request) {
   };
 
   await del("messages", db.from("messages").delete({ count: "exact" }).lt("created_at", months(12)));
+  await del("conversations", db.from("conversations").delete({ count: "exact" }).lt("last_message_at", months(12)));
   await del("contact_messages", db.from("contact_messages").delete({ count: "exact" }).lt("created_at", months(12)));
   await del("reports", db.from("reports").delete({ count: "exact" }).eq("handled", true).lt("created_at", months(12)));
 

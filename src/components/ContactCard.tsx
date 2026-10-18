@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
+import { ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
 import { formatPrice, timeAgo } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
@@ -14,13 +15,16 @@ const input =
 
 export function ContactCard({ listing: l }: { listing: Listing }) {
   const [open, setOpen] = useState(false);
-  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
   const [shared, setShared] = useState(false);
   const [barOpen, setBarOpen] = useState(false);
   const [mode, setMode] = useState<"question" | "offer">("question");
   const card = useRef<HTMLDivElement>(null);
   const user = useUser();
+  const router = useRouter();
+  const loginHref = `/auth/login?next=${encodeURIComponent(`/products/${l.slug}`)}`;
+  const own = Boolean(user && l.ownerId && user.id === l.ownerId);
 
   useEffect(() => {
     const el = card.current;
@@ -31,6 +35,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
   }, []);
 
   const openForm = () => {
+    if (user === null) return router.push(loginHref);
     setOpen(true);
     card.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -40,14 +45,14 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
     const f = new FormData(e.currentTarget);
     setState("sending");
     try {
-      const res = await fetch("/api/messages", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ listing: l.slug, ...Object.fromEntries(f) }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Meldingen ble ikke sendt. Prøv igjen om litt.");
-      setState("sent");
+      router.push(`/meldinger/${data.id}`);
     } catch (err) {
       setError((err as Error).message);
       setState("error");
@@ -116,103 +121,94 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
         {l.status === "active" && (
           <div className="mt-5">
             <div className="grid gap-2.5">
-              <button
-                type="button"
-                aria-expanded={open}
-                onClick={() => setOpen(!open)}
-                className="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-              >
-                <MessageSquareIcon className="h-4 w-4" aria-hidden="true" />
-                Send melding til selger
-              </button>
+              {own ? (
+                <Link
+                  href="/meldinger"
+                  className="flex h-12 items-center justify-center gap-2 rounded-full bg-slate-100 px-5 text-sm font-semibold text-slate-800 transition hover:bg-slate-200"
+                >
+                  <MessageSquareIcon className="h-4 w-4" aria-hidden="true" />
+                  Dette er din annonse – se meldinger
+                </Link>
+              ) : user === null ? (
+                <Link
+                  href={loginHref}
+                  className="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                >
+                  <MessageSquareIcon className="h-4 w-4" aria-hidden="true" />
+                  Logg inn for å sende melding
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  disabled={user === undefined}
+                  onClick={() => setOpen(!open)}
+                  className="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+                >
+                  <MessageSquareIcon className="h-4 w-4" aria-hidden="true" />
+                  Send melding til selger
+                </button>
+              )}
             </div>
-            {open && (
+            {open && user && !own && (
               <div className="mt-4 border-t border-slate-100 pt-4">
-                {state === "sent" ? (
-                  <div className="flex items-start gap-3 rounded-2xl bg-emerald-50 p-4 text-sm text-emerald-800 ring-1 ring-inset ring-emerald-200">
-                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                    <p>{mode === "offer" ? "Budet er sendt." : "Meldingen er sendt."} Selgeren svarer deg på e-post.</p>
+                <form className="grid gap-3" onSubmit={send}>
+                  <div role="tablist" aria-label="Type melding" className="grid grid-cols-2 gap-1 rounded-full bg-slate-100 p-1 text-sm font-semibold">
+                    {(
+                      [
+                        ["question", "Still et spørsmål"],
+                        ["offer", "Gi bud"],
+                      ] as const
+                    ).map(([k, label]) => (
+                      <button
+                        key={k}
+                        type="button"
+                        role="tab"
+                        aria-selected={mode === k}
+                        onClick={() => setMode(k)}
+                        className="h-9 rounded-full text-slate-600 transition aria-selected:bg-white aria-selected:text-primary aria-selected:shadow-sm"
+                      >
+                        {label}
+                      </button>
+                    ))}
                   </div>
-                ) : (
-                  <form className="grid gap-3" onSubmit={send}>
-                    <div role="tablist" aria-label="Type melding" className="grid grid-cols-2 gap-1 rounded-full bg-slate-100 p-1 text-sm font-semibold">
-                      {(
-                        [
-                          ["question", "Still et spørsmål"],
-                          ["offer", "Gi bud"],
-                        ] as const
-                      ).map(([k, label]) => (
-                        <button
-                          key={k}
-                          type="button"
-                          role="tab"
-                          aria-selected={mode === k}
-                          onClick={() => setMode(k)}
-                          className="h-9 rounded-full text-slate-600 transition aria-selected:bg-white aria-selected:text-primary aria-selected:shadow-sm"
-                        >
-                          {label}
-                        </button>
-                      ))}
+                  {mode === "offer" && (
+                    <div className="relative">
+                      <input
+                        name="offer"
+                        required
+                        inputMode="numeric"
+                        maxLength={9}
+                        aria-label="Ditt bud i kroner"
+                        placeholder={`Ditt bud (prisantydning ${formatPrice(l.price)})`}
+                        className={`${input} h-11 pr-12 font-mono-data`}
+                        onChange={(e) => (e.target.value = e.target.value.replace(/\D/g, ""))}
+                      />
+                      <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 font-mono-data text-xs text-slate-500">kr</span>
                     </div>
-                    {mode === "offer" && (
-                      <div className="relative">
-                        <input
-                          name="offer"
-                          required
-                          inputMode="numeric"
-                          maxLength={9}
-                          aria-label="Ditt bud i kroner"
-                          placeholder={`Ditt bud (prisantydning ${formatPrice(l.price)})`}
-                          className={`${input} h-11 pr-12 font-mono-data`}
-                          onChange={(e) => (e.target.value = e.target.value.replace(/\D/g, ""))}
-                        />
-                        <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 font-mono-data text-xs text-slate-500">kr</span>
-                      </div>
-                    )}
-                    {user ? (
-                      <p className="rounded-xl bg-slate-50 px-3.5 py-2.5 text-sm text-slate-600">
-                        Sendes fra <span className="font-semibold text-slate-900">{user.fullName}</span> ({user.email}). Selgeren svarer deg på e-post.
-                      </p>
-                    ) : (
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <input name="name" required maxLength={100} placeholder="Navn" autoComplete="name" aria-label="Navn" className={`${input} h-11`} />
-                        <input
-                          name="email"
-                          required
-                          maxLength={320}
-                          placeholder="E-post"
-                          autoComplete="email"
-                          aria-label="E-post"
-                          className={`${input} h-11`}
-                          type="email"
-                        />
-                      </div>
-                    )}
-                    <textarea
-                      name="message"
-                      required
-                      rows={4}
-                      maxLength={1500}
-                      aria-label="Melding"
-                      className={`${input} py-3`}
-                      key={mode}
-                      defaultValue={
-                        mode === "offer"
-                          ? `Hei! Jeg vil gjerne by på «${l.title}». Gi meg beskjed om budet passer.`
-                          : `Hei! Er «${l.title}» fortsatt til salgs?`
-                      }
-                    />
-                    <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" type="text" style={{ position: "absolute", left: "-9999px" }} />
-                    {state === "error" && <p className="text-sm text-destructive">{error}</p>}
-                    <button
-                      type="submit"
-                      disabled={state === "sending"}
-                      className="flex h-11 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
-                    >
-                      {state === "sending" ? "Sender …" : mode === "offer" ? "Send bud" : "Send melding"}
-                    </button>
-                  </form>
-                )}
+                  )}
+                  <textarea
+                    name="message"
+                    required
+                    rows={4}
+                    maxLength={2000}
+                    aria-label="Melding"
+                    className={`${input} py-3`}
+                    key={mode}
+                    defaultValue={
+                      mode === "offer" ? `Hei! Jeg vil gjerne by på «${l.title}». Gi meg beskjed om budet passer.` : `Hei! Er «${l.title}» fortsatt til salgs?`
+                    }
+                  />
+                  <p className="text-xs text-slate-500">Meldingen sendes i chatten på HOBBYSTRADA. E-postadressen din deles ikke med selgeren.</p>
+                  {state === "error" && <p className="text-sm text-destructive">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={state === "sending"}
+                    className="flex h-11 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+                  >
+                    {state === "sending" ? "Sender …" : mode === "offer" ? "Send bud" : "Send melding"}
+                  </button>
+                </form>
               </div>
             )}
           </div>

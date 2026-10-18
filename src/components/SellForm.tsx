@@ -415,43 +415,11 @@ export function SellForm({ user }: { user: { name: string; email: string } | nul
             </div>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">Bare brukernavn og sted vises i annonsen. Kontaktinformasjonen din vises aldri.</p>
-          {user ? (
+          {user && (
             <p className="mt-5 rounded-lg bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
-              Du er logget inn som <span className="font-semibold text-foreground">{user.email}</span>. Meldinger fra kjøpere sendes dit.
+              Du er logget inn som <span className="font-semibold text-foreground">{user.email}</span>. Meldinger fra kjøpere kommer under Meldinger, og du får
+              beskjed på e-post.
             </p>
-          ) : (
-            <>
-              <p className="mt-5 rounded-lg bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
-                <Link className="font-semibold text-foreground underline underline-offset-4" href="/auth/login?next=/sell">
-                  Logg inn
-                </Link>{" "}
-                eller{" "}
-                <Link className="font-semibold text-foreground underline underline-offset-4" href="/auth/register">
-                  opprett bruker
-                </Link>{" "}
-                så slipper du å fylle inn kontaktinformasjon hver gang.
-              </p>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div className="sm:col-span-2">
-                  <label htmlFor="s-name" className={label}>
-                    Navn *
-                  </label>
-                  <input id="s-name" name="name" required maxLength={100} autoComplete="name" className={field} />
-                </div>
-                <div>
-                  <label htmlFor="s-email" className={label}>
-                    E-post *
-                  </label>
-                  <input id="s-email" name="email" required maxLength={320} autoComplete="email" className={field} type="email" />
-                </div>
-                <div>
-                  <label htmlFor="s-phone" className={label}>
-                    Telefon
-                  </label>
-                  <input id="s-phone" name="phone" maxLength={20} autoComplete="tel" className={field} type="tel" />
-                </div>
-              </div>
-            </>
           )}
           <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
             <input type="checkbox" name="confirm" required className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />

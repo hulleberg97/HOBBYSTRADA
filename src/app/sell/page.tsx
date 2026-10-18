@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SellForm } from "@/components/SellForm";
 import { getUser, getVerification } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
@@ -10,7 +11,7 @@ export const dynamic = "force-dynamic";
 const STEPS = [
   ["Lag annonsen", "Spiller, sett, tilstand, pris, sted og bilder."],
   ["Ute i markedet", "Vises med kortdata for samlere i hele Norge."],
-  ["Kjøpere tar kontakt", "Meldinger direkte til deg."],
+  ["Kjøpere tar kontakt", "Chat direkte med kjøperne."],
   ["Løft om du vil", "Fremhev annonsen for å selge raskere."],
 ];
 
@@ -44,7 +45,22 @@ export default async function SellPage() {
         </div>
       </section>
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        {mustVerify ? (
+        {!user && !mustVerify ? (
+          <div className="mx-auto max-w-md rounded-md border border-border bg-white p-6 text-center sm:p-8">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight">Logg inn for å legge ut kort</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Med en konto får du meldinger fra kjøpere samlet på ett sted, og du kan endre og følge med på annonsene dine.
+            </p>
+            <div className="mt-6 grid gap-2">
+              <Link href="/auth/login?next=/sell" className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+                Logg inn
+              </Link>
+              <Link href="/auth/register" className="flex h-12 items-center justify-center rounded-full border border-border text-sm font-semibold">
+                Opprett gratis konto
+              </Link>
+            </div>
+          </div>
+        ) : mustVerify ? (
           <div className="mx-auto max-w-md rounded-md border border-border bg-white p-6 text-center sm:p-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight">Bekreft deg med Vipps</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

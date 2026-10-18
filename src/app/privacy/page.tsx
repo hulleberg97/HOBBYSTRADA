@@ -29,7 +29,7 @@ export default function PrivacyPage() {
                   "Konto: e-post, brukernavn og passord (lagres kryptert).",
                   "Vipps (hvis du logger inn eller bekrefter deg med Vipps): navn, telefonnummer og e-post. Navnet brukes til merket «Verifisert med Vipps»; telefonnummeret vises aldri.",
                   "Annonser: kortdata, pris, sted, bilder og kontaktinformasjonen du oppgir.",
-                  "Meldinger: navn, e-post og innholdet i meldinger sendt til selgere eller til oss.",
+                  "Meldinger: innholdet i samtaler mellom kjøpere og selgere, og meldinger til oss. Den andre parten ser navnet ditt, men aldri e-postadressen din.",
                   "Teknisk: informasjonskapsler som holder deg innlogget og husker språkvalg.",
                 ]}
               />
@@ -51,7 +51,12 @@ export default function PrivacyPage() {
         },
         {
           title: "Hva som vises offentlig",
-          body: <p>I annonsen vises brukernavn, sted og annonseinnholdet. E-post og telefonnummer vises aldri. Kjøpere når deg gjennom meldingsskjemaet.</p>,
+          body: (
+            <p>
+              I annonsen vises brukernavn, sted og annonseinnholdet. E-post og telefonnummer vises aldri. Kjøpere når deg gjennom meldinger på nettsiden. Du får
+              beskjed på e-post når noen skriver til deg.
+            </p>
+          ),
         },
         {
           title: "Hvem vi deler med",
@@ -68,7 +73,7 @@ export default function PrivacyPage() {
             <List
               items={[
                 "Annonser og bilder: til du sletter dem eller kontoen din. Avviste annonser slettes etter 30 dager.",
-                "Meldinger og henvendelser: slettes automatisk etter 12 måneder.",
+                "Samtaler og henvendelser: slettes automatisk 12 måneder etter siste melding.",
                 "Rapporter om annonser: slettes 12 måneder etter at de er behandlet.",
                 "Betalinger for annonseløft: så lenge bokføringsloven krever (5 år).",
               ]}
