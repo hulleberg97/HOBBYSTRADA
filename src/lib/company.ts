@@ -6,5 +6,3 @@ export const COMPANY = {
   postal: "3612 Kongsberg",
   email: "post@hobbystrada.no",
 };
-
-export const companyLine = `${COMPANY.name} · Org.nr. ${COMPANY.orgnr} · ${COMPANY.street}, ${COMPANY.postal}`;

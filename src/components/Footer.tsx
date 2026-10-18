@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LangToggle } from "./LangToggle";
 import { CookieButton } from "./CookieConsent";
-import { COMPANY, companyLine } from "@/lib/company";
+import { COMPANY } from "@/lib/company";
 
 const COLS = [
   {
@@ -71,15 +71,9 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1">
-            <p>© {new Date().getFullYear()} HOBBYSTRADA. Alle rettigheter forbeholdt.</p>
-            <p>
-              {companyLine} ·{" "}
-              <a className="transition hover:text-white" href={`mailto:${COMPANY.email}`}>
-                {COMPANY.email}
-              </a>
-            </p>
-          </div>
+          <p>
+            © {new Date().getFullYear()} {COMPANY.name} · Org.nr. {COMPANY.orgnr}
+          </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <CookieButton />
           </div>
