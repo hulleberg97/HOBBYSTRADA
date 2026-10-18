@@ -102,3 +102,9 @@
     transform: rotateY(-360deg);
   }
 }
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

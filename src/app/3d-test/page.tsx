@@ -4,6 +4,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { CardStage3D, type StageCard } from "@/components/CardStage3D";
 import { HeroFan, fanCards } from "@/components/HeroFan";
 import { getListings, newest } from "@/lib/listings";
+import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = { title: "3D-test", robots: { index: false, follow: false } };
 export const revalidate = 60;
@@ -22,6 +23,7 @@ export default async function Page() {
     player: l.player,
     number: l.cardNumber ?? "",
     type: l.types[0] ?? "",
+    price: formatPrice(l.price).replace(",00", ""),
   }));
   const fallback = <HeroFan pinned={pinned} paid={paid} fill={fill} />;
   const buttons = (center: boolean) => (

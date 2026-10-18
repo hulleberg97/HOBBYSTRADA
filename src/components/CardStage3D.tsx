@@ -1,13 +1,24 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ArrowRightIcon } from "lucide-react";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { Reflector } from "three/addons/objects/Reflector.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-export type StageCard = { slug: string; title: string; image: string | null; set: string; player: string; number: string; type: string };
+export type StageCard = {
+  slug: string;
+  title: string;
+  image: string | null;
+  set: string;
+  player: string;
+  number: string;
+  type: string;
+  price: string;
+};
 
 const CARD_W = 1.6;
 const CARD_H = 2.62;
@@ -170,14 +181,47 @@ function webglOk() {
   return webglCache;
 }
 
+/** Myk, synlig lyskjegle: toner ut mot kantene og nedover. */
+function lightCone(top: number, bottom: number, height: number, strength: number) {
+  const mat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+    uniforms: { color: { value: new THREE.Color(0xfff1d6) }, strength: { value: strength } },
+    vertexShader: `
+      varying float vY; varying vec3 vN; varying vec3 vView;
+      void main() {
+        vY = uv.y;
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        vN = normalize(normalMatrix * normal);
+        vView = normalize(-mv.xyz);
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: `
+      uniform vec3 color; uniform float strength;
+      varying float vY; varying vec3 vN; varying vec3 vView;
+      void main() {
+        float edge = pow(abs(dot(vN, vView)), 2.4);
+        float fall = smoothstep(0.0, 0.9, vY);
+        gl_FragColor = vec4(color, edge * fall * strength);
+      }`,
+  });
+  return new THREE.Mesh(new THREE.CylinderGeometry(top, bottom, height, 48, 1, true), mat);
+}
+
+const DWELL = 3.4; // sekunder hvert kort står i fokus
+const TURN = 1.4; // sekunder på å snu til neste
+
 /**
- * Kortene i ekte 3D: graderte kort i klar plast, på gullsokler, i en ring som snurrer sakte i et mørkt studio
- * med spot ovenfra og speilende gulv. Kortene bak forsvinner i mørket, så kortet foran er i fokus.
- * Følger musen, kan dras rundt med fingeren og snurrer fortere når man scroller.
+ * Kortene i ekte 3D, i bane rundt en sokkel i midten. Et lysrigg med flomlys over ringen lyser opp kortene
+ * når de passerer, og kortet som kommer foran stopper, løftes frem og får fullt lys. Navn og pris vises under.
+ * Hold over for å stoppe, dra for å snurre selv, trykk for å åpne annonsen.
  */
 export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback: React.ReactNode }) {
   const box = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [focus, setFocus] = useState(0);
   const supported = useSyncExternalStore(
     () => () => {},
     webglOk,
@@ -194,7 +238,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.5 : 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
+    renderer.toneMappingExposure = 1.05;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     el.appendChild(renderer.domElement);
     renderer.domElement.style.touchAction = "pan-y";
@@ -203,69 +247,111 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const pmrem = new THREE.PMREMGenerator(renderer);
     const room = new RoomEnvironment();
     scene.environment = pmrem.fromScene(room, 0.03).texture;
-    scene.environmentIntensity = 0.5;
+    scene.environmentIntensity = 0.4;
     scene.fog = new THREE.Fog(BG, 10, 20);
 
     const disposables: { dispose(): void }[] = [renderer, pmrem, room];
     const track = <T extends { dispose(): void }>(x: T) => (disposables.push(x), x);
 
     const n = Math.max(cards.length, 3);
-    const radius = (CARD_W * 1.25) / Math.tan(Math.PI / n) / 2 + 1.25;
+    const step = (Math.PI * 2) / n;
+    const radius = Math.max(2.5, (CARD_W * 1.3) / Math.tan(Math.PI / n) / 2 + 1.0);
     const ring = new THREE.Group();
     const stage = new THREE.Group();
     stage.add(ring);
     scene.add(stage);
 
-    // Lys: en smal spot rett ovenfra på kortet foran, som i en monter. Resten ligger i halvmørke.
-    const front = new THREE.Vector3(0, 0, radius);
-    const spot = new THREE.SpotLight(0xfff6e6, 85, 16, Math.PI / 8, 0.75, 1.6);
-    spot.position.set(0, 7.5, radius + 0.6);
-    spot.target.position.set(0, 1.2, radius);
-    const rim = new THREE.DirectionalLight(0xf2d48a, 1.1);
-    rim.position.set(-5, 4, -6);
-    const fill = new THREE.DirectionalLight(0x9fb4d8, 0.35);
-    fill.position.set(4, 2, 8);
-    scene.add(spot, spot.target, rim, fill, new THREE.AmbientLight(0x6f84a8, 0.18));
-
-    // Lyskjeglen ovenfra, synlig i lufta som i videoen. Myk mot kantene og nedover.
-    const coneMat = track(
-      new THREE.ShaderMaterial({
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        side: THREE.DoubleSide,
-        uniforms: { color: { value: new THREE.Color(0xfff1d6) }, strength: { value: 0.22 } },
-        vertexShader: `
-          varying float vY; varying vec3 vN; varying vec3 vView;
-          void main() {
-            vY = uv.y;
-            vec4 mv = modelViewMatrix * vec4(position, 1.0);
-            vN = normalize(normalMatrix * normal);
-            vView = normalize(-mv.xyz);
-            gl_Position = projectionMatrix * mv;
-          }`,
-        fragmentShader: `
-          uniform vec3 color; uniform float strength;
-          varying float vY; varying vec3 vN; varying vec3 vView;
-          void main() {
-            float edge = pow(abs(dot(vN, vView)), 2.2);
-            float fall = smoothstep(0.0, 0.85, vY);
-            gl_FragColor = vec4(color, edge * fall * strength);
-          }`,
-      }),
+    // ── Sokkelen i midten: sort lakk med gullkant, H-merket i gull og en glødende ring rundt
+    const black = track(new THREE.MeshPhysicalMaterial({ color: 0x0a0f18, metalness: 0.6, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.08 }));
+    const gold = track(new THREE.MeshStandardMaterial({ color: 0xcfa653, metalness: 1, roughness: 0.2, envMapIntensity: 1.3 }));
+    const podR = radius * 0.5;
+    const podium = new THREE.Mesh(track(new THREE.CylinderGeometry(podR, podR * 1.04, 0.42, 96)), black);
+    podium.position.y = 0.21;
+    const rim = new THREE.Mesh(track(new THREE.TorusGeometry(podR + 0.01, 0.022, 16, 128)), gold);
+    rim.rotation.x = Math.PI / 2;
+    rim.position.y = 0.42;
+    const rimLow = new THREE.Mesh(track(new THREE.TorusGeometry(podR * 1.04 + 0.01, 0.018, 16, 128)), gold);
+    rimLow.rotation.x = Math.PI / 2;
+    rimLow.position.y = 0.01;
+    const { tex: topTex } = canvasTexture(1024, 1024, (ctx) => {
+      const g = ctx.createRadialGradient(512, 512, 40, 512, 512, 512);
+      g.addColorStop(0, "#1b2740");
+      g.addColorStop(1, "#070b12");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(512, 512, 512, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(207,166,83,.55)";
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(512, 512, 430, 0, Math.PI * 2);
+      ctx.stroke();
+      drawMark(ctx, 512, 512, 380, "#d6b25f", "#f6e3a6");
+    });
+    track(topTex);
+    const top = new THREE.Mesh(
+      track(new THREE.CircleGeometry(podR - 0.005, 96)),
+      track(new THREE.MeshPhysicalMaterial({ map: topTex, metalness: 0.5, roughness: 0.3, clearcoat: 1 })),
     );
-    const cone = new THREE.Mesh(track(new THREE.CylinderGeometry(0.2, 2.1, 7, 64, 1, true)), coneMat);
-    cone.position.set(0, 3.5, radius);
-    scene.add(cone);
+    top.rotation.x = -Math.PI / 2;
+    top.position.y = 0.4215;
+    const glowRing = new THREE.Mesh(
+      track(new THREE.RingGeometry(podR * 1.08, podR * 1.16, 128)),
+      track(new THREE.MeshBasicMaterial({ color: 0xe9c46a, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false })),
+    );
+    glowRing.rotation.x = -Math.PI / 2;
+    glowRing.position.y = 0.006;
+    scene.add(podium, rim, rimLow, top, glowRing);
 
-    // Glass, gull og bakside er felles for alle kortene
+    // ── Lysriggen: en ring av flomlys over banen, som peker ned på kortene
+    const RIG_Y = 6.2;
+    const rigLights = mobile ? 4 : 8;
+    const rigMat = track(new THREE.MeshBasicMaterial({ color: 0xfff4dc }));
+    const rigGeo = track(new THREE.BoxGeometry(0.34, 0.06, 0.2));
+    const rigFrame = new THREE.Mesh(
+      track(new THREE.TorusGeometry(radius, 0.03, 8, 128)),
+      track(new THREE.MeshStandardMaterial({ color: 0x1a2232, metalness: 0.8, roughness: 0.4 })),
+    );
+    rigFrame.rotation.x = Math.PI / 2;
+    rigFrame.position.y = RIG_Y + 0.06;
+    scene.add(rigFrame);
+    for (let i = 0; i < rigLights; i++) {
+      const a = (i / rigLights) * Math.PI * 2 + Math.PI / rigLights;
+      const x = Math.sin(a) * radius;
+      const z = Math.cos(a) * radius;
+      const lamp = new THREE.Mesh(rigGeo, rigMat);
+      lamp.position.set(x, RIG_Y, z);
+      lamp.lookAt(0, RIG_Y, 0);
+      const light = new THREE.SpotLight(0xfff1d6, 26, 14, Math.PI / 7, 0.8, 1.5);
+      light.position.set(x, RIG_Y, z);
+      light.target.position.set(x * 0.92, 1.2, z * 0.92);
+      const cone = lightCone(0.12, 1.25, RIG_Y - 0.2, 0.06);
+      cone.position.set(x * 0.96, RIG_Y / 2, z * 0.96);
+      track(cone.geometry);
+      track(cone.material as THREE.Material);
+      scene.add(lamp, light, light.target, cone);
+    }
+
+    // ── Fokuslyset: en sterk spot på plassen foran
+    const front = new THREE.Vector3(0, 0, radius);
+    const key = new THREE.SpotLight(0xfff6e6, 90, 16, Math.PI / 9, 0.7, 1.6);
+    key.position.set(0, 7.2, radius + 1.2);
+    key.target.position.set(0, 1.3, radius);
+    const keyCone = lightCone(0.2, 1.7, 7, 0.16);
+    keyCone.position.set(0, 3.5, radius + 0.15);
+    track(keyCone.geometry);
+    track(keyCone.material as THREE.Material);
+    const back = new THREE.DirectionalLight(0xf2d48a, 0.9);
+    back.position.set(0, 4, -8);
+    scene.add(key, key.target, keyCone, back, new THREE.AmbientLight(0x6f84a8, 0.14));
+
+    // ── Kortene
     const glassGeo = track(new RoundedBoxGeometry(CARD_W, CARD_H, DEPTH, 5, 0.06));
     const faceGeo = track(new THREE.PlaneGeometry(CARD_W - 0.03, CARD_H - 0.03));
     const glass = track(
       new THREE.MeshPhysicalMaterial({
         color: 0xffffff,
         roughness: 0.03,
-        metalness: 0,
         clearcoat: 1,
         clearcoatRoughness: 0.02,
         transparent: true,
@@ -274,7 +360,6 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
         depthWrite: false,
       }),
     );
-    const gold = track(new THREE.MeshStandardMaterial({ color: 0xcfa653, metalness: 1, roughness: 0.2, envMapIntensity: 1.3 }));
     const blockGeo = track(new RoundedBoxGeometry(CARD_W * 0.7, 0.24, 0.34, 5, 0.035));
     const plateGeo = track(new THREE.CylinderGeometry(0.72, 0.76, 0.05, 64));
     const { tex: markTex } = canvasTexture(256, 256, (ctx) => drawMark(ctx, 128, 128, 160, "#6e5019", "#8a6a26"));
@@ -296,12 +381,12 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     const shadowMat = track(new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }));
     const shadowGeo = track(new THREE.PlaneGeometry(2.2, 1.4));
 
-    const slabs: { mesh: THREE.Group; slug: string; lift: number; phase: number }[] = [];
-    const hit: THREE.Object3D[] = [];
-    const anisotropy = renderer.capabilities.getMaxAnisotropy();
     const PLATE_H = 0.05;
     const BLOCK_H = 0.24;
     const cardY = PLATE_H + BLOCK_H - 0.07 + CARD_H / 2;
+    const items: { holder: THREE.Group; card: THREE.Group; face: THREE.MeshPhysicalMaterial; slug: string; angle: number; lift: number }[] = [];
+    const hit: THREE.Object3D[] = [];
+    const anisotropy = renderer.capabilities.getMaxAnisotropy();
 
     cards.forEach((c, i) => {
       const { tex, ctx } = canvasTexture(TEX_W, TEX_H, (cx) => drawFront(cx, c, null));
@@ -326,23 +411,21 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
           iridescenceThicknessRange: [160, 480],
         }),
       );
-
       const holder = new THREE.Group();
       const card = new THREE.Group();
       const face = new THREE.Mesh(faceGeo, faceMat);
       face.position.z = DEPTH / 2 - 0.012;
-      const back = new THREE.Mesh(faceGeo, backMat);
-      back.position.z = -DEPTH / 2 + 0.012;
-      back.rotation.y = Math.PI;
+      const backFace = new THREE.Mesh(faceGeo, backMat);
+      backFace.position.z = -DEPTH / 2 + 0.012;
+      backFace.rotation.y = Math.PI;
       const shell = new THREE.Mesh(glassGeo, glass);
       shell.renderOrder = 2;
-      card.add(face, back, shell);
+      card.add(face, backFace, shell);
       card.position.y = cardY;
-      for (const m of [face, back, shell]) {
+      for (const m of [face, backFace, shell]) {
         m.userData.slug = c.slug;
         hit.push(m);
       }
-
       const plate = new THREE.Mesh(plateGeo, gold);
       plate.position.y = PLATE_H / 2;
       plate.scale.z = 0.62;
@@ -354,15 +437,14 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       shadow.rotation.x = -Math.PI / 2;
       shadow.position.y = 0.004;
       holder.add(shadow, plate, block, mark, card);
-
-      const a = (i / n) * Math.PI * 2;
+      const a = i * step;
       holder.position.set(Math.sin(a) * radius, 0, Math.cos(a) * radius);
       holder.rotation.y = a;
       ring.add(holder);
-      slabs.push({ mesh: card, slug: c.slug, lift: 0, phase: i * 1.3 });
+      items.push({ holder, card, face: faceMat, slug: c.slug, angle: a, lift: 0 });
     });
 
-    // Gulv: speil på PC (for tungt på mobil), med et slør som toner ut mot kantene og en lys flekk under spoten
+    // ── Gulv: speil på PC, slør som toner ut, og lys under fokusplassen
     if (!mobile) {
       const mirror = new Reflector(track(new THREE.CircleGeometry(radius + 6, 64)), {
         textureWidth: Math.min(1024, el.clientWidth),
@@ -390,88 +472,110 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     );
     veil.rotation.x = -Math.PI / 2;
     veil.position.y = 0.001;
-    scene.add(veil);
     const { tex: poolTex } = canvasTexture(256, 256, (ctx) => {
       const g = ctx.createRadialGradient(128, 128, 2, 128, 128, 128);
-      g.addColorStop(0, "rgba(255,236,190,0.55)");
-      g.addColorStop(0.5, "rgba(214,178,95,0.16)");
+      g.addColorStop(0, "rgba(255,236,190,0.6)");
+      g.addColorStop(0.5, "rgba(214,178,95,0.18)");
       g.addColorStop(1, "rgba(214,178,95,0)");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, 256, 256);
     });
     track(poolTex);
     const pool = new THREE.Mesh(
-      track(new THREE.PlaneGeometry(4.2, 2.6)),
+      track(new THREE.PlaneGeometry(4.4, 2.8)),
       track(new THREE.MeshBasicMaterial({ map: poolTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })),
     );
     pool.rotation.x = -Math.PI / 2;
-    pool.position.set(0, 0.006, radius);
-    scene.add(pool);
+    pool.position.set(0, 0.007, radius);
+    scene.add(veil, pool);
 
-    // Kamera: kortet foran i fokus, ringen bak. Trekkes bakover på smale skjermer.
-    const camera = new THREE.PerspectiveCamera(24, 1, 0.1, 100);
-    const target = new THREE.Vector3(0, 1.45, front.z * 0.35);
+    // ── Kamera: litt ovenfra, så sokkelen og banen synes, med kortet foran i fokus
+    const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
+    const target = new THREE.Vector3(0, 1.35, front.z * 0.42);
     const resize = () => {
       const w = el.clientWidth;
       const h = el.clientHeight;
       renderer.setSize(w, h);
       camera.aspect = w / h;
-      const visH = Math.max(4.9, ((2 * radius + 1.2) / camera.aspect) * 0.92);
+      const visH = Math.max(5.2, ((2 * radius + 1.4) / camera.aspect) * 0.9);
       const d = visH / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-      camera.position.set(0, target.y + 0.75, target.z + d);
+      camera.position.set(0, target.y + d * 0.2, target.z + d);
       camera.lookAt(target);
       camera.updateProjectionMatrix();
       const fog = scene.fog as THREE.Fog;
-      const toFront = camera.position.z - radius;
-      fog.near = toFront + 0.6;
-      fog.far = toFront + radius * 2.6;
+      const toFront = camera.position.distanceTo(front);
+      fog.near = toFront + 0.8;
+      fog.far = toFront + radius * 3;
     };
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(el);
 
-    // Samhandling: vipp etter musen, dra for å snurre, scroll gir fart, hold over for å løfte kortet
+    // ── Bevegelse: kortene snur seg frem ett og ett. Hold over stopper, dra snurrer, scroll går videre.
+    let index = 0; // kortet som står i fokus
+    let shown = -1;
+    let angle = 0; // ringens vinkel
+    let from = 0;
+    let goal = 0;
+    let turning = 0; // 0–1 mens ringen snur
+    let timer = 0;
+    const turnTo = (i: number) => {
+      index = i;
+      from = angle;
+      goal = -i * step;
+      turning = 0.0001;
+    };
+    const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
     const pointer = new THREE.Vector2(9, 9);
     const tilt = { x: 0, y: 0 };
-    let velocity = 0;
     let dragging = false;
     let lastX = 0;
-    let hovered: string | null = null;
     let moved = 0;
+    let hovered: string | null = null;
     const ray = new THREE.Raycaster();
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-      tilt.x = pointer.y * 0.035;
-      tilt.y = pointer.x * 0.08;
+      tilt.x = pointer.y * 0.03;
+      tilt.y = pointer.x * 0.07;
       if (dragging) {
         const dx = e.clientX - lastX;
         moved += Math.abs(dx);
-        ring.rotation.y += dx * 0.005;
-        velocity = dx * 0.0008;
+        angle += dx * 0.005;
         lastX = e.clientX;
       }
     };
     const onDown = (e: PointerEvent) => {
       dragging = true;
+      turning = 0;
       moved = 0;
       lastX = e.clientX;
     };
     const onUp = () => {
+      if (!dragging) return;
       dragging = false;
+      turnTo(Math.round(-angle / step));
+      timer = 0;
     };
     const onLeave = () => {
       pointer.set(9, 9);
       tilt.x = tilt.y = 0;
-      dragging = false;
+      onUp();
     };
     const onClick = () => {
       if (hovered && moved < 6) router.push(`/products/${hovered}`);
     };
+    let scrolled = 0;
     let lastScroll = window.scrollY;
     const onScroll = () => {
-      velocity += (window.scrollY - lastScroll) * 0.0002;
+      scrolled += window.scrollY - lastScroll;
       lastScroll = window.scrollY;
+      if (Math.abs(scrolled) > 160 && !turning) {
+        turnTo(index + Math.sign(scrolled));
+        scrolled = 0;
+        timer = 0;
+      }
     };
     const cv = renderer.domElement;
     cv.addEventListener("pointermove", onMove);
@@ -481,12 +585,13 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     cv.addEventListener("click", onClick);
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Tegn bare når feltet er synlig
     let visible = true;
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
     io.observe(el);
 
     const clock = new THREE.Clock();
+    const white = new THREE.Color(0xffffff);
+    const dim = new THREE.Color(0x5b6578);
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
@@ -499,16 +604,41 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
       hovered = (h?.object.userData.slug as string) ?? null;
       cv.style.cursor = hovered ? "pointer" : dragging ? "grabbing" : "grab";
 
-      if (!dragging) {
-        const base = still || hovered ? 0 : 0.11;
-        ring.rotation.y += (base + velocity * 60) * dt;
-        velocity *= 0.94;
+      if (turning > 0) {
+        turning = Math.min(1, turning + dt / TURN);
+        angle = from + (goal - from) * ease(turning);
+        if (turning >= 1) turning = 0;
+      } else if (!dragging && !hovered && !still) {
+        timer += dt;
+        if (timer > DWELL) {
+          timer = 0;
+          turnTo(index + 1);
+        }
       }
+      ring.rotation.y = angle;
       stage.rotation.x += (tilt.x - stage.rotation.x) * 0.05;
       stage.rotation.y += (tilt.y - stage.rotation.y) * 0.05;
-      for (const s of slabs) {
-        s.lift += ((s.slug === hovered ? 0.16 : 0) - s.lift) * 0.1;
-        s.mesh.position.y = cardY + s.lift + (still ? 0 : Math.sin(t * 1.0 + s.phase) * 0.025);
+      podium.rotation.y = top.rotation.z = -angle * 0.25;
+
+      // Fokus: kortet nærmest fronten løftes frem, blir større og får fullt lys
+      let best = 0;
+      let bestF = -2;
+      items.forEach((it, i) => {
+        const f = Math.cos(it.angle + angle);
+        if (f > bestF) {
+          bestF = f;
+          best = i;
+        }
+        const k = Math.pow(Math.max(0, f), 6);
+        it.lift += ((it.slug === hovered ? 0.14 : 0) - it.lift) * 0.1;
+        it.card.position.y = cardY + it.lift + k * 0.12 + (still ? 0 : Math.sin(t + i * 1.3) * 0.02);
+        it.card.position.z = k * 0.35;
+        it.card.scale.setScalar(1 + k * 0.1);
+        it.face.color.copy(dim).lerp(white, 0.35 + 0.65 * Math.max(0, f));
+      });
+      if (best !== shown && bestF > 0.92) {
+        shown = best;
+        setFocus(best);
       }
       renderer.render(scene, camera);
     };
@@ -531,18 +661,39 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
   }, [cards, router, supported]);
 
   if (!supported) return <>{fallback}</>;
-  // Kantene tones ut, så 3D-feltet glir over i bakgrunnen uten synlige kanter
+  const c = cards[focus] ?? cards[0];
   return (
-    <div
-      ref={box}
-      style={{
-        maskImage: "linear-gradient(to right, transparent, #000 12%, #000 88%, transparent), linear-gradient(to bottom, #000 72%, transparent)",
-        maskComposite: "intersect",
-        WebkitMaskComposite: "source-in",
-      }}
-      className="relative h-[340px] w-full sm:h-[440px] lg:h-[500px]"
-      aria-label="Utvalgte kort"
-      role="img"
-    />
+    <div className="relative">
+      {/* Kantene tones ut, så 3D-feltet glir over i bakgrunnen uten synlige kanter */}
+      <div
+        ref={box}
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 80%, transparent)",
+          maskComposite: "intersect",
+          WebkitMaskComposite: "source-in",
+        }}
+        className="relative h-[380px] w-full sm:h-[480px] lg:h-[540px]"
+        aria-label="Utvalgte kort"
+        role="img"
+      />
+      {c && (
+        <div key={c.slug} className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center px-4 sm:bottom-5">
+          <Link
+            href={`/products/${c.slug}`}
+            className="pointer-events-auto flex animate-[stage-in_.6s_ease-out] items-center gap-4 rounded-full bg-black/45 py-2 pl-5 pr-2 text-left text-white ring-1 ring-inset ring-[#cfa653]/40 backdrop-blur-md"
+          >
+            <span className="min-w-0">
+              <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{c.player}</span>
+              <span className="block truncate text-[11px] text-white/60 sm:text-xs">{c.set}</span>
+            </span>
+            <span className="shrink-0 font-heading text-sm font-semibold text-[#f2dc9b] sm:text-base">{c.price}</span>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
+              <ArrowRightIcon className="h-4 w-4" aria-label="Se kortet" />
+            </span>
+          </Link>
+        </div>
+      )}
+    </div>
   );
 }
