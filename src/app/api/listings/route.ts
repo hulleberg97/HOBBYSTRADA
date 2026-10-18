@@ -104,6 +104,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Annonsen ble ikke lagret. Prøv igjen." }, { status: 500 });
   }
 
+  // Husk stedet på kontoen, så det fylles inn neste gang.
+  if (location !== user.location) {
+    const { data } = await db.auth.admin.getUserById(user.id);
+    await db.auth.admin.updateUserById(user.id, { user_metadata: { ...data.user?.user_metadata, location } });
+  }
+
   if (process.env.ADMIN_EMAIL) {
     await sendEmail({
       to: process.env.ADMIN_EMAIL,

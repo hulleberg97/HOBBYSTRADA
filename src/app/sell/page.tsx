@@ -72,7 +72,7 @@ export default async function SellPage() {
             <p className="mt-4 text-xs text-muted-foreground">Vi får bare navnet, telefonnummeret og e-posten din fra Vipps. Telefonnummeret vises aldri.</p>
           </div>
         ) : (
-          <SellForm user={user ? { name: user.name, email: user.email } : null} />
+          <SellForm user={user ? { name: user.name, email: user.email, location: user.location } : null} />
         )}
       </section>
     </>

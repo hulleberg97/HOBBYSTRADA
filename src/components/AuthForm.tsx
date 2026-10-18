@@ -59,7 +59,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
         password: f.password,
         options: {
           emailRedirectTo: `${origin}/auth/callback?next=/account`,
-          data: { first_name: f.first_name, last_name: f.last_name, username: f.first_name },
+          data: { first_name: f.first_name, last_name: f.last_name, username: f.first_name, location: f.location?.trim() },
         },
       });
       err = error;
@@ -119,6 +119,22 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                         Etternavn
                       </label>
                       <input id="last_name" name="last_name" type="text" required autoComplete="family-name" className={field} placeholder="Nordmann" />
+                    </div>
+                    <div className="col-span-2">
+                      <label htmlFor="location" className={label}>
+                        Sted
+                      </label>
+                      <input
+                        id="location"
+                        name="location"
+                        type="text"
+                        required
+                        maxLength={60}
+                        autoComplete="address-level2"
+                        className={field}
+                        placeholder="F.eks. Kongsberg"
+                      />
+                      <p className="mt-1.5 text-xs text-muted-foreground">Vises i annonsene dine, så kjøpere ser hvor kortet er.</p>
                     </div>
                   </div>
                 )}

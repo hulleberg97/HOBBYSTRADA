@@ -12,6 +12,7 @@ export async function getUser() {
     email: data.user.email ?? "",
     name: (meta.username as string) || (meta.name as string) || data.user.email || "",
     fullName: displayName(meta, data.user.email),
+    location: (meta.location as string) || "",
   };
 }
 

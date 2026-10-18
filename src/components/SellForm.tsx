@@ -93,7 +93,7 @@ function PhotoSlot({
   );
 }
 
-export function SellForm({ user }: { user: { name: string; email: string } | null }) {
+export function SellForm({ user }: { user: { name: string; email: string; location?: string } | null }) {
   const [v, setV] = useState({
     player: "",
     set: "",
@@ -411,7 +411,16 @@ export function SellForm({ user }: { user: { name: string; email: string } | nul
               <label htmlFor="s-location" className={label}>
                 Sted *
               </label>
-              <input id="s-location" name="location" required maxLength={60} placeholder="F.eks. Bergen" autoComplete="address-level2" className={field} />
+              <input
+                id="s-location"
+                name="location"
+                required
+                maxLength={60}
+                placeholder="F.eks. Bergen"
+                autoComplete="address-level2"
+                defaultValue={user?.location}
+                className={field}
+              />
             </div>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">Bare brukernavn og sted vises i annonsen. Kontaktinformasjonen din vises aldri.</p>
