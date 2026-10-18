@@ -5,6 +5,7 @@ import { hasVippsLogin } from "@/lib/vipps-login";
 import { VippsButton } from "@/components/VerifiedBadge";
 
 export const metadata: Metadata = { title: "Legg ut kort" };
+export const dynamic = "force-dynamic";
 
 const STEPS = [
   ["Lag annonsen", "Spiller, sett, tilstand, pris, sted og bilder."],
