@@ -1,6 +1,6 @@
 import "server-only";
 import { adminClient } from "./supabase-admin";
-import { sendEmail } from "./email";
+import { brandedEmail, sendEmail } from "./email";
 import { formatPrice } from "./format";
 
 export type Conversation = {
@@ -182,6 +182,14 @@ export async function addMessage(id: string, userId: string, body: string, offer
         to,
         subject: offer ? `Nytt bud på «${row.listing_title}»: ${formatPrice(offer)}` : `Ny melding om «${row.listing_title}»`,
         text: `${from} har sendt deg en melding om «${row.listing_title}»:\n\n${offer ? `Bud: ${formatPrice(offer)}\n\n` : ""}${body}\n\nLes og svar her:\n${site()}/meldinger/${id}\n\nDu kan ikke svare på denne e-posten.`,
+        html: brandedEmail({
+          title: offer ? `Nytt bud: ${formatPrice(offer)}` : "Ny melding",
+          intro: `${from} har sendt deg en melding om «${row.listing_title}».`,
+          quote: body,
+          button: "Les og svar",
+          url: `${site()}/meldinger/${id}`,
+          outro: "Svar i chatten på HOBBYSTRADA. Du kan ikke svare på denne e-posten.",
+        }),
       });
     }
   }
