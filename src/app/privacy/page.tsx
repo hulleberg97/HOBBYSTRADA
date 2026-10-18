@@ -73,7 +73,7 @@ export default function PrivacyPage() {
           title: "Hvor dataene lagres",
           body: (
             <p>
-              Databasen og serverne som behandler opplysningene dine, ligger i EU (Frankfurt). Leverandørene våre har databehandleravtaler med oss og behandler
+              Databasen ligger i EU (Stockholm), og serverne som behandler opplysningene dine, ligger i EU (Frankfurt). Leverandørene våre har databehandleravtaler med oss og behandler
               bare opplysningene på våre vegne.
             </p>
           ),
