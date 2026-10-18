@@ -49,14 +49,8 @@ export function Header() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 text-primary backdrop-blur">
         <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
           <Link className="flex shrink-0 items-center gap-2" href="/">
-            <span className="relative block h-7 w-[115px] overflow-hidden sm:h-9 sm:w-[148px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/img/logo-header.webp"
-                alt="HOBBYSTRADA"
-                className="absolute left-[-20px] top-[-33px] h-[99px] w-[148px] max-w-none sm:left-[-25px] sm:top-[-42px] sm:h-[127px] sm:w-[191px]"
-              />
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={231} height={34} className="h-[26px] w-auto sm:h-[34px]" />
           </Link>
           <form className="hidden max-w-[480px] flex-1 md:block" role="search" onSubmit={search}>
             <label className="relative block">

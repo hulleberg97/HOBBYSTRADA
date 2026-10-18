@@ -41,14 +41,8 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2fr]">
           <div>
             <Link className="inline-block" aria-label="HOBBYSTRADA" href="/">
-              <span className="relative block h-9 w-[148px] overflow-hidden sm:h-10 sm:w-[166px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/img/logo-footer.webp"
-                  alt="HOBBYSTRADA"
-                  className="absolute left-[-25px] top-[-42px] h-[127px] w-[191px] max-w-none mix-blend-lighten [filter:contrast(1.6)] sm:left-[-28px] sm:top-[-47px] sm:h-[142px] sm:w-[214px]"
-                />
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/logo-hvit.svg" alt="HOBBYSTRADA" width={231} height={34} className="h-[34px] w-auto" />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.</p>
             <LangToggle dark className="mt-6" />

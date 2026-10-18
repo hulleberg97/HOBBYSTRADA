@@ -58,8 +58,8 @@ export function brandedEmail({
 }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
   return `<div style="background:#efefeb;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;color:#0f1d2b">
-  <div style="max-width:480px;margin:0 auto;background:#0f1f39;border-radius:16px 16px 0 0;padding:20px 32px">
-    <a href="${site}" style="text-decoration:none"><img src="${site}/email/logo.png" width="166" height="40" alt="HOBBYSTRADA" style="display:block;border:0;width:166px;height:40px;color:#ffffff;font-size:20px;font-weight:bold"></a>
+  <div style="max-width:480px;margin:0 auto;background:#0f1f39;border-radius:16px 16px 0 0;padding:22px 32px">
+    <a href="${site}" style="text-decoration:none"><img src="${site}/email/logo.png" width="272" height="40" alt="HOBBYSTRADA" style="display:block;border:0;width:272px;height:40px;color:#ffffff;font-size:20px;font-weight:bold"></a>
   </div>
   <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:0 0 16px 16px;padding:32px">
     <h1 style="margin:0 0 12px;font-size:22px">${esc(title)}</h1>
