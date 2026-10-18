@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, MessageCircleIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
 import { FavoriteCount } from "./FavoriteButton";
-import { LangToggle } from "./LangToggle";
 import { CartDrawer } from "./CartDrawer";
 import { useUser } from "./useUser";
 import { SearchSuggest } from "./SearchSuggest";
@@ -50,7 +49,7 @@ export function Header() {
         <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
           <Link className="flex shrink-0 items-center gap-2" href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={205} height={34} className="h-[26px] w-auto sm:h-[34px]" />
+            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={169} height={28} className="h-[22px] w-auto sm:h-[28px]" />
           </Link>
           <form className="hidden max-w-[480px] flex-1 md:block" role="search" onSubmit={search}>
             <label className="relative block">
@@ -82,9 +81,6 @@ export function Header() {
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-1.5 xl:ml-0">
-            <div className="hidden lg:block">
-              <LangToggle />
-            </div>
             <Link
               className="hidden h-10 items-center gap-2 rounded-full bg-slate-100 px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-200 sm:flex"
               href={user ? "/account" : "/auth/login"}
@@ -166,10 +162,6 @@ export function Header() {
                 </Link>
               ))}
             </nav>
-            <div className="mx-auto mt-4 flex max-w-[1320px] items-center justify-between gap-3 sm:px-2 lg:hidden">
-              <span className="text-sm font-medium text-slate-600">Språk</span>
-              <LangToggle />
-            </div>
             <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
               <Link
                 onClick={() => setMenu(false)}

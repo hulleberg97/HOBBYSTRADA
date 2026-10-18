@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LangToggle } from "./LangToggle";
 import { CookieButton } from "./CookieConsent";
 import { COMPANY } from "@/lib/company";
 
@@ -42,10 +41,9 @@ export function Footer() {
           <div>
             <Link className="inline-block" aria-label="HOBBYSTRADA" href="/">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/logo-hvit.svg" alt="HOBBYSTRADA" width={205} height={34} className="h-[34px] w-auto" />
+              <img src="/brand/logo-hvit.svg" alt="HOBBYSTRADA" width={169} height={28} className="h-[28px] w-auto" />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.</p>
-            <LangToggle dark className="mt-6" />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             {COLS.map((c) => (
