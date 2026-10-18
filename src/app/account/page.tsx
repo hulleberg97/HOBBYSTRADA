@@ -7,6 +7,7 @@ import { adminClient } from "@/lib/supabase-admin";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
 import { EditListing } from "@/components/EditListing";
+import { SavedSearches } from "@/components/SavedSearches";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 
 export const metadata: Metadata = { title: "Min side" };
@@ -18,6 +19,9 @@ export default async function AccountPage() {
   const db = adminClient();
   const { data: rows } = db ? await db.from("listings").select("*").eq("owner_id", user.id).order("created_at", { ascending: false }) : { data: [] };
   const listings = (rows ?? []).map(fromRow);
+  const { data: searches } = db
+    ? await db.from("saved_searches").select("id, label, query").eq("user_id", user.id).order("created_at", { ascending: false })
+    : { data: [] };
   const { data: messages } = db
     ? await db.from("messages").select("*").eq("seller_id", user.id).order("created_at", { ascending: false }).limit(50)
     : { data: [] };
@@ -102,7 +106,9 @@ export default async function AccountPage() {
           )}
         </section>
         <aside>
-          <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Meldinger</h2>
+          <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Varsler om nye kort</h2>
+          <SavedSearches items={searches ?? []} />
+          <h2 className="mt-10 font-heading text-xl font-bold tracking-tight text-slate-950">Meldinger</h2>
           {(messages ?? []).length === 0 ? (
             <p className="mt-4 rounded-3xl bg-slate-50 p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-200">
               Når kjøpere sender deg meldinger, vises de her og sendes til e-posten din.

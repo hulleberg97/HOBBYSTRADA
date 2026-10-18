@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CheckIcon, ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
 import { formatPrice, timeAgo } from "@/lib/format";
+import { FavoriteButton } from "./FavoriteButton";
 import type { Listing } from "@/lib/types";
 
 const input =
@@ -163,6 +164,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </div>
         )}
         <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-4 text-sm">
+          <FavoriteButton slug={l.slug} title={l.title} variant="detail" />
           <button
             type="button"
             onClick={share}

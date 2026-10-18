@@ -18,6 +18,7 @@ import { ListingCard } from "./ListingCard";
 import { EMPTY, TYPES, activeCount, applyFilters, parseFilters, sortListings, toQuery, type Filters } from "@/lib/filters";
 import { FilterPanel } from "./FilterPanel";
 import { SearchSuggest } from "./SearchSuggest";
+import { SaveSearchButton } from "./SaveSearchButton";
 import type { Listing } from "@/lib/types";
 
 const PAGE_SIZE = 13;
@@ -246,6 +247,9 @@ export function Market({ listings }: { listings: Listing[] }) {
             >
               Nullstill alle
             </button>
+            <span className="sm:ml-auto">
+              <SaveSearchButton />
+            </span>
           </div>
         )}
         {shown.length > 0 ? (

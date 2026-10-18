@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { notifySavedSearches } from "@/lib/notify";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -33,7 +35,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
       return NextResponse.json({ error: "Annonsen venter på godkjenning." }, { status: 403 });
     }
     patch.status = status;
-    if (status === "sold") Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null });
+    if (status === "sold") Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null, sold_at: new Date().toISOString() });
+    if (status === "active") patch.sold_at = null;
   }
   if (price !== undefined) {
     const p = Number(price);
@@ -46,9 +49,16 @@ export async function PATCH(req: Request, { params }: Ctx) {
     if (!location.trim()) return NextResponse.json({ error: "Sted kan ikke være tomt." }, { status: 400 });
     patch.location = location.trim().slice(0, 60);
   }
-  const { error } = await r.db.from("listings").update(patch).eq("id", r.listing.id);
+  let { error } = await r.db.from("listings").update(patch).eq("id", r.listing.id);
+  // Databasen er ikke oppdatert med prisarkivet ennå (supabase/002_nye_funksjoner.sql): lagre uten sold_at.
+  if (error && "sold_at" in patch && /sold_at/.test(error.message)) {
+    delete patch.sold_at;
+    ({ error } = await r.db.from("listings").update(patch).eq("id", r.listing.id));
+  }
   if (error) return NextResponse.json({ error: "Kunne ikke lagre endringen." }, { status: 500 });
   revalidatePath("/", "layout");
+  // Første gang en annonse publiseres: varsle dem som har et lagret søk som passer.
+  if (status === "active" && r.listing.status === "pending") after(() => notifySavedSearches(r.db, r.listing.id));
   return NextResponse.json({ ok: true });
 }
 

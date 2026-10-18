@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { CircleUserIcon, LayoutGridIcon, MenuIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
+import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
+import { FavoriteCount } from "./FavoriteButton";
 import { LangToggle } from "./LangToggle";
 import { CartDrawer } from "./CartDrawer";
 import { useUser } from "./useUser";
@@ -18,6 +19,7 @@ const MOBILE_NAV = [
   ["/products", "Markedet"],
   ["/sell", "Legg ut kort"],
   ["/annonseloft", "Annonseløft"],
+  ["/favoritter", "Favoritter"],
   ["/about", "Om oss"],
   ["/faq", "Spørsmål og svar"],
   ["/contact", "Kontakt"],
@@ -93,6 +95,14 @@ export function Header() {
             >
               <CircleUserIcon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
               {user ? "Min side" : "Logg inn"}
+            </Link>
+            <Link
+              href="/favoritter"
+              aria-label="Favoritter"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
+            >
+              <HeartIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+              <FavoriteCount />
             </Link>
             <button
               type="button"
