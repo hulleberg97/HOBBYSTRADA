@@ -139,7 +139,7 @@ export function Header() {
               onChange={setQ}
               onPick={go}
               inputProps={{
-                placeholder: "Søk etter Messi eller Topps Chrome",
+                placeholder: "Søk etter spiller, klubb eller sett",
                 className:
                   "h-11 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] outline-none placeholder:text-slate-500 focus:border-primary",
               }}
