@@ -373,7 +373,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     );
     glowRing.rotation.x = -Math.PI / 2;
     glowRing.position.y = 0.006;
-    (glowRing.material as THREE.MeshBasicMaterial).color.multiplyScalar(rich ? 2.2 : 1);
+    (glowRing.material as THREE.MeshBasicMaterial).color.multiplyScalar(rich ? 3 : 1);
     scene.add(podium, rim, rimLow, tier, tierRim, inlay, top, glowRing);
 
     // ── Lysriggen: en ring av flomlys over banen, som peker ned på kortene
@@ -384,7 +384,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     housingGeo.rotateX(Math.PI / 2);
     const backCapGeo = track(new THREE.CircleGeometry(0.15, 32));
     const lensGeo = track(new THREE.CircleGeometry(0.165, 32));
-    const lensMat = track(new THREE.MeshBasicMaterial({ color: new THREE.Color(0xfff1d6).multiplyScalar(rich ? 6 : 1.2), toneMapped: !rich, fog: false }));
+    const lensMat = track(new THREE.MeshBasicMaterial({ color: new THREE.Color(0xfff1d6).multiplyScalar(rich ? 9 : 1.2), toneMapped: !rich, fog: false }));
     const rigFrame = new THREE.Mesh(
       track(new THREE.TorusGeometry(radius, 0.03, 8, 128)),
       track(new THREE.MeshStandardMaterial({ color: 0x1a2232, metalness: 0.8, roughness: 0.4 })),
@@ -419,7 +419,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
 
     // ── Fokuslyset: en sterk spot på plassen foran
     const front = new THREE.Vector3(0, 0, radius);
-    const key = new THREE.SpotLight(0xfff6e6, rich ? 70 : 90, 16, Math.PI / 9, 0.7, 1.6);
+    const key = new THREE.SpotLight(0xfff6e6, rich ? 48 : 90, 16, Math.PI / 9, 0.7, 1.6);
     key.position.set(0, 7.2, radius + 1.2);
     key.target.position.set(0, 1.3, radius);
     if (rich) {
@@ -449,8 +449,9 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
         clearcoat: 1,
         clearcoatRoughness: 0.02,
         transparent: true,
-        opacity: 0.09,
-        envMapIntensity: 2.4,
+        opacity: 0.07,
+        envMapIntensity: 1.6,
+        specularIntensity: 0.6,
         depthWrite: false,
       }),
     );
@@ -521,7 +522,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
           map: tex,
           roughness: 0.42,
           metalness: 0.08,
-          iridescence: 0.3,
+          iridescence: 0.18,
           iridescenceIOR: 1.3,
           iridescenceThicknessRange: [160, 480],
         }),
@@ -664,7 +665,7 @@ export function CardStage3D({ cards, fallback }: { cards: StageCard[]; fallback:
     if (rich) {
       composer = new EffectComposer(renderer);
       composer.addPass(new RenderPass(scene, camera));
-      bloom = new UnrealBloomPass(new THREE.Vector2(el.clientWidth, el.clientHeight), 0.35, 0.3, 1.7);
+      bloom = new UnrealBloomPass(new THREE.Vector2(el.clientWidth, el.clientHeight), 0.4, 0.3, 2.4);
       composer.addPass(bloom);
       composer.addPass(new OutputPass());
       disposables.push(composer, bloom);
