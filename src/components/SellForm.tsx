@@ -455,7 +455,14 @@ export function SellForm({ user }: { user: { name: string; email: string } | nul
           )}
           <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
             <input type="checkbox" name="confirm" required className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
-            <span>Jeg eier kortet, opplysningene stemmer, og jeg godtar at kjøpere kan sende meg meldinger om annonsen via HOBBYSTRADA.</span>
+            <span>
+              Jeg eier kortet, opplysningene stemmer, og jeg godtar at kjøpere kan sende meg meldinger om annonsen via HOBBYSTRADA. Jeg forstår at handelen
+              skjer direkte mellom meg og kjøperen, og godtar{" "}
+              <Link href="/terms" target="_blank" className="font-medium text-foreground underline underline-offset-2">
+                vilkårene
+              </Link>
+              .
+            </span>
           </label>
         </fieldset>
         <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px" }} name="_hp" />

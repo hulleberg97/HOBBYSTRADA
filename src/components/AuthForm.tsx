@@ -138,6 +138,15 @@ export function AuthForm({ mode }: { mode: Mode }) {
                   </Link>
                 </div>
               )}
+              {mode === "register" && (
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  Ved å opprette konto godtar du{" "}
+                  <Link href="/terms" target="_blank" className="underline underline-offset-2">
+                    vilkårene
+                  </Link>
+                  . HOBBYSTRADA er en annonseplass og ikke part i handel mellom brukerne.
+                </p>
+              )}
               {error && <p className="text-sm text-destructive">{error}</p>}
               <button type="submit" disabled={busy} className={button}>
                 {busy ? "Et øyeblikk …" : c.submit}

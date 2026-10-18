@@ -13,8 +13,8 @@ export default function TermsPage() {
           title: "Om tjenesten",
           body: (
             <p>
-              HOBBYSTRADA er en annonseplass for fotballkort. Kjøper og selger avtaler pris, betaling og frakt direkte. HOBBYSTRADA er ikke part i handelen og
-              er ikke ansvarlig for kortene som selges.
+              HOBBYSTRADA er en annonseplass for fotballkort. Vi formidler bare kontakt mellom kjøper og selger. Avtalen om kjøp inngås direkte mellom kjøper og
+              selger, og HOBBYSTRADA er ikke part i den.
             </p>
           ),
         },
@@ -55,9 +55,35 @@ export default function TermsPage() {
           ),
         },
         {
-          title: "Ansvar",
+          title: "Ansvar mellom kjøper og selger",
           body: (
-            <p>Vi gjør vårt beste for at siden er tilgjengelig og sikker, men vi garanterer ikke for annonsenes innhold eller for avtaler mellom brukere.</p>
+            <>
+              <p>
+                HOBBYSTRADA har ikke juridisk ansvar for handel mellom brukerne. Kjøper og selger er selv ansvarlige for avtalen, betalingen, frakten og at
+                kortet er som beskrevet. Vi er blant annet ikke ansvarlige for:
+              </p>
+              <List
+                items={[
+                  "at kortet er ekte, i tilstanden som er oppgitt, eller blir levert",
+                  "betaling som ikke kommer frem, eller tap ved svindel",
+                  "skade, tap eller forsinkelse i frakt",
+                  "uenighet om pris, retur eller reklamasjon",
+                ]}
+              />
+              <p className="mt-2">
+                Uenighet løses mellom kjøper og selger. Handel mellom privatpersoner reguleres av kjøpsloven. Ved mistanke om svindel bør du kontakte politiet.
+                Vi hjelper gjerne til ved å fjerne annonser og stenge kontoer som bryter vilkårene.
+              </p>
+            </>
+          ),
+        },
+        {
+          title: "Ansvar for tjenesten",
+          body: (
+            <p>
+              Vi gjør vårt beste for at siden er tilgjengelig og sikker, men vi garanterer ikke for annonsenes innhold. Så langt loven tillater, er vi ikke
+              ansvarlige for tap som oppstår ved bruk av siden.
+            </p>
           ),
         },
       ]}

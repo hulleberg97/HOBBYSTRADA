@@ -196,7 +196,13 @@ export default async function ListingPage({ params }: Props) {
                     <ShieldCheckIcon className="h-4 w-4 text-primary" aria-hidden="true" />
                     Handle trygt
                   </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-slate-600">Du avtaler betaling og frakt direkte med selgeren.</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
+                    Du avtaler betaling og frakt direkte med selgeren. HOBBYSTRADA er ikke part i handelen og har ikke ansvar for kortet, betalingen eller
+                    frakten.{" "}
+                    <Link href="/terms" className="underline underline-offset-2 hover:text-primary">
+                      Les vilkårene
+                    </Link>
+                  </p>
                   <ul className="mt-3 grid gap-2 sm:grid-cols-3">
                     {(
                       [

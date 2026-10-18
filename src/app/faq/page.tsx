@@ -57,6 +57,10 @@ const SECTIONS = [
         "Hvordan handler jeg trygt?",
         "Be om bilder eller video av kortet, gjerne med en lapp med dagens dato ved siden av. Betal med Vipps og sjekk at navnet stemmer med selgeren. Bruk frakt med sporing for dyrere kort, og vær ekstra varsom hvis prisen er langt under markedet.",
       ],
+      [
+        "Hvem har ansvaret hvis noe går galt?",
+        "Kjøper og selger. HOBBYSTRADA er en annonseplass og ikke part i handelen, og har ikke ansvar for kortet, betalingen eller frakten. Uenighet løses mellom dere, og ved svindel bør du kontakte politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene.",
+      ],
       ["Jeg ser en mistenkelig annonse. Hva gjør jeg?", "Trykk «Rapporter» på annonsen, eller kontakt oss med lenken til annonsen."],
     ],
   },
