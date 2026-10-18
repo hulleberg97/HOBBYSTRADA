@@ -200,7 +200,7 @@ export default async function Home() {
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">2</span>
                   <div>
                     <p className="font-semibold text-slate-950">Kontakt selgeren</p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-slate-700">Send melding eller ring direkte fra annonsen.</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-slate-700">Send melding direkte fra annonsen.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">

@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Legg ut kort" };
 const STEPS = [
   ["Lag annonsen", "Spiller, sett, tilstand, pris, sted og bilder."],
   ["Ute i markedet", "Vises med kortdata for samlere i hele Norge."],
-  ["Kjøpere tar kontakt", "Meldinger eller anrop direkte til deg."],
+  ["Kjøpere tar kontakt", "Meldinger direkte til deg."],
   ["Løft om du vil", "Fremhev annonsen for å selge raskere."],
 ];
 
