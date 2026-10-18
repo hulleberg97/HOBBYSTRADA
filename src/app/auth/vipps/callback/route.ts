@@ -12,6 +12,10 @@ async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
     .upsert({ id: userId, vipps_sub: v.sub, verified_name: v.name, phone: v.phone, verified_at: new Date().toISOString() });
   if (error) throw new Error(`Kunne ikke lagre profil: ${error.message}`);
   await db.from("listings").update({ seller_verified: true }).eq("owner_id", userId);
+  // Stedet fra Vipps fylles inn hvis kontoen ikke har et fra før.
+  const { data } = await db.auth.admin.getUserById(userId);
+  const meta = data.user?.user_metadata ?? {};
+  if (v.city && !meta.location) await db.auth.admin.updateUserById(userId, { user_metadata: { ...meta, location: v.city } });
 }
 
 /** Vipps sender brukeren hit etter innlogging. Logger inn, lager konto første gang, eller kobler Vipps til innlogget konto. */
@@ -53,7 +57,7 @@ export async function GET(req: Request) {
       await db.auth.admin.createUser({
         email,
         email_confirm: true,
-        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name },
+        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, ...(v.city ? { location: v.city } : {}) },
       }); // feiler stille hvis kontoen finnes fra før – da logger vi inn på den
     }
 

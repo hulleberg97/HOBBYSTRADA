@@ -26,8 +26,8 @@ export default function PrivacyPage() {
               <p>Vi samler bare inn det som trengs for å drive markedsplassen:</p>
               <List
                 items={[
-                  "Konto: e-post, brukernavn og passord (lagres kryptert).",
-                  "Vipps (hvis du logger inn eller bekrefter deg med Vipps): navn, telefonnummer og e-post. Navnet brukes til merket «Verifisert med Vipps»; telefonnummeret vises aldri.",
+                  "Konto: navn, e-post, sted og passord (lagres kryptert).",
+                  "Vipps (hvis du logger inn eller bekrefter deg med Vipps): navn, telefonnummer, e-post og poststed. Navnet brukes til merket «Verifisert med Vipps», og poststedet fylles inn som sted i annonsene dine. Telefonnummeret vises aldri, og gateadressen lagres ikke.",
                   "Annonser: kortdata, pris, sted, bilder og kontaktinformasjonen du oppgir.",
                   "Meldinger: innholdet i samtaler mellom kjøpere og selgere, og meldinger til oss. Den andre parten ser navnet ditt, men aldri e-postadressen din.",
                   "Teknisk: informasjonskapsler som holder deg innlogget og husker språkvalg.",

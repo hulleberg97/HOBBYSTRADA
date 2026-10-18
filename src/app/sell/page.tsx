@@ -69,7 +69,9 @@ export default async function SellPage() {
             <div className="mt-6">
               <VippsButton href="/auth/vipps?next=/sell" label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
             </div>
-            <p className="mt-4 text-xs text-muted-foreground">Vi får bare navnet, telefonnummeret og e-posten din fra Vipps. Telefonnummeret vises aldri.</p>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Vi får navnet, telefonnummeret, e-posten og poststedet ditt fra Vipps. Telefonnummeret vises aldri, og vi lagrer ikke gateadressen.
+            </p>
           </div>
         ) : (
           <SellForm user={user ? { name: user.name, email: user.email, location: user.location } : null} />
