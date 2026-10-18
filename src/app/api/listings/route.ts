@@ -7,6 +7,8 @@ import { sendEmail } from "@/lib/email";
 
 const TYPE_MAP: Record<string, string> = {
   Autograf: "Autograf",
+  Patch: "Patch",
+  Relic: "Relic",
   "Relic / patch": "Relic",
   Rookie: "Rookie",
   Nummerert: "Nummerert",
@@ -52,8 +54,18 @@ export async function POST(req: Request) {
 
   const code = str(f, "code", 30) || null;
   const num = str(f, "num", 20) || null;
-  const typeLabel = TYPE_MAP[str(f, "type", 30)] ?? "Annet";
-  const types = [typeLabel, ...(num && typeLabel !== "Nummerert" ? ["Nummerert"] : [])];
+  // Flere typer kan velges, f.eks. Autograf + Patch
+  const picked = [
+    ...new Set(
+      f
+        .getAll("type")
+        .map((t) => TYPE_MAP[String(t).slice(0, 30)])
+        .filter(Boolean),
+    ),
+  ];
+  if (!picked.length) picked.push("Annet");
+  const types = [...picked, ...(num && !picked.includes("Nummerert") ? ["Nummerert"] : [])];
+  const typeLabel = (picked.filter((t) => t !== "Nummerert").join(" + ") || picked[0]).slice(0, 40);
   const grader = str(f, "grader", 30);
   const grade = str(f, "grade", 10);
   const grading = !grader || grader.startsWith("Ugradert") ? "Ugradert (raw)" : `${grader} ${grade}`.trim();

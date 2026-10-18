@@ -10,7 +10,7 @@ const label = "mb-1.5 block font-mono-data text-[11px] uppercase tracking-[0.14e
 const field =
   "h-11 w-full rounded-lg border border-border bg-white px-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-foreground/40 focus:ring-2 focus:ring-ring/30";
 
-const TYPES = ["Autograf", "Relic / patch", "Rookie", "Nummerert", "Base / innstikk", "Annet"];
+const TYPES = ["Autograf", "Patch", "Relic", "Rookie", "Nummerert", "Base / innstikk", "Annet"];
 const GRADERS = ["Ugradert (raw)", "PSA", "BGS", "SGC", "CGC", "Annet"];
 const CONDITIONS = ["Mint", "Near Mint", "Excellent", "Very Good", "Brukt"];
 const MAX_MB = 10;
@@ -99,13 +99,14 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
     set: "",
     season: "",
     code: "",
-    type: "Autograf",
     num: "",
     grader: "Ugradert (raw)",
     grade: "",
     cond: "Near Mint",
     price: "",
   });
+  const [types, setTypes] = useState<string[]>([]);
+  const toggleType = (t: string) => setTypes(types.includes(t) ? types.filter((x) => x !== t) : [...types, t]);
   const [front, setFront] = useState<Photo | null>(null);
   const [back, setBack] = useState<Photo | null>(null);
   const [extra, setExtra] = useState<Photo[]>([]);
@@ -128,11 +129,16 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
   };
 
   const count = [front, back].filter(Boolean).length + extra.length;
-  const title = `${v.player || "Spillernavn"} – ${v.set || "Sett"} ${v.type}`;
+  const typeLabel = types.length ? TYPES.filter((t) => types.includes(t)).join(" + ") : "—";
+  const title = `${v.player || "Spillernavn"} – ${v.set || "Sett"}`;
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!front) return;
+    if (!types.length) {
+      setError("Velg minst én type, for eksempel Autograf eller Patch.");
+      return;
+    }
     const fd = new FormData(e.currentTarget);
     setState("sending");
     setError("");
@@ -217,15 +223,26 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               </label>
               <input id="s-code" name="code" maxLength={30} placeholder="CA-EH eller #18" className={field} value={v.code} onChange={set("code")} />
             </div>
-            <div>
-              <label htmlFor="s-type" className={label}>
-                Type
-              </label>
-              <select id="s-type" name="type" className={field} value={v.type} onChange={set("type")}>
+            <div className="sm:col-span-2">
+              <p className={label} id="s-type">
+                Type <span className="font-normal normal-case tracking-normal text-muted-foreground">(velg alle som passer)</span>
+              </p>
+              <div role="group" aria-labelledby="s-type" className="flex flex-wrap gap-2">
                 {TYPES.map((t) => (
-                  <option key={t}>{t}</option>
+                  <button
+                    key={t}
+                    type="button"
+                    aria-pressed={types.includes(t)}
+                    onClick={() => toggleType(t)}
+                    className="h-9 rounded-full border border-border px-3.5 text-sm font-medium transition hover:border-foreground/40 aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground"
+                  >
+                    {t}
+                  </button>
                 ))}
-              </select>
+              </div>
+              {types.map((t) => (
+                <input key={t} type="hidden" name="type" value={t} />
+              ))}
             </div>
             <div className="sm:col-span-2">
               <label htmlFor="s-num" className={label}>
@@ -461,7 +478,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
           <p className="mt-5 line-clamp-2 font-heading text-base font-semibold leading-snug">{title}</p>
           <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-white/10 font-mono-data text-[11px]">
             {[
-              ["Type", v.type],
+              ["Type", typeLabel],
               ["Tilstand", v.grader === GRADERS[0] ? v.cond : `${v.grader} ${v.grade}`.trim()],
               ["Sesong", v.season || "—"],
               ["Pris", v.price ? formatPrice(Number(v.price)) : "— kr"],
