@@ -359,11 +359,11 @@ export default async function Home() {
               <ul className="mt-6 space-y-2.5">
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Først i markedet
+                  Over alle vanlige annonser i markedet
                 </li>
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Først i søkeresultater
+                  Selg raskere uten å bruke mye
                 </li>
               </ul>
             </div>
@@ -372,7 +372,7 @@ export default async function Home() {
               className="group relative flex flex-col rounded-3xl bg-slate-100 p-6 text-slate-950 ring-1 ring-slate-300 sm:p-8 data-[highlight=true]:bg-primary data-[highlight=true]:text-white data-[highlight=true]:ring-0"
             >
               <div className="flex items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold tracking-tight">Fremhevet annonse</h3>
+                <h3 className="text-lg font-semibold tracking-tight">Fremhevet</h3>
                 <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">Mest valgt</span>
               </div>
               <p className="mt-6 flex items-baseline gap-1.5">
@@ -386,11 +386,11 @@ export default async function Home() {
                 </li>
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Egen seksjon på forsiden
+                  Vises under «Utvalgte kort» på forsiden
                 </li>
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Først i markedet
+                  Foran Topp av listen og vanlige annonser
                 </li>
               </ul>
             </div>
@@ -406,15 +406,15 @@ export default async function Home() {
               <ul className="mt-6 space-y-2.5">
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Plass i kortvifta øverst på forsiden
+                  Plass i kortvifta på forsiden
                 </li>
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Gullmerke hele perioden
+                  Alt i Fremhevet
                 </li>
                 <li className="flex items-start gap-2.5 text-sm text-slate-800 group-data-[highlight=true]:text-white/90">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep group-data-[highlight=true]:text-accent" aria-hidden="true" />
-                  Størst synlighet
+                  Aller først i markedet
                 </li>
               </ul>
             </div>

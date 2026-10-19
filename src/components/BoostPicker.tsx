@@ -8,9 +8,14 @@ import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { formatPrice } from "@/lib/format";
 
 const PLANS: { key: BoostKey; Icon: typeof SparklesIcon; perks: string[]; popular?: boolean }[] = [
-  { key: "top", Icon: ArrowUpToLineIcon, perks: ["Først i markedslisten", "Før alle nye annonser", "Varer i 3 dager"] },
-  { key: "featured", Icon: SparklesIcon, perks: ["Gullmerket «Fremhevet»", "Egen seksjon på forsiden", "Først i markedet", "Varer i 7 dager"], popular: true },
-  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Plass i kortvifta på forsiden", "Maksimal synlighet", "Varer i 30 dager"] },
+  { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Selg raskere uten å bruke mye", "Varer i 3 dager"] },
+  {
+    key: "featured",
+    Icon: SparklesIcon,
+    perks: ["Gullmerke og gullramme", "Vises under «Utvalgte kort» på forsiden", "Foran Topp av listen og vanlige annonser", "Varer i 7 dager"],
+    popular: true,
+  },
+  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Plass i kortvifta på forsiden", "Aller først i markedet", "Varer i 30 dager"] },
 ];
 
 export function BoostPicker() {
