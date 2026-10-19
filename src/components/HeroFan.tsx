@@ -237,7 +237,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         })}
       </div>
       {c && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[200] flex justify-center px-4">
+        <div className="pointer-events-none absolute inset-x-0 bottom-5 z-[200] sm:bottom-0 flex justify-center px-4">
           <Link
             key={`${c.slug}-${center}`}
             href={`/products/${c.slug}`}
