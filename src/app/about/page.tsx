@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { COMPANY } from "@/lib/company";
 import { ArrowRightIcon, BadgeCheckIcon, HandshakeIcon, ShieldCheckIcon, ZapIcon } from "lucide-react";
 
 export const metadata: Metadata = { title: "Markedsplassen for fotballkort i Norge" };
@@ -53,7 +54,7 @@ export default function AboutPage() {
             </span>
             <h3 className="mt-5 text-lg font-bold tracking-tight text-slate-950">Direkte mellom samlere</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-slate-600">
-              Kjøper og selger avtaler betaling, frakt eller overlevering seg imellom. Vi er ikke part i handelen.
+              Kjøper og selger avtaler betaling, frakt eller henting i chatten. Vi er ikke part i handelen.
             </p>
           </div>
           <div className="rounded-3xl bg-slate-50 p-6 ring-1 ring-inset ring-slate-200 sm:p-7">
@@ -131,6 +132,10 @@ export default function AboutPage() {
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">4</span>
+                <span className="pt-0.5">Hold samtalen i chatten på HOBBYSTRADA.</span>
+              </li>
+              <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">5</span>
                 <span className="pt-0.5">Rapporter annonser som virker mistenkelige.</span>
               </li>
             </ul>
@@ -140,7 +145,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="flex flex-col items-start justify-between gap-6 rounded-[28px] bg-amber-50 p-8 ring-1 ring-inset ring-accent/40 sm:p-10 md:flex-row md:items-center">
           <div>
-            <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Har du kort du vil selge?</h2>
+            <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Har du kort i skuffen?</h2>
             <p className="mt-2 text-[15px] text-slate-700">Legg ut annonsen og nå samlere i hele Norge.</p>
           </div>
           <Link
@@ -151,6 +156,9 @@ export default function AboutPage() {
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
+        <p className="mt-6 text-center text-xs text-slate-500">
+          HOBBYSTRADA drives av {COMPANY.name}, org.nr. {COMPANY.orgnr}.
+        </p>
       </section>
     </div>
   );

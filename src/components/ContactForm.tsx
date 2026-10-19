@@ -43,7 +43,7 @@ export function ContactForm() {
         <CheckIcon className="mt-1 h-5 w-5 shrink-0" aria-hidden="true" />
         <div>
           <p className="font-heading text-lg font-bold">Takk for meldingen</p>
-          <p className="mt-1 text-sm">Vi svarer deg på e-post så snart vi kan.</p>
+          <p className="mt-1 text-sm">Vi svarer deg på e-post, vanligvis innen ett døgn.</p>
         </div>
       </div>
     );

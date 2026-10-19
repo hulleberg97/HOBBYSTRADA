@@ -10,6 +10,7 @@ import {
   EyeIcon,
   HandCoinsIcon,
   HashIcon,
+  MessageCircleIcon,
   ShieldCheckIcon,
   SparklesIcon,
 } from "lucide-react";
@@ -201,12 +202,13 @@ export default async function ListingPage({ params }: Props) {
                   <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
                     Du avtaler betaling og frakt direkte med selgeren. HOBBYSTRADA er ikke part i handelen, så ta noen enkle forholdsregler:
                   </p>
-                  <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+                  <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                     {(
                       [
                         [EyeIcon, "Be om bilder før du betaler"],
                         [HandCoinsIcon, "Sjekk navnet i Vipps"],
                         [ShieldCheckIcon, "Send med sporing"],
+                        [MessageCircleIcon, "Hold samtalen i chatten"],
                       ] as const
                     ).map(([Icon, text]) => (
                       <li key={text} className="flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-medium text-slate-700 ring-1 ring-slate-200">
