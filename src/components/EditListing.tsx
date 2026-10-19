@@ -182,7 +182,7 @@ export function EditListing({ id, price, location, condition, description, image
         <textarea id={`desc-${id}`} name="description" rows={3} maxLength={1500} defaultValue={description} className={`${field} h-auto py-3`} />
       </div>
       <div className="sm:col-span-3">
-        <p className={label}>Bilder (første bilde vises først)</p>
+        <p className={label}>Bilder (det første bildet er forsidebildet)</p>
         <ul className="flex flex-wrap gap-3">
           {pics.map((p, i) => (
             <li key={p.url} className="relative h-28 w-20 overflow-hidden rounded-lg bg-slate-200 ring-1 ring-slate-300">

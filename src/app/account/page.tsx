@@ -103,7 +103,7 @@ export default async function AccountPage() {
                             { label: "Skjul", status: "hidden" },
                           ]
                         : []),
-                      ...(l.status === "sold" || l.status === "hidden" ? [{ label: "Aktiver igjen", status: "active" }] : []),
+                      ...(l.status === "sold" || l.status === "hidden" ? [{ label: "Legg ut igjen", status: "active" }] : []),
                       { label: "Slett", del: true, tone: "danger" as const },
                     ]}
                   />
@@ -113,7 +113,7 @@ export default async function AccountPage() {
                       className="inline-flex h-9 items-center gap-1 rounded-full bg-accent px-4 text-xs font-semibold text-accent-foreground"
                     >
                       <ZapIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                      Løft
+                      Løft annonsen
                     </Link>
                   )}
                 </OwnerListingRow>
@@ -125,7 +125,9 @@ export default async function AccountPage() {
           {hasVippsLogin() && !verification && (
             <div className="mb-10 rounded-3xl bg-white p-5 ring-1 ring-slate-200">
               <h2 className="font-semibold text-slate-950">Bekreft deg med Vipps</h2>
-              <p className="mt-1 mb-4 text-sm text-slate-600">Du må være verifisert for å legge ut kort. Annonsene dine får merket «Verifisert med Vipps».</p>
+              <p className="mt-1 mb-4 text-sm text-slate-600">
+                Bekreft deg med Vipps for å legge ut kort og chatte. Det tar noen sekunder, og du gjør det bare én gang.
+              </p>
               <VippsButton href="/auth/vipps?next=/account" label="Bekreft med Vipps" />
             </div>
           )}
