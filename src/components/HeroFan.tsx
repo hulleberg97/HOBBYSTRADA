@@ -247,7 +247,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
               <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{c.player}</span>
               <span className="block truncate text-[11px] text-white/60 sm:text-xs">{c.set}</span>
             </span>
-            <span className="shrink-0 font-heading text-sm font-semibold text-[#f2dc9b] sm:text-base">{formatPrice(c.price).replace(",00", "")}</span>
+            <span className="shrink-0 font-heading text-sm font-semibold text-[#f2dc9b] sm:text-base">{formatPrice(c.price)}</span>
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
               <ArrowRightIcon className="h-4 w-4" aria-label="Se kortet" />
             </span>

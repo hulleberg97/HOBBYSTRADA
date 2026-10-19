@@ -61,7 +61,7 @@ export default async function Home() {
                   <br />
                   <span className="text-gold-light">Kjøp og selg.</span>
                 </h1>
-                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Markedsplassen for fotballkort.</p>
+                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for samlere.</p>
                 <div className="mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
                     className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
@@ -96,7 +96,9 @@ export default async function Home() {
               >
                 <PenLineIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-sm font-semibold leading-tight text-slate-950">Autografkort</span>
-                <span className="text-xs font-medium text-slate-700">{c.autograf} annonser</span>
+                <span className="text-xs font-medium text-slate-700">
+                  {c.autograf} {c.autograf === 1 ? "annonse" : "annonser"}
+                </span>
               </Link>
             </li>
             <li className="w-[104px] shrink-0 snap-start sm:w-auto">
@@ -105,8 +107,10 @@ export default async function Home() {
                 href="/search?q=relic"
               >
                 <ShirtIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                <span className="text-sm font-semibold leading-tight text-slate-950">Relic og patch</span>
-                <span className="text-xs font-medium text-slate-700">{c.relic} annonser</span>
+                <span className="text-sm font-semibold leading-tight text-slate-950">Patch / relic</span>
+                <span className="text-xs font-medium text-slate-700">
+                  {c.relic} {c.relic === 1 ? "annonse" : "annonser"}
+                </span>
               </Link>
             </li>
             <li className="w-[104px] shrink-0 snap-start sm:w-auto">
@@ -121,7 +125,9 @@ export default async function Home() {
                   1/1
                 </span>
                 <span className="text-sm font-semibold leading-tight text-slate-950">Nummererte kort</span>
-                <span className="text-xs font-medium text-slate-700">{c.numbered} annonser</span>
+                <span className="text-xs font-medium text-slate-700">
+                  {c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}
+                </span>
               </Link>
             </li>
             <li className="w-[104px] shrink-0 snap-start sm:w-auto">
@@ -131,7 +137,9 @@ export default async function Home() {
               >
                 <StarIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-sm font-semibold leading-tight text-slate-950">Rookies</span>
-                <span className="text-xs font-medium text-slate-700">{c.rookie} annonser</span>
+                <span className="text-xs font-medium text-slate-700">
+                  {c.rookie} {c.rookie === 1 ? "annonse" : "annonser"}
+                </span>
               </Link>
             </li>
             <li className="w-[104px] shrink-0 snap-start sm:w-auto">
@@ -141,7 +149,9 @@ export default async function Home() {
               >
                 <BadgeCheckIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-sm font-semibold leading-tight text-slate-950">Base</span>
-                <span className="text-xs font-medium text-slate-700">{c.base} annonser</span>
+                <span className="text-xs font-medium text-slate-700">
+                  {c.base} {c.base === 1 ? "annonse" : "annonser"}
+                </span>
               </Link>
             </li>
             <li className="w-[104px] shrink-0 snap-start sm:w-auto">
@@ -151,7 +161,9 @@ export default async function Home() {
               >
                 <LayoutGridIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-sm font-semibold leading-tight text-slate-950">Alle kort</span>
-                <span className="text-xs font-medium text-slate-700">{c.all} annonser</span>
+                <span className="text-xs font-medium text-slate-700">
+                  {c.all} {c.all === 1 ? "annonse" : "annonser"}
+                </span>
               </Link>
             </li>
           </ul>
@@ -162,8 +174,8 @@ export default async function Home() {
           <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
             <div className="flex items-end justify-between gap-6">
               <div>
-                <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Fremhevede annonser</h2>
-                <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Løftet av selgerne – vises først i markedet</p>
+                <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Utvalgte kort</h2>
+                <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Kort selgerne har løftet frem</p>
               </div>
               <Link
                 className="inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
@@ -214,7 +226,7 @@ export default async function Home() {
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">2</span>
                   <div>
                     <p className="font-semibold text-slate-950">Kontakt selgeren</p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-slate-700">Send melding direkte fra annonsen.</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-slate-700">Send en melding i chatten rett fra annonsen.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
@@ -240,7 +252,9 @@ export default async function Home() {
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">1</span>
                   <div>
                     <p className="font-semibold text-slate-950">Legg ut annonse</p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-slate-700">Spiller, sett, tilstand, pris og bilder på et par minutter.</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-slate-700">
+                      Fyll inn spiller, sett, tilstand og pris, og last opp bilder. Det tar et par minutter.
+                    </p>
                   </div>
                 </li>
                 <li className="flex gap-4">

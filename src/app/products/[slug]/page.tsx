@@ -126,9 +126,7 @@ export default async function ListingPage({ params }: Props) {
                         {l.featured && (
                           <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>
                         )}
-                        <span className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${l.status === "sold" ? "bg-slate-700" : "bg-emerald-600"}`}>
-                          {l.status === "sold" ? "Solgt" : "Aktiv"}
-                        </span>
+                        {l.status === "sold" && <span className="rounded-full bg-slate-700 px-3 py-1 text-xs font-semibold text-white">Solgt</span>}
                       </div>
                       {l.grading && (
                         <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
@@ -143,9 +141,7 @@ export default async function ListingPage({ params }: Props) {
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
                   <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
                     {l.featured && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>}
-                    <span className={`rounded-full px-3 py-1 text-xs font-semibold text-white ${l.status === "sold" ? "bg-slate-700" : "bg-emerald-600"}`}>
-                      {l.status === "sold" ? "Solgt" : "Aktiv"}
-                    </span>
+                    {l.status === "sold" && <span className="rounded-full bg-slate-700 px-3 py-1 text-xs font-semibold text-white">Solgt</span>}
                   </div>
                   {l.grading && (
                     <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">

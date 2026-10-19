@@ -82,7 +82,7 @@ export default function AboutPage() {
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
                 href="/search?q=Relic"
               >
-                Relic og patch
+                Patch / relic
               </Link>
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"

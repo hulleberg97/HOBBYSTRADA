@@ -40,12 +40,8 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
                 {listing.frontpage ? "Toppannonse" : "Fremhevet"}
               </span>
             )}
-            <span
-              data-state={listing.status}
-              className={`rounded-full px-2.5 py-1 text-[11px] font-semibold text-white data-[state=active]:bg-emerald-600 data-[state=sold]:bg-slate-700 ${listing.featured ? "hidden sm:inline" : ""}`}
-            >
-              {listing.status === "sold" ? "Solgt" : "Aktiv"}
-            </span>
+            {/* Kjøperne ser bare aktive annonser, så bare «Solgt» trenger et merke */}
+            {listing.status === "sold" && <span className="rounded-full bg-slate-700 px-2.5 py-1 text-[11px] font-semibold text-white">Solgt</span>}
           </div>
           {market && (
             <span className="absolute bottom-2.5 right-2.5 z-10 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200 backdrop-blur sm:bottom-3 sm:right-3">
