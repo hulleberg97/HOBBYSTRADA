@@ -56,7 +56,8 @@ const BLEND = 0.22; // hvor lenge (i kortplasser) to kort tones over i hverandre
 function blend(p: number) {
   const a = Math.abs(p);
   if (a >= 0.5 || a < 0.5 - BLEND) return "none";
-  const alpha = (0.5 + (0.5 * (0.5 - a)) / BLEND).toFixed(3);
+  // Avrundet, så masken bare tegnes på nytt noen få ganger under byttet og ikke i hvert bilde
+  const alpha = (Math.round((0.5 + (0.5 * (0.5 - a)) / BLEND) * 20) / 20).toFixed(2);
   const side = p < 0 ? "left" : "right"; // gradienten starter i kanten som vender mot naboen
   return `linear-gradient(to ${side}, rgba(0,0,0,${alpha}) 0%, rgba(0,0,0,${alpha}) 22%, #000 36%)`;
 }
@@ -108,6 +109,8 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
   const cards = list.length && list.length < 5 ? Array.from({ length: Math.ceil(5 / list.length) }, () => list).flat() : list;
   const n = cards.length;
   const refs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const dims = useRef<(HTMLDivElement | null)[]>([]);
+  const glosses = useRef<(HTMLDivElement | null)[]>([]);
   const box = useRef<HTMLDivElement>(null);
   const [center, setCenter] = useState(0);
 
@@ -139,9 +142,17 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
     el.addEventListener("focusin", enter);
     el.addEventListener("focusout", leave);
 
+    // Sist satte verdier per kort, så nettleseren bare får beskjed om det som faktisk endres
+    const prev: Record<string, string>[] = Array.from({ length: n }, () => ({}));
+    const set = (i: number, el: HTMLElement | null, key: string, value: string) => {
+      if (!el || prev[i][key] === value) return;
+      prev[i][key] = value;
+      el.style.setProperty(key, value);
+    };
+
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
-      const dt = Math.min((now - last) / 1000, 0.05);
+      const dt = Math.min((now - last) / 1000, 0.1);
       last = now;
       if (!visible || document.hidden) return;
       speed += ((onCard || focused ? 0 : base) - speed) * (1 - Math.exp(-dt * 3));
@@ -152,15 +163,16 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         if (!node) return;
         const p = offsetOf(i, shift, n);
         const s = place(p);
-        node.style.transform = s.transform;
-        node.style.zIndex = String(s.zIndex);
-        node.style.maskImage = s.mask;
-        node.style.webkitMaskImage = s.mask;
-        node.style.opacity = String(s.opacity);
-        node.style.pointerEvents = s.opacity < 0.3 ? "none" : "";
-        node.style.setProperty("--dim", String(s.dim));
-        node.style.setProperty("--gloss", String(s.gloss));
-        node.style.setProperty("--gloss-x", `${s.glossX}%`);
+        // Bare transform og opacity endres i hvert bilde. Det tar skjermkortet seg av uten å tegne kortene på nytt.
+        set(i, node, "transform", s.transform);
+        set(i, node, "opacity", s.opacity.toFixed(3));
+        set(i, node, "z-index", String(s.zIndex));
+        set(i, node, "mask-image", s.mask);
+        set(i, node, "-webkit-mask-image", s.mask);
+        set(i, node, "pointer-events", s.opacity < 0.3 ? "none" : "auto");
+        set(i, dims.current[i], "opacity", s.dim.toFixed(3));
+        set(i, glosses.current[i], "opacity", s.gloss.toFixed(3));
+        set(i, glosses.current[i]?.firstElementChild as HTMLElement | null, "transform", `translateX(${s.glossX.toFixed(1)}%) rotate(18deg)`);
         if (Math.abs(p) < best) {
           best = Math.abs(p);
           nearest = i;
@@ -211,9 +223,6 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
                 maskImage: s.mask,
                 WebkitMaskImage: s.mask,
                 opacity: s.opacity,
-                "--dim": s.dim,
-                "--gloss": s.gloss,
-                "--gloss-x": `${s.glossX}%`,
               } as React.CSSProperties
             }
             className="group absolute left-1/2 top-[4%] w-[var(--w)] origin-bottom will-change-transform"
@@ -221,14 +230,26 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
             <div className="relative transition-transform duration-300 ease-out group-hover:-translate-y-3">
               <Slab l={l} />
               {/* Glans som glir over kortet når det passerer midten */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[12px]" style={{ opacity: "var(--gloss)" }}>
+              <div
+                ref={(node) => {
+                  glosses.current[i] = node;
+                }}
+                className="pointer-events-none absolute inset-0 overflow-hidden rounded-[12px] will-change-[opacity]"
+                style={{ opacity: s.gloss }}
+              >
                 <div
-                  className="absolute inset-y-[-20%] left-[35%] w-[30%] rotate-[18deg] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent)] mix-blend-soft-light"
-                  style={{ transform: "translateX(var(--gloss-x)) rotate(18deg)" }}
+                  className="absolute inset-y-[-20%] left-[35%] w-[30%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)] will-change-transform"
+                  style={{ transform: `translateX(${s.glossX}%) rotate(18deg)` }}
                 />
               </div>
               {/* Kortene på sidene dempes litt, så midten er i fokus */}
-              <div className="pointer-events-none absolute inset-0 rounded-[12px] bg-[#0b1426]" style={{ opacity: "var(--dim)" }} />
+              <div
+                ref={(node) => {
+                  dims.current[i] = node;
+                }}
+                className="pointer-events-none absolute inset-0 rounded-[12px] bg-[#0b1426] will-change-[opacity]"
+                style={{ opacity: s.dim }}
+              />
             </div>
           </Link>
         );
@@ -238,7 +259,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
           <Link
             key={`${c.slug}-${center}`}
             href={`/products/${c.slug}`}
-            className="pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-black/45 py-2 pl-5 pr-2 text-left text-white ring-1 ring-inset ring-[#cfa653]/40 backdrop-blur-md"
+            className="pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-[#0b1426]/85 py-2 pl-5 pr-2 text-left text-white ring-1 ring-inset ring-[#cfa653]/40"
           >
             <span className="min-w-0">
               <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{c.player}</span>
