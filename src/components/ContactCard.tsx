@@ -88,13 +88,12 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               <span className="font-heading text-3xl font-semibold tracking-tight">{formatPrice(l.price)}</span>
             </div>
           </div>
-          <span
-            data-state={l.status}
-            className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200 data-[state=sold]:bg-slate-100 data-[state=sold]:text-slate-600 data-[state=sold]:ring-slate-200"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true"></span>
-            {l.status === "sold" ? "Solgt" : "Aktiv annonse"}
-          </span>
+          {l.status === "sold" && (
+            <span className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 ring-1 ring-inset ring-slate-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true"></span>
+              Solgt
+            </span>
+          )}
         </div>
         <div className="mt-5 flex items-center gap-3 rounded-2xl bg-slate-50 p-3">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary font-heading text-base font-semibold text-primary-foreground">
@@ -137,7 +136,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                   className="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                 >
                   <MessageSquareIcon className="h-4 w-4" aria-hidden="true" />
-                  Logg inn for å sende melding
+                  Logg inn for å kontakte selgeren
                 </Link>
               ) : (
                 <button

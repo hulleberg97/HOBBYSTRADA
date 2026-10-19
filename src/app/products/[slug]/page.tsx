@@ -3,7 +3,6 @@ import { conditionLabel } from "@/lib/conditions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  ArrowUpRightIcon,
   AwardIcon,
   CalendarIcon,
   ChevronLeftIcon,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import { CardArt } from "@/components/CardArt";
 import { Gallery } from "@/components/Gallery";
+import { OwnerBoost } from "@/components/OwnerBoost";
 import { ContactCard } from "@/components/ContactCard";
 import { ListingCard } from "@/components/ListingCard";
 import { getListing, getListings, getSoldListings } from "@/lib/listings";
@@ -50,17 +50,24 @@ export default async function ListingPage({ params }: Props) {
   const [all, soldAll] = await Promise.all([getListings(), getSoldListings()]);
   const history = soldAll.filter((x) => x.slug !== l.slug && x.player === l.player).slice(0, 5);
 
+  // «01/25» er nummereringen (kort 1 av 25), ikke kortnummeret, så det vises som «Nummerert»
+  const cardNumber = l.cardNumber && l.cardNumber !== l.numbered ? l.cardNumber : null;
+  const numberChip = cardNumber ? `Kortnr. ${cardNumber}` : l.numbered ? `Nummerert ${l.numbered}` : null;
+
+  // Bare felt selgeren har fylt ut vises
   const facts: [typeof HashIcon, string, string][] = [];
-  facts.push([HashIcon, "Kortnummer", l.cardNumber ?? l.numbered ?? "Ikke oppgitt"]);
-  facts.push([AwardIcon, "Gradering", l.grading ?? "Ikke oppgitt"]);
-  facts.push(l.condition ? [SparklesIcon, "Tilstand", conditionLabel(l.condition)!] : [CalendarIcon, "Sesong", l.season ?? "—"]);
+  if (cardNumber) facts.push([HashIcon, "Kortnummer", cardNumber]);
+  else if (l.numbered) facts.push([HashIcon, "Nummerert", l.numbered]);
+  if (l.grading) facts.push([AwardIcon, "Gradering", l.grading]);
+  if (l.condition) facts.push([SparklesIcon, "Tilstand", conditionLabel(l.condition)!]);
+  else if (l.season) facts.push([CalendarIcon, "Sesong", l.season]);
 
   const rows: [string, string | null][] = [
     ["Spiller", l.player],
     ["Klubb", [l.club, l.league].filter(Boolean).join(" · ") || null],
     ["Sett", l.set],
     ["Sesong", l.season],
-    ["Kortnummer", l.cardNumber],
+    ["Kortnummer", cardNumber],
     ["Nummerert", l.numbered],
     ["Produsent", l.producer],
     ["Type", l.types.join(" / ")],
@@ -109,9 +116,7 @@ export default async function ListingPage({ params }: Props) {
             <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
             <span className="hidden truncate text-slate-900 sm:inline">{l.player}</span>
           </nav>
-          {(l.cardNumber || l.numbered) && (
-            <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">Kortnr. {l.cardNumber ?? l.numbered}</span>
-          )}
+          {numberChip && <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">{numberChip}</span>}
         </div>
         <div className="mt-5 grid gap-8 lg:mt-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
           <div className="lg:sticky lg:top-24 lg:self-start">
@@ -176,7 +181,7 @@ export default async function ListingPage({ params }: Props) {
               {l.set}
               {(l.club || l.league) && <span className="text-slate-400"> · {[l.club, l.league].filter(Boolean).join(" · ")}</span>}
             </p>
-            <dl className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
+            <dl className="mt-6 grid gap-2 empty:hidden sm:gap-3" style={{ gridTemplateColumns: `repeat(${Math.max(facts.length, 1)}, minmax(0, 1fr))` }}>
               {facts.map(([Icon, label, value]) => (
                 <div key={label} className="rounded-2xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200 sm:p-4">
                   <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />
@@ -194,11 +199,7 @@ export default async function ListingPage({ params }: Props) {
                     Handle trygt
                   </p>
                   <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-                    Du avtaler betaling og frakt direkte med selgeren. HOBBYSTRADA er ikke part i handelen og har ikke ansvar for kortet, betalingen eller
-                    frakten.{" "}
-                    <Link href="/terms" className="underline underline-offset-2 hover:text-primary">
-                      Les vilkårene
-                    </Link>
+                    Du avtaler betaling og frakt direkte med selgeren. HOBBYSTRADA er ikke part i handelen, så ta noen enkle forholdsregler:
                   </p>
                   <ul className="mt-3 grid gap-2 sm:grid-cols-3">
                     {(
@@ -215,21 +216,7 @@ export default async function ListingPage({ params }: Props) {
                     ))}
                   </ul>
                 </div>
-                {!l.featured && l.status === "active" && (
-                  <Link
-                    className="mt-4 flex items-center justify-between gap-3 rounded-3xl bg-amber-50 px-5 py-4 ring-1 ring-inset ring-accent/40 transition hover:ring-accent"
-                    href={`/annonseloft?annonse=${l.slug}`}
-                  >
-                    <span>
-                      <span className="block text-sm font-semibold text-slate-900">Er dette din annonse?</span>
-                      <span className="block text-xs text-slate-600">Løft den til toppen av markedet med gullmerke.</span>
-                    </span>
-                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-3.5 py-2 text-xs font-semibold text-accent-foreground">
-                      Løft annonsen
-                      <ArrowUpRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                    </span>
-                  </Link>
-                )}
+                {!l.featured && l.status === "active" && <OwnerBoost slug={l.slug} ownerId={l.ownerId} />}
               </div>
             </div>
             {l.description && (
@@ -295,8 +282,7 @@ export default async function ListingPage({ params }: Props) {
         <section className="mt-16 border-t border-slate-200 pt-10 lg:mt-20">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[28px]">Lignende annonser</h2>
-              <p className="mt-1 text-sm text-slate-500">Flere kort fra samlere i markedet</p>
+              <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[28px]">Du vil kanskje også like</h2>
             </div>
             <Link className="inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/products">
               Se alle
