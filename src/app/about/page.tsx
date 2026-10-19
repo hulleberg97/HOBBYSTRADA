@@ -128,7 +128,7 @@ export default function AboutPage() {
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">3</span>
-                <span className="pt-0.5">Bruk frakt med sporing for dyrere kort.</span>
+                <span className="pt-0.5">Vurder frakt med sporing for best mulig trygghet.</span>
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">4</span>

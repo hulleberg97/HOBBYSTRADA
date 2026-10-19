@@ -207,7 +207,7 @@ export default async function ListingPage({ params }: Props) {
                       [
                         [EyeIcon, "Be om bilder før du betaler"],
                         [HandCoinsIcon, "Sjekk navnet før du betaler"],
-                        [ShieldCheckIcon, "Send med sporing"],
+                        [ShieldCheckIcon, "Vurder frakt med sporing"],
                         [MessageCircleIcon, "Hold samtalen i chatten"],
                       ] as const
                     ).map(([Icon, text]) => (
