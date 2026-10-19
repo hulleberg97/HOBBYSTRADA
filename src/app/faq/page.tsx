@@ -12,13 +12,16 @@ const SECTIONS = [
     items: [
       [
         "Hvordan kjøper jeg et kort?",
-        "Logg inn, åpne annonsen og trykk «Send melding til selger». Dere chatter under Meldinger og avtaler pris, betaling og frakt eller overlevering direkte med hverandre.",
+        "Logg inn, åpne annonsen og trykk «Send melding til selger». Du kan skrive en melding eller gi et bud. Dere chatter under Meldinger og avtaler pris, betaling og frakt eller henting direkte med hverandre.",
       ],
       [
         "Kan jeg betale for kortet her på siden?",
         "Nei. Kort i markedet kjøpes direkte fra selgeren, og betalingen avtales mellom dere. Kassen på siden brukes bare til annonseløft.",
       ],
-      ["Hva betyr «Fremhevet»?", "Selgeren har kjøpt annonseløft. Fremhevede annonser vises først i markedet og har gullmerke."],
+      [
+        "Hva betyr «Fremhevet»?",
+        "Selgeren har kjøpt annonseløft. Fremhevede annonser har gullmerke og vises foran vanlige annonser i markedet. Toppannonser vises aller først.",
+      ],
       ["Hva betyr «Illustrasjon»?", "Selgeren har ikke lastet opp bilde ennå. Be alltid om bilder av forside og bakside før du handler."],
     ],
   },
@@ -28,9 +31,12 @@ const SECTIONS = [
     items: [
       [
         "Hvordan legger jeg ut et kort?",
-        "Trykk «Legg ut kort» og fyll inn kortdetaljer, tilstand eller gradering, pris, bilder og kontaktinformasjon. Send inn når du er ferdig.",
+        "Trykk «Legg ut kort» og fyll inn spiller, sett, tilstand eller gradering, pris og bilder. Trykk «Send inn annonsen» når du er ferdig.",
       ],
-      ["Når blir annonsen synlig?", "Vi går gjennom annonser før de publiseres i markedet."],
+      [
+        "Når blir annonsen synlig?",
+        "Vi går gjennom annonser før de publiseres i markedet. Du ser statusen på Min side, og annonsen dukker opp i markedet så snart den er godkjent.",
+      ],
       [
         "Hvilke bilder bør jeg legge ved?",
         "Forsidebilde er påkrevd. Legg gjerne ved bakside og opptil fire nærbilder av sentrering, hjørner, kanter og overflate – det gir kjøperen trygghet.",
@@ -44,7 +50,7 @@ const SECTIONS = [
     items: [
       [
         "Hva er annonseløft?",
-        "Annonseløft gir annonsen mer synlighet. Du kan velge Topp av listen (3 dager), Fremhevet (7 dager) eller Toppannonse (30 dager). Toppannonser vises i kortvifta øverst på forsiden hele perioden, og roterer hvis det er flere enn fem. Priser finner du på siden for annonseløft.",
+        "Annonseløft gir annonsen mer synlighet. Du kan velge Topp av listen (3 dager), Fremhevet (7 dager) eller Toppannonse (30 dager). Toppannonser er med i kortvifta øverst på forsiden hele perioden. Priser finner du på siden for annonseløft.",
       ],
       ["Hvordan kjøper jeg annonseløft?", "Velg pakke på siden for annonseløft og betal i kassen her på siden."],
     ],
@@ -61,6 +67,7 @@ const SECTIONS = [
         "Hvem har ansvaret hvis noe går galt?",
         "Kjøper og selger. HOBBYSTRADA er en annonseplass og ikke part i handelen, og har ikke ansvar for kortet, betalingen eller frakten. Uenighet løses mellom dere, og ved svindel bør du kontakte politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene.",
       ],
+      ["Kan jeg sende bilder i chatten?", "Ja. Trykk på bildeknappen i chatten for å sende et bilde, for eksempel av baksiden eller et hjørne av kortet."],
       ["Jeg ser en mistenkelig annonse. Hva gjør jeg?", "Trykk «Rapporter» på annonsen, eller kontakt oss med lenken til annonsen."],
     ],
   },
