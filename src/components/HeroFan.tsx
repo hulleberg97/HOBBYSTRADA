@@ -29,7 +29,9 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
 /** Plassering langs buen for et kort som står p plasser fra midten (kan være desimaltall). */
 function place(p: number) {
   const a = Math.abs(p);
-  const x = 47 * p - p * a;
+  // Nær midten glir kortene litt fra hverandre, så det nye kortet ikke plutselig dekker det gamle når de bytter plass
+  const part = a < 1 ? 13 * Math.sin(Math.PI * p) : 0;
+  const x = 47 * p - p * a + part;
   const y = 8 * p * p + 2 * a;
   const lift = Math.max(0, 1 - a);
   const fade = a < 1.9 ? 1 : Math.max(0, 1 - (a - 1.9) / (EDGE - 1.9));
@@ -37,7 +39,8 @@ function place(p: number) {
     transform: `translate(-50%, 0) translate(${x}%, ${y - lift * 10}px) rotate(${8 * p}deg) scale(${1 + 0.06 * lift})`,
     zIndex: 100 - Math.round(a * 10),
     opacity: fade,
-    dim: (0.3 * Math.min(a, 2)) / 2,
+    // Kortene utenfor midten er dempet, så kortet som kommer inn tones mykt opp
+    dim: 0.42 * Math.min(1, a / 1.2) ** 1.3,
     gloss: Math.max(0, 1 - a / 0.55),
     glossX: -p * 170,
   };
