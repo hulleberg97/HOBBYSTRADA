@@ -1,7 +1,6 @@
 import "server-only";
 import { adminClient } from "./supabase-admin";
-import { brandedEmail, sendEmail } from "./email";
-import { formatPrice } from "./format";
+import { brandedEmail, kr, sendEmail } from "./email";
 
 export type Conversation = {
   id: string;
@@ -189,7 +188,7 @@ export async function addMessage(id: string, userId: string, body: string, offer
     return null;
   }
   const role = row.buyer_id === userId ? "buyer" : "seller";
-  const preview = offer ? `Bud: ${formatPrice(offer)}` : body || "Sendte et bilde";
+  const preview = offer ? `Bud: ${kr(offer)}` : body || "Sendte et bilde";
   await db
     .from("conversations")
     .update({
@@ -209,17 +208,25 @@ export async function addMessage(id: string, userId: string, body: string, offer
     const to = u.user?.email;
     const from = role === "buyer" ? row.buyer_name : row.seller_name;
     if (to) {
+      const { data: listing } = await db.from("listings").select("price").eq("slug", row.listing_slug).maybeSingle();
       await sendEmail({
         to,
-        subject: offer ? `Nytt bud på «${row.listing_title}»: ${formatPrice(offer)}` : `Ny melding om «${row.listing_title}»`,
-        text: `${from} har sendt deg en melding om «${row.listing_title}»:\n\n${offer ? `Bud: ${formatPrice(offer)}\n\n` : ""}${body || "(Bilde)"}\n\nLes og svar her:\n${site()}/meldinger/${id}\n\nDu kan ikke svare på denne e-posten.`,
+        subject: offer ? `Nytt bud på «${row.listing_title}»: ${kr(offer)}` : `Ny melding om «${row.listing_title}»`,
+        text: `${from} har sendt deg en melding om «${row.listing_title}»:\n\n${offer ? `Bud: ${kr(offer)}\n\n` : ""}${body || "(Bilde)"}\n\nLes og svar her:\n${site()}/meldinger/${id}\n\nDu kan ikke svare på denne e-posten.`,
         html: brandedEmail({
-          title: offer ? `Nytt bud: ${formatPrice(offer)}` : "Ny melding",
+          title: offer ? `Nytt bud: ${kr(offer)}` : "Ny melding",
           intro: `${from} har sendt deg en melding om «${row.listing_title}».`,
           quote: body || (imagePath ? "Sendte deg et bilde." : undefined),
+          item: {
+            title: row.listing_title,
+            image: row.listing_image,
+            price: listing?.price ? Number(listing.price) : null,
+            url: `${site()}/products/${row.listing_slug}`,
+          },
           button: "Les og svar",
           url: `${site()}/meldinger/${id}`,
           outro: "Svar i chatten på HOBBYSTRADA. Du kan ikke svare på denne e-posten.",
+          reason: "Du får denne e-posten fordi noen har skrevet til deg i chatten på HOBBYSTRADA.",
         }),
       });
     }
