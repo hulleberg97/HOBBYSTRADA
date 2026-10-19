@@ -27,20 +27,21 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
 }
 
 /**
- * Plassering for et kort som står p plasser fra midten (kan være desimaltall). Kortene står i ekte 3D: kortene på
- * sidene er vridd inn mot midten og står lenger bak, og kortet som kommer til midten svinger frem. Nettleseren
- * regner ut hva som ligger foran, så kortene glir gjennom hverandre uten at noe plutselig hopper frem.
+ * Plassering langs buen for et kort som står p plasser fra midten (kan være desimaltall). Vifta står i ekte 3D:
+ * kortene på sidene står litt bak og er svakt vridd inn mot midten. Nettleseren regner ut hva som ligger foran,
+ * så kortet som kommer til midten svinger mykt frem uten å hoppe foran det forrige.
  */
 function place(p: number) {
   const a = Math.abs(p);
   const side = Math.sign(p);
   const turn = Math.sin((Math.min(a, 1) * Math.PI) / 2); // 0 i midten, 1 fra nabo-plassen og utover
-  const x = side * (36 * a + 30 * turn); // god avstand mellom midten og naboene, tettere lenger ut
-  const z = 90 * (1 - turn) - 150 * turn - 70 * Math.max(0, a - 1);
-  const y = 12 * Math.min(a, 2.5);
+  const x = side * (34 * a + 32 * turn); // god avstand rundt kortet i midten, så kortene ikke dekker hverandre når de bytter plass
+  const y = 8 * p * p + 2 * a;
+  const lift = Math.max(0, 1 - a);
+  const z = 80 * (1 - turn) - 130 * turn - 60 * Math.max(0, a - 1);
   const fade = a < 1.9 ? 1 : Math.max(0, 1 - (a - 1.9) / (EDGE - 1.9));
   return {
-    transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${(-side * 38 * turn).toFixed(2)}deg) rotateZ(${(4 * p).toFixed(2)}deg)`,
+    transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${(y - lift * 10).toFixed(1)}px, ${z.toFixed(1)}px) rotateZ(${(8 * p).toFixed(2)}deg) rotateY(${(-side * 30 * turn).toFixed(2)}deg) scale(${(1 + 0.06 * lift).toFixed(3)})`,
     opacity: fade,
     // Kortene utenfor midten er dempet, så kortet som kommer inn tones mykt opp
     dim: 0.42 * Math.min(1, a / 1.2) ** 1.3,
