@@ -309,10 +309,7 @@ export default async function Home() {
                 <ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950">Betal og send trygt</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">
-                Møt selgeren hvis dere bor i nærheten. Betaler du før kortet sendes, sjekk at navnet på mottakeren stemmer med selgeren. For dyrere kort bør
-                selgeren sende med sporing.
-              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">Avtal betaling og frakt, vurder frakt med sporing for best mulig trygghet!</p>
             </div>
             <div className="flex flex-col rounded-3xl bg-primary p-6 text-white sm:p-7">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-foreground">
