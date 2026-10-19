@@ -182,11 +182,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
   const c = cards[center];
   return (
     <div ref={box} className="relative mx-auto h-[330px] w-full max-w-[600px] [--w:38%] sm:h-[430px] sm:[--w:34%] lg:h-[470px]">
-      {/* Spotlys bak kortet i midten, og gyllent lys på gulvet */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-12%] h-[105%] w-[62%] -translate-x-1/2 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(255,241,214,0.22),rgba(255,241,214,0.06)_55%,transparent_80%)] [clip-path:polygon(38%_0,62%_0,100%_100%,0_100%)]"
-      />
+      {/* Gyllent lys på gulvet under kortene */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute bottom-[9%] left-1/2 h-[60px] w-[70%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(214,178,95,0.45),rgba(214,178,95,0.12)_60%,transparent)]"
