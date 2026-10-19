@@ -23,6 +23,13 @@ export async function GET(req: Request) {
 
   await del("messages", db.from("messages").delete({ count: "exact" }).lt("created_at", months(12)));
   await del("conversations", db.from("conversations").delete({ count: "exact" }).lt("last_message_at", months(12)));
+  await del(
+    "rate_events",
+    db
+      .from("rate_events")
+      .delete({ count: "exact" })
+      .lt("created_at", new Date(Date.now() - 864e5).toISOString()),
+  );
   await del("contact_messages", db.from("contact_messages").delete({ count: "exact" }).lt("created_at", months(12)));
   await del("reports", db.from("reports").delete({ count: "exact" }).eq("handled", true).lt("created_at", months(12)));
 

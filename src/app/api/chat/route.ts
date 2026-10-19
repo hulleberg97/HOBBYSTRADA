@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getUser, needsVipps } from "@/lib/auth";
+import { rateLimit } from "@/lib/rate-limit";
 import { getListing } from "@/lib/listings";
 import { addMessage, adminUserId, MAX_MESSAGE, openConversation } from "@/lib/chat";
 
@@ -10,6 +11,10 @@ export async function POST(req: Request) {
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "Logg inn for å sende melding." }, { status: 401 });
   if (await needsVipps(user.id)) return NextResponse.json({ error: "Bekreft deg med Vipps for å sende meldinger.", vipps: true }, { status: 403 });
+  const limited =
+    (await rateLimit(`chat:${user.id}`, 20, 60, "Du sender meldinger for raskt. Vent litt og prøv igjen.")) ??
+    (await rateLimit(`ny-samtale:${user.id}`, 30, 3600, "Du har startet mange samtaler den siste timen. Prøv igjen senere."));
+  if (limited) return limited;
   const body = await req.json().catch(() => null);
   const message = clean(body?.message);
   if (!message) return NextResponse.json({ error: "Skriv en melding." }, { status: 400 });

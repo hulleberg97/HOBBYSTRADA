@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
 import { sendEmail } from "@/lib/email";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { getUser } from "@/lib/auth";
 import { getListing } from "@/lib/listings";
 import { REPORT_REASONS } from "@/lib/reports";
@@ -11,6 +12,8 @@ export async function POST(req: Request) {
   const b = await req.json().catch(() => null);
   if (!b) return NextResponse.json({ error: "Ugyldig forespørsel." }, { status: 400 });
   if (b._hp) return NextResponse.json({ ok: true });
+  const limited = await rateLimit(`rapport:${await clientIp()}`, 10, 3600);
+  if (limited) return limited;
   const reason = clean(b.reason, 80);
   const details = clean(b.details, 2000);
   const email = (await getUser())?.email || clean(b.email, 320) || null;

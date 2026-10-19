@@ -5,8 +5,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon, SendIcon, TagIcon } from "lucide-react";
 import { formatPrice, initials } from "@/lib/format";
 import type { ChatMessage, Conversation } from "@/lib/chat";
+import { browserClient } from "@/lib/supabase";
 
-const POLL_MS = 4000;
+// Nye meldinger kommer i sanntid via Supabase. Henting hvert 30. sekund er bare en reserve.
+const POLL_MS = 30000;
 
 export function ListingThumb({ image, title, size = "md" }: { image: string | null; title: string; size?: "sm" | "md" }) {
   const box = size === "sm" ? "h-12 w-9 rounded-md" : "h-16 w-12 rounded-lg";
@@ -47,6 +49,11 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     }
   }, [c.id, last]);
 
+  const latest = useRef(poll);
+  useEffect(() => {
+    latest.current = poll;
+  }, [poll]);
+
   useEffect(() => {
     const t = setInterval(poll, POLL_MS);
     document.addEventListener("visibilitychange", poll);
@@ -55,6 +62,19 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
       document.removeEventListener("visibilitychange", poll);
     };
   }, [poll]);
+
+  // Sanntid: når en ny melding lagres i samtalen, hentes den med en gang
+  useEffect(() => {
+    const db = browserClient();
+    if (!db) return;
+    const channel = db
+      .channel(`samtale-${c.id}`)
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_messages", filter: `conversation_id=eq.${c.id}` }, () => latest.current())
+      .subscribe();
+    return () => {
+      db.removeChannel(channel);
+    };
+  }, [c.id]);
 
   useEffect(() => {
     end.current?.scrollIntoView({ block: "end" });

@@ -4,6 +4,7 @@ import { hasVippsLogin } from "@/lib/vipps-login";
 import { adminClient } from "@/lib/supabase-admin";
 import { slugify } from "@/lib/format";
 import { sendEmail } from "@/lib/email";
+import { rateLimit } from "@/lib/rate-limit";
 
 const TYPE_MAP: Record<string, string> = {
   Autograf: "Autograf",
@@ -32,6 +33,8 @@ export async function POST(req: Request) {
   if (f.get("_hp")) return NextResponse.json({ ok: true });
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "Logg inn for å legge ut kort." }, { status: 401 });
+  const limited = await rateLimit(`annonse:${user.id}`, 15, 3600, "Du har lagt ut mange annonser den siste timen. Prøv igjen senere.");
+  if (limited) return limited;
   const verified = await getVerification(user.id);
   if (hasVippsLogin() && !verified) {
     return NextResponse.json({ error: "Bekreft deg med Vipps før du legger ut kort." }, { status: 403 });

@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { sendEmail } from "@/lib/email";
+import { rateLimit } from "@/lib/rate-limit";
 
 const MAX_BYTES = 4 * 1024 * 1024;
 const MAX_IMAGES = 6;
@@ -16,6 +17,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   const db = adminClient();
   const user = await getUser();
   if (!db || !user) return NextResponse.json({ error: "Du må være logget inn." }, { status: 401 });
+  const limited = await rateLimit(`bilder:${user.id}`, 20, 3600);
+  if (limited) return limited;
   const { id } = await params;
   const { data: listing } = await db.from("listings").select("id, slug, title, owner_id, status, images").eq("id", id).maybeSingle();
   if (!listing) return NextResponse.json({ error: "Fant ikke annonsen." }, { status: 404 });

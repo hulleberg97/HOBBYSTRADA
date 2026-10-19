@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
 import { sendEmail } from "@/lib/email";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { getUser } from "@/lib/auth";
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
@@ -9,6 +10,8 @@ export async function POST(req: Request) {
   const b = await req.json().catch(() => null);
   if (!b) return NextResponse.json({ error: "Ugyldig forespørsel." }, { status: 400 });
   if (b._hp) return NextResponse.json({ ok: true });
+  const limited = await rateLimit(`kontakt:${await clientIp()}`, 5, 3600);
+  if (limited) return limited;
   // Innlogget: navn og e-post hentes fra kontoen, ikke fra skjemaet.
   const user = await getUser();
   const name = user ? user.fullName.slice(0, 200) : [clean(b.first_name, 100), clean(b.last_name, 99)].filter(Boolean).join(" ");
