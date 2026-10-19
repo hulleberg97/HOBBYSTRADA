@@ -28,9 +28,9 @@ export default function PrivacyPage() {
                 items={[
                   "Konto: navn, e-post, sted og passord (lagres kryptert).",
                   "Vipps (hvis du logger inn eller bekrefter deg med Vipps): navn, telefonnummer, e-post og poststed. Navnet brukes til merket «Verifisert med Vipps», og poststedet fylles inn som sted i annonsene dine. Telefonnummeret vises aldri, og gateadressen lagres ikke.",
-                  "Annonser: kortdata, pris, sted, bilder og kontaktinformasjonen du oppgir.",
-                  "Meldinger: innholdet i samtaler mellom kjøpere og selgere, og meldinger til oss. Den andre parten ser navnet ditt, men aldri e-postadressen din.",
-                  "Teknisk: informasjonskapsler som holder deg innlogget og husker språkvalg.",
+                  "Annonser: kortdata, pris, sted og bilder.",
+                  "Meldinger: innholdet i samtaler mellom kjøpere og selgere, bilder dere sender i chatten, og meldinger til oss. Den andre parten ser brukernavnet ditt, men aldri e-postadressen din. Bilder i chatten lagres privat og vises bare for dere to.",
+                  "Teknisk: informasjonskapsler som holder deg innlogget. For å stoppe spam lagrer vi IP-adressen din kortvarig når du sender kontaktskjema eller rapporterer en annonse. Den slettes etter ett døgn.",
                 ]}
               />
             </>

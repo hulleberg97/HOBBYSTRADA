@@ -17,7 +17,7 @@ export default function CookiePage() {
               <List
                 items={[
                   "Innlogging: holder deg innlogget mens du bruker siden.",
-                  "Språk: husker om du har valgt norsk eller engelsk.",
+                  "Favoritter: husker kortene du har lagret, i nettleseren din.",
                   "Samtykke: husker at du har lest denne meldingen.",
                 ]}
               />
