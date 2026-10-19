@@ -10,8 +10,8 @@ export const dynamic = "force-dynamic";
 
 const STEPS = [
   ["Lag annonsen", "Spiller, sett, tilstand, pris, sted og bilder."],
-  ["Ute i markedet", "Vises med kortdata for samlere i hele Norge."],
-  ["Kjøpere tar kontakt", "Chat direkte med kjøperne."],
+  ["Vi sjekker annonsen", "Vi går raskt gjennom den før den legges ut i markedet."],
+  ["Kjøpere tar kontakt", "Du får varsel på e-post når noen skriver eller byr."],
   ["Løft om du vil", "Fremhev annonsen for å selge raskere."],
 ];
 

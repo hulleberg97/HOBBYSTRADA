@@ -212,7 +212,16 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               <label htmlFor="s-set" className={label}>
                 Sett *
               </label>
-              <input id="s-set" name="set" required maxLength={100} placeholder="Topps Chrome UCC" className={field} value={v.set} onChange={set("set")} />
+              <input
+                id="s-set"
+                name="set"
+                required
+                maxLength={100}
+                placeholder="F.eks. Topps Chrome UCC"
+                className={field}
+                value={v.set}
+                onChange={set("set")}
+              />
             </div>
             <div>
               <label htmlFor="s-club" className={label}>
@@ -254,13 +263,13 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               <label htmlFor="s-season" className={label}>
                 Sesong
               </label>
-              <input id="s-season" name="season" maxLength={20} placeholder="2024/25" className={field} value={v.season} onChange={set("season")} />
+              <input id="s-season" name="season" maxLength={20} placeholder="F.eks. 2024/25" className={field} value={v.season} onChange={set("season")} />
             </div>
             <div>
               <label htmlFor="s-code" className={label}>
                 Kortnummer
               </label>
-              <input id="s-code" name="code" maxLength={30} placeholder="CA-EH eller #18" className={field} value={v.code} onChange={set("code")} />
+              <input id="s-code" name="code" maxLength={30} placeholder="F.eks. CA-EH eller #18" className={field} value={v.code} onChange={set("code")} />
             </div>
             <div className="sm:col-span-2">
               <p className={label} id="s-type">
@@ -353,7 +362,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                   required
                   inputMode="numeric"
                   maxLength={9}
-                  placeholder="750"
+                  placeholder="F.eks. 750"
                   className={`${field} pr-12 font-mono-data`}
                   value={v.price}
                   onChange={set("price")}
@@ -448,8 +457,8 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
           </div>
         </fieldset>
         <fieldset className="rounded-md border border-border bg-white p-5 sm:p-7">
-          <legend className="sr-only">Selger og kontakt</legend>
-          <Step n="04" title="Selger og kontakt" />
+          <legend className="sr-only">Navn og sted i annonsen</legend>
+          <Step n="04" title="Navn og sted i annonsen" />
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="s-username" className={label}>
@@ -482,7 +491,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               />
             </div>
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">Bare brukernavn og sted vises i annonsen. Kontaktinformasjonen din vises aldri.</p>
+          <p className="mt-2 text-xs text-muted-foreground">Kjøperne ser brukernavnet og stedet ditt. All kontakt skjer i chatten.</p>
           {user && (
             <p className="mt-5 rounded-lg bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
               Du er logget inn som <span className="font-semibold text-foreground">{user.email}</span>. Meldinger fra kjøpere kommer under Meldinger, og du får
@@ -538,9 +547,9 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
             className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
           >
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-            {state === "sending" ? "Sender inn …" : "Publiser annonsen"}
+            {state === "sending" ? "Sender inn …" : "Send inn annonsen"}
           </button>
-          {!front && <p className="mt-3 text-center text-xs text-white/50">Legg til et bilde av forsiden for å publisere.</p>}
+          {!front && <p className="mt-3 text-center text-xs text-white/50">Legg til et bilde av forsiden for å sende inn.</p>}
         </div>
       </aside>
     </form>
