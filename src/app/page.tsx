@@ -37,11 +37,12 @@ export default async function Home() {
     <div className="bg-background">
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[20px] bg-[radial-gradient(120%_120%_at_85%_10%,hsl(var(--ink-soft))_0%,hsl(var(--ink-raised))_45%,hsl(var(--ink))_100%)] text-white sm:rounded-[28px]">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] [background-size:4px_4px]"
-            ></div>
+          <div id="hero" data-v="a" className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(function(){var v=new URLSearchParams(location.search).get("hero");if(v)document.getElementById("hero").dataset.v=v})()`,
+              }}
+            />
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
@@ -61,23 +62,25 @@ export default async function Home() {
                   <span className="text-gold-light">Kjøp og selg.</span>
                 </h1>
                 <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Markedsplassen for fotballkort.</p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
-                    className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-primary transition hover:bg-gold-light"
+                    className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
                     href="/products"
                   >
                     Se alle annonser
                     <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link
-                    className="inline-flex h-12 items-center rounded-full px-6 text-sm font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10"
+                    className="inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
                     href="/sell"
                   >
                     Legg ut annonse
                   </Link>
                 </div>
               </div>
-              <HeroFan cards={fanList} />
+              <div className="mt-10 sm:mt-6 lg:mt-0">
+                <HeroFan cards={fanList} />
+              </div>
             </div>
           </div>
         </div>
