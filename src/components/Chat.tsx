@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon, SendIcon, TagIcon } from "lucide-react";
+import { ArrowLeftIcon, ImageIcon, SendIcon, TagIcon, XIcon } from "lucide-react";
 import { formatPrice, initials } from "@/lib/format";
 import type { ChatMessage, Conversation } from "@/lib/chat";
 import { browserClient } from "@/lib/supabase";
+import { resizeImage } from "@/lib/resize";
 
 // Nye meldinger kommer i sanntid via Supabase. Henting hvert 30. sekund er bare en reserve.
 const POLL_MS = 30000;
@@ -37,6 +38,9 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   const [offer, setOffer] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [image, setImage] = useState<{ file: File; url: string } | null>(null);
+  const [zoom, setZoom] = useState<string | null>(null);
+  const picker = useRef<HTMLInputElement>(null);
   const end = useRef<HTMLDivElement>(null);
   const last = messages.at(-1)?.createdAt;
 
@@ -81,17 +85,42 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     window.dispatchEvent(new Event("hs:unread"));
   }, [messages.length]);
 
+  const pick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setError("Velg et bilde.");
+      return;
+    }
+    setError("");
+    if (image) URL.revokeObjectURL(image.url);
+    setImage({ file, url: URL.createObjectURL(file) });
+  };
+
+  const clearImage = () => {
+    if (image) URL.revokeObjectURL(image.url);
+    setImage(null);
+  };
+
   const send = async (e?: React.FormEvent) => {
     e?.preventDefault();
     const body = text.trim();
-    if (!body || sending) return;
+    if ((!body && !image) || sending) return;
     setSending(true);
     setError("");
-    const res = await fetch(`/api/chat/${c.id}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ message: body, offer: offer || undefined }),
-    }).catch(() => null);
+    let request: RequestInit;
+    if (image) {
+      // Bildet gjøres mindre i nettleseren først, så det sendes raskt også på mobil
+      const form = new FormData();
+      form.append("message", body);
+      if (offer) form.append("offer", offer);
+      form.append("image", await resizeImage(image.file));
+      request = { method: "POST", body: form };
+    } else {
+      request = { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ message: body, offer: offer || undefined }) };
+    }
+    const res = await fetch(`/api/chat/${c.id}`, request).catch(() => null);
     const data = res ? await res.json().catch(() => ({})) : {};
     setSending(false);
     if (!res?.ok) {
@@ -101,6 +130,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     setMessages((prev) => [...prev, data.message]);
     setText("");
     setOffer(null);
+    clearImage();
   };
 
   return (
@@ -139,7 +169,18 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
                       Bud: {formatPrice(m.offer)}
                     </p>
                   )}
-                  <p className="whitespace-pre-line break-words">{m.body}</p>
+                  {m.image && (
+                    <button
+                      type="button"
+                      onClick={() => setZoom(m.image)}
+                      className="-mx-2 mb-1 mt-0.5 block overflow-hidden rounded-xl"
+                      aria-label="Vis bildet større"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={m.image} alt="Bilde i meldingen" className="max-h-72 w-auto max-w-full object-cover" loading="lazy" />
+                    </button>
+                  )}
+                  {m.body && <p className="whitespace-pre-line break-words">{m.body}</p>}
                 </div>
                 <span className="mt-0.5 px-1 text-[11px] text-slate-400" suppressHydrationWarning>
                   {time(m.createdAt)}
@@ -153,6 +194,20 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
 
       <form onSubmit={send} className="sticky bottom-0 border-t border-slate-200 bg-white px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 sm:px-6">
         {error && <p className="mb-2 text-sm text-destructive">{error}</p>}
+        {image && (
+          <div className="relative mb-2 inline-block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image.url} alt="Bildet du sender" className="h-24 w-auto rounded-xl object-cover ring-1 ring-slate-200" />
+            <button
+              type="button"
+              onClick={clearImage}
+              aria-label="Fjern bildet"
+              className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-white shadow"
+            >
+              <XIcon className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+        )}
         {offer !== null && (
           <div className="relative mb-2">
             <input
@@ -180,6 +235,15 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
               Bud
             </button>
           )}
+          <input ref={picker} type="file" accept="image/*" onChange={pick} className="hidden" />
+          <button
+            type="button"
+            onClick={() => picker.current?.click()}
+            aria-label="Legg ved bilde"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:bg-slate-50"
+          >
+            <ImageIcon className="h-5 w-5" aria-hidden="true" />
+          </button>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -191,13 +255,13 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
             }}
             rows={1}
             maxLength={2000}
-            placeholder="Skriv en melding"
+            placeholder={image ? "Skriv noe til bildet (valgfritt)" : "Skriv en melding"}
             aria-label="Melding"
             className="max-h-40 min-h-11 flex-1 resize-none rounded-2xl border border-slate-200 px-4 py-2.5 text-[15px] outline-none [field-sizing:content] focus:border-primary focus:ring-2 focus:ring-primary/15"
           />
           <button
             type="submit"
-            disabled={sending || !text.trim()}
+            disabled={sending || (!text.trim() && !image)}
             aria-label="Send"
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-white transition hover:bg-primary/90 disabled:opacity-40"
           >
@@ -205,6 +269,27 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
           </button>
         </div>
       </form>
+
+      {zoom && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Bilde"
+          onClick={() => setZoom(null)}
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 p-4"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={zoom} alt="Bilde i meldingen" className="max-h-full max-w-full rounded-lg object-contain" />
+          <button
+            type="button"
+            onClick={() => setZoom(null)}
+            aria-label="Lukk"
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white"
+          >
+            <XIcon className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

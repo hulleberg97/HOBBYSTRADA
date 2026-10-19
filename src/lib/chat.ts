@@ -15,7 +15,7 @@ export type Conversation = {
   unread: boolean;
 };
 
-export type ChatMessage = { id: string; mine: boolean; body: string; offer: number | null; createdAt: string };
+export type ChatMessage = { id: string; mine: boolean; body: string; offer: number | null; image: string | null; createdAt: string };
 
 type Row = {
   id: string;
@@ -34,6 +34,29 @@ type Row = {
 };
 
 export const MAX_MESSAGE = 2000;
+export const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+const BUCKET = "chat-images";
+
+/** Bildene i chatten er private. De vises via lenker som virker i et døgn. */
+async function signImages(paths: string[]) {
+  const db = adminClient();
+  if (!db || !paths.length) return new Map<string, string>();
+  const { data } = await db.storage.from(BUCKET).createSignedUrls(paths, 60 * 60 * 24);
+  return new Map((data ?? []).filter((d) => d.signedUrl && d.path).map((d) => [d.path!, d.signedUrl]));
+}
+
+/** Lagrer et bilde til samtalen og returnerer stien i bøtta. */
+export async function uploadChatImage(conversationId: string, file: File) {
+  const db = adminClient();
+  if (!db) return null;
+  const path = `${conversationId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${file.type === "image/png" ? "png" : "jpg"}`;
+  const { error } = await db.storage.from(BUCKET).upload(path, file, { contentType: file.type });
+  if (error) {
+    console.error("Opplasting av chatbilde feilet", error.message);
+    return null;
+  }
+  return path;
+}
 
 const site = () => process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
 
@@ -99,14 +122,16 @@ export async function getConversation(id: string, userId: string, after?: string
   const db = adminClient();
   const row = await getRow(id, userId);
   if (!db || !row) return null;
-  let q = db.from("chat_messages").select("id, sender_id, body, offer, created_at").eq("conversation_id", id).order("created_at").limit(500);
+  let q = db.from("chat_messages").select("id, sender_id, body, offer, image, created_at").eq("conversation_id", id).order("created_at").limit(500);
   if (after) q = q.gt("created_at", after);
   const { data } = await q;
+  const urls = await signImages((data ?? []).map((m) => m.image).filter(Boolean));
   const messages: ChatMessage[] = (data ?? []).map((m) => ({
     id: m.id,
     mine: m.sender_id === userId,
     body: m.body,
     offer: m.offer === null ? null : Number(m.offer),
+    image: m.image ? (urls.get(m.image) ?? null) : null,
     createdAt: m.created_at,
   }));
   const role = row.buyer_id === userId ? "buyer" : "seller";
@@ -148,17 +173,23 @@ export async function openConversation(input: {
 }
 
 /** Legger til en melding og varsler mottakeren på e-post hvis hen hadde lest alt fra før. */
-export async function addMessage(id: string, userId: string, body: string, offer: number | null) {
+export async function addMessage(id: string, userId: string, body: string, offer: number | null, image: File | null = null) {
   const db = adminClient();
   const row = await getRow(id, userId);
   if (!db || !row) return null;
-  const { data, error } = await db.from("chat_messages").insert({ conversation_id: id, sender_id: userId, body, offer }).select("id, created_at").single();
+  const imagePath = image ? await uploadChatImage(id, image) : null;
+  if (image && !imagePath) return null;
+  const { data, error } = await db
+    .from("chat_messages")
+    .insert({ conversation_id: id, sender_id: userId, body, offer, image: imagePath })
+    .select("id, created_at")
+    .single();
   if (error) {
     console.error("Kunne ikke lagre melding", error.message);
     return null;
   }
   const role = row.buyer_id === userId ? "buyer" : "seller";
-  const preview = offer ? `Bud: ${formatPrice(offer)}` : body;
+  const preview = offer ? `Bud: ${formatPrice(offer)}` : body || "Sendte et bilde";
   await db
     .from("conversations")
     .update({
@@ -181,11 +212,11 @@ export async function addMessage(id: string, userId: string, body: string, offer
       await sendEmail({
         to,
         subject: offer ? `Nytt bud på «${row.listing_title}»: ${formatPrice(offer)}` : `Ny melding om «${row.listing_title}»`,
-        text: `${from} har sendt deg en melding om «${row.listing_title}»:\n\n${offer ? `Bud: ${formatPrice(offer)}\n\n` : ""}${body}\n\nLes og svar her:\n${site()}/meldinger/${id}\n\nDu kan ikke svare på denne e-posten.`,
+        text: `${from} har sendt deg en melding om «${row.listing_title}»:\n\n${offer ? `Bud: ${formatPrice(offer)}\n\n` : ""}${body || "(Bilde)"}\n\nLes og svar her:\n${site()}/meldinger/${id}\n\nDu kan ikke svare på denne e-posten.`,
         html: brandedEmail({
           title: offer ? `Nytt bud: ${formatPrice(offer)}` : "Ny melding",
           intro: `${from} har sendt deg en melding om «${row.listing_title}».`,
-          quote: body,
+          quote: body || (imagePath ? "Sendte deg et bilde." : undefined),
           button: "Les og svar",
           url: `${site()}/meldinger/${id}`,
           outro: "Svar i chatten på HOBBYSTRADA. Du kan ikke svare på denne e-posten.",
@@ -193,5 +224,6 @@ export async function addMessage(id: string, userId: string, body: string, offer
       });
     }
   }
-  return { id: data.id as string, mine: true, body, offer, createdAt: data.created_at as string } satisfies ChatMessage;
+  const signed = imagePath ? (await signImages([imagePath])).get(imagePath) : null;
+  return { id: data.id as string, mine: true, body, offer, image: signed ?? null, createdAt: data.created_at as string } satisfies ChatMessage;
 }
