@@ -26,40 +26,27 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
   );
 }
 
-/** Plassering langs buen for et kort som står p plasser fra midten (kan være desimaltall). */
+/**
+ * Plassering for et kort som står p plasser fra midten (kan være desimaltall). Kortene står i ekte 3D: kortene på
+ * sidene er vridd inn mot midten og står lenger bak, og kortet som kommer til midten svinger frem. Nettleseren
+ * regner ut hva som ligger foran, så kortene glir gjennom hverandre uten at noe plutselig hopper frem.
+ */
 function place(p: number) {
   const a = Math.abs(p);
-  // Nær midten glir kortene litt fra hverandre, så det nye kortet ikke plutselig dekker det gamle når de bytter plass
-  const part = a < 1 ? 14 * Math.sin(Math.PI * p) : 0;
-  const x = 47 * p - p * a + part;
-  const y = 8 * p * p + 2 * a;
-  const lift = Math.max(0, 1 - a);
+  const side = Math.sign(p);
+  const turn = Math.sin((Math.min(a, 1) * Math.PI) / 2); // 0 i midten, 1 fra nabo-plassen og utover
+  const x = side * (36 * a + 30 * turn); // god avstand mellom midten og naboene, tettere lenger ut
+  const z = 90 * (1 - turn) - 150 * turn - 70 * Math.max(0, a - 1);
+  const y = 12 * Math.min(a, 2.5);
   const fade = a < 1.9 ? 1 : Math.max(0, 1 - (a - 1.9) / (EDGE - 1.9));
   return {
-    transform: `translate(-50%, 0) translate(${x}%, ${y - lift * 10}px) rotate(${8 * p}deg) scale(${1 + 0.06 * lift})`,
-    zIndex: 1000 - Math.round(a * 100),
-    mask: blend(p),
+    transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${(-side * 38 * turn).toFixed(2)}deg) rotateZ(${(4 * p).toFixed(2)}deg)`,
     opacity: fade,
     // Kortene utenfor midten er dempet, så kortet som kommer inn tones mykt opp
     dim: 0.42 * Math.min(1, a / 1.2) ** 1.3,
     gloss: Math.max(0, 1 - a / 0.55),
     glossX: -p * 170,
   };
-}
-
-const BLEND = 0.22; // hvor lenge (i kortplasser) to kort tones over i hverandre når de bytter plass
-
-/**
- * Når et kort passerer midten, bytter det plass i dybden med naboen. I stedet for at det ene kortet plutselig
- * havner foran, gjøres kanten mot naboen gjennomsiktig rundt byttet, så de to kortene tones mykt over i hverandre.
- */
-function blend(p: number) {
-  const a = Math.abs(p);
-  if (a >= 0.5 || a < 0.5 - BLEND) return "none";
-  // Avrundet, så masken bare tegnes på nytt noen få ganger under byttet og ikke i hvert bilde
-  const alpha = (Math.round((0.5 + (0.5 * (0.5 - a)) / BLEND) * 20) / 20).toFixed(2);
-  const side = p < 0 ? "left" : "right"; // gradienten starter i kanten som vender mot naboen
-  return `linear-gradient(to ${side}, rgba(0,0,0,${alpha}) 0%, rgba(0,0,0,${alpha}) 22%, #000 36%)`;
 }
 
 /** Avstand fra midten for kort i, gitt hvor langt vifta har glidd. */
@@ -166,9 +153,6 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         // Bare transform og opacity endres i hvert bilde. Det tar skjermkortet seg av uten å tegne kortene på nytt.
         set(i, node, "transform", s.transform);
         set(i, node, "opacity", s.opacity.toFixed(3));
-        set(i, node, "z-index", String(s.zIndex));
-        set(i, node, "mask-image", s.mask);
-        set(i, node, "-webkit-mask-image", s.mask);
         set(i, node, "pointer-events", s.opacity < 0.3 ? "none" : "auto");
         set(i, dims.current[i], "opacity", s.dim.toFixed(3));
         set(i, glosses.current[i], "opacity", s.gloss.toFixed(3));
@@ -206,54 +190,54 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         aria-hidden="true"
         className="pointer-events-none absolute bottom-[9%] left-1/2 h-[60px] w-[70%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(214,178,95,0.45),rgba(214,178,95,0.12)_60%,transparent)]"
       />
-      {cards.map((l, i) => {
-        const s = place(offsetOf(i, 0, n));
-        return (
-          <Link
-            key={`${l.slug}-${i}`}
-            ref={(node) => {
-              refs.current[i] = node;
-            }}
-            href={`/products/${l.slug}`}
-            aria-label={l.title}
-            style={
-              {
-                transform: s.transform,
-                zIndex: s.zIndex,
-                maskImage: s.mask,
-                WebkitMaskImage: s.mask,
-                opacity: s.opacity,
-              } as React.CSSProperties
-            }
-            className="group absolute left-1/2 top-[4%] w-[var(--w)] origin-bottom will-change-transform"
-          >
-            <div className="relative transition-transform duration-300 ease-out group-hover:-translate-y-3">
-              <Slab l={l} />
-              {/* Glans som glir over kortet når det passerer midten */}
-              <div
-                ref={(node) => {
-                  glosses.current[i] = node;
-                }}
-                className="pointer-events-none absolute inset-0 overflow-hidden rounded-[12px] will-change-[opacity]"
-                style={{ opacity: s.gloss }}
-              >
+      {/* Scenen kortene står i. Med ekte 3D regner nettleseren ut hvilke kort som ligger foran. */}
+      <div className="absolute inset-0 [perspective:1100px] [transform-style:preserve-3d]">
+        {cards.map((l, i) => {
+          const s = place(offsetOf(i, 0, n));
+          return (
+            <Link
+              key={`${l.slug}-${i}`}
+              ref={(node) => {
+                refs.current[i] = node;
+              }}
+              href={`/products/${l.slug}`}
+              aria-label={l.title}
+              style={
+                {
+                  transform: s.transform,
+                  opacity: s.opacity,
+                } as React.CSSProperties
+              }
+              className="group absolute left-1/2 top-[4%] w-[var(--w)] origin-bottom will-change-transform"
+            >
+              <div className="relative transition-transform duration-300 ease-out group-hover:-translate-y-3">
+                <Slab l={l} />
+                {/* Glans som glir over kortet når det passerer midten */}
                 <div
-                  className="absolute inset-y-[-20%] left-[35%] w-[30%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)] will-change-transform"
-                  style={{ transform: `translateX(${s.glossX}%) rotate(18deg)` }}
+                  ref={(node) => {
+                    glosses.current[i] = node;
+                  }}
+                  className="pointer-events-none absolute inset-0 overflow-hidden rounded-[12px] will-change-[opacity]"
+                  style={{ opacity: s.gloss }}
+                >
+                  <div
+                    className="absolute inset-y-[-20%] left-[35%] w-[30%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)] will-change-transform"
+                    style={{ transform: `translateX(${s.glossX}%) rotate(18deg)` }}
+                  />
+                </div>
+                {/* Kortene på sidene dempes litt, så midten er i fokus */}
+                <div
+                  ref={(node) => {
+                    dims.current[i] = node;
+                  }}
+                  className="pointer-events-none absolute inset-0 rounded-[12px] bg-[#0b1426] will-change-[opacity]"
+                  style={{ opacity: s.dim }}
                 />
               </div>
-              {/* Kortene på sidene dempes litt, så midten er i fokus */}
-              <div
-                ref={(node) => {
-                  dims.current[i] = node;
-                }}
-                className="pointer-events-none absolute inset-0 rounded-[12px] bg-[#0b1426] will-change-[opacity]"
-                style={{ opacity: s.dim }}
-              />
-            </div>
-          </Link>
-        );
-      })}
+            </Link>
+          );
+        })}
+      </div>
       {c && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[200] flex justify-center px-4">
           <Link
