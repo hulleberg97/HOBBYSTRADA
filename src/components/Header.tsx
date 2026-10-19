@@ -53,7 +53,7 @@ export function Header() {
           </Link>
           <form className="hidden max-w-[480px] flex-1 md:block" role="search" onSubmit={search}>
             <label className="relative block">
-              <span className="sr-only">Søk etter spiller, sett eller kort</span>
+              <span className="sr-only">Søk etter spiller, klubb eller sett</span>
               <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
               <SearchSuggest
                 value={q}
@@ -133,7 +133,7 @@ export function Header() {
         </div>
         <form className="px-4 pb-3 md:hidden" role="search" onSubmit={search}>
           <label className="relative block">
-            <span className="sr-only">Søk etter spiller, sett eller kort</span>
+            <span className="sr-only">Søk etter spiller, klubb eller sett</span>
             <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
             <SearchSuggest
               value={q}

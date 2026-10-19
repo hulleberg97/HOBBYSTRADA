@@ -23,10 +23,10 @@ import type { Listing } from "@/lib/types";
 
 const PAGE_SIZE = 13;
 const PRICES: Record<string, [number | null, number | null]> = {
-  "0-300": [null, 300],
-  "300-700": [300, 700],
-  "700-1000": [700, 1000],
-  "1000-": [1000, null],
+  "0-500": [null, 500],
+  "500-1000": [500, 1000],
+  "1000-5000": [1000, 5000],
+  "5000-": [5000, null],
 };
 
 export function Market({ listings }: { listings: Listing[] }) {
@@ -103,7 +103,7 @@ export function Market({ listings }: { listings: Listing[] }) {
             <form role="search" onSubmit={submit} className="flex h-14 w-full items-center gap-2 rounded-full bg-white pl-5 pr-1.5 shadow-lg lg:w-[420px]">
               <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               <label htmlFor="market-search" className="sr-only">
-                Søk etter spiller eller sett
+                Søk etter spiller, klubb eller sett
               </label>
               <SearchSuggest
                 value={input}
@@ -112,7 +112,7 @@ export function Market({ listings }: { listings: Listing[] }) {
                 listClassName="-left-10"
                 inputProps={{
                   id: "market-search",
-                  placeholder: "Søk etter spiller, sett eller kortnummer",
+                  placeholder: "Søk etter spiller, klubb eller sett",
                   className: "w-full bg-transparent text-[15px] text-slate-900 placeholder:text-slate-400 focus:outline-none",
                 }}
               />
@@ -169,10 +169,10 @@ export function Market({ listings }: { listings: Listing[] }) {
                 className="h-10 appearance-none rounded-full border border-slate-200 bg-white pl-4 pr-9 text-sm font-medium text-slate-800 hover:border-slate-400 focus:border-primary focus:outline-none data-[active=true]:border-primary data-[active=true]:text-primary"
               >
                 <option value="">Alle priser</option>
-                <option value="0-300">Under 300 kr</option>
-                <option value="300-700">300–700 kr</option>
-                <option value="700-1000">700–1 000 kr</option>
-                <option value="1000-">Over 1 000 kr</option>
+                <option value="0-500">Under 500 kr</option>
+                <option value="500-1000">500–1 000 kr</option>
+                <option value="1000-5000">1 000–5 000 kr</option>
+                <option value="5000-">Over 5 000 kr</option>
                 {priceKey === "custom" && <option value="custom">{`${f.min ?? 0}–${f.max ?? "∞"} kr`}</option>}
               </select>
               <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
@@ -303,9 +303,9 @@ export function Market({ listings }: { listings: Listing[] }) {
               <ShieldCheckIcon className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
               Selg kortene dine
             </p>
-            <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">Har du kort som ligger i skuffen?</h2>
+            <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">Har du kort i skuffen?</h2>
             <p className="mt-2 max-w-lg text-[15px] text-slate-600">
-              Legg ut kortet på et par minutter og nå samlere i hele landet. Fremhev annonsen med annonseløft for å komme øverst.
+              Legg dem ut på et par minutter og nå samlere i hele Norge. Vil du selge raskere, kan du løfte annonsen til toppen.
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row md:flex-col">

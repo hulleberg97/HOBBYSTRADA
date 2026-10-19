@@ -74,7 +74,7 @@ export default async function Home() {
                     className="inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
                     href="/sell"
                   >
-                    Legg ut annonse
+                    Legg ut kort
                   </Link>
                 </div>
               </div>
@@ -251,7 +251,7 @@ export default async function Home() {
                 <li className="flex gap-4">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">1</span>
                   <div>
-                    <p className="font-semibold text-slate-950">Legg ut annonse</p>
+                    <p className="font-semibold text-slate-950">Legg ut kort</p>
                     <p className="mt-0.5 text-sm leading-relaxed text-slate-700">
                       Fyll inn spiller, sett, tilstand og pris, og last opp bilder. Det tar et par minutter.
                     </p>
@@ -276,7 +276,7 @@ export default async function Home() {
                 className="mt-8 inline-flex h-11 w-max items-center gap-2 rounded-full px-5 text-sm font-semibold transition bg-primary text-white hover:bg-black"
                 href="/sell"
               >
-                Legg ut annonse
+                Legg ut kort
                 <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

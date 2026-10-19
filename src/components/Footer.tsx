@@ -63,9 +63,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-          <p>
-            © {new Date().getFullYear()} {COMPANY.name} · Org.nr. {COMPANY.orgnr}
-          </p>
+          <p>© {new Date().getFullYear()} HOBBYSTRADA</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <CookieButton />
           </div>

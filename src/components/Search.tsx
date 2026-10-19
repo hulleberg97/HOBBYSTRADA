@@ -48,7 +48,7 @@ export function Search({ listings }: { listings: Listing[] }) {
           >
             <SearchIcon className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
             <label htmlFor="search-input" className="sr-only">
-              Søk etter spiller, sett eller kortnummer
+              Søk etter spiller, klubb eller sett
             </label>
             <input
               id="search-input"
