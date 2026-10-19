@@ -105,8 +105,9 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
   useEffect(() => {
     const el = box.current;
     if (!el || n < 2) return;
-    // Med «Reduser bevegelse» glir vifta saktere i stedet for å stå stille
-    const base = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? SPEED * 0.5 : SPEED;
+    // På mobil glir vifta litt roligere. Med «Reduser bevegelse» glir den saktere i stedet for å stå stille.
+    const phone = window.matchMedia("(max-width: 640px)").matches ? 0.7 : 1;
+    const base = SPEED * phone * (window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0.5 : 1);
     let shift = 0;
     let speed = base;
     let onCard = false; // musen over et kort: stopp, så det er lett å trykke
