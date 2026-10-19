@@ -30,20 +30,35 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
 function place(p: number) {
   const a = Math.abs(p);
   // Nær midten glir kortene litt fra hverandre, så det nye kortet ikke plutselig dekker det gamle når de bytter plass
-  const part = a < 1 ? 13 * Math.sin(Math.PI * p) : 0;
+  const part = a < 1 ? 14 * Math.sin(Math.PI * p) : 0;
   const x = 47 * p - p * a + part;
   const y = 8 * p * p + 2 * a;
   const lift = Math.max(0, 1 - a);
   const fade = a < 1.9 ? 1 : Math.max(0, 1 - (a - 1.9) / (EDGE - 1.9));
   return {
     transform: `translate(-50%, 0) translate(${x}%, ${y - lift * 10}px) rotate(${8 * p}deg) scale(${1 + 0.06 * lift})`,
-    zIndex: 100 - Math.round(a * 10),
+    zIndex: 1000 - Math.round(a * 100),
+    mask: blend(p),
     opacity: fade,
     // Kortene utenfor midten er dempet, så kortet som kommer inn tones mykt opp
     dim: 0.42 * Math.min(1, a / 1.2) ** 1.3,
     gloss: Math.max(0, 1 - a / 0.55),
     glossX: -p * 170,
   };
+}
+
+const BLEND = 0.22; // hvor lenge (i kortplasser) to kort tones over i hverandre når de bytter plass
+
+/**
+ * Når et kort passerer midten, bytter det plass i dybden med naboen. I stedet for at det ene kortet plutselig
+ * havner foran, gjøres kanten mot naboen gjennomsiktig rundt byttet, så de to kortene tones mykt over i hverandre.
+ */
+function blend(p: number) {
+  const a = Math.abs(p);
+  if (a >= 0.5 || a < 0.5 - BLEND) return "none";
+  const alpha = (0.5 + (0.5 * (0.5 - a)) / BLEND).toFixed(3);
+  const side = p < 0 ? "left" : "right"; // gradienten starter i kanten som vender mot naboen
+  return `linear-gradient(to ${side}, rgba(0,0,0,${alpha}) 0%, rgba(0,0,0,${alpha}) 22%, #000 36%)`;
 }
 
 /** Avstand fra midten for kort i, gitt hvor langt vifta har glidd. */
@@ -139,6 +154,8 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         const s = place(p);
         node.style.transform = s.transform;
         node.style.zIndex = String(s.zIndex);
+        node.style.maskImage = s.mask;
+        node.style.webkitMaskImage = s.mask;
         node.style.opacity = String(s.opacity);
         node.style.pointerEvents = s.opacity < 0.3 ? "none" : "";
         node.style.setProperty("--dim", String(s.dim));
@@ -191,6 +208,8 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
               {
                 transform: s.transform,
                 zIndex: s.zIndex,
+                maskImage: s.mask,
+                WebkitMaskImage: s.mask,
                 opacity: s.opacity,
                 "--dim": s.dim,
                 "--gloss": s.gloss,
