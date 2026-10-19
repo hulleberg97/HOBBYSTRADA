@@ -124,7 +124,7 @@ export default function AboutPage() {
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">2</span>
-                <span className="pt-0.5">Betal med Vipps, og sjekk at navnet stemmer med selgeren.</span>
+                <span className="pt-0.5">Sjekk at navnet på mottakeren stemmer med selgeren før du betaler.</span>
               </li>
               <li className="flex items-start gap-4 py-3.5 text-[15px] text-slate-800">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-primary">3</span>

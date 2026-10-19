@@ -310,7 +310,8 @@ export default async function Home() {
               </span>
               <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950">Betal og send trygt</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-slate-700">
-                Det er vanlig å betale med Vipps før kortet sendes. Sjekk at navnet i Vipps stemmer med selgeren, og bruk frakt med sporing for dyrere kort.
+                Møt selgeren hvis dere bor i nærheten. Betaler du før kortet sendes, sjekk at navnet på mottakeren stemmer med selgeren. For dyrere kort bør
+                selgeren sende med sporing.
               </p>
             </div>
             <div className="flex flex-col rounded-3xl bg-primary p-6 text-white sm:p-7">
