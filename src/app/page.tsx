@@ -375,7 +375,7 @@ export default async function Home() {
             </Link>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <div className="group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent">
+            <Link href="/annonseloft" className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="text-lg font-semibold tracking-tight">Topp av listen</h3>
                 <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-800 ring-1 ring-slate-300">3 dager</span>
@@ -394,10 +394,14 @@ export default async function Home() {
                   Selg raskere uten å bruke mye
                 </li>
               </ul>
-            </div>
-            <div
+                          <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
+                Velg
+                <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
+              </span>
+            </Link>
+            <Link href="/annonseloft"
               data-highlight="true"
-              className="group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent"
+              className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent"
             >
               <div className="flex items-center justify-between gap-3">
                 <h3 className="text-lg font-semibold tracking-tight">Fremhevet</h3>
@@ -421,8 +425,12 @@ export default async function Home() {
                   Foran Topp av listen og vanlige annonser
                 </li>
               </ul>
-            </div>
-            <div className="group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent">
+                          <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
+                Velg
+                <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
+              </span>
+            </Link>
+            <Link href="/annonseloft" className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="text-lg font-semibold tracking-tight">Toppannonse</h3>
                 <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-800 ring-1 ring-slate-300">30 dager</span>
@@ -445,7 +453,11 @@ export default async function Home() {
                   Aller først i markedet
                 </li>
               </ul>
-            </div>
+                          <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
+                Velg
+                <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
+              </span>
+            </Link>
           </div>
         </div>
       </section>
