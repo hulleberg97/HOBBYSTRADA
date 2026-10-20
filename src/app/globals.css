@@ -317,3 +317,4 @@ html[data-tone="3"] .hero-bg[data-farge="lys"] { background: radial-gradient(55%
 html[data-tone="3"] h1.font-heading, html[data-tone="3"] h2.font-heading { color: #12392b; }
 html[data-tone="3"] .eyebrow { color: #a07a2c; }
 html[data-tone="3"] footer.bg-ink { background: #0f2a20; }
+html[data-tone="1"] header.sticky [data-current="true"], html[data-tone="1"] header.sticky [aria-expanded="true"] { background: rgb(255 255 255 / 0.12); color: #fff; }
