@@ -396,3 +396,20 @@ html[data-linje="5d5"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.5rem, 3.
 html[data-linje="5d5"] .hero-accent { display: block; padding-bottom: 0.06em; }
 /* 5d6: med undertekst under overskriften */
 html[data-linje="5d6"] .hero-bg .hero-sub > span::after { content: "Kjøp og selg direkte med samlere i hele landet"; display: block; margin-top: 0.6rem; font-size: 0.95rem; font-weight: 400; letter-spacing: 0; color: #64748b; }
+
+/* Flere utkast på 5c (?linje=5c2–5c6) – ensfarget med glans, uten overgang */
+html:is([data-linje="5c2"], [data-linje="5c3"], [data-linje="5c4"], [data-linje="5c5"], [data-linje="5c6"]) .hero-bg .hero-sub.hero-sub { font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; color: #0b1426; filter: drop-shadow(0 1px 0 #fff) drop-shadow(0 6px 10px rgb(11 20 38 / 0.12)); }
+html:is([data-linje="5c2"], [data-linje="5c3"], [data-linje="5c4"], [data-linje="5c5"], [data-linje="5c6"]) .hero-bg .hero-sub > span { background: linear-gradient(180deg, #4a5f8c 0%, #1d2b4a 46%, #0b1426 54%, #142142 100%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 0.06em; }
+html:is([data-linje="5c2"], [data-linje="5c3"], [data-linje="5c4"], [data-linje="5c5"], [data-linje="5c6"]) .hero-bg .hero-sub > span::before { content: "HOBBYSTRADA"; display: table; margin: 0 auto 0.7rem; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.3em; -webkit-text-fill-color: #a8822f; }
+html:is([data-linje="5c3"], [data-linje="5c4"], [data-linje="5c5"], [data-linje="5c6"]) .hero-accent { background: linear-gradient(180deg, #f6e3a8 0%, #dcb862 44%, #a8822f 56%, #c9a14d 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* 5c2: hele linja i blank marine */
+/* 5c3: blank marine + blankt gull på «fotballkort» */
+/* 5c4: som 5c3, med mørk blank merkelapp */
+html[data-linje="5c4"] .hero-bg .hero-sub > span::before { margin-bottom: 0.8rem; padding: 0.42rem 0.95rem 0.42rem 1.25rem; border-radius: 999px; letter-spacing: 0.28em; background: linear-gradient(180deg, #2a3a60 0%, #16223d 48%, #0b1426 52%, #121d36 100%); -webkit-background-clip: border-box; background-clip: border-box; -webkit-text-fill-color: #e6c779; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 8px 20px -12px rgb(11 20 38 / 0.7); }
+/* 5c5: større, på to linjer */
+html[data-linje="5c5"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.5rem, 3.8vw, 3rem); letter-spacing: -0.045em; line-height: 1.02; }
+html[data-linje="5c5"] .hero-accent { display: block; }
+html[data-linje="5c5"] .hero-bg .hero-sub > span { padding-bottom: 0.1em; }
+/* 5c6: med tynne gullinjer og undertekst */
+html[data-linje="5c6"] .hero-bg .hero-sub > span::before { padding: 0 2.6rem; background: linear-gradient(90deg, transparent, #cfa653) left center / 1.9rem 1px no-repeat, linear-gradient(90deg, #cfa653, transparent) right center / 1.9rem 1px no-repeat; -webkit-background-clip: border-box; background-clip: border-box; }
+html[data-linje="5c6"] .hero-bg .hero-sub > span::after { content: "Kjøp og selg direkte med samlere i hele landet"; display: block; margin-top: 0.6rem; font-size: 0.95rem; font-weight: 400; letter-spacing: 0; -webkit-text-fill-color: #64748b; }
