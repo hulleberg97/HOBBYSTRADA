@@ -19,9 +19,9 @@
   --color-ink-soft: hsl(var(--ink-soft));
   --color-gold-light: hsl(var(--gold-light));
   --color-gold-deep: hsl(var(--gold-deep));
-  --font-body: var(--nf-inter), "Inter", system-ui, sans-serif;
-  --font-heading: var(--nf-space), "Space Grotesk", sans-serif;
-  --font-mono: var(--nf-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-body: var(--nf-schibsted), system-ui, sans-serif;
+  --font-heading: var(--nf-schibsted), system-ui, sans-serif;
+  --font-mono: var(--nf-schibsted), system-ui, sans-serif;
 }
 
 :root {
@@ -242,7 +242,7 @@
   .hero-bg[data-tekst="5"] .hero-sub::after { transform: scaleX(-1); }
 }
 
-/* TEST (?stil=pro): farger og skrift (utenfor lag, så de vinner over standardverdiene) */
+/* Profesjonell stil (fast, data-stil="pro" på <html>): farger og skrift (utenfor lag, så de vinner over standardverdiene) */
 html[data-stil="pro"] {
   --font-body: var(--nf-schibsted), system-ui, sans-serif;
   --font-heading: var(--nf-schibsted), system-ui, sans-serif;
@@ -254,7 +254,7 @@ html[data-stil="pro"] { --background: 0 0% 100%; --border: 0 0% 90%; }
 html[data-stil="pro"] body { font-family: var(--font-body); font-size: 15px; }
 html[data-stil="pro"] body { color: #111; }
 @layer utilities {
-/* TEST (?stil=pro): roligere, mer profesjonelt uttrykk. Påvirker ingenting før det slås på. */
+/* Profesjonell stil (fast, data-stil="pro" på <html>): roligere, mer profesjonelt uttrykk. Påvirker ingenting før det slås på. */
 html[data-stil="pro"] .font-heading { letter-spacing: -0.02em !important; font-weight: 700; }
 html[data-stil="pro"] .font-mono-data { letter-spacing: 0.04em !important; font-weight: 600; }
 /* Knapper og felt: mindre runde, som på etablerte markedsplasser */
@@ -272,7 +272,7 @@ html[data-stil="pro"] .hero-bg[data-tekst="5"] .hero-sub { letter-spacing: 0.12e
 :where(html[data-stil="pro"]) .text-slate-600 { color: #5f5a54; }
 :where(html[data-stil="pro"]) .text-slate-700 { color: #4a4640; }
 
-/* TEST (?stil=pro), del 2: inspirert av de store markedsplassene (Finn, eBay, StockX, Catawiki):
+/* Profesjonell stil (fast, data-stil="pro" på <html>), del 2: inspirert av de store markedsplassene (Finn, eBay, StockX, Catawiki):
    hvit side, svart tekst, tynne grå linjer, små hjørner, bildet i fokus og lite pynt. */
 :where(html[data-stil="pro"]) .text-slate-950, :where(html[data-stil="pro"]) .text-slate-900 { color: #111; }
 :where(html[data-stil="pro"]) :is(.ring-slate-300\/70, .ring-slate-300\/80, .ring-slate-300, .ring-slate-200) { --tw-ring-color: #e6e6e6; }

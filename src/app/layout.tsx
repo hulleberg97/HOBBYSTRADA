@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Schibsted_Grotesk, Space_Grotesk } from "next/font/google";
+import { Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 
-const inter = Inter({ variable: "--nf-inter", subsets: ["latin"] });
-const space = Space_Grotesk({ variable: "--nf-space", subsets: ["latin"] });
-const mono = JetBrains_Mono({ variable: "--nf-mono", subsets: ["latin"] });
-// Testes med ?stil=pro før en eventuell endring
 const schibsted = Schibsted_Grotesk({ variable: "--nf-schibsted", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,13 +16,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" className={`${inter.variable} ${space.variable} ${mono.variable} ${schibsted.variable}`}>
+    <html lang="nb" data-stil="pro" className={schibsted.variable}>
       <body>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get("stil");if(q==="pro")sessionStorage.setItem("stil","pro");if(q==="vanlig")sessionStorage.removeItem("stil");if(sessionStorage.getItem("stil")==="pro")document.documentElement.dataset.stil="pro"}catch(e){}})()`,
-          }}
-        />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
