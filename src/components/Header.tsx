@@ -54,6 +54,14 @@ export function Header() {
     };
   }, [help]);
 
+  // Esc lukker søket
+  useEffect(() => {
+    if (!searchOpen) return;
+    const close = (e: KeyboardEvent) => e.key === "Escape" && setSearchOpen(false);
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [searchOpen]);
+
   // Mobilmenyen: lås siden bak, så bare menyen ruller
   useEffect(() => {
     if (!menu) return;
@@ -87,22 +95,6 @@ export function Header() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={169} height={28} className="h-[22px] w-auto sm:h-[28px]" />
           </Link>
-          <form className="hidden max-w-[480px] flex-1 md:block" role="search" onSubmit={search}>
-            <label className="relative block">
-              <span className="sr-only">Søk etter spiller, klubb eller sett</span>
-              <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
-              <SearchSuggest
-                value={q}
-                onChange={setQ}
-                onPick={go}
-                inputProps={{
-                  placeholder: "Søk i alle annonser",
-                  className:
-                    "h-12 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] text-primary outline-none transition placeholder:text-slate-500 hover:border-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10",
-                }}
-              />
-            </label>
-          </form>
           <nav className="ml-auto hidden items-center gap-1 xl:flex" aria-label="Hovedmeny">
             <Link
               data-current={path.startsWith("/products") ? "true" : undefined}
@@ -151,7 +143,7 @@ export function Header() {
                 setSearchOpen(!searchOpen);
                 setMenu(false);
               }}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100 md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100 aria-expanded:bg-slate-100"
             >
               {searchOpen ? <XIcon className="h-5 w-5" aria-hidden="true" /> : <SearchIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />}
             </button>
@@ -194,8 +186,8 @@ export function Header() {
           </div>
         </div>
         {searchOpen && (
-          <form className="px-4 pb-3 md:hidden" role="search" onSubmit={search}>
-            <label className="relative block">
+          <form className="mx-auto max-w-[1320px] px-4 pb-3 sm:px-6 lg:px-8" role="search" onSubmit={search}>
+            <label className="relative mx-auto block max-w-2xl">
               <span className="sr-only">Søk etter spiller, klubb eller sett</span>
               <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
               <SearchSuggest
