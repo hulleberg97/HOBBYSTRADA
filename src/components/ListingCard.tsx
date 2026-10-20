@@ -15,7 +15,7 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
       <FavoriteButton slug={listing.slug} title={listing.title} />
       <Link className="flex h-full flex-col" href={`/products/${listing.slug}`}>
         <div
-          className={`relative aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-inset group-data-[featured=true]:ring-2 group-data-[featured=true]:ring-accent ${market ? "bg-slate-100 ring-slate-200" : "bg-slate-200/80 ring-slate-300"}`}
+          className={`card-frame relative aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-inset group-data-[featured=true]:ring-2 group-data-[featured=true]:ring-accent ${market ? "bg-slate-100 ring-slate-200" : "bg-slate-200/80 ring-slate-300"}`}
         >
           <div className="absolute inset-0 px-[14%] pb-[8%] pt-[18%] transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:px-[12%] sm:pt-[14%]">
             {listing.image ? (
@@ -50,7 +50,7 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
           )}
         </div>
         <div className="flex flex-1 flex-col px-0.5 pt-3">
-          <h3 className={`line-clamp-2 text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
+          <h3 className={`card-title line-clamp-2 text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
             {listing.title}
           </h3>
           {market ? (

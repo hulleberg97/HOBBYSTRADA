@@ -242,7 +242,7 @@
   .hero-bg[data-tekst="5"] .hero-sub::after { transform: scaleX(-1); }
 }
 
-/* TEST (?stil=pro): roligere, mer profesjonelt uttrykk. Påvirker ingenting før det slås på. */
+/* TEST (?stil=pro): farger og skrift (utenfor lag, så de vinner over standardverdiene) */
 html[data-stil="pro"] {
   --font-body: var(--nf-schibsted), system-ui, sans-serif;
   --font-heading: var(--nf-schibsted), system-ui, sans-serif;
@@ -250,7 +250,11 @@ html[data-stil="pro"] {
   --background: 40 12% 95%;
   --muted-foreground: 30 6% 38%;
 }
+html[data-stil="pro"] { --background: 0 0% 100%; --border: 0 0% 90%; }
 html[data-stil="pro"] body { font-family: var(--font-body); font-size: 15px; }
+html[data-stil="pro"] body { color: #111; }
+@layer utilities {
+/* TEST (?stil=pro): roligere, mer profesjonelt uttrykk. Påvirker ingenting før det slås på. */
 html[data-stil="pro"] .font-heading { letter-spacing: -0.02em !important; font-weight: 700; }
 html[data-stil="pro"] .font-mono-data { letter-spacing: 0.04em !important; font-weight: 600; }
 /* Knapper og felt: mindre runde, som på etablerte markedsplasser */
@@ -264,6 +268,21 @@ html[data-stil="pro"] .eyebrow { letter-spacing: 0.08em; color: #6b5a33; }
 html[data-stil="pro"] .eyebrow > span[aria-hidden] { display: none; }
 html[data-stil="pro"] .hero-bg[data-tekst="5"] .hero-sub { letter-spacing: 0.12em; color: #6b5a33; }
 /* Tekst i varm grå i stedet for kald blågrå */
-html[data-stil="pro"] .text-slate-500 { color: #77716a; }
-html[data-stil="pro"] .text-slate-600 { color: #5f5a54; }
-html[data-stil="pro"] .text-slate-700 { color: #4a4640; }
+:where(html[data-stil="pro"]) .text-slate-500 { color: #77716a; }
+:where(html[data-stil="pro"]) .text-slate-600 { color: #5f5a54; }
+:where(html[data-stil="pro"]) .text-slate-700 { color: #4a4640; }
+
+/* TEST (?stil=pro), del 2: inspirert av de store markedsplassene (Finn, eBay, StockX, Catawiki):
+   hvit side, svart tekst, tynne grå linjer, små hjørner, bildet i fokus og lite pynt. */
+:where(html[data-stil="pro"]) .text-slate-950, :where(html[data-stil="pro"]) .text-slate-900 { color: #111; }
+:where(html[data-stil="pro"]) :is(.ring-slate-300\/70, .ring-slate-300\/80, .ring-slate-300, .ring-slate-200) { --tw-ring-color: #e6e6e6; }
+:where(html[data-stil="pro"]) :is(.border-slate-300\/60, .border-slate-200, .border-slate-300) { border-color: #ececec; }
+html[data-stil="pro"] .card-frame { border-radius: 8px; background: #f4f4f2; --tw-ring-color: transparent; }
+html[data-stil="pro"] [data-featured="true"] .card-frame { --tw-ring-color: #cfa653; --tw-ring-shadow: inset 0 0 0 1.5px #cfa653; }
+html[data-stil="pro"] .card-title { font-size: 14px; font-weight: 400; color: #333; }
+html[data-stil="pro"] .card-frame img { border-radius: 4px; }
+html[data-stil="pro"] .rounded-3xl { border-radius: 10px; }
+html[data-stil="pro"] .shadow-xl { box-shadow: 0 8px 30px rgb(0 0 0 / 0.08); }
+html[data-stil="pro"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, #fafaf8, transparent 70%), #fff; }
+html[data-stil="pro"] footer.bg-ink { background: #111; }
+}
