@@ -40,7 +40,8 @@ function place(p: number) {
   const lift = Math.max(0, 1 - a);
   // God avstand, så kortene aldri dekker hverandre når de bytter plass
   const narrow = halfW < 300;
-  const x = side * (80 * a + 22 * turn); // samme avstand på mobil og PC, så vifta ser lik ut
+  // Mobil: jevn, tett avstand (kortene står like tett også midt i byttet). PC: litt mer luft rundt kortet i midten.
+  const x = side * (narrow ? 92 * a + 4 * turn : 80 * a + 22 * turn);
   const z = 60 * (1 - turn) - 120 * turn - 40 * Math.max(0, a - 1);
   const scale = (1 + 0.06 * lift) * (1 - 0.07 * Math.min(a, 2));
   // Kortene tones ut når de nærmer seg kanten av vifta, i stedet for å kuttes av
