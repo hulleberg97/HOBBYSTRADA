@@ -112,7 +112,7 @@
 /* Utkast til oppsett der vifta får hele bredden på PC (?oppsett=a eller b) */
 @media (min-width: 1024px) {
   .hero-bg[data-oppsett] .hero-grid { grid-template-columns: 1fr; padding: 3.5rem 4rem 2rem; }
-  .hero-bg[data-oppsett] .hero-fan { max-width: none; --w: 21%; height: 560px; }
+  .hero-bg[data-oppsett] .hero-fan { max-width: none; --w: 21%; height: 560px; margin-top: 2.75rem; }
   .hero-bg[data-oppsett="a"] .hero-grid { padding-top: 2.75rem; }
   .hero-bg[data-oppsett="a"] h1 { font-size: 2.6rem; }
   .hero-bg[data-oppsett="a"] .hero-sub { margin-top: 0.75rem; font-size: 1rem; }
