@@ -68,8 +68,19 @@ export default async function Home() {
                   <br className="hero-br" /> <span className="hero-gold text-gold-light">Kjøp og selg.</span>
                 </h1>
                 <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
-                  <span>
+                  <span data-t="0">
                     Norges markedsplass for <span className="hero-accent">fotballkort</span>
+                  </span>
+                  {/* TEST overskrifter (?tittel=1/2/3) */}
+                  <span data-t="1">
+                    Kjøp og selg <span className="hero-accent">fotballkort</span>
+                  </span>
+                  <span data-t="2">
+                    Kjøp og selg <span className="hero-accent">fotballkort</span>
+                    <span className="tittel-under">Norges markedsplass for samlere</span>
+                  </span>
+                  <span data-t="3">
+                    Finn ditt neste <span className="hero-accent">fotballkort</span>
                   </span>
                 </p>
                 <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
