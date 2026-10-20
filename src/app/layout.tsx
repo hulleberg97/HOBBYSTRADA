@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" className={schibsted.variable}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" className={schibsted.variable}>
       <body>
-        {/* Test av «glossy white» (?glans=1, ?glans=av for å skru av). Huskes mens fanen er åpen. */}
+        {/* Test av overskrifter (?overskrift=2 eller 3, ?overskrift=av for å skru av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get("glans");if(q)sessionStorage.setItem("glans",q);var t=sessionStorage.getItem("glans");if(t&&t!=="av")document.documentElement.dataset.glans=t}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search).get("overskrift");if(q)sessionStorage.setItem("overskrift",q);var t=sessionStorage.getItem("overskrift");if(t&&t!=="av")document.documentElement.dataset.overskrift=t}catch(e){}})()`,
           }}
         />
         <Header />

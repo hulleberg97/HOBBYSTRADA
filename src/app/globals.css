@@ -312,7 +312,7 @@ html[data-tone][data-meny="c"] header.sticky input { background: #f7f5f0; border
 
 html[data-tone][data-meny="c"] header.sticky svg.pointer-events-none { color: #77716a; position: absolute; z-index: 1; }
 
-/* TEST «glossy white» (?glans=1): kritthvit med blank glans, glass-meny og bokser med myk skygge og lys kant */
+/* Glossy white (fast, data-glans på <html>): kritthvit med blank glans, glass-meny og bokser med myk skygge og lys kant */
 html[data-glans] { --background: 0 0% 100%; }
 html[data-glans] body {
   background:
@@ -331,3 +331,15 @@ html[data-glans] .card-frame { background: linear-gradient(160deg, #fff 0%, #f1f
 html[data-glans] :is(a, button).bg-primary { background: linear-gradient(180deg, #1b2c49 0%, #0b1426 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 6px 16px -8px rgb(11 20 38 / 0.6); }
 html[data-glans] :is(.bg-background, .bg-background\/95) { background: transparent; }
 html[data-glans] [data-featured="true"] .card-frame { box-shadow: inset 0 0 0 1.5px #cfa653, 0 10px 30px -18px rgb(207 166 83 / 0.6); }
+
+/* TEST overskrifter (?overskrift=2/3) */
+/* 2: Stor og tett – større, fetere overskrift, etikett i grått uten gull */
+html[data-overskrift="2"] main h1.font-heading { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1; }
+html[data-overskrift="2"] .eyebrow { color: #6b7280; letter-spacing: 0.12em; }
+html[data-overskrift="2"] main h2.font-heading { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.03em; }
+/* 3: Elegant med gullstrek – litt mindre, med kort gullstrek under overskriften */
+html[data-overskrift="3"] main h1.font-heading { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; letter-spacing: -0.02em; }
+html[data-overskrift="3"] main h1.font-heading::after { content: ""; display: block; width: 56px; height: 3px; margin-top: 14px; border-radius: 3px; background: linear-gradient(90deg, #cfa653, #e8cf8a); }
+html[data-overskrift="3"] [data-center="true"] h1.font-heading::after { margin-inline: auto; }
+html[data-overskrift="3"] .eyebrow { display: none; }
+html[data-overskrift="3"] main h2.font-heading { font-weight: 700; letter-spacing: -0.02em; }
