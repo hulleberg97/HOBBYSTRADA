@@ -12,7 +12,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="Om oss"
         title="Markedsplassen for fotballkort i Norge"
-        lead="Her kjøper og selger samlere fotballkort direkte med hverandre – fra rookies og nummererte kort til autografkort og patch."
+        lead="Her handler samlere fotballkort direkte med hverandre, fra rookies til nummererte kort, autografer og patch."
       >
         <div className="mt-7 flex flex-wrap gap-2.5">
           <Link className={btnPrimary} href="/products">

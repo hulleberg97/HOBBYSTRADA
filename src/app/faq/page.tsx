@@ -13,7 +13,7 @@ const SECTIONS = [
     items: [
       [
         "Hvordan kjøper jeg et kort?",
-        "Logg inn, åpne annonsen og trykk «Send melding til selger». Du kan skrive en melding eller gi et bud. Dere chatter under Meldinger og avtaler pris, betaling og frakt eller henting direkte med hverandre.",
+        "Logg inn, åpne annonsen og trykk «Send melding til selger». Du kan skrive en melding eller gi et bud. I chatten under Meldinger avtaler dere pris, betaling og frakt eller henting.",
       ],
       [
         "Kan jeg betale for kortet her på siden?",
@@ -66,7 +66,7 @@ const SECTIONS = [
       ],
       [
         "Hvem har ansvaret hvis noe går galt?",
-        "Kjøper og selger. HOBBYSTRADA er en annonseplass og ikke part i handelen, og har ikke ansvar for kortet, betalingen eller frakten. Uenighet løses mellom dere, og ved svindel bør du kontakte politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene.",
+        "Kjøper og selger. HOBBYSTRADA er en annonseplass og ikke part i handelen. Vi har derfor ikke ansvar for kortet, betalingen eller frakten. Uenighet løses mellom dere, og ved svindel bør du kontakte politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene.",
       ],
       ["Kan jeg sende bilder i chatten?", "Ja. Trykk på bildeknappen i chatten for å sende et bilde, for eksempel av baksiden eller et hjørne av kortet."],
       ["Jeg ser en mistenkelig annonse. Hva gjør jeg?", "Trykk «Rapporter» på annonsen, eller kontakt oss med lenken til annonsen."],

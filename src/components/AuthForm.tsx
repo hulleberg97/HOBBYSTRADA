@@ -14,7 +14,7 @@ const button = `${ui.btnPrimary} w-full`;
 type Mode = "login" | "register" | "forgot" | "reset";
 
 const COPY: Record<Mode, { title: string; lead: string; submit: string }> = {
-  login: { title: "Logg inn", lead: "Logg inn for å legge ut kort, chatte med kjøpere og selgere og få varsler om nye kort.", submit: "Logg inn" },
+  login: { title: "Logg inn", lead: "Logg inn for å legge ut kort, chatte med andre samlere og få varsler om nye kort.", submit: "Logg inn" },
   register: { title: "Opprett konto", lead: "Lag en gratis konto for å legge ut kort og kontakte selgere", submit: "Opprett konto" },
   forgot: { title: "Glemt passord", lead: "Skriv inn e-posten din, så sender vi deg en lenke for å lage nytt passord", submit: "Send lenke" },
   reset: { title: "Nytt passord", lead: "Velg et nytt passord for kontoen din", submit: "Lagre passord" },

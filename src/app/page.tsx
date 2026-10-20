@@ -7,7 +7,6 @@ import {
   FlagIcon,
   LayoutGridIcon,
   PenLineIcon,
-  ScaleIcon,
   ScanSearchIcon,
   ShieldCheckIcon,
   ShirtIcon,
@@ -290,7 +289,7 @@ export default async function Home() {
                   <div>
                     <p className="font-semibold text-slate-950">Legg ut kort</p>
                     <p className="mt-0.5 text-sm leading-relaxed text-slate-700">
-                      Fyll inn spiller, sett, tilstand og pris, og last opp bilder. Det tar et par minutter.
+                      Fyll inn spiller, sett, tilstand og pris, last opp bilder – ferdig på et par minutter.
                     </p>
                   </div>
                 </li>
@@ -325,22 +324,13 @@ export default async function Home() {
           <Eyebrow>Trygg handel</Eyebrow>
           <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Handle trygt</h2>
           <p className="mt-1 max-w-lg text-sm text-slate-700 sm:text-[15px]">Kjøper og selger avtaler direkte, så ta noen enkle forholdsregler.</p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-7">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">
                 <ScanSearchIcon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950">Se kortet først</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">Be om bilder av kortet foran og bak, og sjekk kortnummer og opplag mot annonsen.</p>
-            </div>
-            <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-7">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">
-                <ScaleIcon className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950">Sjekk prisen</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">
-                Sammenlign med lignende annonser. Pris langt under markedet bør du være skeptisk til.
-              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">Be om bilder av begge sider av kortet. Sjekk at nummer og opplag stemmer med annonsen.</p>
             </div>
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-7">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">

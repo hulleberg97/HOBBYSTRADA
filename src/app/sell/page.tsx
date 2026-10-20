@@ -24,7 +24,7 @@ export default async function SellPage() {
           <div className="mx-auto max-w-md rounded-3xl bg-white p-6 text-center ring-1 ring-slate-300/70 sm:p-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight">Logg inn for å legge ut kort</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Med en konto får du meldinger fra kjøpere samlet på ett sted, og du kan endre og følge med på annonsene dine.
+              Med en konto får du alle meldinger fra kjøpere på ett sted, og du kan enkelt endre annonsene dine.
             </p>
             <div className="mt-6 grid gap-2">
               <Link href="/auth/login?next=/sell" className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">

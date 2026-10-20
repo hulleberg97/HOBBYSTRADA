@@ -524,7 +524,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono-data text-xs text-muted-foreground">NOK</span>
               </div>
-              <p className="mt-2 text-xs text-muted-foreground">Du og kjøperen avtaler betaling og frakt selv.</p>
+              <p className="mt-2 text-xs text-muted-foreground">Du avtaler betaling og frakt direkte med kjøperen.</p>
             </div>
           </div>
         </fieldset>
@@ -580,7 +580,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
             <input type="checkbox" name="confirm" required className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
             <span>
               Jeg eier kortet, opplysningene stemmer, og jeg godtar at kjøpere kan sende meg meldinger om annonsen via HOBBYSTRADA. Jeg forstår at handelen
-              skjer direkte mellom meg og kjøperen, og godtar{" "}
+              skjer direkte mellom meg og kjøperen. Jeg godtar{" "}
               <Link href="/terms" target="_blank" className="font-medium text-foreground underline underline-offset-2">
                 vilkårene
               </Link>
