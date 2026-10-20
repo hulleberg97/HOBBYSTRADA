@@ -380,7 +380,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
             <div>
               <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
                 <p className="text-sm font-semibold">Bilder av kortet</p>
-                <p className="font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{count} bilder valgt</p>
+                <p className="font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{count} {count === 1 ? "bilde" : "bilder"} valgt</p>
               </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:max-w-md">
                 <PhotoSlot

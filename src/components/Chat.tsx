@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon, ImageIcon, SendIcon, TagIcon, XIcon } from "lucide-react";
 import { formatPrice, initials } from "@/lib/format";
 import type { ChatMessage, Conversation } from "@/lib/chat";
-import { browserClient } from "@/lib/supabase";
+import { listen } from "@/lib/realtime";
 import { resizeImage } from "@/lib/resize";
 
 // Nye meldinger kommer i sanntid via Supabase. Henting hvert 30. sekund er bare en reserve.
@@ -68,17 +68,15 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   }, [poll]);
 
   // Sanntid: når en ny melding lagres i samtalen, hentes den med en gang
-  useEffect(() => {
-    const db = browserClient();
-    if (!db) return;
-    const channel = db
-      .channel(`samtale-${c.id}`)
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_messages", filter: `conversation_id=eq.${c.id}` }, () => latest.current())
-      .subscribe();
-    return () => {
-      db.removeChannel(channel);
-    };
-  }, [c.id]);
+  useEffect(
+    () =>
+      listen(`samtale-${c.id}`, (channel) =>
+        channel.on("postgres_changes", { event: "INSERT", schema: "public", table: "chat_messages", filter: `conversation_id=eq.${c.id}` }, () =>
+          latest.current(),
+        ),
+      ),
+    [c.id],
+  );
 
   useEffect(() => {
     end.current?.scrollIntoView({ block: "end" });

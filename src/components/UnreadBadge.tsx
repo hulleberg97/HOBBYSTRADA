@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { browserClient } from "@/lib/supabase";
+import { listen } from "@/lib/realtime";
 
 /** Antall samtaler med uleste meldinger. Oppdateres ved sidebytte, i sanntid og når chatten sier fra. */
 export function UnreadBadge() {
@@ -18,15 +18,13 @@ export function UnreadBadge() {
     const t = setInterval(load, 120000);
     window.addEventListener("hs:unread", load);
     // Sanntid: Supabase sier fra når en av brukerens samtaler endres (bare egne samtaler er synlige)
-    const db = browserClient();
-    const channel = db
-      ?.channel(`uleste-${Math.random().toString(36).slice(2)}`)
-      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "conversations" }, load)
-      .subscribe();
+    const stop = listen(`uleste-${Math.random().toString(36).slice(2)}`, (channel) =>
+      channel.on("postgres_changes", { event: "UPDATE", schema: "public", table: "conversations" }, load),
+    );
     return () => {
       clearInterval(t);
       window.removeEventListener("hs:unread", load);
-      if (db && channel) db.removeChannel(channel);
+      stop();
     };
   }, [path]);
   if (!count) return null;
