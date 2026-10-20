@@ -70,7 +70,7 @@ function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
     <div
       data-top={l.frontpage ? "true" : undefined}
       style={{ WebkitBoxReflect: "below 8px linear-gradient(transparent 72%, rgba(255,255,255,0.16))" } as React.CSSProperties}
-      className="relative w-full rounded-[12px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(226,232,240,0.82)_45%,rgba(255,255,255,0.94))] p-[5%] shadow-[0_30px_60px_-25px_rgba(2,6,23,0.8)] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
+      className="fan-slab relative w-full rounded-[12px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(226,232,240,0.82)_45%,rgba(255,255,255,0.94))] p-[5%] shadow-[0_30px_60px_-25px_rgba(2,6,23,0.8)] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
     >
       <div className="flex items-center gap-[6%] rounded-[6px] bg-[linear-gradient(180deg,#1a2d52,#0c1730)] px-[6%] py-[5%] ring-1 ring-inset ring-[#cfa653]/70">
         <Mark className="h-[20px] w-auto shrink-0 sm:h-[26px]" cards="#f7f3ea" bar="#cfa653" />
@@ -79,7 +79,7 @@ function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
           <p className="truncate text-[8px] font-semibold leading-tight text-[#e2c27a] sm:text-[9px]">{l.set}</p>
         </div>
       </div>
-      <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
+      <div className="fan-window mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
         {l.image ? (
           <Image
             alt=""
