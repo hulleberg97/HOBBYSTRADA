@@ -226,3 +226,10 @@
   .hero-bg[data-tekst="7"] .hero-buttons { display: none; }
   .hero-bg[data-tekst="7"] .hero-text { order: 2; margin-top: 1rem; }
 }
+@media (min-width: 1024px) {
+  /* Luft mellom linjen og kortene, også når et kort løftes */
+  .hero-bg[data-tekst="5"] .hero-text,
+  .hero-bg[data-tekst="1"] .hero-text,
+  .hero-bg[data-tekst="4"] .hero-text,
+  .hero-bg[data-tekst="6"] .hero-text { margin-bottom: 2.25rem; }
+}
