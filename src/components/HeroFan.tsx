@@ -265,7 +265,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
           <Link
             key={`${c.slug}-${center}`}
             href={`/products/${c.slug}`}
-            className="pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da]"
+            className="fan-pill pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da]"
           >
             <span className="min-w-0">
               <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{c.player}</span>
