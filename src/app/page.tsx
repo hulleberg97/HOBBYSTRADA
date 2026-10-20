@@ -37,12 +37,7 @@ export default async function Home() {
     <div className="bg-background">
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-          <div id="hero" data-v="a" className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `(function(){var v=new URLSearchParams(location.search).get("hero");if(v&&/^[a-f]$/.test(v))document.getElementById("hero").dataset.v=v})()`,
-              }}
-            />
+          <div className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
@@ -51,7 +46,7 @@ export default async function Home() {
               <div className="min-w-0">
                 {/* Antallet vises først når det er stort nok til å imponere */}
                 {all.length >= 20 && (
-                  <p className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
+                  <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
                     {all.length} aktive annonser nå
                   </p>
@@ -59,19 +54,19 @@ export default async function Home() {
                 <h1 className="font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
                   Fotballkort.
                   <br />
-                  <span className="hero-gold text-gold-light">Kjøp og selg.</span>
+                  <span className="text-gold-light">Kjøp og selg.</span>
                 </h1>
-                <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for samlere.</p>
+                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for samlere.</p>
                 <div className="mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
-                    className="hero-primary inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
+                    className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
                     href="/products"
                   >
                     Se alle annonser
                     <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link
-                    className="hero-ghost inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
+                    className="inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
                     href="/sell"
                   >
                     Legg ut kort
