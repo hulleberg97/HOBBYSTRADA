@@ -46,8 +46,8 @@ function place(p: number) {
   return {
     transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${(-lift * 8).toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${(-side * 20 * turn).toFixed(2)}deg) scale(${scale.toFixed(3)})`,
     opacity: fade,
-    // Kortene utenfor midten er dempet, så kortet som kommer inn tones mykt opp
-    dim: 0.42 * Math.min(1, a / 1.2) ** 1.3,
+    // Alle kort har naturlige farger helt til de tones ut mot kanten
+    dim: 0,
     gloss: Math.max(0, 1 - a / 0.55),
     glossX: -p * 170,
   };
