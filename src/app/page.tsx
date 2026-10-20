@@ -100,15 +100,15 @@ export default async function Home() {
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <h2 className="sr-only">Kategorier</h2>
-          <ul className="-mx-4 flex snap-x gap-1 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:auto-cols-fr sm:grid-flow-col sm:gap-2 sm:overflow-visible sm:rounded-3xl sm:bg-white sm:p-2 sm:ring-1 sm:ring-slate-300/80">
+          <ul className="flex snap-x gap-1 overflow-x-auto rounded-3xl bg-white p-2 ring-1 ring-slate-300/80 [scrollbar-width:none] sm:grid sm:auto-cols-fr sm:grid-flow-col sm:gap-2 sm:overflow-visible">
             {c.autograf > 0 && (
-              <li className="w-[104px] shrink-0 snap-start sm:w-auto">
+              <li className="w-[96px] shrink-0 snap-start sm:w-auto">
                 <Link
-                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center ring-1 ring-slate-300/80 transition hover:bg-slate-100 sm:ring-0"
+                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center transition hover:bg-slate-100"
                   href="/search?q=autograf"
                 >
                   <PenLineIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                  <span className="text-sm font-semibold leading-tight text-slate-950">Autografkort</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Autografkort</span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.autograf} {c.autograf === 1 ? "annonse" : "annonser"}
                   </span>
@@ -116,13 +116,13 @@ export default async function Home() {
               </li>
             )}
             {c.relic > 0 && (
-              <li className="w-[104px] shrink-0 snap-start sm:w-auto">
+              <li className="w-[96px] shrink-0 snap-start sm:w-auto">
                 <Link
-                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center ring-1 ring-slate-300/80 transition hover:bg-slate-100 sm:ring-0"
+                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center transition hover:bg-slate-100"
                   href="/search?q=relic"
                 >
                   <ShirtIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                  <span className="text-sm font-semibold leading-tight text-slate-950">Patch / relic</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Patch / relic</span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.relic} {c.relic === 1 ? "annonse" : "annonser"}
                   </span>
@@ -130,9 +130,9 @@ export default async function Home() {
               </li>
             )}
             {c.numbered > 0 && (
-              <li className="w-[104px] shrink-0 snap-start sm:w-auto">
+              <li className="w-[96px] shrink-0 snap-start sm:w-auto">
                 <Link
-                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center ring-1 ring-slate-300/80 transition hover:bg-slate-100 sm:ring-0"
+                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center transition hover:bg-slate-100"
                   href="/search?q=%2F"
                 >
                   <span
@@ -141,7 +141,7 @@ export default async function Home() {
                   >
                     1/1
                   </span>
-                  <span className="text-sm font-semibold leading-tight text-slate-950">Nummererte kort</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Nummererte kort</span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}
                   </span>
@@ -149,13 +149,13 @@ export default async function Home() {
               </li>
             )}
             {c.rookie > 0 && (
-              <li className="w-[104px] shrink-0 snap-start sm:w-auto">
+              <li className="w-[96px] shrink-0 snap-start sm:w-auto">
                 <Link
-                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center ring-1 ring-slate-300/80 transition hover:bg-slate-100 sm:ring-0"
+                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center transition hover:bg-slate-100"
                   href="/search?q=RC"
                 >
                   <StarIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                  <span className="text-sm font-semibold leading-tight text-slate-950">Rookies</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Rookies</span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.rookie} {c.rookie === 1 ? "annonse" : "annonser"}
                   </span>
@@ -163,26 +163,26 @@ export default async function Home() {
               </li>
             )}
             {c.base > 0 && (
-              <li className="w-[104px] shrink-0 snap-start sm:w-auto">
+              <li className="w-[96px] shrink-0 snap-start sm:w-auto">
                 <Link
-                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center ring-1 ring-slate-300/80 transition hover:bg-slate-100 sm:ring-0"
+                  className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center transition hover:bg-slate-100"
                   href="/search?q=chrome"
                 >
                   <BadgeCheckIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                  <span className="text-sm font-semibold leading-tight text-slate-950">Base</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Base</span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.base} {c.base === 1 ? "annonse" : "annonser"}
                   </span>
                 </Link>
               </li>
             )}
-            <li className="w-[104px] shrink-0 snap-start sm:w-auto">
+            <li className="w-[96px] shrink-0 snap-start sm:w-auto">
               <Link
-                className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center ring-1 ring-slate-300/80 transition hover:bg-slate-100 sm:ring-0"
+                className="group flex flex-col items-center gap-2.5 rounded-2xl bg-white px-2 py-4 text-center transition hover:bg-slate-100"
                 href="/products"
               >
                 <LayoutGridIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                <span className="text-sm font-semibold leading-tight text-slate-950">Alle kort</span>
+                <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Alle kort</span>
                 <span className="text-xs font-medium text-slate-700">
                   {c.all} {c.all === 1 ? "annonse" : "annonser"}
                 </span>
