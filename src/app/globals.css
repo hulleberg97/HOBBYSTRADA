@@ -359,3 +359,22 @@ html[data-linje="4"] .hero-accent { background: linear-gradient(180deg, #d9b45e,
 /* 5: Liten «HOBBYSTRADA» over, mellomstor overskrift */
 html[data-linje="5"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.35rem, 2.6vw, 2rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; color: #0b1426; }
 html[data-linje="5"] .hero-bg .hero-sub > span::before { content: "HOBBYSTRADA"; display: block; margin-bottom: 0.45rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.24em; color: #a8822f; }
+
+/* Flere utkast på 5 (?linje=5b–5f) – moderne og eksklusivt */
+html:is([data-linje="5b"], [data-linje="5c"], [data-linje="5d"], [data-linje="5e"], [data-linje="5f"]) .hero-bg .hero-sub.hero-sub { font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; color: #0b1426; }
+html:is([data-linje="5b"], [data-linje="5c"], [data-linje="5d"], [data-linje="5e"], [data-linje="5f"]) .hero-bg .hero-sub > span::before { content: "HOBBYSTRADA"; display: table; margin: 0 auto 0.7rem; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.3em; color: #a8822f; }
+html:is([data-linje="5b"], [data-linje="5d"], [data-linje="5e"]) .hero-accent { background: linear-gradient(100deg, #b8913c 0%, #e9cd84 35%, #a8822f 60%, #d9b45e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* 5b: metallgull på «fotballkort», tynne gullinjer som toner ut rundt HOBBYSTRADA */
+html[data-linje="5b"] .hero-bg .hero-sub > span::before { padding: 0 2.6rem; background: linear-gradient(90deg, transparent, #cfa653) left center / 1.9rem 1px no-repeat, linear-gradient(90deg, #cfa653, transparent) right center / 1.9rem 1px no-repeat; }
+/* 5c: hele linja går fra marine til gull */
+html[data-linje="5c"] .hero-bg .hero-sub > span { background: linear-gradient(95deg, #0b1426 0%, #1d2b4a 45%, #a8822f 80%, #d9b45e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html[data-linje="5c"] .hero-bg .hero-sub > span::before { -webkit-text-fill-color: #a8822f; }
+/* 5d: mørk merkelapp med gulltekst over */
+html[data-linje="5d"] .hero-bg .hero-sub > span::before { padding: 0.42rem 0.95rem 0.42rem 1.25rem; border-radius: 999px; background: linear-gradient(180deg, #16223d, #0b1426); color: #e6c779; letter-spacing: 0.28em; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 8px 20px -12px rgb(11 20 38 / 0.7); }
+/* 5e: redaksjonell – rolig første linje, stort «fotballkort» i gull under */
+html[data-linje="5e"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.05rem, 1.8vw, 1.35rem); font-weight: 500; letter-spacing: -0.015em; color: #334155; }
+html[data-linje="5e"] .hero-accent { display: block; margin-top: 0.1rem; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; padding-bottom: 0.08em; }
+/* 5f: lett skrift med fet «fotballkort», gullstrek under og kort undertekst */
+html[data-linje="5f"] .hero-bg .hero-sub.hero-sub { font-weight: 400; letter-spacing: -0.045em; }
+html[data-linje="5f"] .hero-accent { font-weight: 800; background: linear-gradient(transparent 72%, rgb(207 166 83 / 0.45) 72%, rgb(207 166 83 / 0.45) 92%, transparent 92%); padding: 0 0.06em; }
+html[data-linje="5f"] .hero-bg .hero-sub > span::after { content: "Kjøp og selg direkte med samlere i hele landet"; display: block; margin-top: 0.6rem; font-size: 0.95rem; font-weight: 400; letter-spacing: 0; color: #64748b; }
