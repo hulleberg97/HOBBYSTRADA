@@ -311,3 +311,23 @@ html[data-tone][data-meny="c"] header.sticky a.bg-primary { background: #0b1426;
 html[data-tone][data-meny="c"] header.sticky input { background: #f7f5f0; border-color: #ebe6da; color: #0b1426; }
 
 html[data-tone][data-meny="c"] header.sticky svg.pointer-events-none { color: #77716a; position: absolute; z-index: 1; }
+
+/* TEST «glossy white» (?glans=1): kritthvit med blank glans, glass-meny og bokser med myk skygge og lys kant */
+html[data-glans] { --background: 0 0% 100%; }
+html[data-glans] body {
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgb(240 244 250), transparent 60%),
+    radial-gradient(1000px 500px at 100% 0%, rgb(250 246 236), transparent 60%),
+    #fff;
+  background-attachment: fixed;
+}
+html[data-glans] header.sticky { background: rgb(255 255 255 / 0.7) !important; backdrop-filter: saturate(1.6) blur(18px); border-bottom: 1px solid rgb(255 255 255 / 0.9) !important; box-shadow: 0 1px 0 rgb(0 0 0 / 0.05), 0 8px 24px -16px rgb(15 23 42 / 0.25); }
+html[data-glans] .hero-bg[data-farge="lys"] { background: radial-gradient(60% 55% at 50% 60%, #fff, transparent 70%), linear-gradient(180deg, #f7f9fc 0%, #fff 100%); }
+html[data-glans] :is(.bg-white, .card-frame):not([aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) {
+  background: linear-gradient(180deg, #fff 0%, #fbfbfc 100%);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgb(15 23 42 / 0.04), 0 10px 30px -18px rgb(15 23 42 / 0.25);
+}
+html[data-glans] .card-frame { background: linear-gradient(160deg, #fff 0%, #f1f3f6 100%); }
+html[data-glans] :is(a, button).bg-primary { background: linear-gradient(180deg, #1b2c49 0%, #0b1426 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 6px 16px -8px rgb(11 20 38 / 0.6); }
+html[data-glans] :is(.bg-background, .bg-background\/95) { background: transparent; }
+html[data-glans] [data-featured="true"] .card-frame { box-shadow: inset 0 0 0 1.5px #cfa653, 0 10px 30px -18px rgb(207 166 83 / 0.6); }

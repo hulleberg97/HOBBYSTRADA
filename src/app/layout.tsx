@@ -18,6 +18,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" className={schibsted.variable}>
       <body>
+        {/* Test av «glossy white» (?glans=1, ?glans=av for å skru av). Huskes mens fanen er åpen. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var q=new URLSearchParams(location.search).get("glans");if(q)sessionStorage.setItem("glans",q);var t=sessionStorage.getItem("glans");if(t&&t!=="av")document.documentElement.dataset.glans=t}catch(e){}})()`,
+          }}
+        />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
