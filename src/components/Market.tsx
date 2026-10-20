@@ -4,15 +4,7 @@ import { Eyebrow, SellCta } from "./ui";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  LayoutGridIcon,
-  SearchIcon,
-  SlidersHorizontalIcon,
-  XIcon,
-} from "lucide-react";
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, LayoutGridIcon, SearchIcon, SlidersHorizontalIcon, XIcon } from "lucide-react";
 import { ListingCard } from "./ListingCard";
 import { EMPTY, TYPES, typeLabel, activeCount, applyFilters, parseFilters, sortListings, toQuery, type Filters } from "@/lib/filters";
 import { FilterPanel } from "./FilterPanel";
@@ -124,10 +116,10 @@ export function Market({ listings }: { listings: Listing[] }) {
         </section>
       </div>
       <div className="z-20 mt-6 border-b border-slate-200 bg-white/95 backdrop-blur md:sticky md:top-[72px]">
-        <div className="mx-auto flex max-w-[1320px] flex-col gap-3 px-4 py-3 sm:px-6 md:flex-row md:items-center lg:px-8">
+        <div className="mx-auto flex max-w-[1320px] flex-row items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <nav aria-label="Kategorier" className="min-w-0 flex-1">
             <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <li>
+              <li className="hidden md:block">
                 <button
                   aria-current={count === 0 && !f.q ? "true" : undefined}
                   onClick={() => go({ ...EMPTY, sort: f.sort })}
@@ -144,17 +136,15 @@ export function Market({ listings }: { listings: Listing[] }) {
                   className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400"
                 >
                   <SlidersHorizontalIcon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
-                  Flere filtre
+                  <span className="md:hidden">Filter</span>
+                  <span className="hidden md:inline">Flere filtre</span>
                   {count > 0 && <span className="ml-0.5 rounded-full bg-primary px-1.5 font-mono-data text-[11px] text-white">{count}</span>}
                 </button>
               </li>
             </ul>
           </nav>
           <div className="flex flex-wrap items-center gap-2 md:justify-end md:gap-3">
-            <p className="w-full text-sm text-slate-500 md:hidden" aria-live="polite">
-              {result.length} {result.length === 1 ? "annonse" : "annonser"}
-            </p>
-            <div className="relative shrink-0">
+            <div className="relative hidden shrink-0 md:block">
               <label htmlFor="products-price" className="sr-only">
                 Pris
               </label>
@@ -207,7 +197,7 @@ export function Market({ listings }: { listings: Listing[] }) {
                   type="button"
                   aria-pressed={f.types.includes(t)}
                   onClick={() => toggle(t)}
-                  className="shrink-0 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-700 transition hover:border-slate-400 aria-pressed:border-primary aria-pressed:bg-primary/5 aria-pressed:text-primary aria-pressed:ring-1 aria-pressed:ring-primary"
+                  className="shrink-0 whitespace-nowrap rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-700 transition hover:border-slate-400 aria-pressed:border-primary aria-pressed:bg-primary/5 aria-pressed:text-primary aria-pressed:ring-1 aria-pressed:ring-primary"
                 >
                   {typeLabel(t)}
                 </button>
@@ -221,7 +211,7 @@ export function Market({ listings }: { listings: Listing[] }) {
           <h2 className="hidden font-heading text-xl font-bold tracking-tight text-slate-950 md:block">
             {f.q ? `Treff for «${f.q}»` : count ? "Filtrerte annonser" : "Alle annonser"}
           </h2>
-          <span className="hidden text-sm text-slate-500 md:inline" aria-live="polite">
+          <span className="text-sm text-slate-500" aria-live="polite">
             {result.length} treff
           </span>
           <Link href="/solgt" className="ml-auto text-sm font-medium text-slate-600 underline-offset-4 hover:text-primary hover:underline">
