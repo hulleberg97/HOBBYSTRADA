@@ -41,7 +41,7 @@ export default async function Home() {
             {/* Standard: lys bakgrunn og vifta i hele bredden. Utkast for sammenligning: ?farge=midnatt, ?oppsett=b eller ?oppsett=gammel */}
             <script
               dangerouslySetInnerHTML={{
-                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");var h=document.getElementById("hero");if(v==="a"||v==="b")h.dataset.oppsett=v;if(new URLSearchParams(location.search).get("farge")==="midnatt")delete h.dataset.farge})()`,
+                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");var h=document.getElementById("hero");if(v==="a"||v==="b")h.dataset.oppsett=v;var t=new URLSearchParams(location.search).get("tekst");if(t==="1"||t==="2"||t==="3")h.dataset.tekst=t;if(new URLSearchParams(location.search).get("farge")==="midnatt")delete h.dataset.farge})()`,
               }}
             />
             <div
