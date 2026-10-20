@@ -81,8 +81,8 @@ export function BoostPicker() {
           />
           <span>
             Jeg ber om at løftet starter med en gang etter betaling, og forstår at angreretten da faller bort.{" "}
-            <Link href="/refund-policy" target="_blank" className="font-medium text-foreground underline underline-offset-2">
-              Retur og refusjon
+            <Link href="/salgsvilkar" target="_blank" className="font-medium text-foreground underline underline-offset-2">
+              Salgsvilkår
             </Link>
           </span>
         </label>

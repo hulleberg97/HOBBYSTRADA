@@ -65,6 +65,18 @@ export function Footer() {
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} HOBBYSTRADA</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {(
+              [
+                ["/terms", "Vilkår"],
+                ["/salgsvilkar", "Salgsvilkår"],
+                ["/privacy", "Personvern"],
+                ["/refund-policy", "Retur og refusjon"],
+              ] as const
+            ).map(([href, label]) => (
+              <Link key={href} href={href} className="transition hover:text-white">
+                {label}
+              </Link>
+            ))}
             <CookieButton />
           </div>
         </div>

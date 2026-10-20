@@ -1,0 +1,92 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { LegalPage, List } from "@/components/LegalPage";
+import { COMPANY } from "@/lib/company";
+import { BOOSTS } from "@/lib/boosts";
+import { formatPrice } from "@/lib/format";
+
+export const metadata: Metadata = { title: "Salgsvilkår" };
+
+/** Salgsvilkår for det HOBBYSTRADA selger selv: annonseløft. Kort selges mellom brukerne og er ikke omfattet. */
+export default function SalesTermsPage() {
+  return (
+    <LegalPage
+      title="Salgsvilkår"
+      updated="oktober 2026"
+      sections={[
+        {
+          title: "Selger",
+          body: (
+            <p>
+              {COMPANY.name}, org.nr. {COMPANY.orgnr}, {COMPANY.street}, {COMPANY.postal}. E-post: <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
+              Vilkårene gjelder kjøp av annonseløft på HOBBYSTRADA. Kort i markedet kjøpes direkte fra andre brukere, og den handelen er HOBBYSTRADA ikke part
+              i.
+            </p>
+          ),
+        },
+        {
+          title: "Hva du kjøper",
+          body: (
+            <>
+              <p>Annonseløft gir annonsen din bedre synlighet i en bestemt periode:</p>
+              <List items={Object.values(BOOSTS).map((b) => `${b.name}: ${formatPrice(b.price)} for ${b.days} dager`)} />
+              <p>Alle priser er oppgitt i norske kroner. Det kommer ingen andre gebyrer i tillegg.</p>
+            </>
+          ),
+        },
+        {
+          title: "Betaling",
+          body: (
+            <p>
+              Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps, og du får kvittering i Vipps-appen.
+            </p>
+          ),
+        },
+        {
+          title: "Levering",
+          body: (
+            <p>
+              Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang betalingen er gjennomført, og varer i perioden du har valgt. Selges
+              kortet før perioden er over, stopper løftet når annonsen markeres som solgt.
+            </p>
+          ),
+        },
+        {
+          title: "Angrerett",
+          body: (
+            <p>
+              Før du betaler, ber du uttrykkelig om at løftet starter med en gang, og bekrefter at angreretten da faller bort (angrerettloven § 22 bokstav n).
+              Angreretten gjelder derfor ikke etter at løftet er aktivert.
+            </p>
+          ),
+        },
+        {
+          title: "Retur og refusjon",
+          body: (
+            <p>
+              Hvis betalingen gikk gjennom, men løftet ikke ble aktivert, eller noe annet gikk galt fra vår side, refunderer vi hele beløpet til samme
+              betalingsmåte. Se også <Link href="/refund-policy">Retur og refusjon</Link>.
+            </p>
+          ),
+        },
+        {
+          title: "Klager",
+          body: (
+            <p>
+              Er du ikke fornøyd, send oss en melding via <Link href="/contact">kontaktskjemaet</Link> med emnet «Annonseløft og betaling», eller på e-post til{" "}
+              {COMPANY.email}. Vi svarer vanligvis innen ett døgn. Kommer vi ikke til enighet, kan du klage til Forbrukerrådet.
+            </p>
+          ),
+        },
+        {
+          title: "Personopplysninger",
+          body: (
+            <p>
+              Vi behandler bare opplysningene som trengs for å gjennomføre kjøpet. Se <Link href="/privacy">personvernerklæringen</Link>.
+            </p>
+          ),
+        },
+      ]}
+    />
+  );
+}
