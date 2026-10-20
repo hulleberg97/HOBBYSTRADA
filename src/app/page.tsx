@@ -37,13 +37,13 @@ export default async function Home() {
   return (
     <div className="bg-background">
       <section className="bg-background">
-        <div className="mx-auto max-w-[1320px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+        <div className="mx-auto max-w-[1320px] sm:px-6 sm:pt-6 lg:px-8">
           <div
             id="hero"
             data-oppsett="vifte"
             data-tekst="5"
             data-farge="lys"
-            className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]"
+            className="hero-bg relative overflow-hidden text-white sm:rounded-[28px]"
           >
             {/* Standard: lys bakgrunn og vifta i hele bredden. Utkast for sammenligning: ?farge=midnatt, ?oppsett=b eller ?oppsett=gammel */}
             <script

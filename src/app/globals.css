@@ -164,11 +164,12 @@
 }
 
 /* Standard: bare vifta. Teksten finnes fortsatt for Google og skjermlesere, men vises ikke. */
-.hero-bg[data-oppsett="vifte"] .hero-grid { grid-template-columns: 1fr; padding: 1.25rem 0.5rem 0.75rem; }
+.hero-bg[data-oppsett="vifte"] .hero-grid { grid-template-columns: 1fr; padding: 1.25rem 0 0.75rem; }
 .hero-bg[data-oppsett="vifte"] .hero-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .hero-bg[data-oppsett="vifte"] .hero-edge { display: none; }
 .hero-bg[data-oppsett="vifte"] .hero-fan { margin-top: -1.25rem; max-width: none; --w: 40%; height: 400px; }
 @media (min-width: 640px) {
+  .hero-bg[data-oppsett="vifte"] .hero-grid { padding-inline: 0.5rem; }
   .hero-bg[data-oppsett="vifte"] .hero-fan { margin-top: 0.5rem; --w: min(28%, calc((100vh - 275px) * 0.5)); height: clamp(330px, calc(100vh - 235px), 680px); }
 }
 @media (min-width: 1024px) {
