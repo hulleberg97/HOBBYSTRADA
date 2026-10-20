@@ -4,9 +4,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowUpToLineIcon, CheckIcon, CrownIcon, SparklesIcon } from "lucide-react";
-import { CardThumb } from "./CardThumb";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, initials } from "@/lib/format";
 
 const PLANS: { key: BoostKey; Icon: typeof SparklesIcon; perks: string[]; popular?: boolean }[] = [
   { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Selg raskere uten å bruke mye", "Varer i 3 dager"] },
@@ -90,30 +89,43 @@ export function BoostPicker() {
             </Link>
           </p>
         ) : (
-          <ul role="radiogroup" aria-labelledby="boost-listing" className="mt-3 grid max-h-[340px] grid-cols-[minmax(0,1fr)] gap-2 overflow-y-auto overflow-x-hidden p-1">
+          <ul
+            role="radiogroup"
+            aria-labelledby="boost-listing"
+            className="mt-3 grid max-h-[460px] grid-cols-3 gap-2 overflow-y-auto overflow-x-hidden p-1 sm:grid-cols-4 sm:gap-3"
+          >
             {mine.map((l) => (
-              <li key={l.slug}>
+              <li key={l.slug} className="min-w-0">
                 <button
                   type="button"
                   role="radio"
                   aria-checked={listing === l.slug}
                   onClick={() => setListing(l.slug)}
-                  className="flex w-full items-center gap-3 rounded-2xl p-2 pr-4 text-left ring-1 ring-slate-300/70 transition hover:ring-slate-500 aria-checked:ring-2 aria-checked:ring-primary"
+                  className="group relative flex h-full w-full flex-col rounded-2xl bg-white p-1.5 text-left ring-1 ring-slate-300/70 transition hover:ring-slate-500 aria-checked:ring-2 aria-checked:ring-primary"
                 >
-                  <CardThumb image={l.image} title={l.title} />
-                  <span className="min-w-0 flex-1">
-                    <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{l.title}</span>
-                    <span className="mt-0.5 block text-xs text-slate-500">
-                      {formatPrice(l.price)}
-                      {l.boost && <span className="ml-2 rounded-full bg-accent/15 px-2 py-0.5 font-semibold text-[#8a6a24]">{l.boost}</span>}
+                  <span className="relative block aspect-[4/5] w-full overflow-hidden rounded-xl bg-slate-100">
+                    {l.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={l.image} alt="" className="h-full w-full object-cover" loading="lazy" />
+                    ) : (
+                      <span className="flex h-full w-full items-center justify-center bg-primary font-heading text-xl font-semibold text-white">
+                        {initials(l.title)}
+                      </span>
+                    )}
+                    {l.boost && (
+                      <span className="absolute bottom-1.5 left-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold text-accent-foreground">
+                        {l.boost}
+                      </span>
+                    )}
+                    <span
+                      aria-hidden="true"
+                      className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 ring-1 ring-slate-300 group-aria-checked:bg-primary group-aria-checked:ring-primary"
+                    >
+                      {listing === l.slug && <CheckIcon className="h-4 w-4 text-white" />}
                     </span>
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full ring-1 ring-slate-400 [[aria-checked=true]_&]:bg-primary [[aria-checked=true]_&]:ring-primary"
-                  >
-                    {listing === l.slug && <CheckIcon className="h-3.5 w-3.5 text-white" />}
-                  </span>
+                  <span className="mt-1.5 line-clamp-2 px-0.5 text-[12px] font-semibold leading-snug text-slate-900">{l.title}</span>
+                  <span className="mt-auto px-1 pb-1 pt-1 text-xs text-slate-500">{formatPrice(l.price)}</span>
                 </button>
               </li>
             ))}
