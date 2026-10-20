@@ -32,6 +32,7 @@ export function Header() {
   const [q, setQ] = useState("");
   const [menu, setMenu] = useState(false);
   const [menuTop, setMenuTop] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const [help, setHelp] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
@@ -68,6 +69,7 @@ export function Header() {
   const go = (term: string) => {
     router.push(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search");
     setMenu(false);
+    setSearchOpen(false);
   };
   const search = (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,6 +140,18 @@ export function Header() {
               <CircleUserIcon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
               {user ? "Min side" : "Logg inn"}
             </Link>
+            <button
+              type="button"
+              aria-label={searchOpen ? "Lukk søk" : "Søk"}
+              aria-expanded={searchOpen}
+              onClick={() => {
+                setSearchOpen(!searchOpen);
+                setMenu(false);
+              }}
+              className="flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100 md:hidden"
+            >
+              {searchOpen ? <XIcon className="h-5 w-5" aria-hidden="true" /> : <SearchIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />}
+            </button>
             {user !== undefined && (
               <Link
                 href={user ? "/meldinger" : "/auth/login?next=/meldinger"}
@@ -166,78 +180,87 @@ export function Header() {
               type="button"
               aria-label={menu ? "Lukk meny" : "Åpne meny"}
               aria-expanded={menu}
-              onClick={() => setMenu(!menu)}
+              onClick={() => {
+                setMenu(!menu);
+                setSearchOpen(false);
+              }}
               className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-slate-100 xl:hidden"
             >
               {menu ? <XIcon className="h-5 w-5" aria-hidden="true" /> : <MenuIcon className="h-5 w-5" aria-hidden="true" />}
             </button>
           </div>
         </div>
-        <form className="px-4 pb-3 md:hidden" role="search" onSubmit={search}>
-          <label className="relative block">
-            <span className="sr-only">Søk etter spiller, klubb eller sett</span>
-            <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
-            <SearchSuggest
-              value={q}
-              onChange={setQ}
-              onPick={go}
-              inputProps={{
-                placeholder: "Søk etter spiller, klubb eller sett",
-                className:
-                  "h-11 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] outline-none placeholder:text-slate-500 focus:border-primary",
-              }}
-            />
-          </label>
-        </form>
-      </header>
-        {menu && (
-          <div style={{ top: menuTop }} className="fixed inset-x-0 bottom-0 z-50 flex flex-col overflow-y-auto overscroll-contain border-t border-slate-200 bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 xl:hidden">
-            <nav className="mx-auto flex w-full max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
-              {(user ? [["/meldinger", "Meldinger"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
-                <Link
-                  key={href}
-                  onClick={() => setMenu(false)}
-                  className="flex items-center justify-between border-b border-slate-100 py-4 text-lg font-semibold tracking-tight last:border-0"
-                  href={href}
-                >
-                  {label}
-                  <span className="text-slate-400">›</span>
-                </Link>
-              ))}
-              <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">Slik fungerer det</p>
-              <ul className="mt-1">
-                {HELP.map(([href, label]) => (
-                  <li key={href}>
-                    <Link
-                      onClick={() => setMenu(false)}
-                      className="flex items-center justify-between border-b border-slate-100 py-3 text-[15px] font-medium text-slate-700 last:border-0"
-                      href={href}
-                    >
-                      {label}
-                      <span className="text-slate-400">›</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <div className="mt-auto grid grid-cols-2 gap-2 pt-6 sm:hidden">
-              <Link
-                onClick={() => setMenu(false)}
-                className="flex h-12 items-center justify-center rounded-full bg-[#f5f1e8] text-sm font-semibold text-[#0b1426]"
-                href={user ? "/account" : "/auth/login"}
-              >
-                {user ? "Min side" : "Logg inn"}
-              </Link>
-              <Link
-                onClick={() => setMenu(false)}
-                className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white"
-                href="/sell"
-              >
-                Legg ut kort
-              </Link>
-            </div>
-          </div>
+        {searchOpen && (
+          <form className="px-4 pb-3 md:hidden" role="search" onSubmit={search}>
+            <label className="relative block">
+              <span className="sr-only">Søk etter spiller, klubb eller sett</span>
+              <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+              <SearchSuggest
+                value={q}
+                onChange={setQ}
+                onPick={go}
+                inputProps={{
+                  placeholder: "Søk etter spiller, klubb eller sett",
+                  autoFocus: true,
+                  className:
+                    "h-11 w-full rounded-full border border-slate-300 bg-white pl-11 pr-4 text-[15px] outline-none placeholder:text-slate-500 focus:border-primary",
+                }}
+              />
+            </label>
+          </form>
         )}
+      </header>
+      {menu && (
+        <div
+          style={{ top: menuTop }}
+          className="fixed inset-x-0 bottom-0 z-50 flex flex-col overflow-y-auto overscroll-contain border-t border-slate-200 bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 xl:hidden"
+        >
+          <nav className="mx-auto flex w-full max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
+            {(user ? [["/meldinger", "Meldinger"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
+              <Link
+                key={href}
+                onClick={() => setMenu(false)}
+                className="flex items-center justify-between border-b border-slate-100 py-4 text-lg font-semibold tracking-tight last:border-0"
+                href={href}
+              >
+                {label}
+                <span className="text-slate-400">›</span>
+              </Link>
+            ))}
+            <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">Slik fungerer det</p>
+            <ul className="mt-1">
+              {HELP.map(([href, label]) => (
+                <li key={href}>
+                  <Link
+                    onClick={() => setMenu(false)}
+                    className="flex items-center justify-between border-b border-slate-100 py-3 text-[15px] font-medium text-slate-700 last:border-0"
+                    href={href}
+                  >
+                    {label}
+                    <span className="text-slate-400">›</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="mt-auto grid grid-cols-2 gap-2 pt-6 sm:hidden">
+            <Link
+              onClick={() => setMenu(false)}
+              className="flex h-12 items-center justify-center rounded-full bg-[#f5f1e8] text-sm font-semibold text-[#0b1426]"
+              href={user ? "/account" : "/auth/login"}
+            >
+              {user ? "Min side" : "Logg inn"}
+            </Link>
+            <Link
+              onClick={() => setMenu(false)}
+              className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white"
+              href="/sell"
+            >
+              Legg ut kort
+            </Link>
+          </div>
+        </div>
+      )}
     </>
   );
 }
