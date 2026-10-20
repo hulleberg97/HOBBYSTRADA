@@ -204,3 +204,25 @@
   .hero-bg[data-tekst="3"] .hero-primary { background: #fff; color: #0b1426; }
   .hero-bg[data-tekst="3"] .hero-ghost { color: #fff; --tw-ring-color: rgb(255 255 255 / 0.35); }
 }
+
+/* Flere utkast rundt den tynne linjen (?tekst=4–7) */
+@media (min-width: 1024px) {
+  .hero-bg[data-tekst="4"] h1, .hero-bg[data-tekst="5"] h1, .hero-bg[data-tekst="7"] h1 { display: none; }
+  .hero-bg[data-tekst="4"] .hero-sub, .hero-bg[data-tekst="5"] .hero-sub, .hero-bg[data-tekst="7"] .hero-sub { margin-top: 0; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: #64748b; }
+  /* 4: linjen over, små knapper under prisen */
+  .hero-bg[data-tekst="4"] .hero-buttons { position: absolute; left: 50%; bottom: 0.9rem; transform: translateX(-50%); margin: 0; z-index: 250; }
+  .hero-bg[data-tekst="4"] .hero-buttons a { height: 2.25rem; padding-inline: 1rem; font-size: 0.8rem; }
+  .hero-bg[data-tekst="4"] .hero-grid { padding-bottom: 4rem; }
+  /* 5: linjen med gull-streker på hver side, ingen knapper */
+  .hero-bg[data-tekst="5"] .hero-buttons { display: none; }
+  .hero-bg[data-tekst="5"] .hero-sub { max-width: none; display: flex; align-items: center; justify-content: center; gap: 1rem; color: #8a6a24; }
+  .hero-bg[data-tekst="5"] .hero-sub::before, .hero-bg[data-tekst="5"] .hero-sub::after { content: ""; width: 3.5rem; height: 1px; background: linear-gradient(90deg, transparent, #cfa653); }
+  .hero-bg[data-tekst="5"] .hero-sub::after { transform: scaleX(-1); }
+  /* 6: liten overskrift over, linjen under den */
+  .hero-bg[data-tekst="6"] .hero-buttons { display: none; }
+  .hero-bg[data-tekst="6"] h1 { font-size: 1.5rem; letter-spacing: -0.02em; }
+  .hero-bg[data-tekst="6"] .hero-sub { margin-top: 0.3rem; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: #64748b; }
+  /* 7: linjen nederst, under prisen */
+  .hero-bg[data-tekst="7"] .hero-buttons { display: none; }
+  .hero-bg[data-tekst="7"] .hero-text { order: 2; margin-top: 1rem; }
+}
