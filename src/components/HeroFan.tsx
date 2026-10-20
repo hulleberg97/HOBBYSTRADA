@@ -38,11 +38,13 @@ function place(p: number) {
   const side = Math.sign(p);
   const turn = Math.sin((Math.min(a, 1) * Math.PI) / 2); // 0 i midten, 1 fra nabo-plassen og utover
   const lift = Math.max(0, 1 - a);
-  const x = side * (80 * a + 22 * turn); // god avstand, så kortene aldri dekker hverandre når de bytter plass
+  // God avstand, så kortene aldri dekker hverandre når de bytter plass. Tettere på mobil, så flere kort får plass.
+  const narrow = halfW < 300;
+  const x = side * ((narrow ? 64 : 80) * a + (narrow ? 18 : 22) * turn);
   const z = 60 * (1 - turn) - 120 * turn - 40 * Math.max(0, a - 1);
   const scale = (1 + 0.06 * lift) * (1 - 0.07 * Math.min(a, 2));
   // Kortene tones ut når de nærmer seg kanten av vifta, i stedet for å kuttes av
-  const fade = Math.min(1, Math.max(0, 1 - (Math.abs(x) - ((halfW / cardW) * 100 - 60)) / 70));
+  const fade = Math.min(1, Math.max(0, 1 - (Math.abs(x) - ((halfW / cardW) * 100 - (narrow ? 10 : 60))) / 70));
   return {
     transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${(-lift * 8).toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${(-side * 20 * turn).toFixed(2)}deg) scale(${scale.toFixed(3)})`,
     opacity: fade,

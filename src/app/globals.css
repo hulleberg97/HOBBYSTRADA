@@ -148,3 +148,16 @@
 .hero-bg[data-farge="lys"] .hero-ghost:hover { background: rgb(11 20 38 / 0.05); }
 .hero-bg[data-farge="lys"] [data-dim] { background: hsl(var(--background)); }
 .hero-bg[data-farge="lys"] .hero-edge { display: none; }
+
+/* Mobil: kompakt tekst og knapper, mindre kort så flere vises samtidig */
+@media (max-width: 639px) {
+  .hero-bg[data-oppsett="a"] .hero-grid { padding: 1.5rem 1rem 0.5rem; }
+  .hero-bg[data-oppsett="a"] .hero-text { text-align: center; }
+  .hero-bg[data-oppsett="a"] .hero-br { display: none; }
+  .hero-bg[data-oppsett="a"] .hero-badge { display: none; }
+  .hero-bg[data-oppsett="a"] h1 { font-size: 1.65rem; letter-spacing: -0.03em; }
+  .hero-bg[data-oppsett="a"] .hero-sub { margin: 0.4rem auto 0; font-size: 0.875rem; }
+  .hero-bg[data-oppsett="a"] .hero-buttons { justify-content: center; margin-top: 1rem; gap: 0.5rem; }
+  .hero-bg[data-oppsett="a"] .hero-buttons a { height: 2.5rem; padding-inline: 1rem; font-size: 0.8125rem; }
+  .hero-bg[data-oppsett="a"] .hero-fan { --w: 31%; height: 290px; margin-top: 0; }
+}
