@@ -37,11 +37,11 @@ export default async function Home() {
     <div className="bg-background">
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-          <div id="hero" className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
-            {/* Utkast: ?oppsett=a (tekst i midten) eller ?oppsett=b (tekst over) gir vifta hele bredden på PC */}
+          <div id="hero" data-oppsett="a" data-farge="lys" className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
+            {/* Standard: lys bakgrunn og vifta i hele bredden. Utkast for sammenligning: ?farge=midnatt, ?oppsett=b eller ?oppsett=gammel */}
             <script
               dangerouslySetInnerHTML={{
-                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");var h=document.getElementById("hero");if(v==="a"||v==="b")h.dataset.oppsett=v;if(new URLSearchParams(location.search).get("farge")==="lys")h.dataset.farge="lys"})()`,
+                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");var h=document.getElementById("hero");if(v==="b"||v==="gammel")h.dataset.oppsett=v==="b"?"b":"";if(v==="gammel")delete h.dataset.oppsett;if(new URLSearchParams(location.search).get("farge")==="midnatt")delete h.dataset.farge})()`,
               }}
             />
             <div
