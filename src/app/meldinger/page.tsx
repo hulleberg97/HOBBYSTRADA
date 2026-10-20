@@ -1,4 +1,5 @@
 import { Eyebrow } from "@/components/ui";
+import { AccountTabs } from "@/components/AccountTabs";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -24,6 +25,7 @@ export default async function MessagesPage() {
           <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Meldinger</h1>
         </div>
       </section>
+      <AccountTabs active="meldinger" />
       <div className="mx-auto max-w-[880px] px-4 pb-24 pt-8 sm:px-6">
         {conversations.length === 0 ? (
           <div className="rounded-3xl bg-white px-6 py-14 text-center ring-1 ring-inset ring-slate-300/70">
