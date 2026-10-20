@@ -1,5 +1,6 @@
 "use client";
 
+import { PageHeader } from "./ui";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { SearchIcon } from "lucide-react";
@@ -22,34 +23,27 @@ export function SoldArchive({ listings }: { listings: Listing[] }) {
   const prices = hits.map((l) => l.price);
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
-        <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-8 sm:px-6 sm:pt-12 lg:px-8">
-          <p className="text-sm font-medium text-slate-500">Prisarkiv</p>
-          <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Solgte kort</h1>
-          <p className="mt-3 max-w-xl text-base text-slate-600 sm:text-lg">
-            Se hva kortene faktisk ble solgt for. Bruk det når du setter pris eller vurderer et kjøp.
-          </p>
-          <form
-            role="search"
-            onSubmit={(e) => e.preventDefault()}
-            className="mt-6 flex max-w-3xl items-center gap-2 rounded-full border border-slate-300 bg-white p-1.5 pl-5 shadow-sm transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10"
-          >
-            <SearchIcon className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
-            <label htmlFor="sold-search" className="sr-only">
-              Søk i solgte kort
-            </label>
-            <input
-              id="sold-search"
-              type="search"
-              placeholder="Spiller, sett eller kortnummer"
-              className="h-11 min-w-0 flex-1 bg-transparent text-base text-slate-950 outline-none placeholder:text-slate-500"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
-          </form>
-        </div>
-      </section>
+    <div>
+      <PageHeader eyebrow="Prisarkiv" title="Solgte kort" lead="Se hva kortene faktisk ble solgt for. Bruk det når du setter pris eller vurderer et kjøp.">
+        <form
+          role="search"
+          onSubmit={(e) => e.preventDefault()}
+          className="mt-6 flex max-w-3xl items-center gap-2 rounded-full border border-slate-300 bg-white p-1.5 pl-5 shadow-sm transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10"
+        >
+          <SearchIcon className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
+          <label htmlFor="sold-search" className="sr-only">
+            Søk i solgte kort
+          </label>
+          <input
+            id="sold-search"
+            type="search"
+            placeholder="Spiller, sett eller kortnummer"
+            className="h-11 min-w-0 flex-1 bg-transparent text-base text-slate-950 outline-none placeholder:text-slate-500"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </form>
+      </PageHeader>
       <div className="mx-auto max-w-[1320px] px-4 pb-24 pt-8 sm:px-6 lg:px-8">
         {hits.length > 0 && (
           <dl className="mb-8 grid grid-cols-3 gap-3 sm:max-w-2xl">

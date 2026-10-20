@@ -5,12 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { browserClient } from "@/lib/supabase";
 import { VippsButton } from "./VerifiedBadge";
+import * as ui from "./ui";
 
-const field =
-  "w-full border-b border-foreground/20 bg-transparent px-0 py-3 text-sm placeholder:text-muted-foreground focus:border-foreground focus:outline-none transition-colors";
-const label = "mb-2 block text-xs font-semibold uppercase tracking-widest";
-const button =
-  "flex w-full items-center justify-center gap-2 bg-foreground py-3.5 text-sm font-semibold uppercase tracking-wide text-background transition-opacity hover:opacity-90 disabled:opacity-50";
+const field = ui.field;
+const label = ui.fieldLabel;
+const button = `${ui.btnPrimary} w-full`;
 
 type Mode = "login" | "register" | "forgot" | "reset";
 
@@ -89,10 +88,13 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
 
   return (
     <div className="min-h-screen">
-      <div className="container-custom py-24">
-        <div className="mx-auto max-w-sm">
+      <div className="container-custom py-16 sm:py-24">
+        <div className="mx-auto max-w-md rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-10">
           <div className="mb-8 text-center">
-            <h1 className="font-heading text-h2 font-semibold">{c.title}</h1>
+            <div className="flex justify-center">
+              <ui.Eyebrow center>HOBBYSTRADA</ui.Eyebrow>
+            </div>
+            <h1 className="mt-3 font-heading text-[2rem] font-bold tracking-[-0.03em] text-slate-950">{c.title}</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               {vippsOnly ? "Alle kjøpere og selgere på HOBBYSTRADA bekrefter seg med Vipps. Det tar bare noen sekunder." : c.lead}
             </p>

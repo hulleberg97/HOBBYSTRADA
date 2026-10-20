@@ -1,16 +1,15 @@
 "use client";
 
+import { Eyebrow, SellCta } from "./ui";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import {
-  ArrowRightIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   LayoutGridIcon,
   SearchIcon,
-  ShieldCheckIcon,
   SlidersHorizontalIcon,
   XIcon,
 } from "lucide-react";
@@ -83,7 +82,7 @@ export function Market({ listings }: { listings: Listing[] }) {
     "flex h-10 min-w-10 items-center justify-center rounded-lg border border-border bg-white px-3 font-mono-data text-sm transition hover:border-foreground/40 disabled:cursor-not-allowed disabled:opacity-40 data-[current=true]:border-primary data-[current=true]:bg-primary data-[current=true]:text-primary-foreground";
 
   return (
-    <div className="bg-white">
+    <div>
       <div className="mx-auto max-w-[1320px] px-4 pt-5 sm:px-6 sm:pt-8 lg:px-8">
         <nav aria-label="Brødsmuler" className="mb-4 flex items-center gap-1.5 text-sm text-slate-500">
           <Link className="hover:text-primary hover:underline" href="/">
@@ -92,35 +91,36 @@ export function Market({ listings }: { listings: Listing[] }) {
           <span aria-hidden="true">/</span>
           <span className="text-slate-900">Markedet</span>
         </nav>
-        <section className="relative overflow-hidden rounded-3xl bg-primary px-6 py-9 text-white sm:px-10 sm:py-12">
-          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>
-          <div className="pointer-events-none absolute -bottom-32 right-1/3 h-64 w-64 rounded-full bg-white/5 blur-2xl" aria-hidden="true"></div>
-          <div className="relative flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-xl">
-              <h1 className="font-heading text-3xl font-bold tracking-[-0.03em] sm:text-[44px] sm:leading-[1.05]">Finn ditt neste kort</h1>
-              <p className="mt-3 text-[15px] leading-relaxed text-white/75">Fotballkort fra samlere i hele Norge.</p>
-            </div>
-            <form role="search" onSubmit={submit} className="flex h-14 w-full items-center gap-2 rounded-full bg-white pl-5 pr-1.5 shadow-lg lg:w-[420px]">
-              <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
-              <label htmlFor="market-search" className="sr-only">
-                Søk etter spiller, klubb eller sett
-              </label>
-              <SearchSuggest
-                value={input}
-                onChange={setInput}
-                onPick={(v) => submit(undefined, v)}
-                listClassName="-left-10"
-                inputProps={{
-                  id: "market-search",
-                  placeholder: "Søk etter spiller, klubb eller sett",
-                  className: "w-full bg-transparent text-[15px] text-slate-900 placeholder:text-slate-400 focus:outline-none",
-                }}
-              />
-              <button type="submit" className="h-11 shrink-0 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-primary/90">
-                Søk
-              </button>
-            </form>
+        <section className="flex flex-col gap-6 pb-2 pt-2 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-xl">
+            <Eyebrow>Markedet</Eyebrow>
+            <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Finn ditt neste kort</h1>
+            <p className="mt-3 text-base text-slate-600 sm:text-lg">Fotballkort fra samlere i hele Norge.</p>
           </div>
+          <form
+            role="search"
+            onSubmit={submit}
+            className="flex h-14 w-full items-center gap-2 rounded-full bg-white pl-5 pr-1.5 ring-1 ring-slate-300 transition focus-within:ring-2 focus-within:ring-primary/30 lg:w-[420px]"
+          >
+            <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
+            <label htmlFor="market-search" className="sr-only">
+              Søk etter spiller, klubb eller sett
+            </label>
+            <SearchSuggest
+              value={input}
+              onChange={setInput}
+              onPick={(v) => submit(undefined, v)}
+              listClassName="-left-10"
+              inputProps={{
+                id: "market-search",
+                placeholder: "Søk etter spiller, klubb eller sett",
+                className: "w-full bg-transparent text-[15px] text-slate-900 placeholder:text-slate-400 focus:outline-none",
+              }}
+            />
+            <button type="submit" className="h-11 shrink-0 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-primary/90">
+              Søk
+            </button>
+          </form>
         </section>
       </div>
       <div className="z-20 mt-6 border-b border-slate-200 bg-white/95 backdrop-blur md:sticky md:top-[72px]">
@@ -297,32 +297,9 @@ export function Market({ listings }: { listings: Listing[] }) {
           reset={() => go({ ...EMPTY, q: f.q, sort: f.sort })}
           resultCount={result.length}
         />
-        <section className="mt-16 grid gap-6 overflow-hidden rounded-3xl bg-slate-50 p-6 ring-1 ring-inset ring-slate-200 sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
-          <div>
-            <p className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
-              <ShieldCheckIcon className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
-              Selg kortene dine
-            </p>
-            <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">Har du kort i skuffen?</h2>
-            <p className="mt-2 max-w-lg text-[15px] text-slate-600">
-              Legg dem ut på et par minutter og nå samlere i hele Norge. Vil du selge raskere, kan du løfte annonsen til toppen.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row md:flex-col">
-            <Link
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-primary/90"
-              href="/sell"
-            >
-              Legg ut kort <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <Link
-              className="inline-flex h-12 items-center justify-center rounded-full border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-800 transition hover:border-slate-500"
-              href="/annonseloft"
-            >
-              Se annonseløft
-            </Link>
-          </div>
-        </section>
+        <div className="mt-16">
+          <SellCta secondary={{ href: "/annonseloft", label: "Se annonseløft" }} />
+        </div>
       </div>
     </div>
   );

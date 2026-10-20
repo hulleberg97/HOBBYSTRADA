@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui";
 import { SellForm } from "@/components/SellForm";
 import { getUser, getVerification } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
@@ -20,33 +21,26 @@ export default async function SellPage() {
   const mustVerify = hasVippsLogin() && !(user && (await getVerification(user.id)));
   return (
     <>
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-[1320px] px-4 pb-10 pt-12 sm:px-6 lg:px-8 lg:pb-12 lg:pt-16">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-20">
-            <div>
-              <p className="font-mono-data text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Ny annonse</p>
-              <h1 className="mt-4 font-heading text-4xl font-semibold leading-[0.98] tracking-[-0.035em] sm:text-5xl lg:text-6xl">Legg ut kortet ditt</h1>
-            </div>
-            <p className="max-w-md text-base leading-relaxed text-muted-foreground">
-              Lag annonsen på et par minutter. Kjøperne kontakter deg direkte, og dere avtaler handelen selv.
-            </p>
-          </div>
-          <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-foreground pt-6 lg:grid-cols-4">
-            {STEPS.map(([t, d], i) => (
-              <li key={t} className="grid grid-cols-[2rem_1fr]">
-                <span className="font-mono-data text-xs text-muted-foreground">0{i + 1}</span>
-                <div>
-                  <p className="text-sm font-semibold">{t}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{d}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Ny annonse"
+        title="Legg ut kortet ditt"
+        lead="Lag annonsen på et par minutter. Kjøperne kontakter deg direkte, og dere avtaler handelen selv."
+      >
+        <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-slate-300/70 pt-6 lg:grid-cols-4">
+          {STEPS.map(([t, d], i) => (
+            <li key={t} className="grid grid-cols-[2rem_1fr]">
+              <span className="font-mono-data text-xs font-semibold text-[#8a6a24]">0{i + 1}</span>
+              <div>
+                <p className="text-sm font-semibold">{t}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </PageHeader>
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         {!user && !mustVerify ? (
-          <div className="mx-auto max-w-md rounded-md border border-border bg-white p-6 text-center sm:p-8">
+          <div className="mx-auto max-w-md rounded-3xl bg-white p-6 text-center ring-1 ring-slate-300/70 sm:p-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight">Logg inn for å legge ut kort</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               Med en konto får du meldinger fra kjøpere samlet på ett sted, og du kan endre og følge med på annonsene dine.

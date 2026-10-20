@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui";
 import { Suspense } from "react";
 import { ChevronRightIcon } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
@@ -9,14 +10,8 @@ export const metadata: Metadata = { title: "Kontakt" };
 
 export default function ContactPage() {
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
-        <div className="mx-auto max-w-[1320px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-          <p className="text-sm font-medium text-slate-500">Kontakt</p>
-          <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Ta kontakt med oss</h1>
-          <p className="mt-3 max-w-xl text-base text-slate-600 sm:text-lg">Spørsmål om en annonse, annonseløft eller noe annet? Send oss en melding.</p>
-        </div>
-      </section>
+    <div>
+      <PageHeader eyebrow="Kontakt" title="Ta kontakt med oss" lead="Spørsmål om en annonse, annonseløft eller noe annet? Send oss en melding."></PageHeader>
       <div className="mx-auto grid max-w-[1320px] gap-8 px-4 pb-24 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-12 lg:px-8">
         <Suspense>
           <ContactForm />

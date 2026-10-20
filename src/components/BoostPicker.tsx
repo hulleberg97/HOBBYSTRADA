@@ -59,7 +59,7 @@ export function BoostPicker() {
 
   return (
     <div>
-      <div className="mx-auto max-w-2xl rounded-md border border-border bg-white p-5 sm:p-6">
+      <div className="mx-auto max-w-2xl rounded-3xl bg-white p-5 ring-1 ring-slate-300/70 sm:p-6">
         <label htmlFor="boost-listing" className="block font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
           Hvilken annonse vil du løfte?
         </label>
@@ -67,7 +67,7 @@ export function BoostPicker() {
           id="boost-listing"
           maxLength={300}
           placeholder="Lim inn lenken til annonsen, eller skriv tittelen"
-          className="mt-2 h-12 w-full rounded-lg border border-border bg-white px-3 text-sm outline-none transition placeholder:text-muted-foreground/70 focus:border-foreground/40 focus:ring-2 focus:ring-ring/30"
+          className="mt-2 h-12 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm outline-none transition placeholder:text-muted-foreground/70 focus:border-foreground/40 focus:ring-2 focus:ring-ring/30"
           value={listing}
           onChange={(e) => setListing(e.target.value)}
         />
@@ -99,14 +99,14 @@ export function BoostPicker() {
             <div
               key={key}
               data-popular={popular ? "true" : undefined}
-              className="relative flex flex-col rounded-md border border-border bg-white p-6 data-[popular=true]:border-accent data-[popular=true]:ring-1 data-[popular=true]:ring-accent"
+              className="relative flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 data-[popular=true]:ring-2 data-[popular=true]:ring-accent"
             >
               {popular && (
-                <span className="absolute -top-3 left-6 rounded-md bg-accent px-2 py-1 font-mono-data text-[10px] font-semibold uppercase tracking-wider text-accent-foreground">
+                <span className="absolute -top-3 left-6 rounded-full bg-accent px-2 py-1 font-mono-data text-[10px] font-semibold uppercase tracking-wider text-accent-foreground">
                   Mest valgt
                 </span>
               )}
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-accent">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-accent">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 font-heading text-xl font-semibold tracking-tight">{b.name}</h3>
@@ -124,7 +124,7 @@ export function BoostPicker() {
                 type="button"
                 disabled={busy !== null}
                 onClick={() => choose(key)}
-                className="mt-8 flex h-12 items-center justify-center gap-2 rounded-lg bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+                className="mt-8 flex h-12 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
               >
                 {busy === key ? "Et øyeblikk …" : "Velg løft"}
               </button>

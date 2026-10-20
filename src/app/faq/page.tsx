@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui";
 import { MessageCircleIcon, ShieldCheckIcon, ShoppingBagIcon, TagIcon, ZapIcon } from "lucide-react";
 import { AccordionItem } from "@/components/Accordion";
 
@@ -75,26 +76,21 @@ const SECTIONS = [
 
 export default function FaqPage() {
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
-        <div className="mx-auto max-w-[1320px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-          <p className="text-sm font-medium text-slate-500">Hjelp</p>
-          <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Spørsmål og svar</h1>
-          <p className="mt-3 max-w-xl text-base text-slate-600 sm:text-lg">Alt du trenger å vite om å kjøpe, selge og løfte annonser i markedet.</p>
-          <nav className="mt-8 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap" aria-label="Spørsmål og svar">
-            {SECTIONS.map(({ title, Icon }, i) => (
-              <Link
-                key={title}
-                href={`#del-${i + 1}`}
-                className="flex items-center gap-2.5 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-              >
-                <Icon className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} aria-hidden="true" />
-                {title}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </section>
+    <div>
+      <PageHeader eyebrow="Hjelp" title="Spørsmål og svar" lead="Alt du trenger å vite om å kjøpe, selge og løfte annonser i markedet.">
+        <nav className="mt-8 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap" aria-label="Spørsmål og svar">
+          {SECTIONS.map(({ title, Icon }, i) => (
+            <Link
+              key={title}
+              href={`#del-${i + 1}`}
+              className="flex items-center gap-2.5 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
+            >
+              <Icon className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} aria-hidden="true" />
+              {title}
+            </Link>
+          ))}
+        </nav>
+      </PageHeader>
       <div className="mx-auto max-w-[1320px] px-4 pb-24 pt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl space-y-12">
           {SECTIONS.map((s, i) => (

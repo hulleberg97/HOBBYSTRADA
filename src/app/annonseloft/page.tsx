@@ -2,25 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { BoostPicker } from "@/components/BoostPicker";
+import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Annonseløft" };
 
 export default function BoostPage() {
   return (
     <>
-      <section className="bg-primary text-primary-foreground">
-        <div className="bg-grid-navy">
-          <div className="mx-auto max-w-[1320px] px-4 pb-14 pt-14 text-center sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
-            <p className="font-mono-data text-[11px] uppercase tracking-[0.2em] text-accent">Annonseløft</p>
-            <h1 className="mx-auto mt-4 max-w-3xl font-heading text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Få kortet ditt sett først
-            </h1>
-            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/70">
-              Gi annonsen mer synlighet, og selg raskere til samlere i hele Norge.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHeader center eyebrow="Annonseløft" title="Få kortet ditt sett først" lead="Gi annonsen mer synlighet, og selg raskere til samlere i hele Norge." />
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <Suspense>
           <BoostPicker />
