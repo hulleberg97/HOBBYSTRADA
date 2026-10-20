@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpToLineIcon, CheckIcon, CrownIcon, SparklesIcon } from "lucide-react";
+import { CardThumb } from "./CardThumb";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { formatPrice } from "@/lib/format";
 
@@ -24,11 +25,20 @@ export function BoostPicker() {
   const [busy, setBusy] = useState<BoostKey | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [consent, setConsent] = useState(false);
+  // Annonsene brukeren kan løfte. undefined mens de lastes, null hvis ikke innlogget.
+  const [mine, setMine] = useState<{ slug: string; title: string; price: number; image: string | null; boost: string | null }[] | null>();
+
+  useEffect(() => {
+    fetch("/api/listings/mine", { cache: "no-store" })
+      .then((r) => (r.status === 401 ? { listings: null } : r.json()))
+      .then((d) => setMine(d.listings))
+      .catch(() => setMine([]));
+  }, []);
 
   const choose = async (key: BoostKey) => {
     if (!listing.trim()) {
-      setMsg({ ok: false, text: "Skriv inn lenken til annonsen eller tittelen først." });
-      document.getElementById("boost-listing")?.focus();
+      setMsg({ ok: false, text: "Velg hvilken annonse du vil løfte først." });
+      document.getElementById("boost-listing")?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     if (!consent) {
@@ -60,17 +70,55 @@ export function BoostPicker() {
   return (
     <div>
       <div className="mx-auto max-w-2xl rounded-3xl bg-white p-5 ring-1 ring-slate-300/70 sm:p-6">
-        <label htmlFor="boost-listing" className="block font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+        <p id="boost-listing" className="text-sm font-semibold text-slate-900">
           Hvilken annonse vil du løfte?
-        </label>
-        <input
-          id="boost-listing"
-          maxLength={300}
-          placeholder="Lim inn lenken til annonsen, eller skriv tittelen"
-          className="mt-2 h-12 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm outline-none transition placeholder:text-muted-foreground/70 focus:border-foreground/40 focus:ring-2 focus:ring-ring/30"
-          value={listing}
-          onChange={(e) => setListing(e.target.value)}
-        />
+        </p>
+        {mine === undefined ? (
+          <p className="mt-3 text-sm text-slate-500">Henter annonsene dine …</p>
+        ) : mine === null ? (
+          <p className="mt-3 text-sm text-slate-600">
+            <Link href="/auth/login?next=/annonseloft" className="font-semibold text-slate-900 underline underline-offset-2">
+              Logg inn
+            </Link>{" "}
+            for å velge en av annonsene dine.
+          </p>
+        ) : mine.length === 0 ? (
+          <p className="mt-3 text-sm text-slate-600">
+            Du har ingen aktive annonser ennå.{" "}
+            <Link href="/sell" className="font-semibold text-slate-900 underline underline-offset-2">
+              Legg ut et kort
+            </Link>
+          </p>
+        ) : (
+          <ul role="radiogroup" aria-labelledby="boost-listing" className="mt-3 grid max-h-[340px] grid-cols-[minmax(0,1fr)] gap-2 overflow-y-auto overflow-x-hidden p-1">
+            {mine.map((l) => (
+              <li key={l.slug}>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={listing === l.slug}
+                  onClick={() => setListing(l.slug)}
+                  className="flex w-full items-center gap-3 rounded-2xl p-2 pr-4 text-left ring-1 ring-slate-300/70 transition hover:ring-slate-500 aria-checked:ring-2 aria-checked:ring-primary"
+                >
+                  <CardThumb image={l.image} title={l.title} />
+                  <span className="min-w-0 flex-1">
+                    <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{l.title}</span>
+                    <span className="mt-0.5 block text-xs text-slate-500">
+                      {formatPrice(l.price)}
+                      {l.boost && <span className="ml-2 rounded-full bg-accent/15 px-2 py-0.5 font-semibold text-[#8a6a24]">{l.boost}</span>}
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full ring-1 ring-slate-400 [[aria-checked=true]_&]:bg-primary [[aria-checked=true]_&]:ring-primary"
+                  >
+                    {listing === l.slug && <CheckIcon className="h-3.5 w-3.5 text-white" />}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
         <p className="mt-2 text-xs text-muted-foreground">Løftet aktiveres på annonsen etter at betalingen er gjennomført.</p>
         <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input
