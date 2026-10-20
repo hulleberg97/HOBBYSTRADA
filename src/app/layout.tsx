@@ -16,14 +16,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" className={schibsted.variable}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" className={schibsted.variable}>
       <body>
-        {/* Test av menylinje (?meny=b, c eller d, ?meny=av for å skru av). Huskes mens fanen er åpen. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get("meny");if(q)sessionStorage.setItem("meny",q);var t=sessionStorage.getItem("meny");if(t&&t!=="av")document.documentElement.dataset.meny=t}catch(e){}})()`,
-          }}
-        />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

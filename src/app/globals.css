@@ -302,16 +302,7 @@ html[data-tone="1"] .eyebrow { color: #a07a2c; }
 
 html[data-tone="1"] header.sticky [data-current="true"], html[data-tone="1"] header.sticky [aria-expanded="true"] { background: rgb(255 255 255 / 0.12); color: #fff; }
 
-/* TEST menylinje (?meny=b/c/d) */
-/* B: Krem – samme farge som siden, mørk tekst, tynn linje under */
-html[data-tone][data-meny="b"] header.sticky { background: hsl(var(--background) / 0.95); border-color: #e7e1d4; }
-html[data-tone][data-meny="b"] header.sticky img[alt="HOBBYSTRADA"] { content: url("/brand/logo.svg"); }
-html[data-tone][data-meny="b"] header.sticky :is(a, button):not(.bg-primary) { color: #0b1426; }
-html[data-tone][data-meny="b"] header.sticky .bg-slate-100, html[data-tone][data-meny="b"] header.sticky [data-current="true"], html[data-tone][data-meny="b"] header.sticky [aria-expanded="true"] { background: #ece6d8; color: #0b1426; }
-html[data-tone][data-meny="b"] header.sticky a.bg-primary { background: #0b1426; color: #fff; }
-html[data-tone][data-meny="b"] header.sticky input { background: #fff; border-color: #e0d9ca; color: #0b1426; }
-
-/* C: Hvit med gull-linje under */
+/* Menylinje: hvit med gull-linje under (fast, data-meny="c" på <html>) */
 html[data-tone][data-meny="c"] header.sticky { background: #fff; border-bottom: 2px solid #cfa653; }
 html[data-tone][data-meny="c"] header.sticky img[alt="HOBBYSTRADA"] { content: url("/brand/logo.svg"); }
 html[data-tone][data-meny="c"] header.sticky :is(a, button):not(.bg-primary) { color: #0b1426; }
@@ -319,8 +310,4 @@ html[data-tone][data-meny="c"] header.sticky .bg-slate-100, html[data-tone][data
 html[data-tone][data-meny="c"] header.sticky a.bg-primary { background: #0b1426; color: #fff; }
 html[data-tone][data-meny="c"] header.sticky input { background: #f7f5f0; border-color: #ebe6da; color: #0b1426; }
 
-/* D: Marine med gull-linje og gull aktiv lenke */
-html[data-tone][data-meny="d"] header.sticky { border-bottom: 2px solid #cfa653; }
-html[data-tone][data-meny="d"] header.sticky [data-current="true"] { background: transparent; color: #e2c27a; box-shadow: inset 0 -2px 0 #cfa653; border-radius: 0; }
-html[data-tone][data-meny="d"] header.sticky .bg-slate-100 { background: transparent; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.25); }
-html[data-tone]:is([data-meny="b"], [data-meny="c"]) header.sticky svg.pointer-events-none { color: #77716a; position: absolute; z-index: 1; }
+html[data-tone][data-meny="c"] header.sticky svg.pointer-events-none { color: #77716a; position: absolute; z-index: 1; }
