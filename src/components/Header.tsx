@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -7,7 +8,9 @@ import { CircleUserIcon, HeartIcon, LayoutGridIcon, ChevronDownIcon, MenuIcon, M
 import { FavoriteCount } from "./FavoriteButton";
 import { useUser } from "./useUser";
 import { SearchSuggest } from "./SearchSuggest";
-import { UnreadBadge } from "./UnreadBadge";
+
+// Lastes bare for innloggede, så Supabase-koden ikke følger med for alle besøkende
+const UnreadBadge = dynamic(() => import("./UnreadBadge").then((m) => m.UnreadBadge), { ssr: false });
 
 const MOBILE_NAV = [
   ["/products", "Markedet"],
