@@ -77,6 +77,11 @@ export default async function Home() {
                 <HeroFan cards={fanList} />
               </div>
             </div>
+            {/* Kortene som glir ut til høyre tones inn i bakgrunnen i stedet for å kuttes av kanten */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-0 z-[300] hidden w-28 bg-[linear-gradient(90deg,transparent,#0b1830_85%)] lg:block"
+            ></div>
           </div>
         </div>
       </section>
