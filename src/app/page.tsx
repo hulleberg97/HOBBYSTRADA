@@ -68,7 +68,11 @@ export default async function Home() {
                   Fotballkort.
                   <br className="hero-br" /> <span className="hero-gold text-gold-light">Kjøp og selg.</span>
                 </h1>
-                <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for fotballkort</p>
+                <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
+                  <span>
+                    Norges markedsplass for <span className="hero-accent">fotballkort</span>
+                  </span>
+                </p>
                 <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
                     className="hero-primary inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
@@ -122,7 +126,9 @@ export default async function Home() {
                   href="/search?q=relic"
                 >
                   <ShirtIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
-                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Patch / relic</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">
+                    Patch / relic
+                  </span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.relic} {c.relic === 1 ? "annonse" : "annonser"}
                   </span>
@@ -141,7 +147,9 @@ export default async function Home() {
                   >
                     1/1
                   </span>
-                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">Nummererte kort</span>
+                  <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-950 sm:whitespace-normal sm:text-sm">
+                    Nummererte kort
+                  </span>
                   <span className="text-xs font-medium text-slate-700">
                     {c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}
                   </span>
