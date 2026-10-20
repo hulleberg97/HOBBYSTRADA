@@ -269,7 +269,7 @@ export default async function Home() {
                 </li>
               </ol>
               <Link
-                className="mt-8 inline-flex h-11 w-max items-center gap-2 rounded-full px-5 text-sm font-semibold transition bg-slate-200 text-primary hover:bg-slate-300"
+                className="mt-8 inline-flex h-11 w-max items-center gap-2 rounded-full px-5 text-sm font-semibold transition bg-slate-200 text-primary hover:bg-slate-300 [html[data-ring]_&]:bg-white"
                 href="/products"
               >
                 Utforsk markedet
