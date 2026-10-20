@@ -31,8 +31,8 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
  * kortene på sidene står litt bak og er svakt vridd inn mot midten. Nettleseren regner ut hva som ligger foran,
  * så kortet som kommer til midten svinger mykt frem uten å hoppe foran det forrige.
  */
-// Utkast: ?vifte=bred | rekke | bue | ring gir andre former på vifta (settes når siden lastes)
-let mode = "";
+// Formen på vifta: bred (standard), eller utkastene klassisk | rekke | bue | ring via ?vifte= (settes når siden lastes)
+let mode = "bred";
 let cardW = 200; // kortets bredde i px, målt når siden lastes
 let halfW = 300; // halve bredden av vifta i px
 
@@ -49,9 +49,10 @@ function place(p: number) {
   let ry = -side * 30 * turn;
   let scale = 1 + 0.06 * lift;
   if (mode === "bred") {
+    // Nesten vannrett: kortene står på en svak bue med god avstand
     x = side * (56 * a + 30 * turn);
-    y = 2 * p * p + a - lift * 10;
-    rz = 3 * p;
+    y = 1.2 * p * p + 0.5 * a - lift * 10;
+    rz = 2 * p;
     ry = -side * 26 * turn;
   } else if (mode === "rekke") {
     x = side * (80 * a + 22 * turn);
@@ -147,8 +148,9 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
     const el = box.current;
     if (!el || n < 2) return;
     const wanted = new URLSearchParams(window.location.search).get("vifte") ?? "";
-    mode = ["bred", "rekke", "bue", "ring"].includes(wanted) ? wanted : "";
-    if (mode) el.dataset.vifte = mode;
+    // Den brede, nesten vannrette vifta er standard. ?vifte=klassisk viser den gamle buen.
+    mode = wanted === "klassisk" ? "" : ["rekke", "bue", "ring"].includes(wanted) ? wanted : "bred";
+    if (!mode) el.dataset.vifte = "klassisk";
     const measure = () => {
       cardW = refs.current[0]?.offsetWidth || cardW;
       halfW = el.offsetWidth / 2;
@@ -235,7 +237,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
   return (
     <div
       ref={box}
-      className="relative mx-auto h-[330px] w-full max-w-[600px] [--w:38%] sm:h-[430px] sm:[--w:34%] lg:h-[470px] sm:data-vifte:[--w:26%] lg:data-vifte:max-w-[880px]"
+      className="relative mx-auto h-[330px] w-full max-w-[880px] [--w:38%] sm:h-[430px] sm:[--w:26%] lg:h-[470px] data-[vifte=klassisk]:max-w-[600px] sm:data-[vifte=klassisk]:[--w:34%]"
     >
       {/* Gyllent lys på gulvet under kortene */}
       <div
