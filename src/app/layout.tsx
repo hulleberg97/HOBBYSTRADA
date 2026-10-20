@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" className={schibsted.variable}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" className={schibsted.variable}>
       <body>
         {/* Test av linjen over vifta (?linje=2–5, ?linje=av for å skru av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get("linje");if(q)sessionStorage.setItem("linje",q);var t=sessionStorage.getItem("linje");if(t&&t!=="av")document.documentElement.dataset.linje=t}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search).get("linje");if(q)sessionStorage.setItem("linje",q);var t=sessionStorage.getItem("linje");if(t==="av")delete document.documentElement.dataset.linje;else if(t)document.documentElement.dataset.linje=t}catch(e){}})()`,
           }}
         />
         {/* Test av overskrifter (?overskrift=2 eller 3, ?overskrift=av for å skru av). Huskes mens fanen er åpen. */}
