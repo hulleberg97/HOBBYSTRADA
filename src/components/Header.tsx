@@ -48,6 +48,17 @@ export function Header() {
     };
   }, [help]);
 
+  // Mobilmenyen: lås siden bak, så bare menyen ruller
+  useEffect(() => {
+    if (!menu) return;
+    const html = document.documentElement;
+    const before = html.style.overflow;
+    html.style.overflow = "hidden";
+    return () => {
+      html.style.overflow = before;
+    };
+  }, [menu]);
+
   const go = (term: string) => {
     router.push(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search");
     setMenu(false);
@@ -173,7 +184,7 @@ export function Header() {
           </label>
         </form>
         {menu && (
-          <div className="border-t border-slate-200 bg-white px-4 pb-6 pt-2 xl:hidden">
+          <div className="max-h-[calc(100dvh-8.5rem)] overflow-y-auto overscroll-contain border-t border-slate-200 bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 md:max-h-[calc(100dvh-4.5rem)] xl:hidden">
             <nav className="mx-auto flex max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
               {(user ? [["/meldinger", "Meldinger"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
                 <Link
