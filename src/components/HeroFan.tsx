@@ -45,7 +45,7 @@ function place(p: number) {
   const z = 60 * (1 - turn) - 120 * turn - 40 * Math.max(0, a - 1);
   const scale = (1 + 0.06 * lift) * (1 - 0.07 * Math.min(a, 2));
   // Kortene tones ut når de nærmer seg kanten av vifta, i stedet for å kuttes av
-  const fade = Math.min(1, Math.max(0, 1 - (Math.abs(x) - ((halfW / cardW) * 100 - (narrow ? 50 : 60))) / 70));
+  const fade = Math.min(1, Math.max(0, 1 - (Math.abs(x) - ((halfW / cardW) * 100 - (narrow ? 30 : 60))) / 70));
   return {
     transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${(-lift * 8).toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${(-side * 20 * turn).toFixed(2)}deg) scale(${scale.toFixed(3)})`,
     opacity: fade,
