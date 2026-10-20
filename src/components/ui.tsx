@@ -18,7 +18,7 @@ export function Eyebrow({ children, center = false }: { children: React.ReactNod
   return (
     <p
       data-center={center ? "true" : undefined}
-      className="flex items-center data-[center=true]:justify-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]"
+      className="eyebrow flex items-center data-[center=true]:justify-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]"
     >
       <span className="h-px w-6 bg-[#cfa653]" aria-hidden="true"></span>
       {children}

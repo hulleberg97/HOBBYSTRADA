@@ -241,3 +241,29 @@
   .hero-bg[data-tekst="5"] .hero-sub::before, .hero-bg[data-tekst="5"] .hero-sub::after { content: ""; width: 2rem; height: 1px; background: linear-gradient(90deg, transparent, #cfa653); }
   .hero-bg[data-tekst="5"] .hero-sub::after { transform: scaleX(-1); }
 }
+
+/* TEST (?stil=pro): roligere, mer profesjonelt uttrykk. Påvirker ingenting før det slås på. */
+html[data-stil="pro"] {
+  --font-body: var(--nf-schibsted), system-ui, sans-serif;
+  --font-heading: var(--nf-schibsted), system-ui, sans-serif;
+  --font-mono: var(--nf-schibsted), system-ui, sans-serif;
+  --background: 40 12% 95%;
+  --muted-foreground: 30 6% 38%;
+}
+html[data-stil="pro"] body { font-family: var(--font-body); font-size: 15px; }
+html[data-stil="pro"] .font-heading { letter-spacing: -0.02em !important; font-weight: 700; }
+html[data-stil="pro"] .font-mono-data { letter-spacing: 0.04em !important; font-weight: 600; }
+/* Knapper og felt: mindre runde, som på etablerte markedsplasser */
+html[data-stil="pro"] :is(a, button, input, select, form).rounded-full:is(.h-9, .h-10, .h-11, .h-12, .h-14) { border-radius: 10px; }
+html[data-stil="pro"] form.rounded-full { border-radius: 10px; }
+html[data-stil="pro"] .rounded-3xl { border-radius: 14px; }
+html[data-stil="pro"] .rounded-2xl { border-radius: 12px; }
+html[data-stil="pro"] .rounded-xl { border-radius: 8px; }
+/* Etiketter: uten gullstrek og bred sperring, i dempet farge */
+html[data-stil="pro"] .eyebrow { letter-spacing: 0.08em; color: #6b5a33; }
+html[data-stil="pro"] .eyebrow > span[aria-hidden] { display: none; }
+html[data-stil="pro"] .hero-bg[data-tekst="5"] .hero-sub { letter-spacing: 0.12em; color: #6b5a33; }
+/* Tekst i varm grå i stedet for kald blågrå */
+html[data-stil="pro"] .text-slate-500 { color: #77716a; }
+html[data-stil="pro"] .text-slate-600 { color: #5f5a54; }
+html[data-stil="pro"] .text-slate-700 { color: #4a4640; }
