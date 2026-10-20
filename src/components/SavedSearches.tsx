@@ -12,7 +12,7 @@ export function SavedSearches({ items }: { items: { id: string; label: string; q
   };
   if (!items.length) {
     return (
-      <p className="mt-4 rounded-3xl bg-slate-50 p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-200">
+      <p className="mt-4 rounded-3xl bg-white p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-300/70">
         Søk eller filtrer i markedet og trykk «Varsle meg om nye kort», så får du e-post når et nytt kort passer.
       </p>
     );

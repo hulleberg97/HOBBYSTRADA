@@ -1,3 +1,4 @@
+import { Eyebrow } from "@/components/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -16,16 +17,16 @@ export default async function MessagesPage() {
   const conversations = await listConversations(user.id);
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
+    <div>
+      <section className="border-b border-slate-300/60">
         <div className="mx-auto max-w-[880px] px-4 py-10 sm:px-6 sm:py-14">
-          <p className="text-sm font-medium text-slate-500">Min side</p>
-          <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Meldinger</h1>
+          <Eyebrow>Min side</Eyebrow>
+          <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Meldinger</h1>
         </div>
       </section>
       <div className="mx-auto max-w-[880px] px-4 pb-24 pt-8 sm:px-6">
         {conversations.length === 0 ? (
-          <div className="rounded-3xl bg-slate-50 px-6 py-14 text-center ring-1 ring-inset ring-slate-200">
+          <div className="rounded-3xl bg-white px-6 py-14 text-center ring-1 ring-inset ring-slate-300/70">
             <MessageSquareIcon className="mx-auto h-8 w-8 text-slate-400" aria-hidden="true" />
             <p className="mt-3 font-semibold text-slate-950">Ingen meldinger ennå</p>
             <p className="mt-1 text-sm text-slate-600">Når du sender eller får en melding om et kort, finner du samtalen her.</p>

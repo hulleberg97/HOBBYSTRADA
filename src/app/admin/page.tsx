@@ -1,3 +1,4 @@
+import { Eyebrow } from "@/components/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -38,14 +39,14 @@ export default async function AdminPage() {
     : { data: [] };
 
   const h2 = "font-heading text-xl font-bold tracking-tight text-slate-950";
-  const empty = "mt-4 rounded-3xl bg-slate-50 p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-200";
+  const empty = "mt-4 rounded-3xl bg-white p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-300/70";
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
+    <div>
+      <section className="border-b border-slate-300/60">
         <div className="mx-auto max-w-[1320px] px-4 py-10 sm:px-6 lg:px-8">
-          <p className="text-sm font-medium text-slate-500">Administrasjon</p>
-          <h1 className="mt-1 font-heading text-[2rem] font-bold tracking-[-0.03em] text-slate-950">Kontrollpanel</h1>
+          <Eyebrow>Administrasjon</Eyebrow>
+          <h1 className="mt-3 font-heading text-[2rem] font-bold tracking-[-0.03em] text-slate-950">Kontrollpanel</h1>
         </div>
       </section>
       <div className="mx-auto max-w-[1320px] space-y-14 px-4 pb-24 pt-10 sm:px-6 lg:px-8">

@@ -1,3 +1,4 @@
+import { Eyebrow } from "@/components/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -30,12 +31,12 @@ export default async function AccountPage() {
   const unread = await unreadCount(user.id);
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
+    <div>
+      <section className="border-b border-slate-300/60">
         <div className="mx-auto flex max-w-[1320px] flex-wrap items-end justify-between gap-4 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <div>
-            <p className="text-sm font-medium text-slate-500">Min side</p>
-            <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Hei, {user.name}</h1>
+            <Eyebrow>Min side</Eyebrow>
+            <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Hei, {user.name}</h1>
             <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
               {user.email}
               {verification && <VerifiedBadge />}
@@ -66,7 +67,7 @@ export default async function AccountPage() {
         <section>
           <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Annonsene mine</h2>
           {listings.length === 0 ? (
-            <div className="mt-4 rounded-3xl bg-slate-50 px-6 py-12 text-center ring-1 ring-inset ring-slate-200">
+            <div className="mt-4 rounded-3xl bg-white px-6 py-12 text-center ring-1 ring-inset ring-slate-300/70">
               <p className="font-semibold text-slate-950">Du har ingen annonser ennå</p>
               <p className="mt-1 text-sm text-slate-600">Legg ut det første kortet ditt på et par minutter.</p>
             </div>

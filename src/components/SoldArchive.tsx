@@ -52,7 +52,7 @@ export function SoldArchive({ listings }: { listings: Listing[] }) {
               ["Medianpris", formatPrice(median(prices))],
               ["Høyeste", formatPrice(Math.max(...prices))],
             ].map(([k, v]) => (
-              <div key={k} className="rounded-2xl bg-slate-50 p-4 ring-1 ring-inset ring-slate-200">
+              <div key={k} className="rounded-2xl bg-slate-50 p-4 ring-1 ring-inset ring-slate-300/70">
                 <dt className="text-xs text-slate-500">{k}</dt>
                 <dd className="mt-1 font-heading text-lg font-semibold tracking-tight text-slate-950 tabular-nums sm:text-xl">{v}</dd>
               </div>
@@ -87,7 +87,7 @@ export function SoldArchive({ listings }: { listings: Listing[] }) {
             </table>
           </div>
         ) : (
-          <div className="rounded-3xl bg-slate-50 px-6 py-16 text-center ring-1 ring-inset ring-slate-200">
+          <div className="rounded-3xl bg-white px-6 py-16 text-center ring-1 ring-inset ring-slate-300/70">
             <p className="font-heading text-xl font-bold text-slate-950">{q ? "Ingen solgte kort passer søket" : "Ingen kort er solgt ennå"}</p>
             <p className="mt-1.5 text-sm text-slate-600">
               {q ? "Prøv et annet navn eller sett." : "Når selgere merker kort som solgt, havner de her med prisen."}

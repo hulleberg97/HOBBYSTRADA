@@ -95,7 +95,7 @@ export default async function ListingPage({ params }: Props) {
   };
 
   return (
-    <div className="bg-white">
+    <div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <div className="mx-auto max-w-[1320px] px-4 pb-28 pt-4 sm:px-6 lg:px-8 lg:pb-20">
         <div className="flex items-center justify-between gap-4">
@@ -184,7 +184,7 @@ export default async function ListingPage({ params }: Props) {
             </p>
             <dl className="mt-6 grid gap-2 empty:hidden sm:gap-3" style={{ gridTemplateColumns: `repeat(${Math.max(facts.length, 1)}, minmax(0, 1fr))` }}>
               {facts.map(([Icon, label, value]) => (
-                <div key={label} className="rounded-2xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200 sm:p-4">
+                <div key={label} className="rounded-2xl bg-white p-3 ring-1 ring-inset ring-slate-300/70 sm:p-4">
                   <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />
                   <dt className="mt-2 text-[11px] text-slate-500 sm:text-xs">{label}</dt>
                   <dd className="mt-0.5 text-sm font-semibold leading-snug text-slate-900">{value}</dd>
@@ -194,7 +194,7 @@ export default async function ListingPage({ params }: Props) {
             <div className="mt-6">
               <div>
                 <ContactCard listing={l} />
-                <div className="mt-4 rounded-3xl bg-slate-50 p-5 ring-1 ring-inset ring-slate-200">
+                <div className="mt-4 rounded-3xl bg-white p-5 ring-1 ring-inset ring-slate-300/70">
                   <p className="flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <ShieldCheckIcon className="h-4 w-4 text-primary" aria-hidden="true" />
                     Handle trygt

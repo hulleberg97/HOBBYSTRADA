@@ -260,7 +260,7 @@ export function Market({ listings }: { listings: Listing[] }) {
             ))}
           </div>
         ) : (
-          <div className="rounded-3xl bg-slate-50 px-6 py-16 text-center ring-1 ring-inset ring-slate-200">
+          <div className="rounded-3xl bg-white px-6 py-16 text-center ring-1 ring-inset ring-slate-300/70">
             <p className="font-heading text-xl font-bold text-slate-950">Ingen annonser passer</p>
             <p className="mt-1.5 text-sm text-slate-600">Prøv et annet søk eller fjern noen filtre.</p>
           </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Eyebrow } from "@/components/ui";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -25,11 +26,11 @@ export function Search({ listings }: { listings: Listing[] }) {
   const result = q ? listings.filter((l) => matches(l, query)) : listings;
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
+    <div>
+      <section className="border-b border-slate-300/60">
         <div className="mx-auto max-w-[1320px] px-4 pb-8 pt-8 sm:px-6 sm:pt-12 lg:px-8">
-          <p className="text-sm font-medium text-slate-500">Søk</p>
-          <h1 className="mt-1 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">
+          <Eyebrow>Søk</Eyebrow>
+          <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">
             {q ? (
               <>
                 Treff for <span className="text-primary">«{q}»</span>
@@ -114,7 +115,7 @@ export function Search({ listings }: { listings: Listing[] }) {
             ))}
           </div>
         ) : (
-          <div className="rounded-3xl bg-slate-50 px-6 py-16 text-center ring-1 ring-inset ring-slate-200">
+          <div className="rounded-3xl bg-white px-6 py-16 text-center ring-1 ring-inset ring-slate-300/70">
             <p className="font-heading text-xl font-bold text-slate-950">Ingen treff</p>
             <p className="mt-1.5 text-sm text-slate-600">Prøv et annet navn, sett eller kortnummer.</p>
           </div>

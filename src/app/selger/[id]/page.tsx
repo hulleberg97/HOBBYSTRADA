@@ -1,3 +1,4 @@
+import { Eyebrow } from "@/components/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CalendarIcon, MapPinIcon, PackageCheckIcon, TagIcon, type LucideIcon } from "lucide-react";
@@ -44,15 +45,15 @@ export default async function SellerPage({ params }: Props) {
   if (places.length) facts.push([MapPinIcon, places.join(", ")]);
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50/70">
+    <div>
+      <section className="border-b border-slate-300/60">
         <div className="mx-auto flex max-w-[1320px] flex-wrap items-center gap-5 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary font-heading text-2xl font-semibold text-primary-foreground">
             {s.name[0]?.toUpperCase()}
           </span>
           <div className="min-w-0">
-            <p className="text-sm font-medium text-slate-500">Selger</p>
-            <div className="mt-1 flex flex-wrap items-center gap-3">
+            <Eyebrow>Selger</Eyebrow>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
               <h1 className="font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[40px]">{s.name}</h1>
               {s.verified && <VerifiedBadge />}
             </div>
