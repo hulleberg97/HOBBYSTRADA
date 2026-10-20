@@ -67,7 +67,8 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
                     src={images[index]}
                     width={800}
                     height={1120}
-                    priority
+                    loading="eager"
+                    fetchPriority="high"
                     sizes="(max-width: 1024px) 80vw, 360px"
                     className="h-full w-full object-cover"
                   />

@@ -110,8 +110,8 @@ export function Search({ listings }: { listings: Listing[] }) {
         </div>
         {result.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
-            {result.map((l) => (
-              <ListingCard key={l.slug} listing={l} variant="market" />
+            {result.map((l, i) => (
+              <ListingCard key={l.slug} listing={l} variant="market" eager={i < 4} />
             ))}
           </div>
         ) : (

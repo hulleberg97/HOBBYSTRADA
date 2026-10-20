@@ -245,8 +245,8 @@ export function Market({ listings }: { listings: Listing[] }) {
         )}
         {shown.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
-            {shown.map((l) => (
-              <ListingCard key={l.slug} listing={l} variant="market" />
+            {shown.map((l, i) => (
+              <ListingCard key={l.slug} listing={l} variant="market" eager={i < 4} />
             ))}
           </div>
         ) : (

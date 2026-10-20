@@ -8,7 +8,8 @@ import { formatPrice, timeAgo } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
-export function ListingCard({ listing, variant = "home" }: { listing: Listing; variant?: "home" | "market" }) {
+/** «eager»: kort øverst på siden lastes med en gang i stedet for når de rulles inn. */
+export function ListingCard({ listing, variant = "home", eager = false }: { listing: Listing; variant?: "home" | "market"; eager?: boolean }) {
   const market = variant === "market";
   return (
     <div data-featured={listing.featured ? "true" : undefined} className="group relative flex h-full flex-col">
@@ -24,6 +25,8 @@ export function ListingCard({ listing, variant = "home" }: { listing: Listing; v
                 src={listing.image}
                 width={600}
                 height={840}
+                loading={eager ? "eager" : "lazy"}
+                fetchPriority={eager ? "high" : "auto"}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="h-full w-full rounded-md object-cover shadow-[0_18px_30px_-18px_rgba(15,23,42,0.6)]"
               />

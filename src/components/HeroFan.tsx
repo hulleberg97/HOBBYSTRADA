@@ -64,7 +64,8 @@ function offsetOf(i: number, shift: number, n: number) {
 }
 
 /** Kortet i plastholder med HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter. */
-function Slab({ l }: { l: Listing }) {
+/** «eager»: kortene som synes når siden åpnes lastes først, resten etterpå. */
+function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
   return (
     <div
       data-top={l.frontpage ? "true" : undefined}
@@ -80,7 +81,16 @@ function Slab({ l }: { l: Listing }) {
       </div>
       <div className="mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
         {l.image ? (
-          <Image alt="" src={l.image} width={400} height={560} priority sizes="(max-width: 640px) 40vw, 200px" className="h-full w-full object-cover" />
+          <Image
+            alt=""
+            src={l.image}
+            width={400}
+            height={560}
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager ? "high" : "low"}
+            sizes="(max-width: 640px) 40vw, 200px"
+            className="h-full w-full object-cover"
+          />
         ) : (
           <CardArt listing={l} square />
         )}
@@ -222,7 +232,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
               className="group absolute left-1/2 top-[4%] w-[var(--w)] origin-bottom will-change-transform"
             >
               <div className="relative transition-transform duration-300 ease-out group-hover:-translate-y-3">
-                <Slab l={l} />
+                <Slab l={l} eager={Math.abs(offsetOf(i, 0, n)) <= 1} />
                 {/* Glans som glir over kortet når det passerer midten */}
                 <div
                   ref={(node) => {
