@@ -92,7 +92,7 @@ export function Market({ listings }: { listings: Listing[] }) {
           <form
             role="search"
             onSubmit={submit}
-            className="flex h-14 w-full items-center gap-2 rounded-full bg-white pl-5 pr-1.5 ring-1 ring-slate-300 transition focus-within:ring-2 focus-within:ring-primary/30 lg:w-[420px]"
+            className="hidden h-14 w-full md:flex items-center gap-2 rounded-full bg-white pl-5 pr-1.5 ring-1 ring-slate-300 transition focus-within:ring-2 focus-within:ring-primary/30 lg:w-[420px]"
           >
             <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
             <label htmlFor="market-search" className="sr-only">
