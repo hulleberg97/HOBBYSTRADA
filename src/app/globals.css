@@ -162,3 +162,16 @@
   .hero-bg[data-oppsett="a"] .hero-buttons a { height: 2.5rem; padding-inline: 1rem; font-size: 0.8125rem; }
   .hero-bg[data-oppsett="a"] .hero-fan { --w: 31%; height: 290px; margin-top: 0; }
 }
+
+/* Standard: bare vifta. Teksten finnes fortsatt for Google og skjermlesere, men vises ikke. */
+.hero-bg[data-oppsett="vifte"] .hero-grid { grid-template-columns: 1fr; padding: 1.25rem 0.5rem 0.75rem; }
+.hero-bg[data-oppsett="vifte"] .hero-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hero-bg[data-oppsett="vifte"] .hero-edge { display: none; }
+.hero-bg[data-oppsett="vifte"] .hero-fan { margin-top: -0.75rem; max-width: none; --w: 38%; height: 320px; }
+@media (min-width: 640px) {
+  .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(28%, calc((100vh - 230px) * 0.5)); height: clamp(360px, calc(100vh - 190px), 680px); }
+}
+@media (min-width: 1024px) {
+  .hero-bg[data-oppsett="vifte"] .hero-grid { padding: 2rem 2rem 1rem; }
+  .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(22%, calc((100vh - 250px) * 0.5)); height: clamp(380px, calc(100vh - 200px), 680px); }
+}
