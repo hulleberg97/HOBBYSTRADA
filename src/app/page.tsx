@@ -40,7 +40,7 @@ export default async function Home() {
           <div
             id="hero"
             data-oppsett="vifte"
-            data-tekst="2"
+            data-tekst="5"
             data-farge="lys"
             className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]"
           >
