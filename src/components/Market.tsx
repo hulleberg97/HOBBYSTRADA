@@ -115,7 +115,7 @@ export function Market({ listings }: { listings: Listing[] }) {
           </form>
         </section>
       </div>
-      <div className="z-20 mt-6 border-b border-slate-200 bg-white/95 backdrop-blur md:sticky md:top-[72px]">
+      <div className="z-20 mt-6 border-b border-slate-200 bg-background/95 backdrop-blur md:sticky md:top-[72px]">
         <div className="mx-auto flex max-w-[1320px] flex-row items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <nav aria-label="Kategorier" className="min-w-0 flex-1">
             <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

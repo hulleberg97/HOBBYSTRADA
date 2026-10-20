@@ -284,7 +284,7 @@ html[data-stil="pro"] .card-frame img { border-radius: 4px; }
 html[data-stil="pro"] .rounded-3xl { border-radius: 10px; }
 html[data-stil="pro"] .shadow-xl { box-shadow: 0 8px 30px rgb(0 0 0 / 0.08); }
 html[data-stil="pro"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, #fafaf8, transparent 70%), #fff; }
-html[data-stil="pro"] footer.bg-ink { background: #111; }
+html[data-stil="pro"] footer.bg-ink { background: #0b1426; }
 }
 
 /* Krem og marine (fast, data-tone="1" på <html>) – varm kremhvit bakgrunn, mørk marine meny og overskrifter med gull */
