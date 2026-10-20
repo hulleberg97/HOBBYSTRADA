@@ -134,7 +134,7 @@ export default async function ListingPage({ params }: Props) {
                         )}
                         {l.status === "sold" && <span className="rounded-full bg-slate-700 px-3 py-1 text-xs font-semibold text-white">Solgt</span>}
                       </div>
-                      {l.grading && (
+                      {l.grading && !/raw|ugradert/i.test(l.grading) && (
                         <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
                           <ShieldCheckIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                           {l.grading}
@@ -149,7 +149,7 @@ export default async function ListingPage({ params }: Props) {
                     {l.featured && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">Fremhevet</span>}
                     {l.status === "sold" && <span className="rounded-full bg-slate-700 px-3 py-1 text-xs font-semibold text-white">Solgt</span>}
                   </div>
-                  {l.grading && (
+                  {l.grading && !/raw|ugradert/i.test(l.grading) && (
                     <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 backdrop-blur">
                       <ShieldCheckIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                       {l.grading}
