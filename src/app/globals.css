@@ -112,8 +112,9 @@
 /* Utkast til oppsett der vifta får hele bredden på PC (?oppsett=a eller b) */
 @media (min-width: 1024px) {
   .hero-bg[data-oppsett] .hero-grid { grid-template-columns: 1fr; padding: 3.5rem 4rem 2rem; }
-  .hero-bg[data-oppsett] .hero-fan { max-width: none; --w: 21%; height: 560px; margin-top: 2.75rem; }
-  .hero-bg[data-oppsett="a"] .hero-grid { padding-top: 2.75rem; }
+  /* Vifta tilpasser seg skjermhøyden, så hele toppen får plass uten å scrolle */
+  .hero-bg[data-oppsett] .hero-fan { max-width: none; --w: min(21%, calc((100vh - 400px) * 0.47)); height: clamp(300px, calc(100vh - 385px), 540px); margin-top: 1.5rem; }
+  .hero-bg[data-oppsett="a"] .hero-grid { padding-top: 2rem; padding-bottom: 1rem; }
   .hero-bg[data-oppsett="a"] h1 { font-size: 2.6rem; }
   .hero-bg[data-oppsett="a"] .hero-sub { margin-top: 0.75rem; font-size: 1rem; }
   .hero-bg[data-oppsett="a"] .hero-badge { margin-bottom: 0.9rem; }
