@@ -95,7 +95,7 @@ export default async function ListingPage({ params }: Props) {
   };
 
   return (
-    <div>
+    <div className="pb-20 lg:pb-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <div className="mx-auto max-w-[1320px] px-4 pb-28 pt-4 sm:px-6 lg:px-8 lg:pb-20">
         <div className="flex items-center justify-between gap-4">

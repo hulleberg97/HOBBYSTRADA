@@ -30,7 +30,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
   useEffect(() => {
     const el = card.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setBarOpen(!e.isIntersecting && e.boundingClientRect.top < 0));
+    const io = new IntersectionObserver(([e]) => setBarOpen(!e.isIntersecting));
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -234,14 +234,14 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </Link>
         </div>
       </div>
-      {l.status === "active" && (
+      {l.status === "active" && !own && (
         <div
           data-open={barOpen ? "true" : undefined}
           aria-hidden={!barOpen}
-          className="fixed inset-x-0 bottom-0 z-30 flex translate-y-full items-center gap-3 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur transition-transform duration-200 data-[open=true]:translate-y-0 lg:hidden"
+          className="fixed inset-x-0 bottom-0 z-30 flex translate-y-full items-center gap-3 border-t border-slate-200 bg-white/95 px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur transition-transform duration-200 data-[open=true]:translate-y-0 lg:hidden"
         >
           <div className="min-w-0 flex-1">
-            <p className="truncate text-xs text-slate-500">{l.seller}</p>
+            <p className="truncate text-xs text-slate-500">{l.player}</p>
             <span className="font-heading text-lg font-semibold tracking-tight">{formatPrice(l.price)}</span>
           </div>
           <button
