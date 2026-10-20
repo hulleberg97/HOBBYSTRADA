@@ -41,7 +41,7 @@ export default async function Home() {
             {/* Utkast: ?oppsett=a (tekst i midten) eller ?oppsett=b (tekst over) gir vifta hele bredden på PC */}
             <script
               dangerouslySetInnerHTML={{
-                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");if(v==="a"||v==="b")document.getElementById("hero").dataset.oppsett=v})()`,
+                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");var h=document.getElementById("hero");if(v==="a"||v==="b")h.dataset.oppsett=v;if(new URLSearchParams(location.search).get("farge")==="lys")h.dataset.farge="lys"})()`,
               }}
             />
             <div
@@ -59,19 +59,19 @@ export default async function Home() {
                 )}
                 <h1 className="font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
                   Fotballkort.
-                  <br className="hero-br" /> <span className="text-gold-light">Kjøp og selg.</span>
+                  <br className="hero-br" /> <span className="hero-gold text-gold-light">Kjøp og selg.</span>
                 </h1>
                 <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for samlere.</p>
                 <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
-                    className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
+                    className="hero-primary inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
                     href="/products"
                   >
                     Se alle annonser
                     <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link
-                    className="inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
+                    className="hero-ghost inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
                     href="/sell"
                   >
                     Legg ut kort

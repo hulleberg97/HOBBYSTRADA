@@ -124,3 +124,22 @@
   .hero-bg[data-oppsett="b"] .hero-sub { grid-column: 2; grid-row: 2; margin-top: 0; }
   .hero-bg[data-oppsett="b"] .hero-buttons { grid-column: 2; grid-row: 3; margin-top: 1rem; }
 }
+
+/* Utkast: lys bakgrunn (?farge=lys), samme farge som resten av siden */
+.hero-bg[data-farge="lys"] {
+  color: #0b1426;
+  background:
+    radial-gradient(55% 50% at 50% 70%, rgb(255 255 255 / 0.9), transparent 70%),
+    radial-gradient(45% 25% at 50% 96%, rgb(207 166 83 / 0.16), transparent 70%),
+    hsl(var(--background));
+  box-shadow: none;
+}
+.hero-bg[data-farge="lys"] .hero-gold { color: #a8822f; }
+.hero-bg[data-farge="lys"] .hero-sub { color: #475569; }
+.hero-bg[data-farge="lys"] .hero-badge { background: #ffffff; color: #334155; --tw-ring-color: rgb(11 20 38 / 0.1); }
+.hero-bg[data-farge="lys"] .hero-primary { background: #0b1426; color: #ffffff; }
+.hero-bg[data-farge="lys"] .hero-primary:hover { background: #1b2a47; }
+.hero-bg[data-farge="lys"] .hero-ghost { color: #0b1426; --tw-ring-color: rgb(11 20 38 / 0.25); }
+.hero-bg[data-farge="lys"] .hero-ghost:hover { background: rgb(11 20 38 / 0.05); }
+.hero-bg[data-farge="lys"] [data-dim] { background: hsl(var(--background)); }
+.hero-bg[data-farge="lys"] .hero-edge { display: none; }

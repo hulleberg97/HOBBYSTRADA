@@ -238,6 +238,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
                   ref={(node) => {
                     dims.current[i] = node;
                   }}
+                  data-dim
                   className="pointer-events-none absolute inset-0 rounded-[12px] bg-[#0b1426] will-change-[opacity]"
                   style={{ opacity: s.dim }}
                 />
