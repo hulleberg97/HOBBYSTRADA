@@ -104,45 +104,47 @@ export default async function Home() {
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <h2 className="sr-only">Kategorier</h2>
-          <ul className="grid grid-cols-2 gap-1 rounded-3xl bg-white p-1.5 ring-1 ring-slate-300/80 [&>li:last-child:nth-child(odd)]:col-span-2 sm:auto-cols-fr sm:grid-flow-col sm:grid-cols-none sm:gap-2 sm:p-2 sm:[&>li:last-child:nth-child(odd)]:col-span-1">
+          <ul className="kat-rad -mx-4 flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:auto-cols-fr sm:grid-flow-col sm:gap-2 sm:overflow-visible sm:rounded-3xl sm:bg-white sm:p-2 sm:ring-1 sm:ring-slate-300/80">
             {c.autograf > 0 && (
-              <li className="min-w-0">
+              <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
-                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
+                  className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
                   href="/search?q=autograf"
                 >
-                  <PenLineIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
+                  <PenLineIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Autografkort</span>
                   <span className="text-xs font-medium text-slate-600">
-                    {c.autograf} {c.autograf === 1 ? "annonse" : "annonser"}
+                    <span className="sm:hidden">{c.autograf}</span>
+                    <span className="hidden sm:inline">{c.autograf} {c.autograf === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
             )}
             {c.relic > 0 && (
-              <li className="min-w-0">
+              <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
-                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
+                  className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
                   href="/search?q=relic"
                 >
-                  <ShirtIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
+                  <ShirtIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">
                     Patch / relic
                   </span>
                   <span className="text-xs font-medium text-slate-600">
-                    {c.relic} {c.relic === 1 ? "annonse" : "annonser"}
+                    <span className="sm:hidden">{c.relic}</span>
+                    <span className="hidden sm:inline">{c.relic} {c.relic === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
             )}
             {c.numbered > 0 && (
-              <li className="min-w-0">
+              <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
-                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
+                  className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
                   href="/search?q=%2F"
                 >
                   <span
-                    className="row-span-2 flex h-6 w-6 items-center justify-center text-[17px] font-medium leading-none tracking-tight text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8 sm:text-[22px]"
+                    className="flex h-5 shrink-0 items-center justify-center text-[14px] font-medium leading-none tracking-tight text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8 sm:text-[22px]"
                     aria-hidden="true"
                   >
                     1/1
@@ -151,48 +153,52 @@ export default async function Home() {
                     Nummererte kort
                   </span>
                   <span className="text-xs font-medium text-slate-600">
-                    {c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}
+                    <span className="sm:hidden">{c.numbered}</span>
+                    <span className="hidden sm:inline">{c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
             )}
             {c.rookie > 0 && (
-              <li className="min-w-0">
+              <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
-                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
+                  className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
                   href="/search?q=RC"
                 >
-                  <StarIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
+                  <StarIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Rookies</span>
                   <span className="text-xs font-medium text-slate-600">
-                    {c.rookie} {c.rookie === 1 ? "annonse" : "annonser"}
+                    <span className="sm:hidden">{c.rookie}</span>
+                    <span className="hidden sm:inline">{c.rookie} {c.rookie === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
             )}
             {c.base > 0 && (
-              <li className="min-w-0">
+              <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
-                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
+                  className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
                   href="/search?q=chrome"
                 >
-                  <BadgeCheckIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
+                  <BadgeCheckIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Base</span>
                   <span className="text-xs font-medium text-slate-600">
-                    {c.base} {c.base === 1 ? "annonse" : "annonser"}
+                    <span className="sm:hidden">{c.base}</span>
+                    <span className="hidden sm:inline">{c.base} {c.base === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
             )}
-            <li className="min-w-0">
+            <li className="shrink-0 snap-start sm:min-w-0">
               <Link
-                className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
+                className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
                 href="/products"
               >
-                <LayoutGridIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
+                <LayoutGridIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Alle kort</span>
                 <span className="text-xs font-medium text-slate-600">
-                  {c.all} {c.all === 1 ? "annonse" : "annonser"}
+                  <span className="sm:hidden">{c.all}</span>
+                    <span className="hidden sm:inline">{c.all} {c.all === 1 ? "annonse" : "annonser"}</span>
                 </span>
               </Link>
             </li>
