@@ -31,6 +31,8 @@ export function Header() {
   const path = usePathname();
   const [q, setQ] = useState("");
   const [menu, setMenu] = useState(false);
+  const [menuTop, setMenuTop] = useState(0);
+  const headerRef = useRef<HTMLElement>(null);
   const [help, setHelp] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
 
@@ -54,8 +56,12 @@ export function Header() {
     const html = document.documentElement;
     const before = html.style.overflow;
     html.style.overflow = "hidden";
+    const place = () => setMenuTop(headerRef.current?.getBoundingClientRect().bottom ?? 0);
+    place();
+    window.addEventListener("resize", place);
     return () => {
       html.style.overflow = before;
+      window.removeEventListener("resize", place);
     };
   }, [menu]);
 
@@ -70,7 +76,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 text-primary backdrop-blur">
+      <header ref={headerRef} className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 text-primary backdrop-blur">
         <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
           <Link className="flex shrink-0 items-center gap-2" href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -183,9 +189,10 @@ export function Header() {
             />
           </label>
         </form>
+      </header>
         {menu && (
-          <div className="max-h-[calc(100dvh-8.5rem)] overflow-y-auto overscroll-contain border-t border-slate-200 bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 md:max-h-[calc(100dvh-4.5rem)] xl:hidden">
-            <nav className="mx-auto flex max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
+          <div style={{ top: menuTop }} className="fixed inset-x-0 bottom-0 z-50 flex flex-col overflow-y-auto overscroll-contain border-t border-slate-200 bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 xl:hidden">
+            <nav className="mx-auto flex w-full max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
               {(user ? [["/meldinger", "Meldinger"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
                 <Link
                   key={href}
@@ -213,10 +220,10 @@ export function Header() {
                 ))}
               </ul>
             </nav>
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
+            <div className="mt-auto grid grid-cols-2 gap-2 pt-6 sm:hidden">
               <Link
                 onClick={() => setMenu(false)}
-                className="flex h-12 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold"
+                className="flex h-12 items-center justify-center rounded-full bg-[#f5f1e8] text-sm font-semibold text-[#0b1426]"
                 href={user ? "/account" : "/auth/login"}
               >
                 {user ? "Min side" : "Logg inn"}
@@ -231,7 +238,6 @@ export function Header() {
             </div>
           </div>
         )}
-      </header>
     </>
   );
 }
