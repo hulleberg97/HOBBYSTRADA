@@ -104,16 +104,16 @@ export default async function Home() {
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <h2 className="sr-only">Kategorier</h2>
-          <ul className="grid grid-cols-3 gap-1 rounded-3xl bg-white p-2 ring-1 ring-slate-300/80 sm:auto-cols-fr sm:grid-flow-col sm:grid-cols-none sm:gap-2">
+          <ul className="grid grid-cols-2 gap-1 rounded-3xl bg-white p-1.5 ring-1 ring-slate-300/80 [&>li:last-child:nth-child(odd)]:col-span-2 sm:auto-cols-fr sm:grid-flow-col sm:grid-cols-none sm:gap-2 sm:p-2 sm:[&>li:last-child:nth-child(odd)]:col-span-1">
             {c.autograf > 0 && (
               <li className="min-w-0">
                 <Link
-                  className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-white px-1.5 py-4 text-center transition hover:bg-slate-100 sm:gap-2.5 sm:px-2"
+                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
                   href="/search?q=autograf"
                 >
-                  <PenLineIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
+                  <PenLineIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Autografkort</span>
-                  <span className="text-xs font-medium text-slate-700">
+                  <span className="text-xs font-medium text-slate-600">
                     {c.autograf} {c.autograf === 1 ? "annonse" : "annonser"}
                   </span>
                 </Link>
@@ -122,14 +122,14 @@ export default async function Home() {
             {c.relic > 0 && (
               <li className="min-w-0">
                 <Link
-                  className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-white px-1.5 py-4 text-center transition hover:bg-slate-100 sm:gap-2.5 sm:px-2"
+                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
                   href="/search?q=relic"
                 >
-                  <ShirtIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
+                  <ShirtIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">
                     Patch / relic
                   </span>
-                  <span className="text-xs font-medium text-slate-700">
+                  <span className="text-xs font-medium text-slate-600">
                     {c.relic} {c.relic === 1 ? "annonse" : "annonser"}
                   </span>
                 </Link>
@@ -138,20 +138,19 @@ export default async function Home() {
             {c.numbered > 0 && (
               <li className="min-w-0">
                 <Link
-                  className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-white px-1.5 py-4 text-center transition hover:bg-slate-100 sm:gap-2.5 sm:px-2"
+                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
                   href="/search?q=%2F"
                 >
                   <span
-                    className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))] flex items-center justify-center text-[22px] font-medium leading-none tracking-tight"
+                    className="row-span-2 flex h-6 w-6 items-center justify-center text-[17px] font-medium leading-none tracking-tight text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8 sm:text-[22px]"
                     aria-hidden="true"
                   >
                     1/1
                   </span>
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">
-                    <span className="sm:hidden">Nummerert</span>
-                    <span className="hidden sm:inline">Nummererte kort</span>
+                    Nummererte kort
                   </span>
-                  <span className="text-xs font-medium text-slate-700">
+                  <span className="text-xs font-medium text-slate-600">
                     {c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}
                   </span>
                 </Link>
@@ -160,12 +159,12 @@ export default async function Home() {
             {c.rookie > 0 && (
               <li className="min-w-0">
                 <Link
-                  className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-white px-1.5 py-4 text-center transition hover:bg-slate-100 sm:gap-2.5 sm:px-2"
+                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
                   href="/search?q=RC"
                 >
-                  <StarIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
+                  <StarIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Rookies</span>
-                  <span className="text-xs font-medium text-slate-700">
+                  <span className="text-xs font-medium text-slate-600">
                     {c.rookie} {c.rookie === 1 ? "annonse" : "annonser"}
                   </span>
                 </Link>
@@ -174,12 +173,12 @@ export default async function Home() {
             {c.base > 0 && (
               <li className="min-w-0">
                 <Link
-                  className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-white px-1.5 py-4 text-center transition hover:bg-slate-100 sm:gap-2.5 sm:px-2"
+                  className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
                   href="/search?q=chrome"
                 >
-                  <BadgeCheckIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
+                  <BadgeCheckIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Base</span>
-                  <span className="text-xs font-medium text-slate-700">
+                  <span className="text-xs font-medium text-slate-600">
                     {c.base} {c.base === 1 ? "annonse" : "annonser"}
                   </span>
                 </Link>
@@ -187,12 +186,12 @@ export default async function Home() {
             )}
             <li className="min-w-0">
               <Link
-                className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-white px-1.5 py-4 text-center transition hover:bg-slate-100 sm:gap-2.5 sm:px-2"
+                className="group grid h-full grid-cols-[auto_1fr] items-center gap-x-3 rounded-2xl bg-white px-3 py-3 text-left transition hover:bg-slate-100 sm:flex sm:flex-col sm:gap-2.5 sm:px-2 sm:py-4 sm:text-center"
                 href="/products"
               >
-                <LayoutGridIcon className="h-8 w-8 text-primary transition group-hover:text-[hsl(var(--gold-deep))]" strokeWidth={1.4} aria-hidden="true" />
+                <LayoutGridIcon className="row-span-2 h-6 w-6 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Alle kort</span>
-                <span className="text-xs font-medium text-slate-700">
+                <span className="text-xs font-medium text-slate-600">
                   {c.all} {c.all === 1 ? "annonse" : "annonser"}
                 </span>
               </Link>
