@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHeader } from "@/components/ui";
+import { PageHeader, btnPrimary } from "@/components/ui";
 import { MessageCircleIcon, ShieldCheckIcon, ShoppingBagIcon, TagIcon, ZapIcon } from "lucide-react";
 import { AccordionItem } from "@/components/Accordion";
 
@@ -105,20 +105,17 @@ export default function FaqPage() {
               </div>
             </section>
           ))}
-          <div className="flex flex-col items-start gap-5 rounded-3xl bg-primary p-7 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div className="flex flex-col items-start gap-5 rounded-3xl bg-white p-7 ring-1 ring-slate-300/70 sm:flex-row sm:items-center sm:justify-between sm:p-8">
             <div className="flex items-start gap-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary">
                 <MessageCircleIcon className="h-5 w-5 text-accent" strokeWidth={1.75} aria-hidden="true" />
               </span>
               <div>
-                <h2 className="font-heading text-xl font-bold tracking-tight">Fant du ikke svaret?</h2>
-                <p className="mt-1 text-sm text-white/70">Send oss en melding, så hjelper vi deg.</p>
+                <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Fant du ikke svaret?</h2>
+                <p className="mt-1 text-sm text-slate-600">Send oss en melding, så hjelper vi deg.</p>
               </div>
             </div>
-            <Link
-              className="inline-flex h-11 shrink-0 items-center rounded-full bg-white px-6 text-sm font-semibold text-primary transition hover:bg-slate-100"
-              href="/contact"
-            >
+            <Link className={btnPrimary} href="/contact">
               Kontakt oss
             </Link>
           </div>

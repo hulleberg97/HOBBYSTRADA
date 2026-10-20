@@ -53,7 +53,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="border-y border-slate-200 bg-slate-50/70">
+      <section>
         <div className="mx-auto grid max-w-[1320px] gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
           <div>
             <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Dette finner du her</h2>
