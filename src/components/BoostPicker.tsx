@@ -159,7 +159,7 @@ export function BoostPicker() {
             <div
               key={key}
               data-popular={popular ? "true" : undefined}
-              className="relative flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 data-[popular=true]:ring-2 data-[popular=true]:ring-accent"
+              className="plan-card relative flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 data-[popular=true]:ring-2 data-[popular=true]:ring-accent"
             >
               {popular && (
                 <span className="absolute -top-3 left-6 rounded-full bg-accent px-2 py-1 font-mono-data text-[10px] font-semibold uppercase tracking-wider text-accent-foreground">
@@ -172,7 +172,7 @@ export function BoostPicker() {
               <h3 className="mt-5 font-heading text-xl font-semibold tracking-tight">{b.name}</h3>
               <p className="mt-1 font-mono-data text-xs uppercase tracking-wider text-muted-foreground">{b.days} dager</p>
               <p className="mt-5 font-heading text-4xl font-semibold tracking-tight">{formatPrice(b.price)}</p>
-              <ul className="mt-6 space-y-2.5 text-sm">
+              <ul className="mb-8 mt-6 space-y-2.5 text-sm">
                 {perks.map((p) => (
                   <li key={p} className="flex items-start gap-2">
                     <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#9a7420]" aria-hidden="true" />
@@ -184,7 +184,7 @@ export function BoostPicker() {
                 type="button"
                 disabled={busy !== null}
                 onClick={() => choose(key)}
-                className="mt-8 flex h-12 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+                className="mt-auto flex h-12 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
               >
                 {busy === key ? "Et øyeblikk …" : "Velg løft"}
               </button>
