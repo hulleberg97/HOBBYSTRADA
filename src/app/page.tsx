@@ -37,27 +37,32 @@ export default async function Home() {
     <div className="bg-background">
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-          <div className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
+          <div id="hero" className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
+            {/* Utkast: ?oppsett=a (tekst i midten) eller ?oppsett=b (tekst over) gir vifta hele bredden på PC */}
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");if(v==="a"||v==="b")document.getElementById("hero").dataset.oppsett=v})()`,
+              }}
+            />
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
             ></div>
-            <div className="relative grid items-center gap-2 px-6 pt-10 sm:px-10 sm:pt-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-0 lg:py-10 lg:pl-16 lg:pr-4">
-              <div className="min-w-0">
+            <div className="hero-grid relative grid items-center gap-2 px-6 pt-10 sm:px-10 sm:pt-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-0 lg:py-10 lg:pl-16 lg:pr-4">
+              <div className="hero-text min-w-0">
                 {/* Antallet vises først når det er stort nok til å imponere */}
                 {all.length >= 20 && (
-                  <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
+                  <p className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
                     {all.length} aktive annonser nå
                   </p>
                 )}
                 <h1 className="font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
                   Fotballkort.
-                  <br />
-                  <span className="text-gold-light">Kjøp og selg.</span>
+                  <br className="hero-br" /> <span className="text-gold-light">Kjøp og selg.</span>
                 </h1>
-                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for samlere.</p>
-                <div className="mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
+                <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">Norges markedsplass for samlere.</p>
+                <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
                     className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
                     href="/products"
@@ -80,7 +85,7 @@ export default async function Home() {
             {/* Kortene som glir ut til høyre tones inn i bakgrunnen i stedet for å kuttes av kanten */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 z-[300] hidden w-28 bg-[linear-gradient(90deg,transparent,#0b1830_85%)] lg:block"
+              className="hero-edge pointer-events-none absolute inset-y-0 right-0 z-[300] hidden w-28 bg-[linear-gradient(90deg,transparent,#0b1830_85%)] lg:block"
             ></div>
           </div>
         </div>

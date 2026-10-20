@@ -108,3 +108,19 @@
     radial-gradient(120% 90% at 30% 0%, #18304f 0%, #0d1a31 45%, #070d1a 100%);
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
 }
+
+/* Utkast til oppsett der vifta får hele bredden på PC (?oppsett=a eller b) */
+@media (min-width: 1024px) {
+  .hero-bg[data-oppsett] .hero-grid { grid-template-columns: 1fr; padding: 3.5rem 4rem 2rem; }
+  .hero-bg[data-oppsett] .hero-fan { max-width: none; --w: 18%; height: 470px; }
+  .hero-bg[data-oppsett] .hero-edge { display: none; }
+  .hero-bg[data-oppsett="a"] .hero-text { text-align: center; }
+  .hero-bg[data-oppsett="a"] .hero-br { display: none; }
+  .hero-bg[data-oppsett="a"] .hero-sub { margin-inline: auto; }
+  .hero-bg[data-oppsett="a"] .hero-buttons { justify-content: center; }
+  .hero-bg[data-oppsett="b"] .hero-text { display: grid; grid-template-columns: 1fr auto; column-gap: 3rem; align-items: end; }
+  .hero-bg[data-oppsett="b"] .hero-badge { grid-column: 1 / -1; justify-self: start; }
+  .hero-bg[data-oppsett="b"] h1 { grid-column: 1; grid-row: 2 / span 2; }
+  .hero-bg[data-oppsett="b"] .hero-sub { grid-column: 2; grid-row: 2; margin-top: 0; }
+  .hero-bg[data-oppsett="b"] .hero-buttons { grid-column: 2; grid-row: 3; margin-top: 1rem; }
+}

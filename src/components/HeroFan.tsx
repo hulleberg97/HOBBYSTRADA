@@ -192,7 +192,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
 
   const c = cards[center];
   return (
-    <div ref={box} className="relative mx-auto h-[380px] w-full max-w-[900px] [--w:44%] sm:h-[500px] sm:[--w:31%] lg:h-[540px]">
+    <div ref={box} className="hero-fan relative mx-auto h-[380px] w-full max-w-[900px] [--w:44%] sm:h-[500px] sm:[--w:31%] lg:h-[540px]">
       {/* Gyllent lys på gulvet under kortene */}
       <div
         aria-hidden="true"
