@@ -16,14 +16,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" className={schibsted.variable}>
+    <html lang="nb" data-stil="pro" data-tone="1" className={schibsted.variable}>
       <body>
-        {/* Test av fargetoner (?tone=1, 2 eller 3, ?tone=av for å skru av). Huskes mens fanen er åpen. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get("tone");if(q)sessionStorage.setItem("tone",q);var t=sessionStorage.getItem("tone");if(t&&t!=="av")document.documentElement.dataset.tone=t}catch(e){}})()`,
-          }}
-        />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

@@ -287,8 +287,7 @@ html[data-stil="pro"] .hero-bg[data-farge="lys"] { background: radial-gradient(5
 html[data-stil="pro"] footer.bg-ink { background: #111; }
 }
 
-/* TEST av fargetoner (?tone=1/2/3) */
-/* 1: Krem og marine – varm kremhvit bakgrunn, mørk marine meny og overskrifter med gull */
+/* Krem og marine (fast, data-tone="1" på <html>) – varm kremhvit bakgrunn, mørk marine meny og overskrifter med gull */
 html[data-tone="1"] { --background: 42 33% 96%; }
 html[data-tone="1"] body { background: hsl(var(--background)); }
 html[data-tone="1"] header.sticky { background: #0b1426; border-color: #0b1426; }
@@ -301,20 +300,4 @@ html[data-tone="1"] .hero-bg[data-farge="lys"] { background: radial-gradient(55%
 html[data-tone="1"] h1.font-heading, html[data-tone="1"] h2.font-heading { color: #0b1426; }
 html[data-tone="1"] .eyebrow { color: #a07a2c; }
 
-/* 2: Marine seksjoner – hvit side, men annenhver seksjon i dyp marine med hvit tekst og gull-overskrift */
-html[data-tone="2"] main > div > section:nth-of-type(4n + 3) { background: #0b1426; }
-html[data-tone="2"] main > div > section:nth-of-type(4n + 3) :is(h2, h3, p, span, li) { color: #f3efe6; }
-html[data-tone="2"] main > div > section:nth-of-type(4n + 3) .eyebrow { color: #e2c27a; }
-html[data-tone="2"] main > div > section:nth-of-type(4n + 3) :is(.bg-white) { background: #13213a; --tw-ring-color: rgb(255 255 255 / 0.1); }
-html[data-tone="2"] main > div > section:nth-of-type(4n + 3) .bg-primary { background: #cfa653; }
-html[data-tone="2"] h1.font-heading { color: #0b1426; }
-html[data-tone="2"] .hero-bg[data-farge="lys"] { background: linear-gradient(180deg, #f2f4f8, #fff); }
-
-/* 3: Varm sand og grønt – rolig grønn (fotballbane) som aksent i stedet for marineblått */
-html[data-tone="3"] { --background: 40 25% 96%; --primary: 155 45% 18%; }
-html[data-tone="3"] body { background: hsl(var(--background)); }
-html[data-tone="3"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, #fffdf8, transparent 70%), hsl(var(--background)); }
-html[data-tone="3"] h1.font-heading, html[data-tone="3"] h2.font-heading { color: #12392b; }
-html[data-tone="3"] .eyebrow { color: #a07a2c; }
-html[data-tone="3"] footer.bg-ink { background: #0f2a20; }
 html[data-tone="1"] header.sticky [data-current="true"], html[data-tone="1"] header.sticky [aria-expanded="true"] { background: rgb(255 255 255 / 0.12); color: #fff; }
