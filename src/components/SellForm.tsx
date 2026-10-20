@@ -612,41 +612,36 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
         <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px" }} name="_hp" />
       </div>
       <aside data-last={step === 3 ? "true" : undefined} className="hidden data-[last=true]:block lg:sticky lg:top-24 lg:block">
-        <div className="rounded-md bg-primary p-5 text-primary-foreground">
-          <p className="font-mono-data text-[11px] uppercase tracking-[0.18em] text-accent">Forhåndsvisning</p>
+        <div className="rounded-3xl bg-white p-5 ring-1 ring-slate-300/70">
+          <p className="font-mono-data text-[11px] uppercase tracking-[0.18em] text-[#8a6a24]">Forhåndsvisning</p>
           <div className="mx-auto mt-4 aspect-[5/7] w-full max-w-[220px]">
             {front ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={front.url} alt="" className="h-full w-full rounded-lg object-cover" />
             ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-white/25 bg-white/5 text-white/50">
+              <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 bg-slate-50 text-slate-400">
                 <CameraIcon className="h-6 w-6" aria-hidden="true" />
                 <span className="text-xs">Forsidebilde</span>
               </div>
             )}
           </div>
-          <p className="mt-5 line-clamp-2 font-heading text-base font-semibold leading-snug">{title}</p>
-          <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-white/10 font-mono-data text-[11px]">
+          <p className="mt-5 line-clamp-2 font-heading text-base font-semibold leading-snug text-slate-950">{title}</p>
+          <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-slate-200 font-mono-data text-[11px]">
             {[
               ["Type", typeLabel],
               ["Tilstand", v.grader === GRADERS[0] ? (conditionLabel(v.cond) ?? "") : `${v.grader} ${v.grade}`.trim()],
               ["Sesong", v.season || "—"],
               ["Pris", v.price ? formatPrice(Number(v.price)) : "— kr"],
             ].map(([k, val]) => (
-              <div key={k} className="bg-primary p-2.5">
-                <dt className="uppercase tracking-wider text-white/50">{k}</dt>
-                <dd className="mt-1 truncate text-white">{val}</dd>
+              <div key={k} className="bg-white p-2.5">
+                <dt className="uppercase tracking-wider text-slate-500">{k}</dt>
+                <dd className="mt-1 truncate text-slate-900">{val}</dd>
               </div>
             ))}
           </dl>
-          {error && <p className="mt-4 rounded-lg bg-white/10 px-3 py-2 text-xs text-white">{error}</p>}
-          {step < 3 && <p className="mt-5 text-center text-xs text-white/60">Steg {step + 1} av 4. Du sender inn i siste steg.</p>}
-          <button
-            type="submit"
-            hidden={step < 3}
-            disabled={!front || state === "sending"}
-            className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent text-sm font-semibold text-accent-foreground transition hover:bg-accent/90 disabled:opacity-60"
-          >
+          {error && <p className="mt-4 rounded-xl bg-destructive/5 px-3 py-2 text-xs text-destructive">{error}</p>}
+          {step < 3 && <p className="mt-5 text-center text-xs text-slate-500">Steg {step + 1} av 4. Du sender inn i siste steg.</p>}
+          <button type="submit" hidden={step < 3} disabled={!front || state === "sending"} className={`${btnPrimary} mt-5 w-full`}>
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             {state === "sending" ? "Sender inn …" : "Send inn annonsen"}
           </button>

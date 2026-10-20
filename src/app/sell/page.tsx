@@ -9,13 +9,6 @@ import { VippsButton } from "@/components/VerifiedBadge";
 export const metadata: Metadata = { title: "Legg ut kort" };
 export const dynamic = "force-dynamic";
 
-const STEPS = [
-  ["Lag annonsen", "Spiller, sett, tilstand, pris, sted og bilder."],
-  ["Vi sjekker annonsen", "Vi går raskt gjennom den før den legges ut i markedet."],
-  ["Kjøpere tar kontakt", "Du får varsel på e-post når noen skriver eller byr."],
-  ["Løft om du vil", "Fremhev annonsen for å selge raskere."],
-];
-
 export default async function SellPage() {
   const user = await getUser();
   const mustVerify = hasVippsLogin() && !(user && (await getVerification(user.id)));
@@ -25,19 +18,7 @@ export default async function SellPage() {
         eyebrow="Ny annonse"
         title="Legg ut kortet ditt"
         lead="Lag annonsen på et par minutter. Kjøperne kontakter deg direkte, og dere avtaler handelen selv."
-      >
-        <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-slate-300/70 pt-6 lg:grid-cols-4">
-          {STEPS.map(([t, d], i) => (
-            <li key={t} className="grid grid-cols-[2rem_1fr]">
-              <span className="font-mono-data text-xs font-semibold text-[#8a6a24]">0{i + 1}</span>
-              <div>
-                <p className="text-sm font-semibold">{t}</p>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{d}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </PageHeader>
+      ></PageHeader>
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         {!user && !mustVerify ? (
           <div className="mx-auto max-w-md rounded-3xl bg-white p-6 text-center ring-1 ring-slate-300/70 sm:p-8">
