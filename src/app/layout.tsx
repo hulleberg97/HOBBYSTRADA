@@ -27,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Test av overskrifter (?overskrift=2 eller 3, ?overskrift=av for å skru av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var r=new URLSearchParams(location.search).get("ring");if(r)sessionStorage.setItem("ring",r);if(sessionStorage.getItem("ring")==="1")document.documentElement.dataset.ring="1"}catch(e){}})();(function(){try{var q=new URLSearchParams(location.search).get("overskrift");if(q)sessionStorage.setItem("overskrift",q);var t=sessionStorage.getItem("overskrift");if(t&&t!=="av")document.documentElement.dataset.overskrift=t}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search).get("overskrift");if(q)sessionStorage.setItem("overskrift",q);var t=sessionStorage.getItem("overskrift");if(t&&t!=="av")document.documentElement.dataset.overskrift=t}catch(e){}})()`,
           }}
         />
         <Header />
