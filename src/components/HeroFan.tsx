@@ -255,13 +255,13 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
           <Link
             key={`${c.slug}-${center}`}
             href={`/products/${c.slug}`}
-            className="pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-[#0b1426]/85 py-2 pl-5 pr-2 text-left text-white ring-1 ring-inset ring-[#cfa653]/40"
+            className="pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-gradient-to-b from-[#fbf8f1] to-[#f1ebdd] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_10px_28px_-14px_rgb(11_20_38/0.45),inset_0_1px_0_#fff] ring-1 ring-inset ring-[#e3d7bb]"
           >
             <span className="min-w-0">
               <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{c.player}</span>
-              <span className="block truncate text-[11px] text-white/60 sm:text-xs">{c.set}</span>
+              <span className="block truncate text-[11px] text-[#6b6455] sm:text-xs">{c.set}</span>
             </span>
-            <span className="shrink-0 font-heading text-sm font-semibold text-[#f2dc9b] sm:text-base">{formatPrice(c.price)}</span>
+            <span className="shrink-0 font-heading text-sm font-bold text-[#8a6a24] sm:text-base">{formatPrice(c.price)}</span>
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
               <ArrowRightIcon className="h-4 w-4" aria-label="Se kortet" />
             </span>
