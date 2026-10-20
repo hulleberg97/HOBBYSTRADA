@@ -233,3 +233,11 @@
   .hero-bg[data-tekst="4"] .hero-text,
   .hero-bg[data-tekst="6"] .hero-text { margin-bottom: 2.25rem; }
 }
+/* Mobil: den gylne linjen vises også over vifta */
+@media (max-width: 1023px) {
+  .hero-bg[data-tekst="5"] .hero-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; text-align: center; }
+  .hero-bg[data-tekst="5"] h1, .hero-bg[data-tekst="5"] .hero-badge, .hero-bg[data-tekst="5"] .hero-buttons { display: none; }
+  .hero-bg[data-tekst="5"] .hero-sub { max-width: none; margin: 0.25rem 0 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem; font-size: 0.62rem; letter-spacing: 0.12em; white-space: nowrap; text-transform: uppercase; color: #8a6a24; }
+  .hero-bg[data-tekst="5"] .hero-sub::before, .hero-bg[data-tekst="5"] .hero-sub::after { content: ""; width: 2rem; height: 1px; background: linear-gradient(90deg, transparent, #cfa653); }
+  .hero-bg[data-tekst="5"] .hero-sub::after { transform: scaleX(-1); }
+}
