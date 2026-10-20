@@ -2,27 +2,27 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, MessageCircleIcon, SearchIcon, XIcon, ZapIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CircleUserIcon, HeartIcon, LayoutGridIcon, ChevronDownIcon, MenuIcon, MessageCircleIcon, SearchIcon, XIcon } from "lucide-react";
 import { FavoriteCount } from "./FavoriteButton";
 import { useUser } from "./useUser";
 import { SearchSuggest } from "./SearchSuggest";
 import { UnreadBadge } from "./UnreadBadge";
 
-const NAV = [
-  { href: "/products", label: "Markedet", Icon: LayoutGridIcon },
-  { href: "/annonseloft", label: "Annonseløft", Icon: ZapIcon },
-];
-
 const MOBILE_NAV = [
   ["/products", "Markedet"],
   ["/sell", "Legg ut kort"],
-  ["/annonseloft", "Annonseløft"],
   ["/favoritter", "Favoritter"],
-  ["/solgt", "Solgte kort"],
-  ["/about", "Om oss"],
-  ["/faq", "Spørsmål og svar"],
-  ["/contact", "Kontakt"],
+];
+
+/** Alt som forklarer hvordan markedet virker, samlet i én meny. */
+const HELP = [
+  ["/#trygg-handel", "Trygg handel", "Slik handler du trygt"],
+  ["/annonseloft", "Annonseløft", "Selg raskere med synlighet"],
+  ["/solgt", "Solgte kort", "Se hva kort har solgt for"],
+  ["/faq", "Spørsmål og svar", "Svar på det folk lurer på"],
+  ["/about", "Om oss", "Hvem står bak HOBBYSTRADA"],
+  ["/contact", "Kontakt", "Send oss en melding"],
 ];
 
 export function Header() {
@@ -31,6 +31,22 @@ export function Header() {
   const path = usePathname();
   const [q, setQ] = useState("");
   const [menu, setMenu] = useState(false);
+  const [help, setHelp] = useState(false);
+  const helpRef = useRef<HTMLDivElement>(null);
+
+  // Lukk «Slik fungerer det» ved klikk utenfor eller Escape
+  useEffect(() => {
+    if (!help) return;
+    const close = (e: MouseEvent | KeyboardEvent) => {
+      if (e instanceof KeyboardEvent ? e.key === "Escape" : !helpRef.current?.contains(e.target as Node)) setHelp(false);
+    };
+    document.addEventListener("mousedown", close);
+    document.addEventListener("keydown", close);
+    return () => {
+      document.removeEventListener("mousedown", close);
+      document.removeEventListener("keydown", close);
+    };
+  }, [help]);
 
   const go = (term: string) => {
     router.push(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search");
@@ -66,17 +82,36 @@ export function Header() {
             </label>
           </form>
           <nav className="ml-auto hidden items-center gap-1 xl:flex" aria-label="Hovedmeny">
-            {NAV.map(({ href, label, Icon }) => (
-              <Link
-                key={href}
-                data-current={path.startsWith(href) ? "true" : undefined}
-                className="flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-primary data-[current=true]:bg-slate-100 data-[current=true]:text-primary"
-                href={href}
+            <Link
+              data-current={path.startsWith("/products") ? "true" : undefined}
+              className="flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-primary data-[current=true]:bg-slate-100 data-[current=true]:text-primary"
+              href="/products"
+            >
+              <LayoutGridIcon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
+              Markedet
+            </Link>
+            <div ref={helpRef} className="relative">
+              <button
+                type="button"
+                aria-expanded={help}
+                aria-haspopup="true"
+                onClick={() => setHelp(!help)}
+                className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-primary aria-expanded:bg-slate-100 aria-expanded:text-primary"
               >
-                <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
-                {label}
-              </Link>
-            ))}
+                Slik fungerer det
+                <ChevronDownIcon className="h-4 w-4 transition [[aria-expanded=true]_&]:rotate-180" aria-hidden="true" />
+              </button>
+              {help && (
+                <div className="absolute right-0 top-full z-50 mt-2 w-[340px] rounded-3xl bg-white p-2 shadow-xl ring-1 ring-slate-300/70">
+                  {HELP.map(([href, label, hint]) => (
+                    <Link key={href} href={href} onClick={() => setHelp(false)} className="block rounded-2xl px-4 py-3 transition hover:bg-slate-100">
+                      <span className="block text-sm font-semibold text-slate-950">{label}</span>
+                      <span className="block text-xs text-slate-500">{hint}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
           <div className="ml-auto flex items-center gap-1.5 xl:ml-0">
             <Link
@@ -151,6 +186,21 @@ export function Header() {
                   <span className="text-slate-400">›</span>
                 </Link>
               ))}
+              <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">Slik fungerer det</p>
+              <ul className="mt-1">
+                {HELP.map(([href, label]) => (
+                  <li key={href}>
+                    <Link
+                      onClick={() => setMenu(false)}
+                      className="flex items-center justify-between border-b border-slate-100 py-3 text-[15px] font-medium text-slate-700 last:border-0"
+                      href={href}
+                    >
+                      {label}
+                      <span className="text-slate-400">›</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </nav>
             <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
               <Link
