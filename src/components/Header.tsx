@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, MessageCircleIcon, SearchIcon, ShoppingBagIcon, XIcon, ZapIcon } from "lucide-react";
+import { CircleUserIcon, HeartIcon, LayoutGridIcon, MenuIcon, MessageCircleIcon, SearchIcon, XIcon, ZapIcon } from "lucide-react";
 import { FavoriteCount } from "./FavoriteButton";
-import { CartDrawer } from "./CartDrawer";
 import { useUser } from "./useUser";
 import { SearchSuggest } from "./SearchSuggest";
 import { UnreadBadge } from "./UnreadBadge";
@@ -32,7 +31,6 @@ export function Header() {
   const path = usePathname();
   const [q, setQ] = useState("");
   const [menu, setMenu] = useState(false);
-  const [cart, setCart] = useState(false);
 
   const go = (term: string) => {
     router.push(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search");
@@ -88,14 +86,14 @@ export function Header() {
               <CircleUserIcon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
               {user ? "Min side" : "Logg inn"}
             </Link>
-            {user && (
+            {user !== undefined && (
               <Link
-                href="/meldinger"
+                href={user ? "/meldinger" : "/auth/login?next=/meldinger"}
                 aria-label="Meldinger"
                 className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
               >
                 <MessageCircleIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                <UnreadBadge />
+                {user && <UnreadBadge />}
               </Link>
             )}
             <Link
@@ -106,14 +104,6 @@ export function Header() {
               <HeartIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
               <FavoriteCount />
             </Link>
-            <button
-              type="button"
-              aria-label="Handlekurv"
-              onClick={() => setCart(true)}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
-            >
-              <ShoppingBagIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-            </button>
             <Link
               className="hidden h-10 items-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black sm:flex"
               href="/sell"
@@ -181,7 +171,6 @@ export function Header() {
           </div>
         )}
       </header>
-      <CartDrawer open={cart} onClose={() => setCart(false)} />
     </>
   );
 }

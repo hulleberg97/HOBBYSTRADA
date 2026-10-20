@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CookieButton } from "./CookieConsent";
+import { AccountLinks } from "./AccountLinks";
 import { COMPANY } from "@/lib/company";
 
 const COLS = [
@@ -27,9 +28,8 @@ const COLS = [
       ["/about", "Om markedet"],
       ["/#trygg-handel", "Trygg handel"],
       ["/contact", "Kontakt"],
-      ["/auth/login", "Logg inn"],
-      ["/auth/register", "Opprett konto"],
     ],
+    account: true,
   },
 ];
 
@@ -57,6 +57,7 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
+                  {"account" in c && <AccountLinks className="text-sm text-white/75 transition hover:text-white" />}
                 </ul>
               </div>
             ))}
