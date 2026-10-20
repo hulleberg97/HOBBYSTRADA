@@ -169,11 +169,11 @@
 .hero-bg[data-oppsett="vifte"] .hero-edge { display: none; }
 .hero-bg[data-oppsett="vifte"] .hero-fan { margin-top: -1.25rem; max-width: none; --w: 40%; height: 400px; }
 @media (min-width: 640px) {
-  .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(28%, calc((100vh - 230px) * 0.5)); height: clamp(360px, calc(100vh - 190px), 680px); }
+  .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(28%, calc((100vh - 255px) * 0.5)); height: clamp(330px, calc(100vh - 215px), 680px); }
 }
 @media (min-width: 1024px) {
   .hero-bg[data-oppsett="vifte"] .hero-grid { padding: 2rem 2rem 1rem; }
-  .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(22%, calc((100vh - 250px) * 0.5)); height: clamp(380px, calc(100vh - 200px), 680px); }
+  .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(22%, calc((100vh - 275px) * 0.5)); height: clamp(340px, calc(100vh - 225px), 680px); }
 }
 
 /* Utkast på PC: hvor teksten står når vifta er hovedfokus (?tekst=1, 2 eller 3) */
