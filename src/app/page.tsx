@@ -40,7 +40,7 @@ export default async function Home() {
           <div id="hero" data-v="a" className="hero-bg relative overflow-hidden rounded-[20px] text-white sm:rounded-[28px]">
             <script
               dangerouslySetInnerHTML={{
-                __html: `(function(){var v=new URLSearchParams(location.search).get("hero");if(v)document.getElementById("hero").dataset.v=v})()`,
+                __html: `(function(){var v=new URLSearchParams(location.search).get("hero");if(v&&/^[a-e]$/.test(v))document.getElementById("hero").dataset.v=v})()`,
               }}
             />
             <div

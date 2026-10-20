@@ -31,17 +31,21 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
  * kortene på sidene står litt bak og er svakt vridd inn mot midten. Nettleseren regner ut hva som ligger foran,
  * så kortet som kommer til midten svinger mykt frem uten å hoppe foran det forrige.
  */
+// Utkast: ?vifte=bred gir en flatere og bredere vifte (settes når siden lastes)
+let wide = false;
+
 function place(p: number) {
   const a = Math.abs(p);
   const side = Math.sign(p);
   const turn = Math.sin((Math.min(a, 1) * Math.PI) / 2); // 0 i midten, 1 fra nabo-plassen og utover
-  const x = side * (34 * a + 32 * turn); // god avstand rundt kortet i midten, så kortene ikke dekker hverandre når de bytter plass
-  const y = 8 * p * p + 2 * a;
+  const x = side * (wide ? 42 * a + 34 * turn : 34 * a + 32 * turn); // god avstand rundt kortet i midten, så kortene ikke dekker hverandre når de bytter plass
+  const y = wide ? 2.5 * p * p + a : 8 * p * p + 2 * a;
   const lift = Math.max(0, 1 - a);
   const z = 80 * (1 - turn) - 130 * turn - 60 * Math.max(0, a - 1);
-  const fade = a < 1.9 ? 1 : Math.max(0, 1 - (a - 1.9) / (EDGE - 1.9));
+  const edge = wide ? EDGE + 0.5 : EDGE;
+  const fade = a < edge - 0.55 ? 1 : Math.max(0, 1 - (a - (edge - 0.55)) / 0.55);
   return {
-    transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${(y - lift * 10).toFixed(1)}px, ${z.toFixed(1)}px) rotateZ(${(8 * p).toFixed(2)}deg) rotateY(${(-side * 30 * turn).toFixed(2)}deg) scale(${(1 + 0.06 * lift).toFixed(3)})`,
+    transform: `translate(-50%, 0) translate3d(${x.toFixed(2)}%, ${(y - lift * 10).toFixed(1)}px, ${z.toFixed(1)}px) rotateZ(${((wide ? 3 : 8) * p).toFixed(2)}deg) rotateY(${(-side * 30 * turn).toFixed(2)}deg) scale(${(1 + 0.06 * lift).toFixed(3)})`,
     opacity: fade,
     // Kortene utenfor midten er dempet, så kortet som kommer inn tones mykt opp
     dim: 0.42 * Math.min(1, a / 1.2) ** 1.3,
@@ -105,6 +109,8 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
   useEffect(() => {
     const el = box.current;
     if (!el || n < 2) return;
+    wide = new URLSearchParams(window.location.search).get("vifte") === "bred";
+    el.dataset.vifte = wide ? "bred" : "";
     // På mobil glir vifta litt roligere. Med «Reduser bevegelse» glir den saktere i stedet for å stå stille.
     const phone = window.matchMedia("(max-width: 640px)").matches ? 0.7 : 1;
     const base = SPEED * phone * (window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0.5 : 1);
@@ -182,7 +188,10 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
 
   const c = cards[center];
   return (
-    <div ref={box} className="relative mx-auto h-[330px] w-full max-w-[600px] [--w:38%] sm:h-[430px] sm:[--w:34%] lg:h-[470px]">
+    <div
+      ref={box}
+      className="relative mx-auto h-[330px] w-full max-w-[600px] [--w:38%] sm:h-[430px] sm:[--w:34%] lg:h-[470px] sm:data-[vifte=bred]:[--w:27%] lg:data-[vifte=bred]:max-w-[860px]"
+    >
       {/* Gyllent lys på gulvet under kortene */}
       <div
         aria-hidden="true"

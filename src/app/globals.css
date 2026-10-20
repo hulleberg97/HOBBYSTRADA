@@ -103,6 +103,10 @@
 /* Bakgrunnen i toppen av forsiden (utkast a, b, c) */
 .hero-bg {
   isolation: isolate;
+  /* Standard (Midnatt), også hvis adressen har et ukjent utkast */
+  background:
+    radial-gradient(70% 55% at 72% 68%, rgb(207 166 83 / 0.16), transparent 65%),
+    radial-gradient(120% 90% at 30% 0%, #18304f 0%, #0d1a31 45%, #070d1a 100%);
 }
 .hero-bg::before {
   content: "";
