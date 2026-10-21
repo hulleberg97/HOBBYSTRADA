@@ -448,3 +448,27 @@ html .text-\[22px\] { font-size: 24px; }
 html .text-\[28px\], html .text-3xl { font-size: 32px; line-height: 1.15; }
 html .text-\[40px\] { font-size: 44px; }
 
+
+/* TEST mer dybde i det lyse designet (?dybde=1): hvitt i tre lag, lagdelte myke skygger og lys ovenfra */
+/* 1. Hvitt i lag: varm offwhite bakgrunn med lys ovenfra (eget fast lag, så det blir likt på iPhone) */
+html[data-dybde][data-glans] body { background: #f8f7f4; }
+html[data-dybde][data-glans] body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(90% 55% at 50% -8%, #ffffff 0%, rgb(255 255 255 / 0.6) 40%, transparent 75%), radial-gradient(60% 40% at 0% 0%, rgb(232 238 248 / 0.7), transparent 70%), radial-gradient(50% 35% at 100% 0%, rgb(250 243 228 / 0.7), transparent 70%); }
+html[data-dybde][data-glans] body { background-attachment: scroll; }
+html[data-dybde] .seksjon-alt { background: linear-gradient(180deg, transparent 0%, rgb(238 242 248 / 0.75) 12%, rgb(238 242 248 / 0.75) 88%, transparent 100%) !important; }
+/* 2. Lagdelte skygger og glanskant på bokser og kort – rent hvitt løfter seg fra bakgrunnen */
+html[data-dybde][data-glans] :is(.bg-white, .card-frame):not(select, [aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) {
+  background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 60%, #fafafa 100%);
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgb(15 23 42 / 0.04), 0 1px 2px rgb(15 23 42 / 0.05), 0 4px 8px -2px rgb(15 23 42 / 0.04), 0 18px 36px -12px rgb(15 23 42 / 0.12), 0 40px 70px -30px rgb(15 23 42 / 0.10);
+}
+html[data-dybde][data-glans] :is(a, button).rounded-full.bg-white { box-shadow: inset 0 1px 0 #fff, 0 0 0 1px #e3dccb, 0 2px 4px rgb(15 23 42 / 0.05), 0 8px 18px -10px rgb(15 23 42 / 0.15); }
+/* 3. Menylinjen som glass med lys kant */
+html[data-dybde][data-glans] header.sticky { background: rgb(255 255 255 / 0.75) !important; box-shadow: 0 1px 0 rgb(15 23 42 / 0.05), 0 10px 30px -20px rgb(15 23 42 / 0.25) !important; }
+/* 4. Scenelys bak kortbildene i listene */
+html[data-dybde][data-glans] .card-frame { background: radial-gradient(70% 55% at 50% 40%, #ffffff 0%, #f6f7f9 60%, #eceef2 100%); }
+html[data-dybde][data-glans] .card-frame img { box-shadow: 0 2px 4px rgb(15 23 42 / 0.12), 0 22px 34px -16px rgb(15 23 42 / 0.55) !important; }
+html[data-dybde][data-glans] [data-featured="true"] .card-frame { box-shadow: inset 0 0 0 1.5px #cfa653, 0 1px 2px rgb(15 23 42 / 0.05), 0 18px 36px -14px rgb(207 166 83 / 0.45); }
+html[data-dybde] .group:hover .card-frame { box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgb(15 23 42 / 0.05), 0 26px 50px -18px rgb(15 23 42 / 0.25) !important; }
+/* Vifta: bakgrunnen gjennomsiktig så lyset ovenfra synes */
+html[data-dybde][data-glans] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 62%, #ffffff, transparent 70%); }
+html[data-dybde][data-glans] .hero-bg [data-dim] { background: #f8f7f4; }

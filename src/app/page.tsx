@@ -244,7 +244,7 @@ export default async function Home() {
           <ListingGrid listings={latest} />
         </div>
       </section>
-      <section className="bg-background">
+      <section className="seksjon-alt bg-background">
         <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <Eyebrow>Slik fungerer det</Eyebrow>
           <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Ingen mellomledd</h2>
@@ -354,7 +354,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-background">
+      <section className="seksjon-alt bg-background">
         <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
