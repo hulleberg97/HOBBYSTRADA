@@ -3,16 +3,12 @@ import { conditionLabel } from "@/lib/conditions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  AwardIcon,
-  CalendarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   EyeIcon,
   HandCoinsIcon,
-  HashIcon,
   MessageCircleIcon,
   ShieldCheckIcon,
-  SparklesIcon,
 } from "lucide-react";
 import { CardArt } from "@/components/CardArt";
 import { Gallery } from "@/components/Gallery";
@@ -53,15 +49,8 @@ export default async function ListingPage({ params }: Props) {
 
   // «01/25» er nummereringen (kort 1 av 25), ikke kortnummeret, så det vises som «Nummerert»
   const cardNumber = l.cardNumber && l.cardNumber !== l.numbered ? l.cardNumber : null;
-  const numberChip = cardNumber ? `Kortnr. ${cardNumber}` : l.numbered ? `Nummerert ${l.numbered}` : null;
 
   // Bare felt selgeren har fylt ut vises
-  const facts: [typeof HashIcon, string, string][] = [];
-  if (cardNumber) facts.push([HashIcon, "Kortnummer", cardNumber]);
-  else if (l.numbered) facts.push([HashIcon, "Nummerert", l.numbered]);
-  if (l.grading) facts.push([AwardIcon, "Gradering", l.grading]);
-  if (l.condition) facts.push([SparklesIcon, "Tilstand", conditionLabel(l.condition)!]);
-  else if (l.season) facts.push([CalendarIcon, "Sesong", l.season]);
 
   const rows: [string, string | null][] = [
     ["Spiller", l.player],
@@ -117,7 +106,6 @@ export default async function ListingPage({ params }: Props) {
             <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
             <span className="hidden truncate text-slate-900 sm:inline">{l.player}</span>
           </nav>
-          {numberChip && <span className="t-nrchip shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">{numberChip}</span>}
         </div>
         <div className="mt-5 grid gap-8 lg:mt-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
           <div className="lg:sticky lg:top-24 lg:self-start">
@@ -182,15 +170,6 @@ export default async function ListingPage({ params }: Props) {
               {l.set}
               {(l.club || l.league) && <span className="text-slate-400"> · {[l.club, l.league].filter(Boolean).join(" · ")}</span>}
             </p>
-            <dl className="t-facts mt-6 grid gap-2 empty:hidden sm:gap-3" style={{ gridTemplateColumns: `repeat(${Math.max(facts.length, 1)}, minmax(0, 1fr))` }}>
-              {facts.map(([Icon, label, value]) => (
-                <div key={label} className="rounded-2xl bg-white p-3 ring-1 ring-inset ring-slate-300/70 sm:p-4">
-                  <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />
-                  <dt className="mt-2 text-[11px] text-slate-500 sm:text-xs">{label}</dt>
-                  <dd className="mt-0.5 text-sm font-semibold leading-snug text-slate-900">{value}</dd>
-                </div>
-              ))}
-            </dl>
             <div className="mt-6">
               <div>
                 <ContactCard listing={l} />

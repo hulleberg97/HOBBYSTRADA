@@ -488,23 +488,19 @@ html[data-tittel="1"] .hero-sub > span[data-t="1"], html[data-tittel="2"] .hero-
 html[data-tittel] .hero-sub .hero-accent { display: inline; }
 .tittel-under { display: block; margin-top: 0.5rem; font-size: max(0.875rem, 0.42em); font-weight: 500; letter-spacing: 0; line-height: 1.3; background: none !important; -webkit-text-fill-color: #64748b; filter: none; }
 
-/* TEST designforslag (?annonse=1, ?skala=1, ?forside=1, ?hjorner=1, ?kortinfo=1, ?alle=1, =av for å slå av) */
-/* 1: annonsesiden uten dobbel info – fjern faktaboksene og kortnummer-lappen, tabellen «Kortdata» har alt */
-html[data-t-annonse] :is(.t-facts, .t-nrchip) { display: none; }
-/* 2: fast skriftskala 12 / 14 / 16 / 18 / 24 / 32 / 48 */
-html[data-t-skala] .text-\[11px\] { font-size: 12px; }
-html[data-t-skala] .text-\[13px\] { font-size: 14px; }
-html[data-t-skala] .text-\[15px\] { font-size: 16px; }
-html[data-t-skala] .card-title { font-size: 14px; }
-html[data-t-skala] .text-\[10px\]:not(.hero-fan *) { font-size: 12px; }
-/* 3: forsiden uten den ekstra «Har du kort i skuffen?»-boksen nederst */
-html[data-t-forside] .t-sellcta { display: none; }
-/* 4: like hjørner – store flater 24 px, mindre bokser og bilder 12 px */
-html[data-t-hjorner] main :is(.rounded-md, .rounded-lg, .rounded-xl, .rounded-\[10px\], .rounded-2xl):not(.hero-fan *, img) { border-radius: 12px; }
-html[data-t-hjorner] main :is(.rounded-3xl, .rounded-\[28px\], .rounded-\[20px\]):not(.hero-fan *) { border-radius: 24px; }
-/* 5: sted og tid på én linje i kortene */
-html[data-t-kortinfo] .card-meta { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; gap: 0.35rem; }
-html[data-t-kortinfo] .card-meta .card-time svg { display: none; }
-html[data-t-kortinfo] .card-meta > * + .card-time::before { content: "·"; margin-right: 0.35rem; }
-html[data-t-kortinfo] .card-meta .card-time-short { display: inline; }
-html[data-t-kortinfo] .card-meta .card-time-short ~ * , html[data-t-kortinfo] .card-meta .card-time:has(.card-time-short) > span:not(.card-time-short) { display: none; }
+/* Designsystem: fast skriftskala, like hjørner og kompakt kortinfo */
+/* Fast skriftskala 12 / 14 / 16 / 18 / 24 / 32 / 48 */
+html .text-\[11px\] { font-size: 12px; }
+html .text-\[13px\] { font-size: 14px; }
+html .text-\[15px\] { font-size: 16px; }
+html .card-title { font-size: 14px; }
+html .text-\[10px\]:not(.hero-fan *) { font-size: 12px; }
+/* Like hjørner – store flater 24 px, mindre bokser og bilder 12 px */
+html main :is(.rounded-md, .rounded-lg, .rounded-xl, .rounded-\[10px\], .rounded-2xl):not(.hero-fan *, img) { border-radius: 12px; }
+html main :is(.rounded-3xl, .rounded-\[28px\], .rounded-\[20px\]):not(.hero-fan *) { border-radius: 24px; }
+/* Sted og tid på én linje i kortene */
+html .card-meta { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; gap: 0.35rem; }
+html .card-meta .card-time svg { display: none; }
+html .card-meta > * + .card-time::before { content: "·"; margin-right: 0.35rem; }
+html .card-meta .card-time-short { display: inline; }
+html .card-meta .card-time-short ~ * , html .card-meta .card-time:has(.card-time-short) > span:not(.card-time-short) { display: none; }

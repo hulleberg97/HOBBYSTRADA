@@ -13,7 +13,7 @@ import {
   StarIcon,
 } from "lucide-react";
 import { HeroFan } from "@/components/HeroFan";
-import { Eyebrow, SellCta, btnSecondary } from "@/components/ui";
+import { Eyebrow, btnSecondary } from "@/components/ui";
 import { fanCards } from "@/lib/fan";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
@@ -467,11 +467,6 @@ export default async function Home() {
               </span>
             </Link>
           </div>
-        </div>
-      </section>
-      <section className="t-sellcta bg-background">
-        <div className="mx-auto max-w-[1320px] px-4 pb-16 pt-4 sm:px-6 md:pb-24 lg:px-8">
-          <SellCta secondary={{ href: "/faq", label: "Spørsmål og svar" }} />
         </div>
       </section>
     </div>
