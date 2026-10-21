@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Inter_Tight, Manrope, Plus_Jakarta_Sans, Schibsted_Grotesk, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 
 const schibsted = Schibsted_Grotesk({ variable: "--nf-schibsted", subsets: ["latin"] });
+// TEST skrifttyper for overskriften (?ot=1a–1f). Lastes ikke på forhånd, så de ikke gjør siden tregere.
+const tGeist = Geist({ variable: "--t-geist", subsets: ["latin"], weight: ["600", "700", "800"], preload: false });
+const tGeistMono = Geist_Mono({ variable: "--t-geistmono", subsets: ["latin"], weight: ["500"], preload: false });
+const tInterTight = Inter_Tight({ variable: "--t-intertight", subsets: ["latin"], weight: ["700", "800"], preload: false });
+const tSpace = Space_Grotesk({ variable: "--t-space", subsets: ["latin"], weight: ["600", "700"], preload: false });
+const tSora = Sora({ variable: "--t-sora", subsets: ["latin"], weight: ["600", "700"], preload: false });
+const tManrope = Manrope({ variable: "--t-manrope", subsets: ["latin"], weight: ["700", "800"], preload: false });
+const tJakarta = Plus_Jakarta_Sans({ variable: "--t-jakarta", subsets: ["latin"], weight: ["700", "800"], preload: false });
+const testFonts = [tGeist.variable, tGeistMono.variable, tInterTight.variable, tSpace.variable, tSora.variable, tManrope.variable, tJakarta.variable].join(" ");
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://hobbystrada.vercel.app"),
@@ -16,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" className={schibsted.variable}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" className={`${schibsted.variable} ${testFonts}`}>
       <body>
         {/* Test av mer dybde i det lyse designet (?dybde=1, ?dybde=av). Huskes mens fanen er åpen. */}
         <script
@@ -27,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Test av overskriften (?ot=1–4, ?ot=av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ot");if(v)sessionStorage.setItem("ot",v);var m=sessionStorage.getItem("ot");if(/^[1-7]$/.test(m||""))document.documentElement.dataset.ot=m}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ot");if(v)sessionStorage.setItem("ot",v);var m=sessionStorage.getItem("ot");if(/^([1-7]|1[a-f])$/.test(m||""))document.documentElement.dataset.ot=m}catch(e){}})()`,
           }}
         />
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}

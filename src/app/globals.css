@@ -504,12 +504,12 @@ html .fan-pill { background: rgb(255 255 255 / 0.45) !important; backdrop-filter
 /* TEST overskrift over vifta (?ot=1–4) */
 html[data-linje="s6"][data-ot] .hero-bg .hero-sub > span { -webkit-box-decoration-break: clone; }
 /* 1 Stor og tydelig: større, tett og blank marine, undertekst som gull-etikett over */
-html[data-linje="s6"][data-ot="1"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
-html[data-linje="s6"][data-ot="1"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="1"] .hero-accent { background-image: linear-gradient(180deg, #2c3e66 0%, #0b1426 55%, #050a14 100%); }
-html[data-linje="s6"][data-ot="1"] .hero-bg .hero-sub > span { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 0.25em; }
-html[data-linje="s6"][data-ot="1"] .tittel-under { order: -1; flex-basis: 100%; }
-html[data-linje="s6"][data-ot="1"] .tittel-under { margin: 0 0 0.9rem; font-size: 11px !important; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; -webkit-text-fill-color: #8a6a24; }
-@media (max-width: 767px) { html[data-linje="s6"][data-ot="1"] .hero-accent { display: inline; } html[data-linje="s6"][data-ot="1"] .hero-bg .hero-sub.hero-sub { font-size: 2.1rem; } }
+html[data-linje="s6"][data-ot^="1"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+html[data-linje="s6"][data-ot^="1"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot^="1"] .hero-accent { background-image: linear-gradient(180deg, #2c3e66 0%, #0b1426 55%, #050a14 100%); }
+html[data-linje="s6"][data-ot^="1"] .hero-bg .hero-sub > span { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 0.25em; }
+html[data-linje="s6"][data-ot^="1"] .tittel-under { order: -1; flex-basis: 100%; }
+html[data-linje="s6"][data-ot^="1"] .tittel-under { margin: 0 0 0.9rem; font-size: 11px !important; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; -webkit-text-fill-color: #8a6a24; }
+@media (max-width: 767px) { html[data-linje="s6"][data-ot^="1"] .hero-accent { display: inline; } html[data-linje="s6"][data-ot^="1"] .hero-bg .hero-sub.hero-sub { font-size: 2.1rem; } }
 /* 2 Glassetikett: overskriften i en frostet glassplate */
 html[data-linje="s6"][data-ot="2"] .hero-bg .hero-sub.hero-sub { display: table; margin-inline: auto; padding: 0.9rem 1.6rem 1rem; border-radius: 20px; background: rgb(255 255 255 / 0.42); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgb(255 255 255 / 0.7), 0 18px 40px -22px rgb(11 20 38 / 0.45); font-size: clamp(1.5rem, 2.8vw, 2.2rem); filter: none; }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="2"] .hero-accent { display: inline; } html[data-linje="s6"][data-ot="2"] .hero-bg .hero-sub.hero-sub { padding: 0.75rem 1.1rem; font-size: 1.45rem; } }
@@ -538,3 +538,25 @@ html[data-linje="s6"][data-ot="7"] .hero-bg .hero-ghost { color: #0b1426 !import
 html[data-linje="s6"][data-ot="7"] .hero-bg .hero-ghost:hover { background: #0b1426 !important; color: #fff !important; }
 html[data-linje="s6"][data-ot="7"] .hero-bg :is(.hero-primary, .hero-ghost) { border-radius: 999px !important; }
 @media (min-width: 1024px) { html[data-linje="s6"][data-ot="7"] .hero-bg :is(.hero-primary, .hero-ghost) { height: 3rem; padding-inline: 1.6rem; font-size: 16px; } }
+
+/* TEST skrift og farge på utkast 1 (?ot=1a–1f) */
+/* 1a Geist + ren marine – Vercel/Next-stilen */
+html[data-linje="s6"][data-ot="1a"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-geist); font-weight: 700; letter-spacing: -0.05em; }
+html[data-linje="s6"][data-ot="1a"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="1a"] .hero-accent { background-image: none; -webkit-text-fill-color: #0b1426; }
+html[data-linje="s6"][data-ot="1a"] .tittel-under { font-family: var(--t-geistmono); letter-spacing: 0.18em; -webkit-text-fill-color: #64748b; }
+/* 1b Inter Tight + grafitt til marine */
+html[data-linje="s6"][data-ot="1b"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-intertight); font-weight: 800; letter-spacing: -0.045em; }
+html[data-linje="s6"][data-ot="1b"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="1b"] .hero-accent { background-image: linear-gradient(180deg, #3b3f4a 0%, #1d1d1f 45%, #0b1426 100%); }
+/* 1c Space Grotesk + marine, teknisk etikett i mono */
+html[data-linje="s6"][data-ot="1c"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-space); font-weight: 700; letter-spacing: -0.04em; }
+html[data-linje="s6"][data-ot="1c"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="1c"] .hero-accent { background-image: none; -webkit-text-fill-color: #0b1426; }
+html[data-linje="s6"][data-ot="1c"] .tittel-under { font-family: var(--t-geistmono); letter-spacing: 0.2em; -webkit-text-fill-color: #8a6a24; }
+/* 1d Sora + marine med elektrisk blått skjær */
+html[data-linje="s6"][data-ot="1d"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-sora); font-weight: 700; letter-spacing: -0.045em; }
+html[data-linje="s6"][data-ot="1d"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="1d"] .hero-accent { background-image: linear-gradient(100deg, #0b1426 0%, #12254d 45%, #2f5bd3 100%); }
+html[data-linje="s6"][data-ot="1d"] .tittel-under { -webkit-text-fill-color: #3b5bab; }
+/* 1e Manrope + nesten sort, gull-etikett */
+html[data-linje="s6"][data-ot="1e"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-manrope); font-weight: 800; letter-spacing: -0.045em; }
+html[data-linje="s6"][data-ot="1e"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="1e"] .hero-accent { background-image: none; -webkit-text-fill-color: #111318; }
+/* 1f Plus Jakarta Sans + blank marine (som 1) */
+html[data-linje="s6"][data-ot="1f"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-jakarta); font-weight: 800; letter-spacing: -0.045em; }
