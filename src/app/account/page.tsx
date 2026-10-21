@@ -36,9 +36,12 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
     <div>
       <section className="border-b border-slate-300/60">
         <div className="mx-auto flex max-w-[880px] flex-wrap items-end justify-between gap-4 px-4 py-10 sm:px-6 sm:py-14">
-          <div>
+          <div className="min-w-0">
             <Eyebrow>Min side</Eyebrow>
-            <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Hei, {user.name}</h1>
+            <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 [overflow-wrap:anywhere] sm:text-[44px]">
+              {/* Fornavnet holder; er navnet en e-post, brukes delen før @ */}
+              Hei, {user.name.includes("@") ? user.name.split("@")[0] : user.name.split(" ")[0]}
+            </h1>
             <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
               {user.email}
               {verification && <VerifiedBadge />}

@@ -232,7 +232,8 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                 className="block h-1.5 rounded-full bg-slate-300/70 transition-colors data-[done=true]:bg-primary"
               ></span>
               <span className="mt-1.5 block truncate text-[11px] font-semibold text-slate-500 sm:text-xs [[aria-current=step]_&]:text-slate-950">
-                {i + 1}. {label}
+                {i + 1}. <span className="sm:hidden">{label === "Tilstand og pris" ? "Pris" : label}</span>
+                <span className="hidden sm:inline">{label}</span>
               </span>
             </li>
           ))}
