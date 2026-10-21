@@ -584,3 +584,16 @@ html[data-balanse][data-glans] :is(.bg-white, .card-frame):not(select, [aria-cur
 html[data-balanse][data-glans] .card-frame { background: radial-gradient(70% 60% at 50% 40%, #ffffff 0%, #f6f7f8 65%, #eef0f2 100%); }
 html[data-balanse] main .text-slate-400 { color: var(--nb-dempet); }
 html[data-balanse] main .bg-slate-50, html[data-balanse] main .bg-slate-100 { background-color: var(--nb-flate); }
+/* Bobler med farge (fylt lys grå, ingen kant) på hvit side – gir struktur */
+html[data-balanse] { --nb-boble: #eceef2; --nb-boble-hover: #dfe3e9; }
+html[data-balanse][data-glans] :is(a, button).rounded-full:is(.bg-white, .bg-slate-100, .bg-slate-200):not([aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]),
+html[data-balanse] main :is(button, a).rounded-full.border:not(.bg-primary):not([aria-pressed="true"]):not([aria-current="true"]),
+html[data-balanse] main select.rounded-full { background-color: var(--nb-boble) !important; border-color: transparent !important; box-shadow: none !important; color: #0b1426; }
+html[data-balanse][data-glans] :is(a, button).rounded-full:is(.bg-white, .bg-slate-100, .bg-slate-200):not([aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]):hover,
+html[data-balanse] main :is(button, a).rounded-full.border:not(.bg-primary):not([aria-pressed="true"]):not([aria-current="true"]):hover,
+html[data-balanse] main select.rounded-full:hover { background-color: var(--nb-boble-hover) !important; }
+html[data-balanse] main button[aria-pressed="true"].rounded-full { background: #0b1426 !important; color: #fff !important; border-color: #0b1426 !important; box-shadow: none !important; }
+html[data-balanse] header.sticky a[href="/auth/login"], html[data-balanse] header.sticky a[href="/account"] { background: var(--nb-boble) !important; box-shadow: none !important; }
+html[data-balanse][data-glans] span.rounded-full.bg-white, html[data-balanse] main span.rounded-full.bg-slate-100 { background: var(--nb-boble); color: #334155; }
+/* Flater: hvite med tydeligere, myk skygge, så bokser skilles fra bakgrunnen */
+html[data-balanse][data-glans] :is(.bg-white, .card-frame):not(select, a.rounded-full, button.rounded-full, span.rounded-full, [aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) { box-shadow: 0 0 0 1px rgb(15 23 42 / 0.06), 0 2px 4px rgb(15 23 42 / 0.04), 0 16px 36px -18px rgb(15 23 42 / 0.22); }
