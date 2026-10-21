@@ -30,7 +30,7 @@ export function FavoriteButton({ slug, title, variant = "card" }: { slug: string
       onClick={click}
       aria-pressed={on}
       aria-label={on ? `Fjern ${title} fra favoritter` : `Lagre ${title} som favoritt`}
-      className="absolute right-2.5 top-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-sm ring-1 ring-slate-200 backdrop-blur transition hover:scale-105 hover:text-rose-600 aria-pressed:text-rose-600 sm:right-3 sm:top-3"
+      className="absolute right-2.5 top-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 before:absolute before:-inset-1.5 before:content-[''] text-slate-700 shadow-sm ring-1 ring-slate-200 backdrop-blur transition hover:scale-105 hover:text-rose-600 aria-pressed:text-rose-600 sm:right-3 sm:top-3"
     >
       <HeartIcon className={`h-4 w-4 ${on ? "fill-current" : ""}`} aria-hidden="true" />
     </button>

@@ -52,7 +52,7 @@ export function Footer() {
                 <ul className="mt-4 space-y-2.5">
                   {c.links.map(([href, label]) => (
                     <li key={href}>
-                      <Link className="text-sm text-white/75 transition hover:text-white" href={href}>
+                      <Link className="relative text-sm text-white/75 transition before:absolute before:-inset-y-2 before:inset-x-0 before:content-[''] hover:text-white" href={href}>
                         {label}
                       </Link>
                     </li>
@@ -74,7 +74,7 @@ export function Footer() {
                 ["/refund-policy", "Retur og refusjon"],
               ] as const
             ).map(([href, label]) => (
-              <Link key={href} href={href} className="transition hover:text-white">
+              <Link key={href} href={href} className="relative transition before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] hover:text-white">
                 {label}
               </Link>
             ))}

@@ -53,9 +53,9 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           )}
         </div>
         <div className="flex flex-1 flex-col px-0.5 pt-3">
-          <h3 className={`card-title line-clamp-2 text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
+          <p className={`card-title line-clamp-2 text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
             {listing.title}
-          </h3>
+          </p>
           {market ? (
             <div className="mt-1.5 text-lg font-bold tracking-tight text-slate-950">
               <span className="font-heading text-lg font-semibold tracking-tight">{formatPrice(listing.price)}</span>

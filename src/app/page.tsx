@@ -63,11 +63,12 @@ export default async function Home() {
                     {all.length} aktive annonser nå
                   </p>
                 )}
-                <h1 className="font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
+                <p className="hero-title font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
                   Fotballkort.
                   <br className="hero-br" /> <span className="hero-gold text-gold-light">Kjøp og selg.</span>
-                </h1>
-                <p className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
+                </p>
+                {/* Overskriften som vises over vifta er sidens h1 */}
+                <h1 className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
                   <span data-t="0">
                     Norges markedsplass for <span className="hero-accent">fotballkort</span>
                   </span>
@@ -82,7 +83,7 @@ export default async function Home() {
                   <span data-t="3">
                     Finn ditt neste <span className="hero-accent">fotballkort</span>
                   </span>
-                </p>
+                </h1>
                 <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
                     className="hero-primary inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
