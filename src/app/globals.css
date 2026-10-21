@@ -472,3 +472,19 @@ html[data-dybde] .group:hover .card-frame { box-shadow: inset 0 1px 0 #fff, 0 0 
 /* Vifta: bakgrunnen gjennomsiktig så lyset ovenfra synes */
 html[data-dybde][data-glans] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 62%, #ffffff, transparent 70%); }
 html[data-dybde][data-glans] .hero-bg [data-dim] { background: #f8f7f4; }
+
+/* TEST lys og glans rundt vifta (?vifte=1 studio, ?vifte=2 glassgulv, ?vifte=3 gullhalo) */
+html[data-vifte] .hero-bg { isolation: isolate; }
+html[data-vifte] .hero-fan::before, html[data-vifte] .hero-fan::after { content: ""; position: absolute; pointer-events: none; z-index: -1; }
+/* 1 Studio: lys bakvegg som mørkner mot kantene, tydelig spotlys ovenfra og skygge på gulvet */
+html[data-vifte="1"] .hero-bg[data-farge="lys"] { background: radial-gradient(60% 75% at 50% 40%, #ffffff 0%, rgb(255 255 255 / 0.6) 35%, rgb(226 231 239 / 0.85) 75%, rgb(226 231 239 / 0) 100%); }
+html[data-vifte="1"] .hero-fan::before { left: 50%; top: -18%; width: 64%; height: 100%; transform: translateX(-50%); background: radial-gradient(50% 100% at 50% 0%, rgb(255 255 255 / 1), rgb(255 255 255 / 0.7) 45%, transparent 80%); clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); filter: blur(14px); }
+html[data-vifte="1"] .hero-fan::after { left: 50%; bottom: 7%; width: 72%; height: 60px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(15 23 42 / 0.35), rgb(15 23 42 / 0.12) 55%, transparent); filter: blur(8px); }
+/* 2 Glassgulv: blank gulvflate under kortene med lys horisontlinje og speiling */
+html[data-vifte="2"] .hero-bg[data-farge="lys"] { background: radial-gradient(48% 22% at 50% 70%, rgb(214 221 232 / 0.9), rgb(232 236 243 / 0.5) 60%, transparent 100%), radial-gradient(60% 55% at 50% 38%, #ffffff, transparent 75%); }
+html[data-vifte="2"] .hero-fan::before { left: 4%; right: 4%; top: 61.5%; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, #fff 25%, #fff 75%, transparent); box-shadow: 0 0 24px 8px rgb(255 255 255 / 0.95), 0 6px 30px 4px rgb(11 20 38 / 0.06); }
+html[data-vifte="2"] .hero-fan::after { left: 50%; bottom: 3%; width: 80%; height: 34%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(214 178 95 / 0.32), rgb(214 178 95 / 0.10) 55%, transparent); }
+/* 3 Gullhalo: varm gylden glød og fine lysstråler bak midtkortet */
+html[data-vifte="3"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 60% at 50% 45%, #fdf6e4 0%, rgb(253 246 228 / 0.6) 45%, transparent 80%); }
+html[data-vifte="3"] .hero-fan::before { left: 50%; top: -2%; width: min(640px, 92%); aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(232 200 120 / 0.75), rgb(232 205 132 / 0.30) 45%, transparent 72%); filter: blur(8px); }
+html[data-vifte="3"] .hero-fan::after { left: 50%; top: -10%; width: min(1100px, 140%); height: 110%; transform: translateX(-50%); background: repeating-conic-gradient(from 0deg at 50% 42%, rgb(201 160 70 / 0.22) 0deg 1.6deg, transparent 1.6deg 11deg); mask-image: radial-gradient(closest-side, #000 15%, transparent 72%); -webkit-mask-image: radial-gradient(closest-side, #000 15%, transparent 72%); }
