@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { browserClient } from "@/lib/supabase";
@@ -30,6 +31,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
   }[params.get("feil") ?? ""];
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [showPw, setShowPw] = useState(false);
   const [done, setDone] = useState("");
   const c = COPY[mode];
   // Med Vipps slått på verifiserer alle seg med Vipps. E-post er bare for kontoer som finnes fra før.
@@ -172,21 +174,36 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                       <label htmlFor="password" className={label}>
                         Passord
                       </label>
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        required
-                        minLength={mode === "login" ? undefined : 8}
-                        autoComplete={mode === "login" ? "current-password" : "new-password"}
-                        className={field}
-                        placeholder={mode === "login" ? "Ditt passord" : "Minst 8 tegn"}
-                      />
+                      <div className="relative">
+                        <input
+                          id="password"
+                          name="password"
+                          type={showPw ? "text" : "password"}
+                          required
+                          minLength={mode === "login" ? undefined : 8}
+                          autoComplete={mode === "login" ? "current-password" : "new-password"}
+                          className={field}
+                          placeholder={mode === "login" ? "Ditt passord" : "Minst 8 tegn"}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPw(!showPw)}
+                          aria-label={showPw ? "Skjul passordet" : "Vis passordet"}
+                          aria-pressed={showPw}
+                          className="t-visPw absolute right-1.5 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+                        >
+                          {showPw ? (
+                            <EyeOffIcon className="h-[18px] w-[18px]" aria-hidden="true" />
+                          ) : (
+                            <EyeIcon className="h-[18px] w-[18px]" aria-hidden="true" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   )}
                   {mode === "login" && (
                     <div className="flex items-center justify-between">
-                      <Link className="ml-auto text-xs text-muted-foreground transition-colors hover:text-foreground" href="/auth/forgot-password">
+                      <Link className="t-glemt ml-auto text-xs text-muted-foreground transition-colors hover:text-foreground" href="/auth/forgot-password">
                         Glemt passord?
                       </Link>
                     </div>

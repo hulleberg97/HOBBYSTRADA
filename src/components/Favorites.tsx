@@ -40,6 +40,20 @@ export function Favorites({ listings }: { listings: Listing[] }) {
             </Link>
           </div>
         )}
+        {saved.length === 0 && listings.length > 0 && (
+          <div className="t-tomforslag mt-12 hidden">
+            <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950">Nyeste annonser</h2>
+            <p className="mt-1 text-sm text-slate-600">Kanskje noe for deg?</p>
+            <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
+              {[...listings]
+                .sort((a, b) => (b.createdAt ?? "").localeCompare(a.createdAt ?? ""))
+                .slice(0, 4)
+                .map((l) => (
+                  <ListingCard key={l.slug} listing={l} variant="market" />
+                ))}
+            </div>
+          </div>
+        )}
         {gone > 0 && (
           <p className="mt-8 text-sm text-slate-500">
             {gone} {gone === 1 ? "lagret kort er" : "lagrede kort er"} solgt eller fjernet.
