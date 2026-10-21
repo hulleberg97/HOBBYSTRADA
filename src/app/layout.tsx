@@ -18,6 +18,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" className={schibsted.variable}>
       <body>
+        {/* Test av mørkt tema på forsiden (?mork=bla, ?mork=lime, ?mork=av). Huskes mens fanen er åpen. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("mork");if(v)sessionStorage.setItem("mork",v);var m=sessionStorage.getItem("mork");if(m==="bla"||m==="lime")document.documentElement.dataset.mork=m}catch(e){}})()`,
+          }}
+        />
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}
         <script
           dangerouslySetInnerHTML={{
