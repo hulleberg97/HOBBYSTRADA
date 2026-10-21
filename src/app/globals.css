@@ -493,13 +493,3 @@ html header.sticky a[href="/auth/login"], html header.sticky a[href="/account"] 
 html[data-glans] span.rounded-full.bg-white, html main span.rounded-full.bg-slate-100 { background: var(--nb-boble); color: #334155; }
 /* Flater: hvite med tydeligere, myk skygge, så bokser skilles fra bakgrunnen */
 html[data-glans] :is(.bg-white, .card-frame):not(select, a.rounded-full, button.rounded-full, span.rounded-full, [aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) { box-shadow: 0 0 0 1px rgb(15 23 42 / 0.06), 0 2px 4px rgb(15 23 42 / 0.04), 0 16px 36px -18px rgb(15 23 42 / 0.22); }
-
-/* TEST ny stil på toppen (?stil2=1) */
-.stil2-kun { display: none; }
-html[data-stil2] .stil2-kun { display: block; }
-html[data-stil2] .stil2-skjul { display: none; }
-@media (max-width: 767px) { html[data-stil2] .tabbar { display: block; } html[data-stil2] body { padding-bottom: calc(56px + env(safe-area-inset-bottom)); } }
-.stil2-hero { overflow-x: clip; background: linear-gradient(180deg, #ffffff 0%, #f5f6f8 100%); }
-.stil2-tittel { font-family: var(--t-jakarta); font-size: clamp(2.6rem, 5.6vw, 5rem); line-height: 0.98; letter-spacing: -0.045em; color: #0b1426; }
-.stil2-vifte .hero-fan { max-width: none; --w: 34%; height: clamp(320px, 42vw, 520px); }
-@media (max-width: 639px) { .stil2-vifte .hero-fan { --w: 44%; height: 340px; } }
