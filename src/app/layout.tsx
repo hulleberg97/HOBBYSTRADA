@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Test av mørkt tema på forsiden (?mork=marine, ?mork=hvit, ?mork=bla, ?mork=lime, ?mork=av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("mork");if(v)sessionStorage.setItem("mork",v);var m=sessionStorage.getItem("mork");if(m==="bla"||m==="lime"||m==="hvit"||m==="marine")document.documentElement.dataset.mork=m}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("mork");if(v)sessionStorage.setItem("mork",v);var m=sessionStorage.getItem("mork");if(m==="bla"||m==="lime"||m==="hvit"||m==="marine"||m==="marine2")document.documentElement.dataset.mork=m}catch(e){}})()`,
           }}
         />
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}
