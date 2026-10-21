@@ -494,7 +494,7 @@ html[data-glans] span.rounded-full.bg-white, html main span.rounded-full.bg-slat
 /* Flater: hvite med tydeligere, myk skygge, så bokser skilles fra bakgrunnen */
 html[data-glans] :is(.bg-white, .card-frame):not(select, a.rounded-full, button.rounded-full, span.rounded-full, [aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) { box-shadow: 0 0 0 1px rgb(15 23 42 / 0.06), 0 2px 4px rgb(15 23 42 / 0.04), 0 16px 36px -18px rgb(15 23 42 / 0.22); }
 
-/* TEST ny stil på toppen (?stil2=1) */
+/* Toppen på forsiden (gammel topp som backup med ?stil2=av) */
 .stil2-kun { display: none; }
 html[data-stil2] .stil2-kun { display: block; }
 html[data-stil2] .stil2-skjul { display: none; }

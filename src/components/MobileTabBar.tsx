@@ -12,7 +12,7 @@ const TABS = [
   ["/account", "Profil", UserRoundIcon],
 ] as const;
 
-/** Fast meny nederst på mobil, som i en app. Vises bare i stil-testen (?stil2=1). */
+/** Fast meny nederst på mobil, som i en app. Skjules med backupen ?stil2=av. */
 export function MobileTabBar() {
   const path = usePathname();
   return (

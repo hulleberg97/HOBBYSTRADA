@@ -37,15 +37,15 @@ export default async function Home() {
   const fanList = fanCards(fanPinned, fanPaid, fanFill);
   return (
     <div className="bg-background">
-      {/* TEST ny stil på toppen (?stil2=1): tekst til venstre, vifta til høyre, tillitsrad under. Samme tekst som i dag. */}
+      {/* Toppen: tekst til venstre, vifta til høyre, tillitsrad under. Den gamle toppen under er backup (?stil2=av). */}
       <section className="stil2-kun">
         <div className="stil2-hero">
           <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 pb-6 pt-8 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-4 lg:px-8 lg:pb-10 lg:pt-14">
             <div className="text-center lg:text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Norges markedsplass for samlere</p>
-              <p className="stil2-tittel mt-4 font-bold">
+              <h1 className="stil2-tittel mt-4 font-bold">
                 Kjøp og selg <span className="block text-slate-400">fotballkort</span>
-              </p>
+              </h1>
               <div className="mt-7 flex flex-wrap justify-center gap-2.5 lg:justify-start">
                 <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
                   Se alle annonser
@@ -107,13 +107,12 @@ export default async function Home() {
                   Fotballkort.
                   <br className="hero-br" /> <span className="hero-gold text-gold-light">Kjøp og selg.</span>
                 </p>
-                {/* Overskriften som vises over vifta er sidens h1 */}
-                <h1 className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
+                <div className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
                   <span>
                     Kjøp og selg <span className="hero-accent">fotballkort</span>
                     <span className="tittel-under">Norges markedsplass for samlere</span>
                   </span>
-                </h1>
+                </div>
                 <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
                   <Link
                     className="hero-primary inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"

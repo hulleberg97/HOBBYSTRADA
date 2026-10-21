@@ -20,12 +20,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" className={`${schibsted.variable} ${headlineFont}`}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" data-stil2="1" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
-        {/* Test av ny stil (?stil2=1, ?stil2=av). Huskes mens fanen er åpen. */}
+        {/* Backup: ?stil2=av viser den gamle toppen (huskes mens fanen er åpen), ?stil2=1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("stil2");if(v)sessionStorage.setItem("stil2",v);if(sessionStorage.getItem("stil2")==="1")document.documentElement.dataset.stil2="1"}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("stil2");if(v)sessionStorage.setItem("stil2",v);if(sessionStorage.getItem("stil2")==="av")delete document.documentElement.dataset.stil2}catch(e){}})()`,
           }}
         />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
