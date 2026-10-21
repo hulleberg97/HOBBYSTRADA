@@ -450,56 +450,63 @@ html .text-\[40px\] { font-size: 44px; }
 
 /* TEST mørkt tema på forsiden (?mork=bla / ?mork=lime). Gjelder bare forsiden (siden med #hero). */
 .mork-kun { display: none; }
+html[data-mork] { --m-bg: #09090b; --m-flate: #18181b; --m-kant: #27272a; --m-kant2: #3f3f46; --m-dempet: #a1a1aa; --m-lys: #e4e4e7; --m-bg-glass: rgb(9 9 11 / 0.85); --m-flate-glass: rgb(24 24 27 / 0.88); }
+/* Utkast «marine»: marineblå bakgrunn i logoens blå, hvite knapper */
+html[data-mork="marine"] { --m-bg: #0b1426; --m-flate: #122039; --m-kant: #1f3054; --m-kant2: #2c4170; --m-dempet: #94a3b8; --m-lys: #e2e8f0; --m-bg-glass: rgb(11 20 38 / 0.85); --m-flate-glass: rgb(18 32 57 / 0.9);
+  --aksent: #ffffff; --aksent-knapp: #ffffff; --aksent-knapp-hover: #e2e8f0; --aksent-tekst: #0b1426; }
+html[data-mork="marine"]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(60% 55% at 50% 72%, rgb(96 130 200 / 0.16), transparent 70%), var(--m-bg); }
+html[data-mork="marine"]:has(#hero) .mork-kun .font-heading.text-base { font-size: 17px; letter-spacing: -0.01em; }
+html[data-mork="marine"]:has(#hero) main span.bg-primary { color: #0b1426 !important; }
 html[data-mork]:has(#hero) .lys-kun { display: none; }
 html[data-mork]:has(#hero) .mork-kun { display: block; }
 html[data-mork="bla"] { --aksent: #3b82f6; --aksent-knapp: #2563eb; --aksent-knapp-hover: #1d4ed8; --aksent-tekst: #ffffff; }
 html[data-mork="lime"] { --aksent: #a3e635; --aksent-knapp: #a3e635; --aksent-knapp-hover: #bef264; --aksent-tekst: #09090b; }
-html[data-mork]:has(#hero), html[data-mork]:has(#hero) body { background: #09090b; color: #fff; color-scheme: dark; }
+html[data-mork]:has(#hero), html[data-mork]:has(#hero) body { background: var(--m-bg); color: #fff; color-scheme: dark; }
 /* Menylinjen */
-html[data-mork]:has(#hero) header.sticky { background: rgb(9 9 11 / 0.85) !important; border-bottom: 1px solid #27272a !important; box-shadow: none !important; backdrop-filter: blur(12px); }
+html[data-mork]:has(#hero) header.sticky { background: var(--m-bg-glass) !important; border-bottom: 1px solid var(--m-kant) !important; box-shadow: none !important; backdrop-filter: blur(12px); }
 html[data-mork]:has(#hero) header.sticky img[alt="HOBBYSTRADA"] { content: url("/brand/logo-hvit.svg"); }
-html[data-mork]:has(#hero) header.sticky :is(a, button):not(.bg-primary) { color: #e4e4e7 !important; background: transparent !important; box-shadow: none !important; }
-html[data-mork]:has(#hero) header.sticky a[href="/auth/login"], html[data-mork]:has(#hero) header.sticky a[href="/account"] { box-shadow: inset 0 0 0 1px #3f3f46 !important; }
-html[data-mork]:has(#hero) header.sticky :is(a, button):not(.bg-primary):hover { background: #18181b !important; color: #fff !important; }
+html[data-mork]:has(#hero) header.sticky :is(a, button):not(.bg-primary) { color: var(--m-lys) !important; background: transparent !important; box-shadow: none !important; }
+html[data-mork]:has(#hero) header.sticky a[href="/auth/login"], html[data-mork]:has(#hero) header.sticky a[href="/account"] { box-shadow: inset 0 0 0 1px var(--m-kant2) !important; }
+html[data-mork]:has(#hero) header.sticky :is(a, button):not(.bg-primary):hover { background: var(--m-flate) !important; color: #fff !important; }
 html[data-mork]:has(#hero) header.sticky a.bg-primary { background: var(--aksent-knapp) !important; color: var(--aksent-tekst) !important; box-shadow: none !important; }
-html[data-mork]:has(#hero) header.sticky [data-current="true"] { background: #18181b; color: #fff; }
-html[data-mork]:has(#hero) header input { background: #18181b; border-color: #3f3f46; color: #fff; }
+html[data-mork]:has(#hero) header.sticky [data-current="true"] { background: var(--m-flate); color: #fff; }
+html[data-mork]:has(#hero) header input { background: var(--m-flate); border-color: var(--m-kant2); color: #fff; }
 /* Toppen med vifta */
-html[data-mork]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, rgb(59 130 246 / 0.10), transparent 70%), #09090b; }
-html[data-mork="lime"]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, rgb(163 230 53 / 0.08), transparent 70%), #09090b; }
-html[data-mork]:has(#hero) .hero-bg [data-dim] { background: #09090b; }
-html[data-mork]:has(#hero) .hero-bg .hero-sub > span, html[data-mork]:has(#hero) .hero-accent { background-image: linear-gradient(180deg, #ffffff 0%, #e4e4e7 55%, #a1a1aa 100%); }
+html[data-mork]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, rgb(59 130 246 / 0.10), transparent 70%), var(--m-bg); }
+html[data-mork="lime"]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, rgb(163 230 53 / 0.08), transparent 70%), var(--m-bg); }
+html[data-mork]:has(#hero) .hero-bg [data-dim] { background: var(--m-bg); }
+html[data-mork]:has(#hero) .hero-bg .hero-sub > span, html[data-mork]:has(#hero) .hero-accent { background-image: linear-gradient(180deg, #ffffff 0%, var(--m-lys) 55%, var(--m-dempet) 100%); }
 html[data-mork]:has(#hero) .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.5)); }
-html[data-mork]:has(#hero) .tittel-under { -webkit-text-fill-color: #a1a1aa; }
+html[data-mork]:has(#hero) .tittel-under { -webkit-text-fill-color: var(--m-dempet); }
 html[data-mork]:has(#hero) .fan-slab { border-color: rgb(255 255 255 / 0.14); background: linear-gradient(115deg, transparent 22%, rgb(255 255 255 / 0.10) 36%, transparent 52%), linear-gradient(180deg, rgb(255 255 255 / 0.10), rgb(255 255 255 / 0.04)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), inset 0 2px 0 rgb(255 255 255 / 0.12), 0 30px 60px -25px rgb(0 0 0 / 0.9); }
 html[data-mork]:has(#hero) .fan-window { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12), 0 2px 8px rgb(0 0 0 / 0.5); }
-html[data-mork]:has(#hero) .fan-pill { background: rgb(24 24 27 / 0.85); border-color: #3f3f46; box-shadow: 0 14px 30px -16px rgb(0 0 0 / 0.8); color: #fff; backdrop-filter: blur(8px); }
+html[data-mork]:has(#hero) .fan-pill { background: var(--m-flate-glass); border-color: var(--m-kant2); box-shadow: 0 14px 30px -16px rgb(0 0 0 / 0.8); color: #fff; backdrop-filter: blur(8px); }
 html[data-mork]:has(#hero) .fan-pill .text-\[\#0b1426\], html[data-mork]:has(#hero) .fan-pill { color: #fff; }
-html[data-mork]:has(#hero) .fan-pill .text-\[\#6b6455\] { color: #a1a1aa; }
+html[data-mork]:has(#hero) .fan-pill .text-\[\#6b6455\] { color: var(--m-dempet); }
 html[data-mork]:has(#hero) .fan-pill .text-\[\#8a6a24\] { color: var(--aksent); }
 html[data-mork]:has(#hero) .fan-pill .bg-\[\#cfa653\] { background: var(--aksent-knapp); color: var(--aksent-tekst); }
 /* Innholdet under */
-html[data-mork]:has(#hero) main :is(.bg-white, .card-frame, .kat-rad a, .boost-card) { background: #18181b !important; box-shadow: inset 0 0 0 1px #27272a !important; }
+html[data-mork]:has(#hero) main :is(.bg-white, .card-frame, .kat-rad a, .boost-card) { background: var(--m-flate) !important; box-shadow: inset 0 0 0 1px var(--m-kant) !important; }
 html[data-mork]:has(#hero) main .boost-card[data-highlight="true"] { box-shadow: inset 0 0 0 1px rgb(245 158 11 / 0.5) !important; }
 html[data-mork]:has(#hero) main :is(.text-slate-950, .text-slate-900, .text-slate-800, .text-primary, .text-foreground, h2, h3) { color: #fff; }
-html[data-mork]:has(#hero) main :is(.text-slate-700, .text-slate-600, .text-slate-500, .text-muted-foreground) { color: #a1a1aa; }
+html[data-mork]:has(#hero) main :is(.text-slate-700, .text-slate-600, .text-slate-500, .text-muted-foreground) { color: var(--m-dempet); }
 html[data-mork]:has(#hero) main :is(a, button).bg-primary, html[data-mork]:has(#hero) main span.bg-primary { background: var(--aksent-knapp) !important; color: var(--aksent-tekst) !important; box-shadow: none !important; }
 html[data-mork]:has(#hero) main :is(a, button).bg-primary:hover { background: var(--aksent-knapp-hover) !important; }
-html[data-mork]:has(#hero) main .border-slate-300\/60, html[data-mork]:has(#hero) main .divide-slate-100 > * { border-color: #27272a; }
+html[data-mork]:has(#hero) main .border-slate-300\/60, html[data-mork]:has(#hero) main .divide-slate-100 > * { border-color: var(--m-kant); }
 html[data-mork]:has(#hero) main .text-gold-deep { color: var(--aksent); }
-html[data-mork]:has(#hero) footer.bg-ink { background: #09090b; border-top: 1px solid #27272a; }
-html[data-mork]:has(#hero) .mork-kun button[aria-pressed] { background: rgb(9 9 11 / 0.7) !important; color: #e4e4e7; box-shadow: inset 0 0 0 1px #3f3f46 !important; }
-html[data-mork]:has(#hero) header.sticky :is(a, button)[data-current="true"], html[data-mork]:has(#hero) header.sticky [aria-expanded="true"] { background: #18181b !important; }
-@media (min-width: 640px) { html[data-mork]:has(#hero) main .kat-rad { background: #18181b !important; box-shadow: inset 0 0 0 1px #27272a !important; } }
+html[data-mork]:has(#hero) footer.bg-ink { background: var(--m-bg); border-top: 1px solid var(--m-kant); }
+html[data-mork]:has(#hero) .mork-kun button[aria-pressed] { background: var(--m-bg-glass) !important; color: var(--m-lys); box-shadow: inset 0 0 0 1px var(--m-kant2) !important; }
+html[data-mork]:has(#hero) header.sticky :is(a, button)[data-current="true"], html[data-mork]:has(#hero) header.sticky [aria-expanded="true"] { background: var(--m-flate) !important; }
+@media (min-width: 640px) { html[data-mork]:has(#hero) main .kat-rad { background: var(--m-flate) !important; box-shadow: inset 0 0 0 1px var(--m-kant) !important; } }
 
 /* Utkast «hvit»: svart og hvitt som StockX – hvite knapper, hvite priser, gull bare for merkevaren og annonseløft */
 html[data-mork="hvit"] { --aksent: #ffffff; --aksent-knapp: #ffffff; --aksent-knapp-hover: #e4e4e7; --aksent-tekst: #09090b; }
-html[data-mork="hvit"]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(60% 55% at 50% 72%, rgb(255 255 255 / 0.07), transparent 70%), #09090b; }
-html[data-mork="hvit"]:has(#hero) .fan-pill { background: rgb(24 24 27 / 0.9); }
+html[data-mork="hvit"]:has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(60% 55% at 50% 72%, rgb(255 255 255 / 0.07), transparent 70%), var(--m-bg); }
+html[data-mork="hvit"]:has(#hero) .fan-pill { background: var(--m-flate-glass); }
 /* Sekundærknapper: tynn lys kant, ingen fyll */
-html[data-mork]:has(#hero) main :is(a, button).rounded-full:not(.bg-primary):is(.bg-white, .bg-slate-100, .bg-slate-200) { background: transparent !important; box-shadow: inset 0 0 0 1px #3f3f46 !important; color: #fff !important; }
-html[data-mork]:has(#hero) main :is(a, button).rounded-full:not(.bg-primary):is(.bg-white, .bg-slate-100, .bg-slate-200):hover { box-shadow: inset 0 0 0 1px #a1a1aa !important; }
+html[data-mork]:has(#hero) main :is(a, button).rounded-full:not(.bg-primary):is(.bg-white, .bg-slate-100, .bg-slate-200) { background: transparent !important; box-shadow: inset 0 0 0 1px var(--m-kant2) !important; color: #fff !important; }
+html[data-mork]:has(#hero) main :is(a, button).rounded-full:not(.bg-primary):is(.bg-white, .bg-slate-100, .bg-slate-200):hover { box-shadow: inset 0 0 0 1px var(--m-dempet) !important; }
 /* Prisene litt større og tydeligere i rutenettet */
 html[data-mork="hvit"]:has(#hero) .mork-kun .font-heading.text-base { font-size: 17px; letter-spacing: -0.01em; }
 /* Ikoner og tall i sirkler: hvite med sort innhold */
-html[data-mork="hvit"]:has(#hero) main span.bg-primary { color: #09090b !important; }
+html[data-mork="hvit"]:has(#hero) main span.bg-primary { color: var(--m-bg) !important; }
