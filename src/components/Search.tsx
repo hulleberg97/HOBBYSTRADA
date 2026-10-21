@@ -7,9 +7,8 @@ import { useState } from "react";
 import { SearchIcon, SlidersHorizontalIcon, XIcon } from "lucide-react";
 import { ListingCard } from "./ListingCard";
 import { matches } from "@/lib/listings";
+import { POPULAR } from "@/lib/popular";
 import type { Listing } from "@/lib/types";
-
-const POPULAR = ["Autograf", "Messi", "Salah", "Haaland", "Museum Collection", "Rookie", "Patch", "Topps Chrome"];
 
 export function Search({ listings }: { listings: Listing[] }) {
   const router = useRouter();
