@@ -117,7 +117,7 @@ export default async function ListingPage({ params }: Props) {
             <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
             <span className="hidden truncate text-slate-900 sm:inline">{l.player}</span>
           </nav>
-          {numberChip && <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">{numberChip}</span>}
+          {numberChip && <span className="t-nrchip shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">{numberChip}</span>}
         </div>
         <div className="mt-5 grid gap-8 lg:mt-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
           <div className="lg:sticky lg:top-24 lg:self-start">
@@ -182,7 +182,7 @@ export default async function ListingPage({ params }: Props) {
               {l.set}
               {(l.club || l.league) && <span className="text-slate-400"> · {[l.club, l.league].filter(Boolean).join(" · ")}</span>}
             </p>
-            <dl className="mt-6 grid gap-2 empty:hidden sm:gap-3" style={{ gridTemplateColumns: `repeat(${Math.max(facts.length, 1)}, minmax(0, 1fr))` }}>
+            <dl className="t-facts mt-6 grid gap-2 empty:hidden sm:gap-3" style={{ gridTemplateColumns: `repeat(${Math.max(facts.length, 1)}, minmax(0, 1fr))` }}>
               {facts.map(([Icon, label, value]) => (
                 <div key={label} className="rounded-2xl bg-white p-3 ring-1 ring-inset ring-slate-300/70 sm:p-4">
                   <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />

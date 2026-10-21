@@ -63,10 +63,10 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           ) : (
             <p className="mt-1.5 text-lg font-bold tracking-tight text-slate-950">{formatPrice(listing.price)}</p>
           )}
-          <div className={`mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
+          <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
             {listing.sellerVerified && <VerifiedBadge compact />}
-            <span className="inline-flex items-center gap-1">
+            <span className="card-time inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
               <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>
             </span>

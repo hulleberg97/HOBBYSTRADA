@@ -469,7 +469,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-background">
+      <section className="t-sellcta bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pb-16 pt-4 sm:px-6 md:pb-24 lg:px-8">
           <SellCta secondary={{ href: "/faq", label: "Spørsmål og svar" }} />
         </div>
