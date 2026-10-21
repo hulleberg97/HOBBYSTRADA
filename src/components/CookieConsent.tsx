@@ -7,7 +7,7 @@ const EVENT = "open-cookie-settings";
 
 export function CookieButton() {
   return (
-    <button type="button" onClick={() => window.dispatchEvent(new Event(EVENT))} className="transition hover:text-white">
+    <button type="button" onClick={() => window.dispatchEvent(new Event(EVENT))} className="tap transition hover:text-white">
       Administrer informasjonskapsler
     </button>
   );

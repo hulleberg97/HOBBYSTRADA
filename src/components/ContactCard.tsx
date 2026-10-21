@@ -220,13 +220,13 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           <button
             type="button"
             onClick={share}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            className="tap-sm inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
           >
             <Share2Icon className="h-4 w-4" aria-hidden="true" />
             {shared ? "Lenke kopiert" : "Del"}
           </button>
           <Link
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            className="tap-sm inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
             href={`/contact?rapport=${l.slug}`}
           >
             <FlagIcon className="h-4 w-4" aria-hidden="true" />

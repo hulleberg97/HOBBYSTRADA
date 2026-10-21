@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ChevronLeftIcon, ChevronRightIcon, XIcon, ZoomInIcon } from "lucide-react";
 
 /** Bildegalleri for annonsesiden: hovedbilde, miniatyrer og fullskjerm med sveip og zoom. */
@@ -98,67 +99,70 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
           ))}
         </ul>
       )}
-      {open && (
-        <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-[60] flex flex-col bg-slate-950/95 text-white">
-          <div className="flex items-center justify-between px-4 py-3 sm:px-6">
-            <p className="font-mono-data text-xs text-white/70">
-              {index + 1} / {n}
-            </p>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Lukk"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
+      {/* Legges rett i <body>, så fullskjermen alltid ligger over menylinjen */}
+      {open &&
+        createPortal(
+          <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-[60] flex flex-col bg-slate-950 text-white">
+            <div className="flex items-center justify-between px-4 py-3 sm:px-6">
+              <p className="font-mono-data text-xs text-white/70">
+                {index + 1} / {n}
+              </p>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Lukk"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
+              >
+                <XIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+            <div
+              ref={track}
+              onScroll={onScroll}
+              className="flex flex-1 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              <XIcon className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-          <div
-            ref={track}
-            onScroll={onScroll}
-            className="flex flex-1 snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {images.map((src, i) => (
-              <div key={src} className="relative flex h-full w-full shrink-0 snap-center items-center justify-center overflow-hidden p-4">
-                <Image
-                  src={src}
-                  alt={`${title} – bilde ${i + 1}`}
-                  width={1600}
-                  height={2240}
-                  sizes="100vw"
-                  onClick={(e) => {
-                    const r = e.currentTarget.getBoundingClientRect();
-                    setZoom(zoom ? null : { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
-                  }}
-                  style={i === index && zoom ? { transform: "scale(2.5)", transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined}
-                  className={`max-h-full w-auto max-w-full object-contain transition-transform duration-200 ${i === index && zoom ? "cursor-zoom-out" : "cursor-zoom-in"}`}
-                />
-              </div>
-            ))}
-          </div>
-          {n > 1 && (
-            <>
-              <button
-                type="button"
-                onClick={() => show(index - 1)}
-                aria-label="Forrige bilde"
-                className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20 sm:flex"
-              >
-                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => show(index + 1)}
-                aria-label="Neste bilde"
-                className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20 sm:flex"
-              >
-                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </>
-          )}
-          <p className="pb-4 text-center text-xs text-white/60">Trykk på bildet for å zoome{n > 1 ? " · sveip for neste" : ""}</p>
-        </div>
-      )}
+              {images.map((src, i) => (
+                <div key={src} className="relative flex h-full w-full shrink-0 snap-center items-center justify-center overflow-hidden p-4">
+                  <Image
+                    src={src}
+                    alt={`${title} – bilde ${i + 1}`}
+                    width={1600}
+                    height={2240}
+                    sizes="100vw"
+                    onClick={(e) => {
+                      const r = e.currentTarget.getBoundingClientRect();
+                      setZoom(zoom ? null : { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
+                    }}
+                    style={i === index && zoom ? { transform: "scale(2.5)", transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined}
+                    className={`max-h-full w-auto max-w-full object-contain transition-transform duration-200 ${i === index && zoom ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+                  />
+                </div>
+              ))}
+            </div>
+            {n > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => show(index - 1)}
+                  aria-label="Forrige bilde"
+                  className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20 sm:flex"
+                >
+                  <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => show(index + 1)}
+                  aria-label="Neste bilde"
+                  className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20 sm:flex"
+                >
+                  <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </>
+            )}
+            <p className="pb-4 text-center text-xs text-white/60">Trykk på bildet for å zoome{n > 1 ? " · sveip for neste" : ""}</p>
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

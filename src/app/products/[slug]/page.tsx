@@ -90,7 +90,7 @@ export default async function ListingPage({ params }: Props) {
         <div className="flex items-center justify-between gap-4">
           <nav aria-label="Brødsmuler" className="flex min-w-0 items-center gap-1 text-sm text-slate-500">
             <Link
-              className="mr-1 inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-1 font-medium text-primary hover:bg-slate-100 sm:hidden"
+              className="tap-sm mr-1 inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-1 font-medium text-primary hover:bg-slate-100 sm:hidden"
               href="/products"
             >
               <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
@@ -265,7 +265,7 @@ export default async function ListingPage({ params }: Props) {
             <div>
               <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[28px]">Du vil kanskje også like</h2>
             </div>
-            <Link className="inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/products">
+            <Link className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/products">
               Se alle
               <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>

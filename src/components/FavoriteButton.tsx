@@ -17,7 +17,7 @@ export function FavoriteButton({ slug, title, variant = "card" }: { slug: string
         type="button"
         onClick={click}
         aria-pressed={on}
-        className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 aria-pressed:text-rose-600"
+        className="tap-sm inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 aria-pressed:text-rose-600"
       >
         <HeartIcon className={`h-4 w-4 ${on ? "fill-current" : ""}`} aria-hidden="true" />
         {on ? "Lagret" : "Lagre"}

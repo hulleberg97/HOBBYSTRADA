@@ -141,7 +141,7 @@ export function BoostPicker() {
           />
           <span>
             Jeg ber om at løftet starter med en gang etter betaling, og forstår at angreretten da faller bort.{" "}
-            <Link href="/salgsvilkar" target="_blank" className="font-medium text-foreground underline underline-offset-2">
+            <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
               Salgsvilkår
             </Link>
           </span>
@@ -169,7 +169,7 @@ export function BoostPicker() {
               <span className="plan-icon flex h-11 w-11 items-center justify-center rounded-full bg-primary text-accent">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
-              <h3 className="plan-title mt-5 font-heading text-xl font-semibold tracking-tight">{b.name}</h3>
+              <h2 className="plan-title mt-5 font-heading text-xl font-semibold tracking-tight">{b.name}</h2>
               <p className="mt-1 font-mono-data text-xs uppercase tracking-wider text-muted-foreground">{b.days} dager</p>
               <p className="plan-price mt-5 font-heading text-4xl font-semibold tracking-tight">{formatPrice(b.price)}</p>
               <ul className="mb-8 mt-6 space-y-2.5 text-sm">

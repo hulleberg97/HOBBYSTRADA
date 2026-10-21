@@ -57,7 +57,7 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
-                  {"account" in c && <AccountLinks className="text-sm text-white/75 transition hover:text-white" />}
+                  {"account" in c && <AccountLinks className="relative text-sm text-white/75 transition before:absolute before:-inset-y-2 before:inset-x-0 before:content-[''] hover:text-white" />}
                 </ul>
               </div>
             ))}

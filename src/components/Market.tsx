@@ -77,7 +77,7 @@ export function Market({ listings }: { listings: Listing[] }) {
     <div>
       <div className="mx-auto max-w-[1320px] px-4 pt-5 sm:px-6 sm:pt-8 lg:px-8">
         <nav aria-label="Brødsmuler" className="mb-4 flex items-center gap-1.5 text-sm text-slate-500">
-          <Link className="hover:text-primary hover:underline" href="/">
+          <Link className="tap hover:text-primary hover:underline" href="/">
             Forside
           </Link>
           <span aria-hidden="true">/</span>
@@ -214,7 +214,7 @@ export function Market({ listings }: { listings: Listing[] }) {
           <span className="text-sm text-slate-500" aria-live="polite">
             {result.length} treff
           </span>
-          <Link href="/solgt" className="ml-auto text-sm font-medium text-slate-600 underline-offset-4 hover:text-primary hover:underline">
+          <Link href="/solgt" className="tap ml-auto text-sm font-medium text-slate-600 underline-offset-4 hover:text-primary hover:underline">
             Se hva kort har solgt for
           </Link>
         </div>

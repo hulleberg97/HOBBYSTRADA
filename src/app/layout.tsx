@@ -18,18 +18,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" className={schibsted.variable}>
       <body>
-        {/* Test av linjen over vifta (?linje=2–5, ?linje=av for å skru av). Huskes mens fanen er åpen. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get("linje");sessionStorage.removeItem("linje");if(q)sessionStorage.setItem("linje2",q);var t=sessionStorage.getItem("linje2");if(t==="av")delete document.documentElement.dataset.linje;else if(t)document.documentElement.dataset.linje=t}catch(e){}})()`,
-          }}
-        />
-        {/* Test av overskrifter (?overskrift=2 eller 3, ?overskrift=av for å skru av). Huskes mens fanen er åpen. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var a=new URLSearchParams(location.search).get("tittel");if(a)sessionStorage.setItem("tittel",a);var v=sessionStorage.getItem("tittel");if(v==="av")delete document.documentElement.dataset.tittel;else if(v==="1"||v==="2"||v==="3")document.documentElement.dataset.tittel=v}catch(e){}})();(function(){try{var q=new URLSearchParams(location.search).get("overskrift");if(q)sessionStorage.setItem("overskrift",q);var t=sessionStorage.getItem("overskrift");if(t&&t!=="av")document.documentElement.dataset.overskrift=t}catch(e){}})()`,
-          }}
-        />
         <Header />
         <main className="site-main">{children}</main>
         <Footer />

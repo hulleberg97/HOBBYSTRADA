@@ -69,19 +69,9 @@ export default async function Home() {
                 </p>
                 {/* Overskriften som vises over vifta er sidens h1 */}
                 <h1 className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
-                  <span data-t="0">
-                    Norges markedsplass for <span className="hero-accent">fotballkort</span>
-                  </span>
-                  {/* TEST overskrifter (?tittel=1/2/3) */}
-                  <span data-t="1">
-                    Kjøp og selg <span className="hero-accent">fotballkort</span>
-                  </span>
-                  <span data-t="2">
+                  <span>
                     Kjøp og selg <span className="hero-accent">fotballkort</span>
                     <span className="tittel-under">Norges markedsplass for samlere</span>
-                  </span>
-                  <span data-t="3">
-                    Finn ditt neste <span className="hero-accent">fotballkort</span>
                   </span>
                 </h1>
                 <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
@@ -225,7 +215,7 @@ export default async function Home() {
                 <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Kort selgerne har løftet frem</p>
               </div>
               <Link
-                className="inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
+                className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
                 href="/products"
               >
                 Se alle
@@ -244,7 +234,7 @@ export default async function Home() {
               <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Nylig lagt ut av samlere i hele Norge</p>
             </div>
             <Link
-              className="inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
+              className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
               href="/products"
             >
               Se alle
