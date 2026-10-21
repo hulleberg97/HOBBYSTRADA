@@ -510,10 +510,7 @@ html .card-meta .card-time-short ~ * , html .card-meta .card-time:has(.card-time
 .plan-card .plan-title { margin-top: 0; }
 .plan-card .plan-price { margin-top: 0.75rem; }
 
-/* TEST runde 3 (?tom=1, ?passord=1, ?luft=1, ?alle=1, =av for å slå av) */
-html[data-t-tom] .t-tomforslag { display: block; }
-html[data-t-passord] .t-visPw { display: flex; }
-html[data-t-passord] #password { padding-right: 3.25rem; }
-html[data-t-passord] .t-glemt { font-size: 14px; padding: 0.5rem 0; color: #0b1426; text-decoration: underline; text-underline-offset: 3px; }
-html[data-t-luft] .t-main { min-height: 0; }
-html[data-t-luft] .t-main > :only-child:not(:has(#hero)) { min-height: 62vh; }
+/* Passordfeltet har plass til «vis passord»-knappen */
+#password { padding-right: 3.25rem; }
+/* Korte sider fyller ikke hele skjermen med tom plass før bunnen */
+.site-main > :only-child:not(:has(#hero)) { min-height: 62vh; }

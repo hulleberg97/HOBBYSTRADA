@@ -41,7 +41,7 @@ export function Favorites({ listings }: { listings: Listing[] }) {
           </div>
         )}
         {saved.length === 0 && listings.length > 0 && (
-          <div className="t-tomforslag mt-12 hidden">
+          <div className="mt-12">
             <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950">Nyeste annonser</h2>
             <p className="mt-1 text-sm text-slate-600">Kanskje noe for deg?</p>
             <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">

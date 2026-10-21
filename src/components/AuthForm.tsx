@@ -190,7 +190,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                           onClick={() => setShowPw(!showPw)}
                           aria-label={showPw ? "Skjul passordet" : "Vis passordet"}
                           aria-pressed={showPw}
-                          className="t-visPw absolute right-1.5 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+                          className="absolute right-1.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
                         >
                           {showPw ? (
                             <EyeOffIcon className="h-[18px] w-[18px]" aria-hidden="true" />
@@ -203,7 +203,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                   )}
                   {mode === "login" && (
                     <div className="flex items-center justify-between">
-                      <Link className="t-glemt ml-auto text-xs text-muted-foreground transition-colors hover:text-foreground" href="/auth/forgot-password">
+                      <Link className="ml-auto py-2 text-sm text-primary underline underline-offset-[3px] transition-colors hover:text-black" href="/auth/forgot-password">
                         Glemt passord?
                       </Link>
                     </div>
