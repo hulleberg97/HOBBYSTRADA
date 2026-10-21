@@ -500,9 +500,11 @@ html[data-t-skala] .text-\[10px\]:not(.hero-fan *) { font-size: 12px; }
 /* 3: forsiden uten den ekstra «Har du kort i skuffen?»-boksen nederst */
 html[data-t-forside] .t-sellcta { display: none; }
 /* 4: like hjørner – store flater 24 px, mindre bokser og bilder 12 px */
-html[data-t-hjorner] main :is(.rounded-md, .rounded-lg, .rounded-xl, .rounded-\[10px\], .rounded-2xl):not(.hero-fan *) { border-radius: 12px; }
+html[data-t-hjorner] main :is(.rounded-md, .rounded-lg, .rounded-xl, .rounded-\[10px\], .rounded-2xl):not(.hero-fan *, img) { border-radius: 12px; }
 html[data-t-hjorner] main :is(.rounded-3xl, .rounded-\[28px\], .rounded-\[20px\]):not(.hero-fan *) { border-radius: 24px; }
 /* 5: sted og tid på én linje i kortene */
 html[data-t-kortinfo] .card-meta { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; gap: 0.35rem; }
 html[data-t-kortinfo] .card-meta .card-time svg { display: none; }
 html[data-t-kortinfo] .card-meta > * + .card-time::before { content: "·"; margin-right: 0.35rem; }
+html[data-t-kortinfo] .card-meta .card-time-short { display: inline; }
+html[data-t-kortinfo] .card-meta .card-time-short ~ * , html[data-t-kortinfo] .card-meta .card-time:has(.card-time-short) > span:not(.card-time-short) { display: none; }

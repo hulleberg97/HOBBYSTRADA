@@ -69,6 +69,11 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             <span className="card-time inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
               <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>
+              {!listing.soldAt && (
+                <span className="card-time-short hidden" suppressHydrationWarning>
+                  {timeAgo(listing.createdAt).replace(/^For /, "")}
+                </span>
+              )}
             </span>
           </div>
         </div>
