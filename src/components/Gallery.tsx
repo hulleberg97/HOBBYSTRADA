@@ -102,7 +102,7 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
       {/* Legges rett i <body>, så fullskjermen alltid ligger over menylinjen */}
       {open &&
         createPortal(
-          <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-[60] flex flex-col bg-slate-950 text-white">
+          <div role="dialog" aria-modal="true" aria-label={title} className="galleri-fs fixed inset-0 z-[60] flex flex-col bg-slate-950 text-white">
             <div className="flex items-center justify-between px-4 py-3 sm:px-6">
               <p className="font-mono-data text-xs text-white/70">
                 {index + 1} / {n}
@@ -134,7 +134,7 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
                       setZoom(zoom ? null : { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
                     }}
                     style={i === index && zoom ? { transform: "scale(2.5)", transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined}
-                    className={`max-h-full w-auto max-w-full object-contain transition-transform duration-200 ${i === index && zoom ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+                    className={`galleri-bilde max-h-full w-auto max-w-full object-contain transition-transform duration-200 ${i === index && zoom ? "cursor-zoom-out" : "cursor-zoom-in"}`}
                   />
                 </div>
               ))}
