@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter_Tight, Manrope, Plus_Jakarta_Sans, Schibsted_Grotesk, Sora, Space_Grotesk } from "next/font/google";
+import { Big_Shoulders, Bricolage_Grotesque, Chakra_Petch, Geist, Geist_Mono, Instrument_Serif, Inter_Tight, Manrope, Plus_Jakarta_Sans, Schibsted_Grotesk, Sora, Space_Grotesk, Syne, Unbounded } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -14,7 +14,13 @@ const tSpace = Space_Grotesk({ variable: "--t-space", subsets: ["latin"], weight
 const tSora = Sora({ variable: "--t-sora", subsets: ["latin"], weight: ["600", "700"], preload: false });
 const tManrope = Manrope({ variable: "--t-manrope", subsets: ["latin"], weight: ["700", "800"], preload: false });
 const tJakarta = Plus_Jakarta_Sans({ variable: "--t-jakarta", subsets: ["latin"], weight: ["700", "800"], preload: false });
-const testFonts = [tGeist.variable, tGeistMono.variable, tInterTight.variable, tSpace.variable, tSora.variable, tManrope.variable, tJakarta.variable].join(" ");
+const tUnbounded = Unbounded({ variable: "--t-unbounded", subsets: ["latin"], weight: ["600", "700"], preload: false });
+const tSyne = Syne({ variable: "--t-syne", subsets: ["latin"], weight: ["700", "800"], preload: false });
+const tBricolage = Bricolage_Grotesque({ variable: "--t-bricolage", subsets: ["latin"], weight: ["700", "800"], preload: false });
+const tInstrument = Instrument_Serif({ variable: "--t-instrument", subsets: ["latin"], weight: ["400"], style: ["normal", "italic"], preload: false });
+const tShoulders = Big_Shoulders({ variable: "--t-shoulders", subsets: ["latin"], weight: ["800", "900"], preload: false });
+const tChakra = Chakra_Petch({ variable: "--t-chakra", subsets: ["latin"], weight: ["600", "700"], preload: false });
+const testFonts = [tGeist.variable, tGeistMono.variable, tInterTight.variable, tSpace.variable, tSora.variable, tManrope.variable, tJakarta.variable, tUnbounded.variable, tSyne.variable, tBricolage.variable, tInstrument.variable, tShoulders.variable, tChakra.variable].join(" ");
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://hobbystrada.vercel.app"),
@@ -36,7 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Test av overskriften (?ot=1–4, ?ot=av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ot");if(v)sessionStorage.setItem("ot",v);var m=sessionStorage.getItem("ot");if(/^([1-7]|1[a-f])$/.test(m||""))document.documentElement.dataset.ot=m}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ot");if(v)sessionStorage.setItem("ot",v);var m=sessionStorage.getItem("ot");if(/^([1-7]|1[a-l])$/.test(m||""))document.documentElement.dataset.ot=m}catch(e){}})()`,
           }}
         />
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}
