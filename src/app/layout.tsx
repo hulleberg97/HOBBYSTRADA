@@ -27,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Test av overskriften (?ot=1–4, ?ot=av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ot");if(v)sessionStorage.setItem("ot",v);var m=sessionStorage.getItem("ot");if(/^[1-4]$/.test(m||""))document.documentElement.dataset.ot=m}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ot");if(v)sessionStorage.setItem("ot",v);var m=sessionStorage.getItem("ot");if(/^[1-7]$/.test(m||""))document.documentElement.dataset.ot=m}catch(e){}})()`,
           }}
         />
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}

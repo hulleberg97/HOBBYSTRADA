@@ -521,3 +521,20 @@ html[data-linje="s6"][data-ot="3"] .tittel-under { -webkit-text-fill-color: #475
 html[data-linje="s6"][data-ot="4"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.05; }
 html[data-linje="s6"][data-ot="4"] .hero-accent { display: block !important; font-size: 2.1em; font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; background-image: linear-gradient(180deg, #2c3e66 0%, #0b1426 55%, #050a14 100%) !important; padding-bottom: 0.06em; }
 html[data-linje="s6"][data-ot="4"] .tittel-under { margin-top: 0.7rem; }
+/* Apple-inspirert: stor, ren skrift i nesten sort (#1d1d1f), rolig grå undertekst under, mye luft */
+html[data-linje="s6"][data-ot="5"] .hero-bg .hero-sub.hero-sub, html[data-linje="s6"][data-ot="6"] .hero-bg .hero-sub.hero-sub, html[data-linje="s6"][data-ot="7"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2.3rem, 4.6vw, 4rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; filter: none; }
+html[data-linje="s6"][data-ot="5"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="5"] .hero-accent, html[data-linje="s6"][data-ot="7"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="7"] .hero-accent { background-image: none; -webkit-text-fill-color: #1d1d1f; color: #1d1d1f; }
+html[data-linje="s6"][data-ot="5"] .tittel-under, html[data-linje="s6"][data-ot="6"] .tittel-under, html[data-linje="s6"][data-ot="7"] .tittel-under { margin-top: 0.55rem; font-size: clamp(1.05rem, 1.6vw, 1.45rem) !important; font-weight: 400; letter-spacing: 0.005em; -webkit-text-fill-color: #6e6e73; }
+@media (max-width: 767px) { html[data-linje="s6"][data-ot="5"] .hero-accent, html[data-linje="s6"][data-ot="6"] .hero-accent, html[data-linje="s6"][data-ot="7"] .hero-accent { display: inline; } html[data-linje="s6"][data-ot="5"] .hero-bg .hero-sub.hero-sub, html[data-linje="s6"][data-ot="6"] .hero-bg .hero-sub.hero-sub, html[data-linje="s6"][data-ot="7"] .hero-bg .hero-sub.hero-sub { font-size: 2.15rem; line-height: 1.08; } }
+/* 6 Apple Pro: metallisk «titan»-toning i marine og grafitt, som på Apples Pro-sider */
+html[data-linje="s6"][data-ot="6"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="6"] .hero-accent { background-image: linear-gradient(100deg, #1d1d1f 0%, #3a4a6b 35%, #0b1426 55%, #5a6a88 80%, #1d1d1f 100%); background-size: 100% 100%; }
+/* 7 Apple med knapper: to runde knapper under overskriften, som «Kjøp» og «Les mer» hos Apple */
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; text-align: center; }
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-title, html[data-linje="s6"][data-ot="7"] .hero-bg .hero-badge { display: none; }
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-buttons { display: flex !important; justify-content: center; margin-top: 1.25rem; position: static; transform: none; }
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-primary { background: #0b1426 !important; color: #fff !important; height: 2.75rem; padding-inline: 1.4rem; font-size: 15px; font-weight: 500; }
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-primary svg { display: none; }
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-ghost { color: #0b1426 !important; --tw-ring-color: #0b1426; height: 2.75rem; padding-inline: 1.4rem; font-size: 15px; font-weight: 500; background: transparent; }
+html[data-linje="s6"][data-ot="7"] .hero-bg .hero-ghost:hover { background: #0b1426 !important; color: #fff !important; }
+html[data-linje="s6"][data-ot="7"] .hero-bg :is(.hero-primary, .hero-ghost) { border-radius: 999px !important; }
+@media (min-width: 1024px) { html[data-linje="s6"][data-ot="7"] .hero-bg :is(.hero-primary, .hero-ghost) { height: 3rem; padding-inline: 1.6rem; font-size: 16px; } }
