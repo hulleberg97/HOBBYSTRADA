@@ -251,14 +251,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
             className="flex h-11 shrink-0 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
           >
             <MessageSquareIcon className="h-4 w-4" aria-hidden="true" />
-            {user === null ? (
-              <>
-                <span className="ny-skjul">Send melding</span>
-                <span className="ny-vis">Logg inn for å kontakte</span>
-              </>
-            ) : (
-              "Send melding"
-            )}
+            {user === null ? "Logg inn for å kontakte" : "Send melding"}
           </button>
         </div>
       )}

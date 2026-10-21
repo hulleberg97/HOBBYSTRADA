@@ -6,17 +6,9 @@ export type LegalSection = { title: string; body: React.ReactNode };
 export function LegalPage({ title, updated, sections }: { title: string; updated: string; sections: LegalSection[] }) {
   return (
     <div className="min-h-screen">
-      <div className="ny-vis-blokk">
-        <PageHeader eyebrow="Juridisk" title={title} lead={`Sist oppdatert: ${updated}`} />
-      </div>
-      <div className="ny-skjul border-b">
-        <div className="container-custom py-12 text-center">
-          <h1 className="text-h1 font-heading font-semibold">{title}</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Sist oppdatert: {updated}</p>
-        </div>
-      </div>
-      <div className="juridisk-innhold container-custom max-w-3xl py-24">
-        <div className="juridisk-tekst space-y-8 text-sm leading-relaxed text-muted-foreground">
+      <PageHeader eyebrow="Juridisk" title={title} lead={`Sist oppdatert: ${updated}`} />
+      <div className="container-custom max-w-3xl pb-16 pt-10">
+        <div className="space-y-8 text-base leading-relaxed text-slate-700">
           {sections.map((s) => (
             <section key={s.title}>
               <h2 className="mb-3 font-heading text-h4 font-semibold text-foreground">{s.title}</h2>

@@ -16,7 +16,7 @@ export function SavedSearches({ items }: { items: { id: string; label: string; q
         <p>Søk eller filtrer i markedet og trykk «Varsle meg om nye kort», så får du e-post når et nytt kort passer.</p>
         <Link
           href="/products"
-          className="ny-vis mt-5 h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
+          className="mt-5 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
         >
           Gå til markedet
         </Link>

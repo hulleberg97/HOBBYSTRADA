@@ -40,8 +40,9 @@ export default async function SellerPage({ params }: Props) {
   const facts: [LucideIcon, string][] = [
     [CalendarIcon, `Medlem siden ${new Date(s.since).toLocaleDateString("nb-NO", { month: "long", year: "numeric" })}`],
     [TagIcon, `${active.length} til salgs`],
-    [PackageCheckIcon, `${sold.length} solgt`],
   ];
+  // «0 solgt» vises ikke – det virker bare negativt
+  if (sold.length) facts.push([PackageCheckIcon, `${sold.length} solgt`]);
   if (places.length) facts.push([MapPinIcon, places.join(", ")]);
 
   return (
@@ -59,7 +60,7 @@ export default async function SellerPage({ params }: Props) {
             </div>
             <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
               {facts.map(([Icon, text]) => (
-                <li key={text} className={`inline-flex items-center gap-1.5 ${text === "0 solgt" ? "ny-skjul" : ""}`}>
+                <li key={text} className="inline-flex items-center gap-1.5">
                   <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />
                   {text}
                 </li>

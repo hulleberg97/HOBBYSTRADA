@@ -251,7 +251,7 @@ export default async function Home() {
           <p className="mt-1 text-sm text-slate-600 sm:text-[15px]">Kjøper og selger avtaler direkte.</p>
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-9">
-              <p className="ny-etikett text-sm font-semibold uppercase tracking-wide text-slate-700">For kjøpere</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">For kjøpere</p>
               <ol className="mt-5 space-y-6">
                 <li className="flex gap-4">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">1</span>
@@ -284,7 +284,7 @@ export default async function Home() {
               </Link>
             </div>
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-9">
-              <p className="ny-etikett text-sm font-semibold uppercase tracking-wide text-slate-700">For selgere</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">For selgere</p>
               <ol className="mt-5 space-y-6">
                 <li className="flex gap-4">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">1</span>

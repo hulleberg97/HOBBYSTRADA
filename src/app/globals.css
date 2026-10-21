@@ -436,23 +436,14 @@ html .card-meta .card-time-short ~ * , html .card-meta .card-time:has(.card-time
 header :is(a, button).h-10.w-10 { position: relative; }
 header :is(a, button).h-10.w-10::after { content: ""; position: absolute; inset: -2px; }
 
-/* TEST runde 4 (?ny=1) */
-.ny-vis, .ny-vis-blokk { display: none; }
-html[data-ny] .ny-skjul { display: none; }
-html[data-ny] .ny-vis { display: inline-flex; }
-html[data-ny] .ny-vis-blokk { display: block; }
-/* 6: juridiske sider som resten av siden, større og roligere tekst */
-html[data-ny] .juridisk-innhold { padding-top: 2.5rem; padding-bottom: 4rem; }
-html[data-ny] .juridisk-tekst { font-size: 16px; color: #334155; }
-/* 8: samme nedtrekkspil overalt */
-html[data-ny] select.ny-pil { appearance: none; padding-right: 2.5rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 16px; }
-/* 9: små etiketter i gull som resten av siden */
-html[data-ny] .ny-etikett { font-size: 11px; letter-spacing: 0.18em; color: #8a6a24; }
-/* 14: hjelpetekst under felter lettere å lese */
-html[data-ny] main form .text-xs { font-size: 13px; line-height: 1.5; }
-/* 15: fast skriftskala 12 / 14 / 16 / 18 / 20 / 24 / 32 / 44 / 48 */
-@media (min-width: 640px) { html[data-ny] .sm\:text-\[15px\] { font-size: 16px; } html[data-ny] .sm\:text-\[28px\] { font-size: 32px; } }
-html[data-ny] .text-\[17px\] { font-size: 18px; }
-html[data-ny] .text-\[22px\] { font-size: 24px; }
-html[data-ny] .text-\[28px\], html[data-ny] .text-3xl { font-size: 32px; line-height: 1.15; }
-html[data-ny] .text-\[40px\] { font-size: 44px; }
+/* Felles regler for skjemaer og skriftskala */
+/* samme nedtrekkspil overalt */
+select.select-pil { appearance: none; padding-right: 2.5rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 16px; }
+/* hjelpetekst under felter lettere å lese */
+html main form .text-xs { font-size: 13px; line-height: 1.5; }
+/* fast skriftskala 12 / 14 / 16 / 18 / 20 / 24 / 32 / 44 / 48 */
+@media (min-width: 640px) { html .sm\:text-\[15px\] { font-size: 16px; } html .sm\:text-\[28px\] { font-size: 32px; } }
+html .text-\[17px\] { font-size: 18px; }
+html .text-\[22px\] { font-size: 24px; }
+html .text-\[28px\], html .text-3xl { font-size: 32px; line-height: 1.15; }
+html .text-\[40px\] { font-size: 44px; }
