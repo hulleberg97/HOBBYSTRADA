@@ -550,7 +550,8 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                 maxLength={40}
                 placeholder="Vises i annonsen"
                 autoComplete="nickname"
-                defaultValue={user?.name}
+                // Brukernavnet vises offentlig – aldri hele e-postadressen
+                defaultValue={user?.name.includes("@") ? user.name.split("@")[0] : user?.name}
                 className={field}
               />
             </div>
