@@ -27,18 +27,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("dybde");if(v)sessionStorage.setItem("dybde",v);if(sessionStorage.getItem("dybde")==="1")document.documentElement.dataset.dybde="1"}catch(e){}})()`,
           }}
         />
-        {/* Test av helhetlig fargebruk (?helhet=1, ?helhet=av). Huskes mens fanen er åpen. Slår også på «dybde». */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("helhet");if(v)sessionStorage.setItem("helhet",v);if(sessionStorage.getItem("helhet")==="1"){document.documentElement.dataset.helhet="1";document.documentElement.dataset.dybde="1"}}catch(e){}})()`,
-          }}
-        />
-        {/* Test av nøytral fargebalanse (?balanse=1, ?balanse=av). Huskes mens fanen er åpen. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("balanse");if(v)sessionStorage.setItem("balanse",v);if(sessionStorage.getItem("balanse")==="1")document.documentElement.dataset.balanse="1"}catch(e){}})()`,
-          }}
-        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
