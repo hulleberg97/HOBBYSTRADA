@@ -24,7 +24,7 @@ export default function OmPage() {
         </div>
       </PageHeader>
       <section className="mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+        <div className="grid gap-4 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div>
             <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Hva er HOBBYSTRADA?</h2>
           </div>
