@@ -562,12 +562,9 @@ html[data-kompakt] .markt-rad1 select, html[data-kompakt] .markt-rad1 button { h
 html[data-kompakt] .markt-rad1 button { padding-top: 0; padding-bottom: 0; }
 html[data-kompakt] .markt-rad2 { padding-bottom: 0.5rem; }
 
-/* TEST lys fullskjermvisning av annonsebilder (?galleri=lys grå-mint, ?galleri=hvit ren hvit) */
-html[data-galleri] .galleri-fs { color: #0b1426; }
-html[data-galleri="lys"] .galleri-fs { background: radial-gradient(55% 55% at 50% 48%, #ffffff 0%, rgb(255 255 255 / 0.6) 40%, transparent 75%), linear-gradient(180deg, #dfe7e7, #cbd6d7) !important; }
-html[data-galleri="hvit"] .galleri-fs { background: #ffffff !important; }
-html[data-galleri] .galleri-fs :is(.text-white\/70, .text-white\/60) { color: #5b6b7a; }
-html[data-galleri] .galleri-fs button.rounded-full { background: rgb(11 20 38 / 0.06); color: #0b1426; }
-html[data-galleri] .galleri-fs button.rounded-full:hover { background: rgb(11 20 38 / 0.12); }
-html[data-galleri] .galleri-fs .galleri-bilde { border-radius: 6px; box-shadow: 0 2px 6px rgb(11 20 38 / 0.12), 0 30px 60px -20px rgb(11 20 38 / 0.45); }
-html[data-galleri="hvit"] .galleri-fs .galleri-bilde { box-shadow: 0 2px 6px rgb(11 20 38 / 0.10), 0 24px 50px -22px rgb(11 20 38 / 0.35); }
+/* Fullskjermvisning av annonsebilder: hvit bakgrunn for mest kontrast, kortet med myk skygge */
+.galleri-fs.galleri-fs { background: #ffffff; color: #0b1426; }
+.galleri-fs :is(.text-white\/70, .text-white\/60) { color: #5b6b7a; }
+.galleri-fs button.rounded-full { background: rgb(11 20 38 / 0.06); color: #0b1426; }
+.galleri-fs button.rounded-full:hover { background: rgb(11 20 38 / 0.12); }
+.galleri-fs .galleri-bilde { border-radius: 6px; box-shadow: 0 2px 6px rgb(11 20 38 / 0.10), 0 24px 50px -22px rgb(11 20 38 / 0.35); }

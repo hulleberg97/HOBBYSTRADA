@@ -102,7 +102,7 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
       {/* Legges rett i <body>, så fullskjermen alltid ligger over menylinjen */}
       {open &&
         createPortal(
-          <div role="dialog" aria-modal="true" aria-label={title} className="galleri-fs fixed inset-0 z-[60] flex flex-col bg-slate-950 text-white">
+          <div role="dialog" aria-modal="true" aria-label={title} className="galleri-fs fixed inset-0 z-[60] flex flex-col bg-white text-primary">
             <div className="flex items-center justify-between px-4 py-3 sm:px-6">
               <p className="font-mono-data text-xs text-white/70">
                 {index + 1} / {n}

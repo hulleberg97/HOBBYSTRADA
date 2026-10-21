@@ -39,12 +39,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("kompakt");if(v)sessionStorage.setItem("kompakt",v);if(sessionStorage.getItem("kompakt")==="1")document.documentElement.dataset.kompakt="1"}catch(e){}})()`,
           }}
         />
-        {/* Test av lys fullskjermvisning av annonsebilder (?galleri=lys / hvit / av). Huskes mens fanen er åpen. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("galleri");if(v)sessionStorage.setItem("galleri",v);var m=sessionStorage.getItem("galleri");if(m==="lys"||m==="hvit")document.documentElement.dataset.galleri=m}catch(e){}})()`,
-          }}
-        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
