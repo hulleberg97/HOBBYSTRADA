@@ -75,15 +75,15 @@ export function Market({ listings }: { listings: Listing[] }) {
 
   return (
     <div>
-      <div className="mx-auto max-w-[1320px] px-4 pt-5 sm:px-6 sm:pt-8 lg:px-8">
-        <nav aria-label="Brødsmuler" className="mb-4 flex items-center gap-1.5 text-sm text-slate-500">
+      <div className="markt-topp mx-auto max-w-[1320px] px-4 pt-5 sm:px-6 sm:pt-8 lg:px-8">
+        <nav aria-label="Brødsmuler" className="markt-sti mb-4 flex items-center gap-1.5 text-sm text-slate-500">
           <Link className="tap hover:text-primary hover:underline" href="/">
             Forside
           </Link>
           <span aria-hidden="true">/</span>
           <span className="text-slate-900">Markedet</span>
         </nav>
-        <section className="flex flex-col gap-6 pb-2 pt-2 lg:flex-row lg:items-end lg:justify-between">
+        <section className="markt-tittel flex flex-col gap-6 pb-2 pt-2 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
             <Eyebrow>Markedet</Eyebrow>
             <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Finn ditt neste kort</h1>
@@ -92,7 +92,7 @@ export function Market({ listings }: { listings: Listing[] }) {
           <form
             role="search"
             onSubmit={submit}
-            className="hidden h-14 w-full md:flex items-center gap-2 rounded-full bg-white pl-5 pr-1.5 ring-1 ring-slate-300 transition focus-within:ring-2 focus-within:ring-primary/30 lg:w-[420px]"
+            className="markt-sok hidden h-14 w-full md:flex items-center gap-2 rounded-full bg-white pl-5 pr-1.5 ring-1 ring-slate-300 transition focus-within:ring-2 focus-within:ring-primary/30 lg:w-[420px]"
           >
             <SearchIcon className="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
             <label htmlFor="market-search" className="sr-only">
@@ -116,7 +116,7 @@ export function Market({ listings }: { listings: Listing[] }) {
         </section>
       </div>
       <div className="filter-bar z-20 mt-6 border-b border-slate-200 bg-background/95 backdrop-blur md:sticky md:top-[72px]">
-        <div className="mx-auto flex max-w-[1320px] flex-row items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="markt-rad1 mx-auto flex max-w-[1320px] flex-row items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <nav aria-label="Kategorier" className="min-w-0 flex-1">
             <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <li className="hidden md:block">
@@ -186,7 +186,7 @@ export function Market({ listings }: { listings: Listing[] }) {
             </div>
           </div>
         </div>
-        <div className="mx-auto flex max-w-[1320px] items-center gap-2 px-4 pb-3 sm:px-6 lg:px-8">
+        <div className="markt-rad2 mx-auto flex max-w-[1320px] items-center gap-2 px-4 pb-3 sm:px-6 lg:px-8">
           <span className="hidden shrink-0 items-center gap-1.5 text-xs font-medium text-slate-500 sm:inline-flex">
             <SlidersHorizontalIcon className="h-3.5 w-3.5" aria-hidden="true" /> Korttype
           </span>

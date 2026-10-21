@@ -33,6 +33,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("helhet");if(v)sessionStorage.setItem("helhet",v);if(sessionStorage.getItem("helhet")==="1"){document.documentElement.dataset.helhet="1";document.documentElement.dataset.dybde="1"}}catch(e){}})()`,
           }}
         />
+        {/* Test av kompakt topp i markedet (?kompakt=1, ?kompakt=av). Huskes mens fanen er åpen. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("kompakt");if(v)sessionStorage.setItem("kompakt",v);if(sessionStorage.getItem("kompakt")==="1")document.documentElement.dataset.kompakt="1"}catch(e){}})()`,
+          }}
+        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
