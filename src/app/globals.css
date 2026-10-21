@@ -488,3 +488,17 @@ html[data-vifte="2"] .hero-fan::after { left: 50%; bottom: 3%; width: 80%; heigh
 html[data-vifte="3"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 60% at 50% 45%, #fdf6e4 0%, rgb(253 246 228 / 0.6) 45%, transparent 80%); }
 html[data-vifte="3"] .hero-fan::before { left: 50%; top: -2%; width: min(640px, 92%); aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(232 200 120 / 0.75), rgb(232 205 132 / 0.30) 45%, transparent 72%); filter: blur(8px); }
 html[data-vifte="3"] .hero-fan::after { left: 50%; top: -10%; width: min(1100px, 140%); height: 110%; transform: translateX(-50%); background: repeating-conic-gradient(from 0deg at 50% 42%, rgb(201 160 70 / 0.22) 0deg 1.6deg, transparent 1.6deg 11deg); mask-image: radial-gradient(closest-side, #000 15%, transparent 72%); -webkit-mask-image: radial-gradient(closest-side, #000 15%, transparent 72%); }
+/* 4 Pop: Studio skrudd opp – kraftig spotlys, mørk vignett rundt, gullkant-lys, dype skygger og friskere kortfarger */
+html[data-vifte="4"] .hero-bg[data-farge="lys"] { background:
+  radial-gradient(42% 58% at 50% 42%, #ffffff 0%, #ffffff 30%, rgb(255 255 255 / 0) 70%),
+  radial-gradient(85% 90% at 50% 45%, #f1f3f7 0%, #dde2ea 70%, #cfd6e0 100%); }
+html[data-vifte="4"] .hero-fan::before { left: 50%; top: -22%; width: 70%; height: 108%; transform: translateX(-50%);
+  background: radial-gradient(50% 100% at 50% 0%, #fff 0%, rgb(255 255 255 / 0.85) 45%, transparent 82%);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); filter: blur(12px); }
+html[data-vifte="4"] .hero-fan::after { left: 50%; bottom: 6%; width: 70%; height: 70px; transform: translateX(-50%); border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(11 20 38 / 0.5), rgb(11 20 38 / 0.18) 55%, transparent); filter: blur(7px); }
+html[data-vifte="4"] .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 3px 2px -1px #fff, inset 0 -4px 6px -2px rgb(100 116 139 / 0.3),
+  0 0 0 1px rgb(207 166 83 / 0.35), 0 0 30px -6px rgb(214 178 95 / 0.55), 0 40px 70px -25px rgb(11 20 38 / 0.85) !important; }
+html[data-vifte="4"] .fan-window img { filter: saturate(1.15) contrast(1.06); }
+html[data-vifte="4"] .hero-bg .hero-sub > span, html[data-vifte="4"] .hero-accent { filter: drop-shadow(0 2px 0 #fff); }
+html[data-vifte="4"] .fan-pill { box-shadow: inset 0 0 0 1.5px #fff, inset 0 3px 2px -1px #fff, 0 0 0 1px rgb(207 166 83 / 0.4), 0 18px 34px -14px rgb(11 20 38 / 0.6) !important; }
