@@ -8,14 +8,14 @@ import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { formatPrice, initials } from "@/lib/format";
 
 const PLANS: { key: BoostKey; Icon: typeof SparklesIcon; perks: string[]; popular?: boolean }[] = [
-  { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Selg raskere uten å bruke mye", "Varer i 3 dager"] },
+  { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Selg raskere uten å bruke mye"] },
   {
     key: "featured",
     Icon: SparklesIcon,
-    perks: ["Gullmerke og gullramme", "Vises under «Utvalgte kort» på forsiden", "Foran Topp av listen og vanlige annonser", "Varer i 7 dager"],
+    perks: ["Gullmerke og gullramme", "Vises under «Utvalgte kort» på forsiden", "Foran Topp av listen og vanlige annonser"],
     popular: true,
   },
-  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Plass i kortvifta på forsiden", "Aller først i markedet", "Varer i 30 dager"] },
+  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Plass i kortvifta på forsiden", "Aller først i markedet"] },
 ];
 
 export function BoostPicker() {
@@ -174,7 +174,7 @@ export function BoostPicker() {
               <p className="plan-price mt-5 font-heading text-4xl font-semibold tracking-tight">{formatPrice(b.price)}</p>
               <ul className="mb-8 mt-6 space-y-2.5 text-sm">
                 {perks.map((p) => (
-                  <li key={p} data-varer={p.startsWith("Varer i") ? "true" : undefined} className="flex items-start gap-2">
+                  <li key={p} className="flex items-start gap-2">
                     <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#9a7420]" aria-hidden="true" />
                     {p}
                   </li>

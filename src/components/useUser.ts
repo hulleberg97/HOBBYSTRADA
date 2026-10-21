@@ -20,8 +20,9 @@ export function useUser() {
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
     if (!hasAuthCookie()) {
-      setUser(null);
-      return;
+      // Satt litt etter, så React ikke må tegne på nytt midt i oppdateringen
+      const id = setTimeout(() => setUser(null), 0);
+      return () => clearTimeout(id);
     }
     let alive = true;
     let stop = () => {};

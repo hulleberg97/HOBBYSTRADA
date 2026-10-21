@@ -77,22 +77,25 @@ export function Search({ listings }: { listings: Listing[] }) {
               Søk
             </button>
           </form>
-          <div className="sok-populaer mt-5" data-skjul={q && result.length ? "true" : undefined}>
-            <p className="text-xs font-medium text-slate-500">Populære søk</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {POPULAR.map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  data-current={q.toLowerCase() === p.toLowerCase() ? "true" : undefined}
-                  onClick={() => go(p)}
-                  className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-300 transition hover:ring-primary data-[current=true]:bg-primary data-[current=true]:text-white data-[current=true]:ring-primary"
-                >
-                  {p}
-                </button>
-              ))}
+          {/* Forslagene vises bare når søket ikke gir treff, så treffene kommer høyt opp */}
+          {!(q && result.length > 0) && (
+            <div className="mt-5">
+              <p className="text-xs font-medium text-slate-500">Populære søk</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {POPULAR.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    data-current={q.toLowerCase() === p.toLowerCase() ? "true" : undefined}
+                    onClick={() => go(p)}
+                    className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-300 transition hover:ring-primary data-[current=true]:bg-primary data-[current=true]:text-white data-[current=true]:ring-primary"
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
       <div className="mx-auto max-w-[1320px] px-4 pb-24 pt-8 sm:px-6 lg:px-8">
