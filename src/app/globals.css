@@ -519,3 +519,4 @@ html .card-meta .card-time-short ~ * , html .card-meta .card-time:has(.card-time
 html[data-t-minside] .t-ms-btn { display: inline-flex; }
 @media (min-width: 768px) { html[data-t-minside] .t-ms-hero { display: none; } }
 html[data-t-vipps] .t-vipps { display: none; }
+html[data-t-minside] .t-ms-tom { display: none; }

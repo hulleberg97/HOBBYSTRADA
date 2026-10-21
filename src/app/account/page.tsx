@@ -55,7 +55,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
             )}
             <Link
               href="/sell"
-              className="t-ms-hero inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
+              className={`t-ms-hero ${listings.length === 0 ? "t-ms-tom" : ""} inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black`}
             >
               <PlusIcon className="h-4 w-4" aria-hidden="true" />
               Legg ut kort
