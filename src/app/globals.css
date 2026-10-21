@@ -473,51 +473,21 @@ html[data-dybde] .group:hover .card-frame { box-shadow: inset 0 1px 0 #fff, 0 0 
 html[data-dybde][data-glans] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 62%, #ffffff, transparent 70%); }
 html[data-dybde][data-glans] .hero-bg [data-dim] { background: #f8f7f4; }
 
-/* TEST lys og glans rundt vifta (?vifte=1 studio, ?vifte=2 glassgulv, ?vifte=3 gullhalo) */
-html[data-vifte] .hero-bg { isolation: isolate; }
-html[data-vifte] .hero-fan::before, html[data-vifte] .hero-fan::after { content: ""; position: absolute; pointer-events: none; z-index: -1; }
-/* 1 Studio: lys bakvegg som mørkner mot kantene, tydelig spotlys ovenfra og skygge på gulvet */
-html[data-vifte="1"] .hero-bg[data-farge="lys"] { background: radial-gradient(60% 75% at 50% 40%, #ffffff 0%, rgb(255 255 255 / 0.6) 35%, rgb(226 231 239 / 0.85) 75%, rgb(226 231 239 / 0) 100%); }
-html[data-vifte="1"] .hero-fan::before { left: 50%; top: -18%; width: 64%; height: 100%; transform: translateX(-50%); background: radial-gradient(50% 100% at 50% 0%, rgb(255 255 255 / 1), rgb(255 255 255 / 0.7) 45%, transparent 80%); clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); filter: blur(14px); }
-html[data-vifte="1"] .hero-fan::after { left: 50%; bottom: 7%; width: 72%; height: 60px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(15 23 42 / 0.35), rgb(15 23 42 / 0.12) 55%, transparent); filter: blur(8px); }
-/* 2 Glassgulv: blank gulvflate under kortene med lys horisontlinje og speiling */
-html[data-vifte="2"] .hero-bg[data-farge="lys"] { background: radial-gradient(48% 22% at 50% 70%, rgb(214 221 232 / 0.9), rgb(232 236 243 / 0.5) 60%, transparent 100%), radial-gradient(60% 55% at 50% 38%, #ffffff, transparent 75%); }
-html[data-vifte="2"] .hero-fan::before { left: 4%; right: 4%; top: 61.5%; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, #fff 25%, #fff 75%, transparent); box-shadow: 0 0 24px 8px rgb(255 255 255 / 0.95), 0 6px 30px 4px rgb(11 20 38 / 0.06); }
-html[data-vifte="2"] .hero-fan::after { left: 50%; bottom: 3%; width: 80%; height: 34%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(214 178 95 / 0.32), rgb(214 178 95 / 0.10) 55%, transparent); }
-/* 3 Gullhalo: varm gylden glød og fine lysstråler bak midtkortet */
-html[data-vifte="3"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 60% at 50% 45%, #fdf6e4 0%, rgb(253 246 228 / 0.6) 45%, transparent 80%); }
-html[data-vifte="3"] .hero-fan::before { left: 50%; top: -2%; width: min(640px, 92%); aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgb(232 200 120 / 0.75), rgb(232 205 132 / 0.30) 45%, transparent 72%); filter: blur(8px); }
-html[data-vifte="3"] .hero-fan::after { left: 50%; top: -10%; width: min(1100px, 140%); height: 110%; transform: translateX(-50%); background: repeating-conic-gradient(from 0deg at 50% 42%, rgb(201 160 70 / 0.22) 0deg 1.6deg, transparent 1.6deg 11deg); mask-image: radial-gradient(closest-side, #000 15%, transparent 72%); -webkit-mask-image: radial-gradient(closest-side, #000 15%, transparent 72%); }
-/* 4 Pop: Studio skrudd opp – kraftig spotlys, mørk vignett rundt, gullkant-lys, dype skygger og friskere kortfarger */
-html[data-vifte="4"] .hero-bg[data-farge="lys"] { background:
-  radial-gradient(42% 58% at 50% 42%, #ffffff 0%, #ffffff 30%, rgb(255 255 255 / 0) 70%),
-  radial-gradient(85% 90% at 50% 45%, #f1f3f7 0%, #dde2ea 70%, #cfd6e0 100%); }
-html[data-vifte="4"] .hero-fan::before { left: 50%; top: -22%; width: 70%; height: 108%; transform: translateX(-50%);
-  background: radial-gradient(50% 100% at 50% 0%, #fff 0%, rgb(255 255 255 / 0.85) 45%, transparent 82%);
-  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); filter: blur(12px); }
-html[data-vifte="4"] .hero-fan::after { left: 50%; bottom: 6%; width: 70%; height: 70px; transform: translateX(-50%); border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(11 20 38 / 0.5), rgb(11 20 38 / 0.18) 55%, transparent); filter: blur(7px); }
-html[data-vifte="4"] .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 3px 2px -1px #fff, inset 0 -4px 6px -2px rgb(100 116 139 / 0.3),
-  0 0 0 1px rgb(207 166 83 / 0.35), 0 0 30px -6px rgb(214 178 95 / 0.55), 0 40px 70px -25px rgb(11 20 38 / 0.85) !important; }
-html[data-vifte="4"] .fan-window img { filter: saturate(1.15) contrast(1.06); }
-html[data-vifte="4"] .hero-bg .hero-sub > span, html[data-vifte="4"] .hero-accent { filter: drop-shadow(0 2px 0 #fff); }
-html[data-vifte="4"] .fan-pill { box-shadow: inset 0 0 0 1.5px #fff, inset 0 3px 2px -1px #fff, 0 0 0 1px rgb(207 166 83 / 0.4), 0 18px 34px -14px rgb(11 20 38 / 0.6) !important; }
-/* 5 Pop i full bredde og høyde: scenen fyller hele skjermen ned til annonsene, uten lyskjegle og gullglød */
-html:is([data-vifte="5"], [data-vifte="6"]) div:has(> #hero) { max-width: none; padding: 0 !important; }
-html:is([data-vifte="5"], [data-vifte="6"]) #hero { border-radius: 0; min-height: calc(100svh - 72px); display: flex; flex-direction: column; justify-content: center; }
-html[data-vifte="5"] .hero-bg[data-farge="lys"] { background:
-  radial-gradient(38% 55% at 50% 44%, #ffffff 0%, rgb(255 255 255 / 0.9) 35%, rgb(255 255 255 / 0) 75%),
-  radial-gradient(90% 95% at 50% 45%, #eef1f5 0%, #dce1e9 65%, #cdd4de 100%); }
-html:is([data-vifte="5"], [data-vifte="6"]) .hero-fan::after { left: 50%; bottom: 6%; width: 64%; height: 64px; transform: translateX(-50%); border-radius: 50%;
+/* Vifta: scene i full bredde og høyde med frosset glass, dyp skygge under kortene */
+html .hero-bg { isolation: isolate; }
+html .hero-fan::before, html .hero-fan::after { content: ""; position: absolute; pointer-events: none; z-index: -1; }
+html div:has(> #hero) { max-width: none; padding: 0 !important; }
+html .hero-fan::after { left: 50%; bottom: 6%; width: 64%; height: 64px; transform: translateX(-50%); border-radius: 50%;
   background: radial-gradient(closest-side, rgb(11 20 38 / 0.45), rgb(11 20 38 / 0.16) 55%, transparent); filter: blur(8px); }
-html:is([data-vifte="5"], [data-vifte="6"]) .hero-fan > [aria-hidden="true"]:first-child { display: none; }
-html:is([data-vifte="5"], [data-vifte="6"]) .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 3px 2px -1px #fff, inset 0 -4px 6px -2px rgb(100 116 139 / 0.3), 0 2px 4px rgb(11 20 38 / 0.10), 0 40px 70px -25px rgb(11 20 38 / 0.8) !important; }
-html:is([data-vifte="5"], [data-vifte="6"]) .fan-window img { filter: saturate(1.12) contrast(1.05); }
-html:is([data-vifte="5"], [data-vifte="6"]) .fan-pill { box-shadow: inset 0 0 0 1.5px #fff, inset 0 3px 2px -1px #fff, 0 18px 34px -14px rgb(11 20 38 / 0.55) !important; }
-@media (min-width: 1024px) { html:is([data-vifte="5"], [data-vifte="6"]) .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(380px, calc(100svh - 300px), 760px); --w: min(22%, calc((100svh - 330px) * 0.5)); } }
-@media (max-width: 639px) { html:is([data-vifte="5"], [data-vifte="6"]) #hero { min-height: calc(100svh - 64px); } html:is([data-vifte="5"], [data-vifte="6"]) .hero-bg[data-oppsett="vifte"] .hero-fan { height: min(66svh, 560px); --w: 52%; } }
-/* 6 Frosset glass: samme gråblå farger, men som matt, frostet glass med myke lysflekker bak, korn og glassblank kant */
-html[data-vifte="6"] .hero-bg[data-farge="lys"] { background:
+html #hero { border-radius: 0; min-height: calc(100svh - 72px); display: flex; flex-direction: column; justify-content: center; }
+html .hero-fan > [aria-hidden="true"]:first-child { display: none; }
+html .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 3px 2px -1px #fff, inset 0 -4px 6px -2px rgb(100 116 139 / 0.3), 0 2px 4px rgb(11 20 38 / 0.10), 0 40px 70px -25px rgb(11 20 38 / 0.8) !important; }
+html .fan-window img { filter: saturate(1.12) contrast(1.05); }
+html .fan-pill { box-shadow: inset 0 0 0 1.5px #fff, inset 0 3px 2px -1px #fff, 0 18px 34px -14px rgb(11 20 38 / 0.55) !important; }
+@media (min-width: 1024px) { html .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(380px, calc(100svh - 300px), 760px); --w: min(22%, calc((100svh - 330px) * 0.5)); } }
+@media (max-width: 639px) { html #hero { min-height: calc(100svh - 64px); } html .hero-bg[data-oppsett="vifte"] .hero-fan { height: min(66svh, 560px); --w: 52%; } }
+/* Frosset glass: gråblå farger som matt, frostet glass med myke lysflekker bak, korn og glassblank kant */
+html[data-glans] #hero.hero-bg[data-farge="lys"] { background:
   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
   linear-gradient(115deg, rgb(255 255 255 / 0.55) 0%, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / 0) 62%, rgb(255 255 255 / 0.45) 100%),
   radial-gradient(26% 38% at 16% 32%, rgb(150 172 210 / 0.85), transparent 72%),
@@ -526,7 +496,7 @@ html[data-vifte="6"] .hero-bg[data-farge="lys"] { background:
   radial-gradient(34% 30% at 24% 84%, rgb(160 178 210 / 0.7), transparent 72%),
   radial-gradient(34% 44% at 50% 44%, rgb(255 255 255 / 0.95), transparent 78%),
   linear-gradient(180deg, #e3e8f0, #cfd7e3); }
-html[data-vifte="6"] #hero { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -1px 0 rgb(255 255 255 / 0.6); }
-html[data-vifte="6"] #hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+html #hero { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -1px 0 rgb(255 255 255 / 0.6); }
+html #hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: linear-gradient(120deg, rgb(255 255 255 / 0.35) 0%, transparent 22%, transparent 70%, rgb(255 255 255 / 0.25) 100%); }
-html[data-vifte="6"] .fan-pill { background: rgb(255 255 255 / 0.45) !important; backdrop-filter: blur(16px) saturate(1.4); }
+html .fan-pill { background: rgb(255 255 255 / 0.45) !important; backdrop-filter: blur(16px) saturate(1.4); }
