@@ -514,3 +514,8 @@ html .card-meta .card-time-short ~ * , html .card-meta .card-time:has(.card-time
 #password { padding-right: 3.25rem; }
 /* Korte sider fyller ikke hele skjermen med tom plass før bunnen */
 .site-main > :only-child:not(:has(#hero)) { min-height: 62vh; }
+
+/* TEST innlogget (?minside=1, ?vipps=1, ?alle=1) */
+html[data-t-minside] .t-ms-btn { display: inline-flex; }
+@media (min-width: 768px) { html[data-t-minside] .t-ms-hero { display: none; } }
+html[data-t-vipps] .t-vipps { display: none; }

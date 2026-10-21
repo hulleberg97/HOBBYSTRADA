@@ -55,7 +55,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
             )}
             <Link
               href="/sell"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
+              className="t-ms-hero inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
             >
               <PlusIcon className="h-4 w-4" aria-hidden="true" />
               Legg ut kort
@@ -81,6 +81,13 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <div className="mt-4 rounded-3xl bg-white px-6 py-12 text-center ring-1 ring-inset ring-slate-300/70">
                 <p className="font-semibold text-slate-950">Du har ingen annonser ennå</p>
                 <p className="mt-1 text-sm text-slate-600">Legg ut det første kortet ditt på et par minutter.</p>
+                <Link
+                  href="/sell"
+                  className="t-ms-btn mt-6 hidden h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
+                >
+                  <PlusIcon className="h-4 w-4" aria-hidden="true" />
+                  Legg ut kort
+                </Link>
               </div>
             ) : (
               <ul className="mt-4 space-y-3">
@@ -151,8 +158,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                 <dd className="font-medium text-slate-900">{user.email}</dd>
                 <dt className="text-slate-500">Sted</dt>
                 <dd className="font-medium text-slate-900">{user.location || "Ikke oppgitt"}</dd>
-                <dt className="text-slate-500">Vipps</dt>
-                <dd className="font-medium text-slate-900">{verification ? "Bekreftet" : "Ikke bekreftet"}</dd>
+                <dt className={`text-slate-500 ${hasVippsLogin() ? "" : "t-vipps"}`}>Vipps</dt>
+                <dd className={`font-medium text-slate-900 ${hasVippsLogin() ? "" : "t-vipps"}`}>{verification ? "Bekreftet" : "Ikke bekreftet"}</dd>
               </dl>
               <form action="/auth/logout" method="post" className="mt-6">
                 <button className={btnSecondary}>Logg ut</button>
