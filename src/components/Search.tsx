@@ -77,7 +77,7 @@ export function Search({ listings }: { listings: Listing[] }) {
               Søk
             </button>
           </form>
-          <div className="mt-5">
+          <div className="sok-populaer mt-5" data-skjul={q && result.length ? "true" : undefined}>
             <p className="text-xs font-medium text-slate-500">Populære søk</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {POPULAR.map((p) => (

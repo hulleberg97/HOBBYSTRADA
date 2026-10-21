@@ -504,3 +504,18 @@ html .card-meta .card-time svg { display: none; }
 html .card-meta > * + .card-time::before { content: "·"; margin-right: 0.35rem; }
 html .card-meta .card-time-short { display: inline; }
 html .card-meta .card-time-short ~ * , html .card-meta .card-time:has(.card-time-short) > span:not(.card-time-short) { display: none; }
+
+/* TEST runde 2 (?loft=1, ?sok=1, ?fot=1, ?alle=1, =av for å slå av) */
+/* Annonseløft: kompakte priskort – ikonet oppe til høyre, uten dobbel «Varer i …» */
+html[data-t-loft] .plan-card .plan-icon { position: absolute; top: 1.5rem; right: 1.5rem; height: 2.25rem; width: 2.25rem; }
+html[data-t-loft] .plan-card .plan-title { margin-top: 0; }
+html[data-t-loft] .plan-card .plan-price { margin-top: 0.75rem; }
+html[data-t-loft] .plan-card li[data-varer] { display: none; }
+/* Søk: «Populære søk» skjules når søket gir treff, så treffene kommer høyere opp */
+html[data-t-sok] .sok-populaer[data-skjul] { display: none; }
+/* Bunnen på mobil: to kolonner uten huller, uten dobbel innlogging (finnes i menyen) */
+html[data-t-fot] .fot-konto { display: none; }
+@media (max-width: 639px) {
+  html[data-t-fot] .fot-kol { display: block; columns: 2; column-gap: 2rem; }
+  html[data-t-fot] .fot-kol > div { break-inside: avoid; margin-bottom: 2rem; }
+}

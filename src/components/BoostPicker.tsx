@@ -166,15 +166,15 @@ export function BoostPicker() {
                   Mest valgt
                 </span>
               )}
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-accent">
+              <span className="plan-icon flex h-11 w-11 items-center justify-center rounded-full bg-primary text-accent">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
-              <h3 className="mt-5 font-heading text-xl font-semibold tracking-tight">{b.name}</h3>
+              <h3 className="plan-title mt-5 font-heading text-xl font-semibold tracking-tight">{b.name}</h3>
               <p className="mt-1 font-mono-data text-xs uppercase tracking-wider text-muted-foreground">{b.days} dager</p>
-              <p className="mt-5 font-heading text-4xl font-semibold tracking-tight">{formatPrice(b.price)}</p>
+              <p className="plan-price mt-5 font-heading text-4xl font-semibold tracking-tight">{formatPrice(b.price)}</p>
               <ul className="mb-8 mt-6 space-y-2.5 text-sm">
                 {perks.map((p) => (
-                  <li key={p} className="flex items-start gap-2">
+                  <li key={p} data-varer={p.startsWith("Varer i") ? "true" : undefined} className="flex items-start gap-2">
                     <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#9a7420]" aria-hidden="true" />
                     {p}
                   </li>

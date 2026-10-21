@@ -16,7 +16,7 @@ export function AccountLinks({ className }: { className: string }) {
         ["/auth/register", "Opprett konto"],
       ];
   return links.map(([href, label]) => (
-    <li key={href}>
+    <li key={href} className="fot-konto">
       <Link className={className} href={href}>
         {label}
       </Link>

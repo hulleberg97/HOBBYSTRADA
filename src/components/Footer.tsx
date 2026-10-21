@@ -45,7 +45,7 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.</p>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+          <div className="fot-kol grid grid-cols-2 gap-8 sm:grid-cols-3">
             {COLS.map((c) => (
               <div key={c.title}>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">{c.title}</p>
