@@ -514,7 +514,10 @@ html[data-mork="hvit"]:has(#hero) main span.bg-primary { color: var(--m-bg) !imp
 /* Utkast «marine2»: mørkere marine med glans */
 html:is([data-mork="marine2"], [data-mork^="glans"]) { --m-bg: #060c18; --m-flate: #0c1628; --m-kant: #1a2944; --m-kant2: #2a3d63; --m-dempet: #8fa0bb; --m-lys: #e2e8f0; --m-bg-glass: rgb(6 12 24 / 0.72); --m-flate-glass: rgb(12 22 40 / 0.8);
   --aksent: #ffffff; --aksent-knapp: #ffffff; --aksent-knapp-hover: #e2e8f0; --aksent-tekst: #060c18; }
-html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero), html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) body { background: radial-gradient(120% 60% at 50% 0%, var(--g-topp, #0f1d38) 0%, var(--m-bg) 55%) fixed, var(--m-bg) !important; }
+/* Lysskjæret ligger i et fast lag, så det blir likt på PC og iPhone (iPhone støtter ikke «fixed» bakgrunn) */
+html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) { background: var(--m-bg) !important; }
+html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) body { background: transparent !important; }
+html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(120% 60% at 50% 0%, var(--g-topp, #0f1d38) 0%, var(--m-bg) 55%); }
 html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) .hero-bg[data-farge="lys"] { background: radial-gradient(60% 55% at 50% 72%, var(--g-lys, rgb(110 150 230 / 0.16)), transparent 70%), transparent; }
 html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) .hero-bg [data-dim] { background: transparent; }
 html:is([data-mork="marine2"], [data-mork^="glans"]):has(#hero) header.sticky { background: rgb(6 12 24 / 0.6) !important; backdrop-filter: saturate(1.6) blur(18px); border-bottom: 1px solid rgb(255 255 255 / 0.08) !important; box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.04) !important; }
