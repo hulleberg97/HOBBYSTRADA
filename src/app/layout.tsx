@@ -27,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Test av lys og glans rundt vifta (?vifte=1/2/3, ?vifte=av). Huskes mens fanen er åpen. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vifte");if(v)sessionStorage.setItem("vifte",v);var m=sessionStorage.getItem("vifte");if(m==="1"||m==="2"||m==="3"||m==="4"||m==="5")document.documentElement.dataset.vifte=m}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vifte");if(v)sessionStorage.setItem("vifte",v);var m=sessionStorage.getItem("vifte");if(m==="1"||m==="2"||m==="3"||m==="4"||m==="5"||m==="6")document.documentElement.dataset.vifte=m}catch(e){}})()`,
           }}
         />
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}
