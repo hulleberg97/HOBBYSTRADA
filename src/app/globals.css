@@ -577,3 +577,18 @@ html[data-linje="s6"][data-ot="1k"] .hero-bg .hero-sub.hero-sub { font-family: v
 html[data-linje="s6"][data-ot="1l"] .hero-bg .hero-sub.hero-sub { font-family: var(--t-chakra); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; }
 html[data-linje="s6"][data-ot="1l"] .tittel-under { font-family: var(--t-chakra); }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="1g"] .hero-bg .hero-sub.hero-sub { font-size: 1.55rem; } html[data-linje="s6"][data-ot="1j"] .hero-bg .hero-sub.hero-sub { font-size: 2.5rem; } html[data-linje="s6"][data-ot="1k"] .hero-bg .hero-sub.hero-sub { font-size: 2.7rem; } }
+/* Unisport-stil (?ot=u1 / u2): dempet blågrå bakgrunn og stor, fet, hvit overskrift i store bokstaver */
+html[data-glans][data-ot="u1"] #hero.hero-bg[data-farge="lys"] { background:
+  radial-gradient(40% 55% at 8% 18%, rgb(110 118 120 / 0.85), transparent 70%),
+  radial-gradient(55% 70% at 18% 40%, rgb(140 152 154 / 0.7), transparent 75%),
+  radial-gradient(45% 50% at 78% 30%, rgb(214 228 228 / 0.9), transparent 75%),
+  linear-gradient(180deg, #b7c4c5 0%, #c9d5d5 45%, #dfe7e7 80%, #e9eeee 100%); }
+html[data-glans][data-ot="u2"] #hero.hero-bg[data-farge="lys"] { background:
+  radial-gradient(45% 55% at 50% 50%, rgb(255 255 255 / 0.18), transparent 75%),
+  linear-gradient(120deg, #5f7387 0%, #7d90a3 45%, #a7b6c4 80%, #c3ced8 100%); }
+:is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-bg .hero-sub.hero-sub { font-family: var(--t-jakarta); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.98; font-size: clamp(2.2rem, 4.8vw, 4.2rem); filter: drop-shadow(0 4px 14px rgb(11 20 38 / 0.25)); }
+:is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-bg .hero-sub > span, :is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-accent { background-image: none; -webkit-text-fill-color: #ffffff; }
+:is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-bg .hero-sub > span { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 0.25em; }
+:is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .tittel-under { order: -1; flex-basis: 100%; margin: 0 0 0.8rem; font-family: var(--nf-schibsted); font-size: 12px !important; font-weight: 600; letter-spacing: 0.24em; -webkit-text-fill-color: rgb(255 255 255 / 0.9); text-transform: uppercase; }
+@media (max-width: 767px) { :is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-accent { display: inline; } :is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-bg .hero-sub.hero-sub { font-size: 2.3rem; } }
+html:is([data-ot="u1"], [data-ot="u2"]) .hero-bg [data-dim] { background: transparent; }
