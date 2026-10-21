@@ -17,7 +17,6 @@ import { Eyebrow, btnSecondary } from "@/components/ui";
 import { fanCards } from "@/lib/fan";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
-import { DarkGrid } from "@/components/DarkTile";
 
 export const revalidate = 60;
 
@@ -28,8 +27,6 @@ export default async function Home() {
     .sort((a, b) => Number(Boolean(b.frontpage)) - Number(Boolean(a.frontpage)))
     .slice(0, 4);
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
-  // Test av mørkt tema (?mork=bla / ?mork=lime): tettere rutenett med 10 kort
-  const latestDense = newest(all.filter((l) => !l.featured)).slice(0, 10);
   const c = categoryCounts(all);
   // Kortvifta: alle toppannonser, deretter de nyeste – helst med ekte bilde
   const fanPinned = all.filter((l) => l.fanSlot);
@@ -225,12 +222,7 @@ export default async function Home() {
                 <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-            <div className="lys-kun">
-              <ListingGrid listings={featured} />
-            </div>
-            <div className="mork-kun">
-              <DarkGrid listings={featured} />
-            </div>
+            <ListingGrid listings={featured} />
           </div>
         </section>
       )}
@@ -249,12 +241,7 @@ export default async function Home() {
               <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          <div className="lys-kun">
-            <ListingGrid listings={latest} />
-          </div>
-          <div className="mork-kun">
-            <DarkGrid listings={latestDense} />
-          </div>
+          <ListingGrid listings={latest} />
         </div>
       </section>
       <section className="bg-background">
