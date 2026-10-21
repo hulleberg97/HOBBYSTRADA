@@ -592,3 +592,5 @@ html[data-glans][data-ot="u2"] #hero.hero-bg[data-farge="lys"] { background:
 :is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .tittel-under { order: -1; flex-basis: 100%; margin: 0 0 0.8rem; font-family: var(--nf-schibsted); font-size: 12px !important; font-weight: 600; letter-spacing: 0.24em; -webkit-text-fill-color: rgb(255 255 255 / 0.9); text-transform: uppercase; }
 @media (max-width: 767px) { :is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-accent { display: inline; } :is(html[data-linje="s6"][data-ot="u1"], html[data-linje="s6"][data-ot="u2"]) .hero-bg .hero-sub.hero-sub { font-size: 2.3rem; } }
 html:is([data-ot="u1"], [data-ot="u2"]) .hero-bg [data-dim] { background: transparent; }
+/* u1: kraftigere, myk skygge under den hvite skriften, som hos Unisport */
+html[data-linje="s6"][data-ot="u1"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 2px 2px rgb(30 40 45 / 0.35)) drop-shadow(0 8px 18px rgb(30 40 45 / 0.45)) drop-shadow(0 18px 40px rgb(30 40 45 / 0.3)); }
