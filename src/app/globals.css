@@ -568,3 +568,19 @@ html .markt-rad2 { padding-bottom: 0.5rem; }
 .galleri-fs button.rounded-full { background: rgb(11 20 38 / 0.06); color: #0b1426; }
 .galleri-fs button.rounded-full:hover { background: rgb(11 20 38 / 0.12); }
 .galleri-fs .galleri-bilde { border-radius: 6px; box-shadow: 0 2px 6px rgb(11 20 38 / 0.10), 0 24px 50px -22px rgb(11 20 38 / 0.35); }
+
+/* TEST nøytral fargebalanse (?balanse=1): hvit bakgrunn uten varme/kalde skjær, ingen krem, nøytrale grånyanser overalt */
+html[data-balanse][data-glans] body { background: #ffffff; }
+html[data-balanse] { --nb-flate: #f4f5f7; --nb-kant: #e2e5ea; --nb-dempet: #64748b; }
+/* Menylinjen: nøytral grå i stedet for krem */
+html[data-balanse][data-tone][data-meny="c"] header.sticky :is(.bg-slate-100, [data-current="true"], [aria-expanded="true"]) { background: var(--nb-flate) !important; }
+html[data-balanse][data-tone][data-meny="c"] header.sticky input { background: var(--nb-flate); border-color: var(--nb-kant); }
+html[data-balanse][data-glans] :is(a, button).rounded-full:is(.bg-white, .bg-slate-100, .bg-slate-200):not([aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) { background: #fff; box-shadow: inset 0 0 0 1px var(--nb-kant), 0 1px 2px rgb(15 23 42 / 0.05); color: #0b1426; }
+html[data-balanse][data-glans] :is(a, button).rounded-full:is(.bg-white, .bg-slate-100, .bg-slate-200):not([aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]):hover { box-shadow: inset 0 0 0 1px #94a3b8, 0 4px 12px -6px rgb(11 20 38 / 0.2); }
+html[data-balanse][data-glans] span.rounded-full.bg-white { background: var(--nb-flate); color: #334155; }
+html[data-balanse] main :is(button, a).border-\[\#e3dccb\], html[data-balanse] main .ring-\[\#e3dccb\] { border-color: var(--nb-kant); --tw-ring-color: var(--nb-kant); }
+/* Flater og kortbakgrunner: nøytral lys grå uten blåskjær */
+html[data-balanse][data-glans] :is(.bg-white, .card-frame):not(select, [aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]) { background: #fff; box-shadow: 0 0 0 1px rgb(15 23 42 / 0.05), 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 30px -18px rgb(15 23 42 / 0.18); }
+html[data-balanse][data-glans] .card-frame { background: radial-gradient(70% 60% at 50% 40%, #ffffff 0%, #f6f7f8 65%, #eef0f2 100%); }
+html[data-balanse] main .text-slate-400 { color: var(--nb-dempet); }
+html[data-balanse] main .bg-slate-50, html[data-balanse] main .bg-slate-100 { background-color: var(--nb-flate); }
