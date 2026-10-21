@@ -44,12 +44,6 @@ export default async function Home() {
             data-farge="lys"
             className="hero-bg relative overflow-hidden text-white sm:rounded-[28px]"
           >
-            {/* Standard: lys bakgrunn og vifta i hele bredden. Utkast for sammenligning: ?farge=midnatt, ?oppsett=b eller ?oppsett=gammel */}
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `(function(){var v=new URLSearchParams(location.search).get("oppsett");var h=document.getElementById("hero");if(v==="a"||v==="b")h.dataset.oppsett=v;var t=new URLSearchParams(location.search).get("tekst");if(/^[1-7]$/.test(t||""))h.dataset.tekst=t;if(t==="ingen")delete h.dataset.tekst;if(new URLSearchParams(location.search).get("farge")==="midnatt")delete h.dataset.farge})()`,
-              }}
-            />
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
