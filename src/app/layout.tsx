@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieConsent } from "@/components/CookieConsent";
+import { MobileTabBar } from "@/components/MobileTabBar";
 
 const schibsted = Schibsted_Grotesk({ variable: "--nf-schibsted", subsets: ["latin"] });
 // Skriften i den store overskriften over vifta
@@ -21,6 +22,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
+        {/* Test av ny stil (?stil2=1, ?stil2=av). Huskes mens fanen er åpen. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("stil2");if(v)sessionStorage.setItem("stil2",v);if(sessionStorage.getItem("stil2")==="1")document.documentElement.dataset.stil2="1"}catch(e){}})()`,
+          }}
+        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
@@ -37,6 +44,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="site-main">{children}</main>
         <Footer />
         <CookieConsent />
+        <MobileTabBar />
       </body>
     </html>
   );

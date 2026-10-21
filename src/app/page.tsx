@@ -4,6 +4,7 @@ import {
   BadgeCheckIcon,
   CheckIcon,
   ChevronRightIcon,
+  HandshakeIcon,
   FlagIcon,
   LayoutGridIcon,
   PenLineIcon,
@@ -11,6 +12,7 @@ import {
   ShieldCheckIcon,
   ShirtIcon,
   StarIcon,
+  ZapIcon,
 } from "lucide-react";
 import { HeroFan } from "@/components/HeroFan";
 import { Eyebrow, btnSecondary } from "@/components/ui";
@@ -35,7 +37,51 @@ export default async function Home() {
   const fanList = fanCards(fanPinned, fanPaid, fanFill);
   return (
     <div className="bg-background">
-      <section className="bg-background">
+      {/* TEST ny stil på toppen (?stil2=1): tekst til venstre, vifta til høyre, tillitsrad under. Samme tekst som i dag. */}
+      <section className="stil2-kun">
+        <div className="stil2-hero">
+          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 pb-6 pt-8 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-4 lg:px-8 lg:pb-10 lg:pt-14">
+            <div className="text-center lg:text-left">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Norges markedsplass for samlere</p>
+              <p className="stil2-tittel mt-4 font-bold">
+                Kjøp og selg <span className="block text-slate-400">fotballkort</span>
+              </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+                <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
+                  Se alle annonser
+                  <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link className="inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-slate-300 transition hover:ring-slate-500" href="/sell">
+                  Legg ut kort
+                </Link>
+              </div>
+            </div>
+            <div className="stil2-vifte">
+              <HeroFan cards={fanList} />
+            </div>
+          </div>
+          <div className="mx-auto max-w-[1320px] px-4 pb-8 sm:px-6 lg:px-8">
+            <ul className="grid grid-cols-1 gap-4 border-t border-slate-200 pt-6 sm:grid-cols-3">
+              {(
+                [
+                  [BadgeCheckIcon, "Bare fotballkort", "Fra base og rookies til autografer og 1/1"],
+                  [HandshakeIcon, "Direkte mellom samlere", "Gratis å legge ut, avtal i chatten"],
+                  [ZapIcon, "Synlighet når du vil", "Løft annonsen til toppen"],
+                ] as const
+              ).map(([Icon, title, text]) => (
+                <li key={title} className="flex items-center gap-3">
+                  <Icon className="h-6 w-6 shrink-0 text-slate-700" strokeWidth={1.5} aria-hidden="true" />
+                  <span>
+                    <span className="block text-sm font-semibold text-slate-950">{title}</span>
+                    <span className="block text-xs text-slate-500">{text}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section className="stil2-skjul bg-background">
         <div className="mx-auto max-w-[1320px] sm:px-6 sm:pt-6 lg:px-8">
           <div
             id="hero"

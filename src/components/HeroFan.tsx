@@ -122,6 +122,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
     const el = box.current;
     if (!el || n < 2) return;
     const measure = () => {
+      if (!el.offsetWidth) return; // skjult vifte (bredde 0) skal ikke overstyre målene
       cardW = refs.current[0]?.offsetWidth || cardW;
       halfW = el.offsetWidth / 2;
     };
