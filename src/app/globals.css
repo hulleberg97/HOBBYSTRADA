@@ -517,6 +517,11 @@ html:is([data-ot="u1"]) .hero-bg [data-dim] { background: transparent; }
 /* u1: kraftigere, myk skygge under den hvite skriften, som hos Unisport */
 html[data-linje="s6"][data-ot="u1"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 2px 2px rgb(30 40 45 / 0.35)) drop-shadow(0 8px 18px rgb(30 40 45 / 0.45)) drop-shadow(0 18px 40px rgb(30 40 45 / 0.3)); }
 
+/* Menylinjen: nok dekning til at innhold som rulles under ikke blir forstyrrende */
+html[data-glans] header.sticky.sticky { background: rgb(255 255 255 / 0.97) !important; }
+/* Filterlinjen i markedet henger fast øverst: frostet bakgrunn, så kortene ikke synes gjennom */
+html[data-glans] .filter-bar.filter-bar { background: #fff; backdrop-filter: saturate(1.6) blur(18px); -webkit-backdrop-filter: saturate(1.6) blur(18px); }
+
 /* TEST helhetlig fargebruk (?helhet=1): lys grå-mint bakgrunn overalt, hvite flater, marine for tekst og knapper, gull bare for premium, ingen krem */
 html[data-helhet] { --gm-bg: #f1f5f5; --gm-band: #e4ecec; --gm-kant: #d6e0e1; --gm-merke: #e8efef; }
 html[data-helhet][data-dybde][data-glans] body { background: var(--gm-bg); }
@@ -541,3 +546,4 @@ html[data-helhet] .eyebrow > span { background: #b6c3c6 !important; }
 html[data-helhet] main span.rounded-full.bg-primary:is(.h-8, .h-10) { background: var(--gm-merke) !important; color: #0b1426 !important; box-shadow: inset 0 0 0 1px var(--gm-kant); }
 html[data-helhet] main .text-gold-deep { color: #0b1426; }
 html[data-helhet][data-dybde][data-glans] :is(.boost-card[data-highlight="true"], .plan-card[data-popular="true"]) { box-shadow: inset 0 0 0 2px #cfa653, 0 2px 4px rgb(15 23 42 / 0.05), 0 18px 36px -14px rgb(207 166 83 / 0.45) !important; }
+html[data-helhet][data-glans] .filter-bar.filter-bar { background: #f1f5f5; }
