@@ -108,7 +108,8 @@ export function Search({ listings }: { listings: Listing[] }) {
             href={q ? `/products?q=${encodeURIComponent(q)}` : "/products"}
           >
             <SlidersHorizontalIcon className="h-4 w-4" aria-hidden="true" />
-            Filtrer på pris og korttype
+            <span className="ny-skjul">Filtrer på pris og korttype</span>
+            <span className="ny-vis">Filter</span>
           </Link>
         </div>
         {result.length > 0 ? (
@@ -121,6 +122,20 @@ export function Search({ listings }: { listings: Listing[] }) {
           <div className="rounded-3xl bg-white px-6 py-16 text-center ring-1 ring-inset ring-slate-300/70">
             <p className="font-heading text-xl font-bold text-slate-950">Ingen treff</p>
             <p className="mt-1.5 text-sm text-slate-600">Prøv et annet navn, sett eller kortnummer.</p>
+          </div>
+        )}
+        {q && result.length === 0 && listings.length > 0 && (
+          <div className="ny-vis-blokk mt-12">
+            <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950">Nyeste annonser</h2>
+            <p className="mt-1 text-sm text-slate-600">Kanskje noe for deg?</p>
+            <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
+              {[...listings]
+                .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+                .slice(0, 4)
+                .map((l) => (
+                  <ListingCard key={l.slug} listing={l} variant="market" />
+                ))}
+            </div>
           </div>
         )}
       </div>

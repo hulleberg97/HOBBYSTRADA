@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { CookieButton } from "./CookieConsent";
 import { AccountLinks } from "./AccountLinks";
-import { COMPANY } from "@/lib/company";
 
 const COLS = [
   {

@@ -61,7 +61,7 @@ export function ReportForm({ slug }: { slug: string }) {
           <label htmlFor="report-reason" className={label}>
             Hva er galt?
           </label>
-          <select id="report-reason" name="reason" required defaultValue="" className={field}>
+          <select id="report-reason" name="reason" required defaultValue="" className={`${field} ny-pil`}>
             <option value="" disabled>
               Velg en grunn
             </option>

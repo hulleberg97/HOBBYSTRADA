@@ -18,6 +18,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" className={schibsted.variable}>
       <body>
+        {/* Test av runde 4 (?ny=1, ?ny=av). Huskes mens fanen er åpen. Gir også norske feilmeldinger i skjemaer. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("ny");if(v)sessionStorage.setItem("ny",v);if(sessionStorage.getItem("ny")!=="1")return;document.documentElement.setAttribute("data-ny","");document.addEventListener("invalid",function(e){var f=e.target,v=f.validity,m="";if(v.valueMissing)m=f.type==="checkbox"?"Kryss av her for å gå videre.":f.tagName==="SELECT"?"Velg et alternativ.":"Fyll ut dette feltet.";else if(v.typeMismatch&&f.type==="email")m="Skriv inn en gyldig e-postadresse.";else if(v.tooShort)m="Bruk minst "+f.minLength+" tegn.";else if(v.rangeUnderflow||v.rangeOverflow)m="Verdien er utenfor det som er tillatt.";f.setCustomValidity(m)},true);document.addEventListener("input",function(e){if(e.target.setCustomValidity)e.target.setCustomValidity("")},true);document.addEventListener("change",function(e){if(e.target.setCustomValidity)e.target.setCustomValidity("")},true)}catch(e){}})()`,
+          }}
+        />
         <Header />
         <main className="site-main">{children}</main>
         <Footer />

@@ -59,7 +59,7 @@ export default async function SellerPage({ params }: Props) {
             </div>
             <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
               {facts.map(([Icon, text]) => (
-                <li key={text} className="inline-flex items-center gap-1.5">
+                <li key={text} className={`inline-flex items-center gap-1.5 ${text === "0 solgt" ? "ny-skjul" : ""}`}>
                   <Icon className="h-4 w-4 text-slate-400" aria-hidden="true" />
                   {text}
                 </li>

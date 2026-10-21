@@ -78,7 +78,9 @@ export function Header() {
   }, [menu]);
 
   const go = (term: string) => {
-    router.push(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search");
+    // Test (?ny=1): søket går rett til markedet, der filtrene er
+    const base = document.documentElement.hasAttribute("data-ny") ? "/products" : "/search";
+    router.push(term.trim() ? `${base}?q=${encodeURIComponent(term.trim())}` : base);
     setMenu(false);
     setSearchOpen(false);
   };

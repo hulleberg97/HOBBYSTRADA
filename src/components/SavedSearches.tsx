@@ -12,9 +12,15 @@ export function SavedSearches({ items }: { items: { id: string; label: string; q
   };
   if (!items.length) {
     return (
-      <p className="mt-4 rounded-3xl bg-white p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-300/70">
-        Søk eller filtrer i markedet og trykk «Varsle meg om nye kort», så får du e-post når et nytt kort passer.
-      </p>
+      <div className="mt-4 rounded-3xl bg-white p-6 text-sm text-slate-600 ring-1 ring-inset ring-slate-300/70">
+        <p>Søk eller filtrer i markedet og trykk «Varsle meg om nye kort», så får du e-post når et nytt kort passer.</p>
+        <Link
+          href="/products"
+          className="ny-vis mt-5 h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
+        >
+          Gå til markedet
+        </Link>
+      </div>
     );
   }
   return (
