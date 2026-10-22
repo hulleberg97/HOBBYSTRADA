@@ -2,6 +2,7 @@ import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { activateBoost } from "./activate-boost";
 import { capturePayment, getPayment, hasVipps } from "./vipps";
+import { BOOSTS, boostDate, type BoostKey } from "./boosts";
 
 export type SettleResult = "paid" | "waiting" | "cancelled" | "unknown";
 
@@ -37,4 +38,22 @@ export async function settlePending(db: SupabaseClient, userId?: string) {
   const { data } = await q;
   const results = await Promise.all((data ?? []).map((o) => settleBoost(db, o.id).catch(() => "waiting" as const)));
   return results.filter((r) => r === "paid").length;
+}
+
+/** Løft brukeren har fått aktivert de siste tre dagene, til «Hurra!»-varselet på Min side. */
+export async function recentBoosts(db: SupabaseClient, userId: string) {
+  const { data } = await db
+    .from("boost_orders")
+    .select("id, plan, listings(slug, title, bumped_until)")
+    .eq("user_id", userId)
+    .eq("status", "paid")
+    .gt("paid_at", new Date(Date.now() - 3 * 864e5).toISOString())
+    .order("paid_at", { ascending: false });
+  return (data ?? []).flatMap((o) => {
+    const l = o.listings as unknown as { slug: string; title: string; bumped_until: string | null } | null;
+    if (!l) return [];
+    const plan = o.plan as BoostKey;
+    const until = l.bumped_until ? ` til ${boostDate(l.bumped_until)}` : "";
+    return [{ id: o.id as string, slug: l.slug, title: l.title, text: `${BOOSTS[plan].name} er aktivert${until}.` }];
+  });
 }

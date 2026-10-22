@@ -7,7 +7,8 @@ import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
 import { adminClient } from "@/lib/supabase-admin";
-import { settlePending } from "@/lib/settle-boost";
+import { recentBoosts, settlePending } from "@/lib/settle-boost";
+import { BoostNotice } from "@/components/BoostNotice";
 import { activeBoost, boostDate } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
@@ -28,7 +29,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const db = adminClient();
   const verification = await getVerification(user.id);
   // Løft som er betalt i Vipps, men ikke aktivert ennå, aktiveres her
-  const justBoosted = db ? await settlePending(db, user.id).catch(() => 0) : 0;
+  if (db) await settlePending(db, user.id).catch(() => 0);
+  const boosted = db ? await recentBoosts(db, user.id).catch(() => []) : [];
   const { data: rows } = db ? await db.from("listings").select("*").eq("owner_id", user.id).order("created_at", { ascending: false }) : { data: [] };
   const listings = (rows ?? []).map(fromRow);
   // Aktivt løft per annonse: navnet på det sterkeste løftet og når det varer til
@@ -72,6 +74,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
       </section>
       <AccountTabs active={tab} unread={unread} listings={listings.length} alerts={searches?.length ?? 0} />
       <div className="mx-auto max-w-[880px] px-4 pb-24 pt-8 sm:px-6">
+        <BoostNotice items={boosted} />
         {hasVippsLogin() && !verification && (
           <div className="mb-8 rounded-3xl bg-white p-5 ring-1 ring-slate-300/70">
             <h2 className="font-semibold text-slate-950">Bekreft deg med Vipps</h2>
@@ -84,14 +87,6 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         {tab === "annonser" && (
           <section>
             <h2 className="sr-only">Annonsene mine</h2>
-            {justBoosted > 0 && (
-              <p role="status" className="mt-4 flex items-center gap-3 rounded-2xl bg-accent/15 px-5 py-4 text-sm font-semibold text-slate-950 ring-1 ring-inset ring-accent/50">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
-                  <ZapIcon className="h-4 w-4" aria-hidden="true" />
-                </span>
-                Hurra! Annonsen din er løftet!
-              </p>
-            )}
             {listings.length === 0 ? (
               <div className="mt-4 rounded-3xl bg-white px-6 py-12 text-center ring-1 ring-inset ring-slate-300/70">
                 <p className="font-semibold text-slate-950">Du har ingen annonser ennå</p>
