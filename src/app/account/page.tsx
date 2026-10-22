@@ -8,7 +8,7 @@ import { hasVippsLogin } from "@/lib/vipps-login";
 import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
 import { adminClient } from "@/lib/supabase-admin";
 import { settlePending } from "@/lib/settle-boost";
-import { activeBoost } from "@/lib/boosts";
+import { activeBoost, boostDate } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
 import { EditListing } from "@/components/EditListing";
@@ -28,12 +28,12 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const db = adminClient();
   const verification = await getVerification(user.id);
   // Løft som er betalt i Vipps, men ikke aktivert ennå, aktiveres her
-  if (db) await settlePending(db, user.id).catch(() => 0);
+  const justBoosted = db ? await settlePending(db, user.id).catch(() => 0) : 0;
   const { data: rows } = db ? await db.from("listings").select("*").eq("owner_id", user.id).order("created_at", { ascending: false }) : { data: [] };
   const listings = (rows ?? []).map(fromRow);
   // Aktivt løft per annonse: navnet på det sterkeste løftet og når det varer til
   const boostOf = new Map((rows ?? []).flatMap((r) => (activeBoost(r) ? [[r.slug as string, activeBoost(r)!]] : [])));
-  const until = (d: string) => new Date(d).toLocaleDateString("nb-NO", { day: "numeric", month: "long", timeZone: "Europe/Oslo" });
+  const until = boostDate;
   const { data: searches } = db
     ? await db.from("saved_searches").select("id, label, query").eq("user_id", user.id).order("created_at", { ascending: false })
     : { data: [] };
@@ -84,6 +84,14 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         {tab === "annonser" && (
           <section>
             <h2 className="sr-only">Annonsene mine</h2>
+            {justBoosted > 0 && (
+              <p role="status" className="mt-4 flex items-center gap-3 rounded-2xl bg-accent/15 px-5 py-4 text-sm font-semibold text-slate-950 ring-1 ring-inset ring-accent/50">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                  <ZapIcon className="h-4 w-4" aria-hidden="true" />
+                </span>
+                Hurra! Annonsen din er løftet!
+              </p>
+            )}
             {listings.length === 0 ? (
               <div className="mt-4 rounded-3xl bg-white px-6 py-12 text-center ring-1 ring-inset ring-slate-300/70">
                 <p className="font-semibold text-slate-950">Du har ingen annonser ennå</p>

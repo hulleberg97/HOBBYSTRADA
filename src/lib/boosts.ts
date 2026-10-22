@@ -6,6 +6,16 @@ export const BOOSTS = {
 
 export type BoostKey = keyof typeof BOOSTS;
 
+/** Hva løftet gjør, slik det står i bekreftelsen til kunden. Samme løfter som på annonseløft-siden. */
+export const BOOST_EFFECT: Record<BoostKey, string> = {
+  top: "Annonsen ligger nå over alle vanlige annonser i markedet.",
+  featured: "Annonsen har nå gullmerke og gullramme, og vises under «Utvalgte kort» på forsiden.",
+  frontpage: "Annonsen har nå plass i kortvifta på forsiden, og ligger aller først i markedet.",
+};
+
+/** Dato i norsk tid, f.eks. «25. oktober». */
+export const boostDate = (d: string) => new Date(d).toLocaleDateString("nb-NO", { day: "numeric", month: "long", timeZone: "Europe/Oslo" });
+
 type BoostDates = { frontpage_until?: string | null; featured_until?: string | null; bumped_until?: string | null };
 
 /** Det sterkeste aktive løftet på en annonse, og når det varer til. */

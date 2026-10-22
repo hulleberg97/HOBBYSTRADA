@@ -4,6 +4,9 @@ import { CheckIcon, ClockIcon, XIcon } from "lucide-react";
 import { adminClient } from "@/lib/supabase-admin";
 import { settleBoost, type SettleResult } from "@/lib/settle-boost";
 import { AutoRefresh } from "@/components/AutoRefresh";
+import { BoostSuccess } from "@/components/BoostSuccess";
+import { activeBoost, type BoostKey } from "@/lib/boosts";
+import { fromRow } from "@/lib/listings";
 
 export const metadata: Metadata = { title: "Betaling", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -30,6 +33,17 @@ export default async function PaymentPage({ searchParams }: { searchParams: Prom
     } catch (e) {
       console.error(e);
       result = "waiting";
+    }
+  }
+  if (result === "paid" && db) {
+    const { data: order } = await db.from("boost_orders").select("plan, listings(*)").eq("id", id).maybeSingle();
+    const row = order?.listings as unknown as Record<string, string | null> | null;
+    if (order && row) {
+      return (
+        <div className="px-4 py-16 sm:py-24">
+          <BoostSuccess plan={order.plan as BoostKey} until={activeBoost(row)?.until ?? null} listing={fromRow(row as never)} />
+        </div>
+      );
     }
   }
   const c = COPY[result];
