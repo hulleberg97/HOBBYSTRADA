@@ -7,6 +7,8 @@ import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
 import { adminClient } from "@/lib/supabase-admin";
+import { settlePending } from "@/lib/settle-boost";
+import { activeBoost } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
 import { EditListing } from "@/components/EditListing";
@@ -25,8 +27,13 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   if (!user) redirect("/auth/login?next=/account");
   const db = adminClient();
   const verification = await getVerification(user.id);
+  // Løft som er betalt i Vipps, men ikke aktivert ennå, aktiveres her
+  if (db) await settlePending(db, user.id).catch(() => 0);
   const { data: rows } = db ? await db.from("listings").select("*").eq("owner_id", user.id).order("created_at", { ascending: false }) : { data: [] };
   const listings = (rows ?? []).map(fromRow);
+  // Aktivt løft per annonse: navnet på det sterkeste løftet og når det varer til
+  const boostOf = new Map((rows ?? []).flatMap((r) => (activeBoost(r) ? [[r.slug as string, activeBoost(r)!]] : [])));
+  const until = (d: string) => new Date(d).toLocaleDateString("nb-NO", { day: "numeric", month: "long", timeZone: "Europe/Oslo" });
   const { data: searches } = db
     ? await db.from("saved_searches").select("id, label, query").eq("user_id", user.id).order("created_at", { ascending: false })
     : { data: [] };
@@ -126,7 +133,13 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                         { label: "Slett", del: true, tone: "danger" as const },
                       ]}
                     />
-                    {l.status === "active" && !l.featured && (
+                    {l.status === "active" && boostOf.get(l.slug) && (
+                      <span className="inline-flex h-9 items-center gap-1 rounded-full bg-accent/15 px-4 text-xs font-semibold text-[#8a6a24] ring-1 ring-inset ring-accent/50">
+                        <ZapIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                        Aktivt løft: {boostOf.get(l.slug)!.name} til {until(boostOf.get(l.slug)!.until)}
+                      </span>
+                    )}
+                    {l.status === "active" && !boostOf.get(l.slug) && (
                       <Link
                         href={`/annonseloft?annonse=${l.slug}`}
                         className="inline-flex h-9 items-center gap-1 rounded-full bg-accent px-4 text-xs font-semibold text-accent-foreground"

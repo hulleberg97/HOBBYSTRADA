@@ -25,3 +25,16 @@ export async function settleBoost(db: SupabaseClient, orderId: string): Promise<
   }
   return "waiting";
 }
+
+/**
+ * Sjekker alle ubetalte bestillinger mot Vipps (eventuelt bare for én bruker). Fanger opp betalinger der kunden
+ * ikke kom tilbake til siden, eller kom tilbake før Vipps hadde registrert betalingen. Returnerer antall aktiverte.
+ */
+export async function settlePending(db: SupabaseClient, userId?: string) {
+  if (!hasVipps()) return 0;
+  let q = db.from("boost_orders").select("id").eq("status", "pending").gt("created_at", new Date(Date.now() - 3 * 864e5).toISOString());
+  if (userId) q = q.eq("user_id", userId);
+  const { data } = await q;
+  const results = await Promise.all((data ?? []).map((o) => settleBoost(db, o.id).catch(() => "waiting" as const)));
+  return results.filter((r) => r === "paid").length;
+}

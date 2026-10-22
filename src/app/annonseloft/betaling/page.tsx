@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckIcon, ClockIcon, XIcon } from "lucide-react";
 import { adminClient } from "@/lib/supabase-admin";
 import { settleBoost, type SettleResult } from "@/lib/settle-boost";
+import { AutoRefresh } from "@/components/AutoRefresh";
 
 export const metadata: Metadata = { title: "Betaling", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ const COPY: Record<SettleResult, { title: string; text: string; Icon: typeof Che
   paid: { title: "Betalingen er gjennomført", text: "Løftet er aktivert, og annonsen din vises nå først i markedet.", Icon: CheckIcon, tone: "bg-emerald-600" },
   waiting: {
     title: "Venter på Vipps",
-    text: "Vi har ikke fått bekreftelse fra Vipps ennå. Last inn siden på nytt om litt.",
+    text: "Vi har ikke fått bekreftelse fra Vipps ennå. Siden oppdaterer seg selv straks betalingen er registrert.",
     Icon: ClockIcon,
     tone: "bg-accent",
   },
@@ -34,6 +35,7 @@ export default async function PaymentPage({ searchParams }: { searchParams: Prom
   const c = COPY[result];
   return (
     <div className="container-custom py-24">
+      {result === "waiting" && <AutoRefresh />}
       <div className="mx-auto max-w-md rounded-md border border-border bg-white p-8 text-center">
         <span className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full text-white ${c.tone}`}>
           <c.Icon className="h-6 w-6" aria-hidden="true" />

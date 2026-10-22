@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
+import { settlePending } from "@/lib/settle-boost";
 
 /**
  * Daglig opprydding (Vercel Cron, kl. 03:17 UTC). Sletter data vi ikke lenger trenger:
@@ -54,7 +55,9 @@ export async function GET(req: Request) {
   }
   result.listing_images = await removeOrphans(db, "listing-images", (folder) => usedFolders.has(folder));
 
-  return NextResponse.json({ ok: true, deleted: result });
+  // Betalte annonseløft som ikke ble fanget opp underveis
+  const activated = await settlePending(db).catch(() => 0);
+  return NextResponse.json({ ok: true, deleted: result, activated });
 }
 
 /** Sletter alle filer i mapper som ikke er i bruk. Mappenavnet er samtale-id eller annonse-slug. */

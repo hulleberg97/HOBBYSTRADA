@@ -7,6 +7,7 @@ import { adminClient } from "@/lib/supabase-admin";
 import { fromRow } from "@/lib/listings";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { hasVipps } from "@/lib/vipps";
+import { settlePending } from "@/lib/settle-boost";
 import { formatPrice } from "@/lib/format";
 import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingActions";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
@@ -21,6 +22,8 @@ export default async function AdminPage() {
   const user = await getUser();
   const db = adminClient();
   if (!db || !isAdmin(user)) notFound();
+  // Betalte løft aktiveres før listen hentes, så bare ekte ubetalte bestillinger vises
+  await settlePending(db).catch(() => 0);
 
   const [{ data: pending }, { data: orders }, { data: messages }, { data: contact }, { data: all }] = await Promise.all([
     db.from("listings").select("*").eq("status", "pending").order("created_at"),
