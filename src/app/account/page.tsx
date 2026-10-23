@@ -2,12 +2,14 @@ import { Eyebrow, btnSecondary } from "@/components/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PlusIcon, ZapIcon } from "lucide-react";
+import { LogOutIcon, PlusIcon, ZapIcon } from "lucide-react";
 import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
 import { adminClient } from "@/lib/supabase-admin";
-import { recentBoosts, settlePending } from "@/lib/settle-boost";
+import { paidBoosts, recentBoosts, settlePending } from "@/lib/settle-boost";
+import { isPlaceholderEmail } from "@/lib/email";
+import { formatPrice } from "@/lib/format";
 import { BoostNotice } from "@/components/BoostNotice";
 import { activeBoost, boostDate } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
@@ -40,6 +42,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
     ? await db.from("saved_searches").select("id, label, query").eq("user_id", user.id).order("created_at", { ascending: false })
     : { data: [] };
   const unread = await unreadCount(user.id);
+  const purchases = db && tab === "konto" ? await paidBoosts(db, user.id).catch(() => []) : [];
+  const email = isPlaceholderEmail(user.email) ? "Ingen e-post fra Vipps" : user.email;
 
   return (
     <div>
@@ -52,7 +56,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               Hei, {user.name.includes("@") ? user.name.split("@")[0] : user.name.split(" ")[0]}
             </h1>
             <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
-              {user.email}
+              {email}
               {verification && <VerifiedBadge />}
             </p>
           </div>
@@ -69,6 +73,12 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <PlusIcon className="h-4 w-4" aria-hidden="true" />
               Legg ut kort
             </Link>
+            <form action="/auth/logout" method="post">
+              <button className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-slate-500">
+                <LogOutIcon className="h-4 w-4" aria-hidden="true" />
+                Logg ut
+              </button>
+            </form>
           </div>
         </div>
       </section>
@@ -171,7 +181,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                 <dt className="text-slate-500">Navn</dt>
                 <dd className="font-medium text-slate-900">{user.fullName || user.name}</dd>
                 <dt className="text-slate-500">E-post</dt>
-                <dd className="font-medium text-slate-900">{user.email}</dd>
+                <dd className="font-medium text-slate-900">{email}</dd>
                 <dt className="text-slate-500">Sted</dt>
                 <dd className="font-medium text-slate-900">{user.location || "Ikke oppgitt"}</dd>
                 {/* Vises først når Vipps-innlogging er slått på */}
@@ -185,6 +195,38 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <form action="/auth/logout" method="post" className="mt-6">
                 <button className={btnSecondary}>Logg ut</button>
               </form>
+            </div>
+            <div className="rounded-3xl bg-white p-5 ring-1 ring-slate-300/70 sm:p-6">
+              <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Kjøpte annonseløft</h2>
+              {purchases.length === 0 ? (
+                <p className="mt-2 text-sm text-slate-600">Du har ikke kjøpt annonseløft ennå.</p>
+              ) : (
+                <ul className="mt-3 divide-y divide-slate-100">
+                  {purchases.map((p) => (
+                    <li key={p.id} className="flex items-center justify-between gap-4 py-3 text-sm">
+                      <div className="min-w-0">
+                        <p className="font-medium text-slate-900">
+                          {p.name}{" "}
+                          <span className="font-normal text-slate-500">
+                            · {new Date(p.paidAt).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric", timeZone: "Europe/Oslo" })}
+                          </span>
+                        </p>
+                        <p className="truncate text-slate-500">
+                          {p.slug ? (
+                            <Link href={`/products/${p.slug}`} className="underline underline-offset-2">
+                              {p.title}
+                            </Link>
+                          ) : (
+                            p.title
+                          )}
+                        </p>
+                      </div>
+                      <p className="shrink-0 font-semibold text-slate-950">{formatPrice(p.amount)}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p className="mt-3 text-xs text-slate-500">Kvitteringen for hver betaling finner du i Vipps-appen.</p>
             </div>
             <DeleteAccount />
           </section>

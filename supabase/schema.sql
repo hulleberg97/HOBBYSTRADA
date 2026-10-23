@@ -306,3 +306,10 @@ exception when duplicate_object then null; end $$;
 alter table public.chat_messages add column if not exists image text;
 insert into storage.buckets (id, name, public) values ('chat-images', 'chat-images', false)
 on conflict (id) do nothing;
+
+-- Betalinger beholdes når annonsen slettes (supabase/009_betalinger_personvern.sql)
+alter table public.boost_orders add column if not exists listing_title text;
+alter table public.boost_orders alter column listing_id drop not null;
+alter table public.boost_orders drop constraint if exists boost_orders_listing_id_fkey;
+alter table public.boost_orders add constraint boost_orders_listing_id_fkey
+  foreign key (listing_id) references public.listings(id) on delete set null;

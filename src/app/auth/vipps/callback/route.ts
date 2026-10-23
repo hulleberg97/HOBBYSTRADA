@@ -9,7 +9,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
   const { error } = await db
     .from("profiles")
-    .upsert({ id: userId, vipps_sub: v.sub, verified_name: v.name, phone: v.phone, verified_at: new Date().toISOString() });
+    .upsert({ id: userId, vipps_sub: v.sub, verified_name: v.name, verified_at: new Date().toISOString() });
   if (error) throw new Error(`Kunne ikke lagre profil: ${error.message}`);
   await db.from("listings").update({ seller_verified: true }).eq("owner_id", userId);
   // Stedet fra Vipps fylles inn hvis kontoen ikke har et fra før.
