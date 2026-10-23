@@ -211,7 +211,7 @@ html[data-stil="pro"] .eyebrow { letter-spacing: 0.08em; color: #6b5a33; }
 html[data-stil="pro"] .eyebrow > span[aria-hidden] { display: none; }
 html[data-stil="pro"] .hero-bg[data-tekst="5"] .hero-sub { letter-spacing: 0.12em; color: #6b5a33; }
 /* Tekst i varm grå i stedet for kald blågrå */
-:where(html[data-stil="pro"]) .text-slate-500 { color: #77716a; }
+:where(html[data-stil="pro"]) .text-slate-500 { color: #6b655e; } /* minst 4.5:1 også på de grå boksene */
 :where(html[data-stil="pro"]) .text-slate-600 { color: #5f5a54; }
 :where(html[data-stil="pro"]) .text-slate-700 { color: #4a4640; }
 
