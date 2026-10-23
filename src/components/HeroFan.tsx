@@ -27,7 +27,6 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
 
 let cardW = 200; // kortets bredde i px, målt når siden lastes
 let halfW = 300; // halve bredden av vifta i px
-let pcLayout = false; // CSS kan be om PC-oppsettet også på smal skjerm med --fan-pc: 1
 
 /**
  * Plassering for et kort som står p plasser fra midten (kan være desimaltall). Kortene står på en rad i ekte 3D:
@@ -40,7 +39,7 @@ function place(p: number) {
   const turn = Math.sin((Math.min(a, 1) * Math.PI) / 2); // 0 i midten, 1 fra nabo-plassen og utover
   const lift = Math.max(0, 1 - a);
   // God avstand, så kortene aldri dekker hverandre når de bytter plass
-  const narrow = halfW < 300 && !pcLayout;
+  const narrow = halfW < 300;
   // Mobil: jevn, tett avstand (kortene står like tett også midt i byttet). PC: litt mer luft rundt kortet i midten.
   const x = side * (narrow ? 92 * a + 4 * turn : 80 * a + 22 * turn);
   const z = 60 * (1 - turn) - 120 * turn - 40 * Math.max(0, a - 1);
@@ -126,7 +125,6 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
       if (!el.offsetWidth) return; // skjult vifte (bredde 0) skal ikke overstyre målene
       cardW = refs.current[0]?.offsetWidth || cardW;
       halfW = el.offsetWidth / 2;
-      pcLayout = getComputedStyle(el).getPropertyValue("--fan-pc").trim() === "1";
     };
     measure();
     window.addEventListener("resize", measure);
@@ -264,7 +262,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         })}
       </div>
       {c && (
-        <div className="fan-pill-wrap pointer-events-none absolute inset-x-0 bottom-5 z-[200] sm:bottom-0 flex justify-center px-4">
+        <div className="pointer-events-none absolute inset-x-0 bottom-5 z-[200] sm:bottom-0 flex justify-center px-4">
           <Link
             key={`${c.slug}-${center}`}
             href={`/products/${c.slug}`}
