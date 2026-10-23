@@ -241,7 +241,7 @@ html[data-tone="1"] header.sticky a.bg-primary { background: #cfa653; color: #0b
 html[data-tone="1"] header.sticky input { background: rgb(255 255 255 / 0.08); border-color: rgb(255 255 255 / 0.15); color: #fff; }
 html[data-tone="1"] .hero-bg[data-farge="lys"] { background: radial-gradient(55% 50% at 50% 70%, #fffdf8, transparent 70%), hsl(var(--background)); }
 html[data-tone="1"] h1.font-heading, html[data-tone="1"] h2.font-heading { color: #0b1426; }
-html[data-tone="1"] .eyebrow { color: #a07a2c; }
+html[data-tone="1"] .eyebrow { color: #8a6a24; } /* 5.5:1 mot hvitt, kravet for liten tekst er 4.5:1 */
 
 html[data-tone="1"] header.sticky [data-current="true"], html[data-tone="1"] header.sticky [aria-expanded="true"] { background: rgb(255 255 255 / 0.12); color: #fff; }
 
@@ -506,3 +506,11 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"] .hero-bg .hero-sub.hero-sub { font-size: 1.8rem; } }
 /* Telefon: «FOTBALLKORT» alltid på egen linje, så overskriften aldri går helt ut til kantene på store telefoner */
 @media (max-width: 639px) { html[data-linje="s6"][data-ot="u1"] .hero-accent { display: block; flex-basis: 100%; } }
+
+/* De minste telefonene (320–359 px): tettere ikoner og mindre logo i toppen, så menyknappen ikke kuttes */
+@media (max-width: 359px) {
+  header.sticky > div { gap: 0.5rem; padding-inline: 0.75rem; }
+  header.sticky img[alt="HOBBYSTRADA"] { height: 19px; }
+  header.sticky .ml-auto { gap: 0; }
+  header.sticky .ml-auto > a, header.sticky .ml-auto > button { width: 2.25rem; height: 2.25rem; }
+}

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpToLineIcon, CheckIcon, CrownIcon, SparklesIcon } from "lucide-react";
 import { BOOSTS, type BoostKey } from "@/lib/boosts";
 import { formatPrice, initials } from "@/lib/format";
+import { useUser } from "./useUser";
 
 const PLANS: { key: BoostKey; Icon: typeof SparklesIcon; perks: string[]; popular?: boolean }[] = [
   { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Selg raskere uten å bruke mye"] },
@@ -25,14 +26,19 @@ export function BoostPicker() {
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [consent, setConsent] = useState(false);
   // Annonsene brukeren kan løfte. undefined mens de lastes, null hvis ikke innlogget.
-  const [mine, setMine] = useState<{ slug: string; title: string; price: number; image: string | null; boost: string | null }[] | null>();
+  const [hentet, setMine] = useState<{ slug: string; title: string; price: number; image: string | null; boost: string | null }[] | null>();
 
+  const user = useUser();
   useEffect(() => {
+    // Annonsene hentes bare for innloggede, så serveren ikke får en unødvendig forespørsel fra andre
+    if (!user) return;
     fetch("/api/listings/mine", { cache: "no-store" })
       .then((r) => (r.status === 401 ? { listings: null } : r.json()))
       .then((d) => setMine(d.listings))
       .catch(() => setMine([]));
-  }, []);
+  }, [user]);
+  // Ikke innlogget: null (vis «logg inn»). Innlogget: det som er hentet (undefined mens det lastes).
+  const mine = user === null ? null : hentet;
 
   const choose = async (key: BoostKey) => {
     if (!listing.trim()) {

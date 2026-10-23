@@ -100,7 +100,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
             {l.seller[0]?.toUpperCase()}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-slate-500">Selger</p>
+            <p className="text-xs text-slate-600">Selger</p>
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <Link href={`/selger/${l.ownerId ?? "hobbystrada"}`} className="truncate text-sm font-semibold text-slate-900 hover:underline">
                 {l.seller}
