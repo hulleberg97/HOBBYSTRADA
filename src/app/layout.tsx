@@ -27,6 +27,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("bg");if(v)sessionStorage.setItem("bg",v);var s=sessionStorage.getItem("bg");if(s&&s!=="av")document.documentElement.dataset.bg=s}catch(e){}})()`,
           }}
         />
+        {/* TEST: ?opp=stor|liten|venstre|tolinjer|under|linjeunder prøver ulike oppsett av overskriften (?opp=av tilbake) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("opp");if(v)sessionStorage.setItem("opp",v);var s=sessionStorage.getItem("opp");if(s&&s!=="av")document.documentElement.dataset.opp=s}catch(e){}})()`,
+          }}
+        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
