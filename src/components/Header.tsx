@@ -255,6 +255,11 @@ export function Header() {
               Legg ut kort
             </Link>
           </div>
+          {user && (
+            <form action="/auth/logout" method="post" className="mt-auto pt-6 sm:mt-6">
+              <button className="h-12 w-full rounded-full text-sm font-semibold text-slate-700 ring-1 ring-inset ring-slate-300 transition hover:bg-slate-50">Logg ut</button>
+            </form>
+          )}
         </div>
       )}
     </>

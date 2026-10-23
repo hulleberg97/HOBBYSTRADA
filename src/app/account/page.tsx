@@ -2,7 +2,7 @@ import { Eyebrow, btnSecondary } from "@/components/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PlusIcon, ZapIcon } from "lucide-react";
+import { LogOutIcon, PlusIcon, ZapIcon } from "lucide-react";
 import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VerifiedBadge, VippsButton } from "@/components/VerifiedBadge";
@@ -69,6 +69,12 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <PlusIcon className="h-4 w-4" aria-hidden="true" />
               Legg ut kort
             </Link>
+            <form action="/auth/logout" method="post">
+              <button className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-slate-500">
+                <LogOutIcon className="h-4 w-4" aria-hidden="true" />
+                Logg ut
+              </button>
+            </form>
           </div>
         </div>
       </section>
