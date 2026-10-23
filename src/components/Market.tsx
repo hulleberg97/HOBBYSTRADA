@@ -20,10 +20,19 @@ const PRICES: Record<string, [number | null, number | null]> = {
   "5000-": [5000, null],
 };
 
+/** Markedet med filtrene fra adressefeltet. */
 export function Market({ listings }: { listings: Listing[] }) {
-  const router = useRouter();
   const params = useSearchParams();
-  const f = useMemo(() => parseFilters(new URLSearchParams(params.toString())), [params]);
+  return <MarketView listings={listings} search={params.toString()} />;
+}
+
+/**
+ * Selve markedet. Brukes også som første bilde mens nettleseren starter (uten filtre), så kortene står der fra
+ * starten i stedet for at siden hopper når de kommer.
+ */
+export function MarketView({ listings, search }: { listings: Listing[]; search: string }) {
+  const router = useRouter();
+  const f = useMemo(() => parseFilters(new URLSearchParams(search)), [search]);
   const [input, setInput] = useState(f.q);
   const [prevQ, setPrevQ] = useState(f.q);
   if (f.q !== prevQ) {
