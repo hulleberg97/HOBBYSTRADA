@@ -21,6 +21,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
+        {/* TEST: ?bg=frost viser frosset glass bak vifta i stedet for grå-mint (?bg=av tilbake). Huskes mens fanen er åpen. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("bg");if(v)sessionStorage.setItem("bg",v);var s=sessionStorage.getItem("bg");if(s&&s!=="av")document.documentElement.dataset.bg=s}catch(e){}})()`,
+          }}
+        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
