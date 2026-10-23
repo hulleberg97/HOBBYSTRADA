@@ -26,8 +26,9 @@ export default function PrivacyPage() {
               <p>Vi samler bare inn det som trengs for å drive markedsplassen:</p>
               <List
                 items={[
-                  "Konto: navn, e-post, sted og passord (lagres kryptert).",
-                  "Vipps (hvis du logger inn eller bekrefter deg med Vipps): navn, telefonnummer, e-post og poststed. Navnet brukes til merket «Verifisert med Vipps», og poststedet fylles inn som sted i annonsene dine. Telefonnummeret vises aldri, og gateadressen lagres ikke.",
+                  "Konto: navn, e-post og sted. Har du en eldre konto med e-post og passord, lagres passordet kryptert.",
+                  "Vipps: når du logger inn med Vipps, får vi navnet, e-posten og adressen din fra Vipps. Navnet brukes til merket «Verifisert med Vipps», og poststedet fylles inn som sted i annonsene dine. Vi lagrer bare poststedet, ikke gateadressen. Vi henter ikke telefonnummeret ditt.",
+                  "Annonseløft: hvilken pakke du kjøpte, beløp, tidspunkt og hvilken annonse det gjaldt. Selve betalingen skjer i Vipps, og vi ser aldri kortopplysningene dine.",
                   "Annonser: kortdata, pris, sted og bilder.",
                   "Meldinger: innholdet i samtaler mellom kjøpere og selgere, bilder dere sender i chatten, og meldinger til oss. Den andre parten ser brukernavnet ditt, men aldri e-postadressen din. Bilder i chatten lagres privat og vises bare for dere to.",
                   "Teknisk: informasjonskapsler som holder deg innlogget. For å stoppe spam lagrer vi IP-adressen din kortvarig når du sender kontaktskjema eller rapporterer en annonse. Den slettes etter ett døgn.",
@@ -50,10 +51,23 @@ export default function PrivacyPage() {
           ),
         },
         {
+          title: "Grunnlaget for behandlingen",
+          body: (
+            <List
+              items={[
+                "Avtale: konto, annonser, meldinger og annonseløft er nødvendig for å levere tjenesten du har bedt om (personvernforordningen art. 6 nr. 1 b).",
+                "Rettslig plikt: betalinger for annonseløft lagres fordi bokføringsloven krever det (art. 6 nr. 1 c).",
+                "Berettiget interesse: å stoppe svindel, spam og misbruk, for eksempel ved å lagre IP-adressen kortvarig og behandle rapporter om annonser (art. 6 nr. 1 f).",
+                "Samtykke: varsler på e-post om nye kort sendes bare når du har slått dem på, og du kan slå dem av når som helst på Min side (art. 6 nr. 1 a).",
+              ]}
+            />
+          ),
+        },
+        {
           title: "Hva som vises offentlig",
           body: (
             <p>
-              I annonsen vises brukernavn, sted og annonseinnholdet. E-post og telefonnummer vises aldri. Kjøpere når deg gjennom meldinger på nettsiden. Du får
+              I annonsen vises brukernavn, sted og annonseinnholdet. E-postadressen din vises aldri. Kjøpere når deg gjennom meldinger på nettsiden. Du får
               beskjed på e-post når noen skriver til deg.
             </p>
           ),
@@ -63,7 +77,7 @@ export default function PrivacyPage() {
           body: (
             <p>
               Vi selger aldri opplysninger. Vi bruker leverandører som lagrer data og sender e-post på våre vegne (Supabase, Vercel og e-posttjeneste), og
-              betalingsleverandør for annonseløft. De får bare det de trenger for å levere tjenesten.
+              Vipps MobilePay for innlogging og betaling. De får bare det de trenger for å levere tjenesten.
             </p>
           ),
         },
@@ -72,10 +86,11 @@ export default function PrivacyPage() {
           body: (
             <List
               items={[
+                "Konto: til du sletter den. Da slettes også koblingen til Vipps.",
                 "Annonser og bilder: til du sletter dem eller kontoen din. Avviste annonser slettes etter 30 dager.",
                 "Samtaler og henvendelser: slettes automatisk 12 måneder etter siste melding.",
                 "Rapporter om annonser: slettes 12 måneder etter at de er behandlet.",
-                "Betalinger for annonseløft: så lenge bokføringsloven krever (5 år).",
+                "Betalinger for annonseløft: så lenge bokføringsloven krever (5 år), også om annonsen eller kontoen slettes. E-postadressen din fjernes fra betalingen når du sletter kontoen.",
               ]}
             />
           ),

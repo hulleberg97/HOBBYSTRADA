@@ -11,6 +11,6 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
   const patch: Record<string, string> = { bumped_until: until };
   if (order.plan !== "top") patch.featured_until = until;
   if (order.plan === "frontpage") patch.frontpage_until = until;
-  await db.from("listings").update(patch).eq("id", order.listing_id);
+  if (order.listing_id) await db.from("listings").update(patch).eq("id", order.listing_id);
   await db.from("boost_orders").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", order.id);
 }

@@ -156,7 +156,7 @@ export default async function AdminPage() {
                     </p>
                     <p className="text-sm text-slate-600">
                       <Link href={`/products/${o.listings?.slug}`} className="underline">
-                        {o.listings?.title}
+                        {o.listings?.title ?? o.listing_title ?? "Slettet annonse"}
                       </Link>{" "}
                       · {o.buyer_email} · {date(o.created_at)}
                     </p>

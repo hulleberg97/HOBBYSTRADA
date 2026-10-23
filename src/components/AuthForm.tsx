@@ -110,7 +110,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                   {vippsError && <p className="mb-3 text-sm text-destructive">{vippsError}</p>}
                   <VippsButton href={`/auth/vipps?next=${encodeURIComponent(next)}`} label={mode === "login" ? "Logg inn med Vipps" : "Fortsett med Vipps"} />
                   <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
-                    Vi får navnet, e-posten, telefonnummeret og poststedet ditt fra Vipps. Telefonnummeret vises aldri. Ved å fortsette godtar du{" "}
+                    Vi får navnet, e-posten og poststedet ditt fra Vipps. Ved å fortsette godtar du{" "}
                     <Link href="/terms" target="_blank" className="underline underline-offset-2">
                       vilkårene
                     </Link>

@@ -17,6 +17,7 @@ function smtp() {
 
 /** Sender e-post via SMTP, eller via Resend når RESEND_API_KEY er satt. Returnerer false hvis e-post ikke er satt opp. */
 export async function sendEmail({ to, subject, text, html, replyTo }: Mail) {
+  if (isPlaceholderEmail(to)) return false;
   const mailer = smtp();
   if (mailer) {
     try {
@@ -117,3 +118,6 @@ export function brandedEmail({
 </table>
 </body></html>`;
 }
+
+/** Kontoer fra Vipps uten bekreftet e-post får en erstatningsadresse som ikke kan motta e-post. */
+export const isPlaceholderEmail = (email: string | null | undefined) => Boolean(email?.endsWith("@brukere.hobbystrada.no"));

@@ -57,3 +57,27 @@ export async function recentBoosts(db: SupabaseClient, userId: string) {
     return [{ id: o.id as string, slug: l.slug, title: l.title, text: `${BOOSTS[plan].name} er aktivert${until}.` }];
   });
 }
+
+/** Betalte annonseløft til kjøpshistorikken på Min side, nyeste først. */
+export async function paidBoosts(db: SupabaseClient, userId: string) {
+  const q = (cols: string) =>
+    db.from("boost_orders").select(cols).eq("user_id", userId).eq("status", "paid").order("paid_at", { ascending: false }).limit(50);
+  // listing_title finnes først når supabase/009_betalinger_personvern.sql er kjørt
+  let res = await q("id, plan, amount, paid_at, listing_title, listings(title, slug)");
+  if (res.error) res = await q("id, plan, amount, paid_at, listings(title, slug)");
+  return ((res.data ?? []) as unknown as {
+    id: string;
+    plan: BoostKey;
+    amount: number;
+    paid_at: string;
+    listing_title?: string | null;
+    listings: { title: string; slug: string } | null;
+  }[]).map((o) => ({
+    id: o.id,
+    name: BOOSTS[o.plan].name,
+    amount: Number(o.amount),
+    paidAt: o.paid_at,
+    title: o.listings?.title ?? o.listing_title ?? "Slettet annonse",
+    slug: o.listings?.slug ?? null,
+  }));
+}

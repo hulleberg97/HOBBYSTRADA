@@ -37,7 +37,8 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
   u.search = new URLSearchParams({
     client_id: clientId()!,
     response_type: "code",
-    scope: "openid name phoneNumber email address",
+    // Bare det vi bruker: navn, e-post og poststed (fra adressen; gateadressen lagres ikke)
+    scope: "openid name email address",
     state,
     nonce,
     redirect_uri: redirectUri(origin),
@@ -45,7 +46,7 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
   return u.toString();
 }
 
-export type VippsUser = { sub: string; name: string; phone: string | null; email: string | null; emailVerified: boolean; city: string | null };
+export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean; city: string | null };
 
 /** «KONGSBERG» → «Kongsberg», «MO I RANA» → «Mo i Rana». */
 const cityName = (s: unknown) =>
@@ -80,7 +81,6 @@ export async function exchangeCode({ code, nonce, origin }: { code: string; nonc
   return {
     sub: String(u.sub),
     name: [u.given_name, u.family_name].filter(Boolean).join(" ") || u.name || "",
-    phone: u.phone_number ?? null,
     email: u.email ? String(u.email).toLowerCase() : null,
     emailVerified: Boolean(u.email_verified),
     city: cityName(u.address?.region ?? u.address?.locality),
