@@ -504,3 +504,14 @@ html[data-linje="s6"][data-ot="u1"] .hero-bg .hero-sub.hero-sub { font-family: v
 html[data-linje="s6"][data-ot="u1"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"] .hero-accent { background-image: none; -webkit-text-fill-color: #0b1426; }
 html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8822f; }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"] .hero-bg .hero-sub.hero-sub { font-size: 1.8rem; } }
+/* Telefon: «FOTBALLKORT» alltid på egen linje, så overskriften aldri går helt ut til kantene på store telefoner */
+@media (max-width: 639px) { html[data-linje="s6"][data-ot="u1"] .hero-accent { display: block; flex-basis: 100%; } }
+
+/* TEST ?mob=…: vifta på telefon med samme bue og kortavstand som på PC. PC påvirkes ikke. */
+@media (max-width: 639px) {
+  html[data-mob] .hero-bg[data-oppsett="vifte"] .hero-fan { --fan-pc: 1; }
+  /* b: mindre kort som på PC, toppen like høy som innholdet, kategoriene synes under */
+  html[data-mob="b"] #hero { min-height: 0; }
+  html[data-mob="b"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: 380px; --w: 31%; }
+  html[data-mob="b"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 1rem; }
+}
