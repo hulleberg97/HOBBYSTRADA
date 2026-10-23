@@ -615,3 +615,51 @@ html[data-opp="under-b"] .hero-bg .hero-buttons.hero-buttons { display: flex; ju
 /* D: større overskrift under vifta */
 html[data-linje="s6"][data-ot="u1"][data-opp="under-d"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2.6rem, 6vw, 5.6rem); }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"][data-opp="under-d"] .hero-bg .hero-sub.hero-sub { font-size: 2.8rem; } }
+
+/* ===== Utkast 1–5 med overskriften under vifta, optimalisert hver for seg på PC og telefon (?opp=under-1 … under-5) ===== */
+/* Felles PC: litt lavere vifte, så overskriften alltid er synlig på første skjerm */
+@media (min-width: 1024px) {
+  html[data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(340px, calc(100svh - 400px), 600px); }
+}
+/* Felles telefon: liten vifte i bue som på PC, så overskriften synes uten å bla */
+@media (max-width: 639px) {
+  html[data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) #hero { min-height: 0; }
+  html[data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-bg[data-oppsett="vifte"] .hero-fan { height: 300px; --w: 25%; --fan-pc: 1; }
+  html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-bg .hero-text { margin: 0.9rem 0 1.4rem; }
+  html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-bg .hero-sub.hero-sub { font-size: 2rem; }
+  html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .tittel-under { font-size: 10px !important; }
+}
+/* Felles mørk tekst på perlemor (kontrast ca. 16:1) med lys, myk skygge */
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-accent { background-image: none; -webkit-text-fill-color: #0b1426; }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.85)) drop-shadow(0 10px 22px rgb(60 50 80 / 0.16)); }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"]) .tittel-under { -webkit-text-fill-color: #4b5568; filter: none; }
+
+/* 1 Klassisk: marineblå, den lille linja under */
+html[data-linje="s6"][data-ot="u1"][data-opp="under-1"] .tittel-under { order: 2; margin: 0.8rem 0 0; }
+
+/* 2 Redaksjonell: «KJØP OG SELG» marineblått, «FOTBALLKORT» dempet gråblått. Større på PC, to linjer på telefon */
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-2"] .hero-accent { -webkit-text-fill-color: #64748b; }
+@media (min-width: 1024px) { html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-2"] .hero-bg .hero-sub.hero-sub { font-size: clamp(3rem, 5.4vw, 5rem); letter-spacing: -0.025em; } }
+
+/* 3 Handling: knappene under overskriften. Side ved side på PC, like brede på telefon */
+html[data-opp="under-3"] .hero-bg .hero-buttons.hero-buttons { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.25rem; }
+@media (max-width: 639px) {
+  html[data-opp="under-3"] .hero-bg .hero-buttons.hero-buttons { padding-inline: 0.75rem; }
+  html[data-opp="under-3"] .hero-bg .hero-buttons.hero-buttons > a { flex: 1; justify-content: center; }
+}
+
+/* 4 Minimal: grafitt, tynn gullstrek mellom vifta og overskriften, litt mindre skrift */
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-4"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-4"] .hero-accent { -webkit-text-fill-color: #1d2127; }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-4"] .hero-bg .hero-text::before { content: ""; display: block; width: 56px; height: 2px; margin: 0 auto 1.1rem; border-radius: 2px; background: #cfa653; }
+@media (min-width: 640px) { html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-4"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2rem, 3.8vw, 3.4rem); } }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-4"] .tittel-under { order: 2; margin: 0.8rem 0 0; }
+
+/* 5 Pearl: som 1, men med perlemorhvit tekst og sterkere skygge (svakere kontrast, til sammenligning) */
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-5"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-5"] .hero-accent {
+  background-image: linear-gradient(100deg, #ffffff 0%, #f3ecf5 22%, #e4edf8 42%, #fdf6e8 62%, #eaf2fb 80%, #ffffff 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-5"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 2px 2px rgb(50 55 80 / 0.55)) drop-shadow(0 8px 18px rgb(50 55 80 / 0.45)) drop-shadow(0 18px 40px rgb(50 55 80 / 0.3)); }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]):not([data-opp="under-b"]):not([data-opp="under-c"]):not([data-opp="under-d"])[data-opp="under-5"] .tittel-under { order: 2; margin: 0.8rem 0 0; }
+html[data-opp="under-3"] .hero-bg .hero-buttons .hero-primary.hero-primary { background: #0b1426 !important; color: #ffffff; }
+html[data-opp="under-3"] .hero-bg .hero-buttons .hero-primary.hero-primary:hover { background: #1b2a47 !important; }
+html[data-opp="under-3"] .hero-bg .hero-buttons .hero-ghost.hero-ghost { background: #ffffff; color: #0b1426; }
