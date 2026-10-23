@@ -544,6 +544,20 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
   html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .hero-bg .hero-sub.hero-sub { font-size: 1.6rem; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .tittel-under { font-size: 9.5px !important; }
+  /* b6: som b5, men alt ca. 25 % større: to kort fyller bredden, større prisknapp og overskrift */
+  html[data-mob="b6"] #hero { min-height: 0; }
+  html[data-mob="b6"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: calc(165px + 95vw); --w: 51%; }
+  html[data-mob="b6"] .hero-fan::after { bottom: 100px; width: 80%; }
+  html[data-mob="b6"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 0.5rem; }
+  html[data-mob="b6"] .fan-pill { gap: 1.1rem; padding: 0.55rem 0.55rem 0.55rem 1.4rem; }
+  html[data-mob="b6"] .fan-pill > span:first-child > span:first-child { font-size: 16px; }
+  html[data-mob="b6"] .fan-pill > span:first-child > span:last-child { font-size: 13.5px; }
+  html[data-mob="b6"] .fan-pill > span:nth-child(2) { font-size: 17px; }
+  html[data-mob="b6"] .fan-pill > span:last-child { width: 2.75rem; height: 2.75rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .hero-bg .hero-text { order: 2; margin: 0.25rem 0 1.5rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .hero-bg .hero-sub.hero-sub { font-size: 2.05rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .tittel-under { font-size: 11.5px !important; margin-bottom: 0.9rem; }
   /* b3: overskriften under vifta og prisboblen, med god luft */
   html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-text { order: 2; margin: 1.5rem 0 1.25rem; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
