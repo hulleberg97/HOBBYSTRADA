@@ -548,14 +548,15 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
   html[data-mob="b6"] #hero { min-height: 0; }
   /* Kortbredden er så stor som mulig, men aldri større enn at overskriften synes over nettleserens adresselinje
      uten å bla (100svh = synlig høyde med adresselinjen fremme). Høyden på vifta følger kortbredden. */
-  html[data-mob="b6"] .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(calc((100vw - 1rem) * 0.51), calc((100svh - 332px - env(safe-area-inset-bottom)) / 2.28)); height: calc(var(--w) * 2.28 + 110px); }
-  html[data-mob="b6"] .hero-fan::after { bottom: 100px; width: 80%; }
+  html[data-mob="b6"] .hero-bg[data-oppsett="vifte"] .hero-fan { --w: min(calc((100vw - 1rem) * 0.51), calc((100svh - 332px - env(safe-area-inset-bottom)) / 2.28)); height: calc(var(--w) * 2.28 + 90px); }
+  html[data-mob="b6"] .hero-fan > .bottom-5 { bottom: 0.5rem; }
+  html[data-mob="b6"] .hero-fan::after { bottom: 80px; width: 80%; }
   html[data-mob="b6"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-top: 0.25rem; padding-bottom: 0.5rem; }
-  html[data-mob="b6"] .fan-pill { gap: 1.1rem; padding: 0.55rem 0.55rem 0.55rem 1.4rem; }
-  html[data-mob="b6"] .fan-pill > span:first-child > span:first-child { font-size: 16px; }
-  html[data-mob="b6"] .fan-pill > span:first-child > span:last-child { font-size: 13.5px; }
-  html[data-mob="b6"] .fan-pill > span:nth-child(2) { font-size: 17px; }
-  html[data-mob="b6"] .fan-pill > span:last-child { width: 2.75rem; height: 2.75rem; }
+  html[data-mob="b6"] .fan-pill { gap: 0.9rem; padding: 0.45rem 0.45rem 0.45rem 1.15rem; }
+  html[data-mob="b6"] .fan-pill > span:first-child > span:first-child { font-size: 14.5px; }
+  html[data-mob="b6"] .fan-pill > span:first-child > span:last-child { font-size: 12px; }
+  html[data-mob="b6"] .fan-pill > span:nth-child(2) { font-size: 15px; }
+  html[data-mob="b6"] .fan-pill > span:last-child { width: 2.4rem; height: 2.4rem; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .hero-bg .hero-text { order: 2; margin: 0 0 1.5rem; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b6"] .hero-bg .hero-sub.hero-sub { font-size: 2.05rem; }
