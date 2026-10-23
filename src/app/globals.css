@@ -574,8 +574,8 @@ html[data-linje="s6"][data-ot="u1"][data-opp="venstre"] .hero-bg .hero-sub.hero-
 html[data-linje="s6"][data-ot="u1"][data-opp="venstre"] .hero-bg .hero-grid { padding-inline: clamp(1.25rem, 5vw, 4.5rem); }
 html[data-linje="s6"][data-ot="u1"][data-opp="tolinjer"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2.6rem, 5.8vw, 5.4rem); line-height: 0.92; }
 html[data-linje="s6"][data-ot="u1"][data-opp="tolinjer"] .hero-accent { display: block; flex-basis: 100%; }
-html[data-linje="s6"][data-ot="u1"][data-opp="under"] .hero-bg .hero-text { order: 2; margin: 0.5rem 0 1.5rem; }
-html[data-linje="s6"][data-ot="u1"][data-opp="under"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under"] .hero-bg .hero-text { order: 2; margin: 1.4rem 0 1.75rem; }
+html[data-linje="s6"][data-ot="u1"][data-opp^="under"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
 html[data-linje="s6"][data-ot="u1"]:is([data-opp="linjeunder"], [data-opp="linjeunder2"], [data-opp="linjeunder3"]) .tittel-under { order: 2; margin: 0.9rem 0 0; }
 /* linjeunder2: som linjeunder, men på telefon en mindre vifte som ligner PC (små kort i bue, flere synlige) */
 @media (max-width: 639px) {
@@ -600,3 +600,18 @@ html[data-linje="s6"][data-ot="u1"]:is([data-opp="linjeunder"], [data-opp="linje
   html[data-linje="s6"][data-ot="u1"][data-opp="linjeunder3"] .tittel-under { margin-top: 0.5rem; font-size: 9px !important; }
   html[data-opp="linjeunder3"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-top: 0.5rem; padding-bottom: 0.25rem; }
 }
+
+/* Utkast med overskriften under vifta (?opp=under-a|b|c|d) */
+/* A: den lille linja under overskriften */
+html[data-linje="s6"][data-ot="u1"][data-opp="under-a"] .tittel-under { order: 2; margin: 0.9rem 0 0; }
+/* B: knappene «Se alle annonser» og «Legg ut kort» under overskriften */
+html[data-opp="under-b"] .hero-bg .hero-buttons.hero-buttons { display: flex; justify-content: center; margin-top: 1.4rem; }
+/* C: mindre vifte på telefon, så overskriften synes på første skjerm */
+@media (max-width: 639px) {
+  html[data-opp="under-c"] #hero { min-height: 0; }
+  html[data-opp="under-c"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: 300px; --w: 25%; --fan-pc: 1; }
+  html[data-linje="s6"][data-ot="u1"][data-opp="under-c"] .hero-bg .hero-sub.hero-sub { font-size: 1.9rem; }
+}
+/* D: større overskrift under vifta */
+html[data-linje="s6"][data-ot="u1"][data-opp="under-d"] .hero-bg .hero-sub.hero-sub { font-size: clamp(2.6rem, 6vw, 5.6rem); }
+@media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"][data-opp="under-d"] .hero-bg .hero-sub.hero-sub { font-size: 2.8rem; } }
