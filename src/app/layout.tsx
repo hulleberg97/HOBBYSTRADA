@@ -62,6 +62,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("font");if(v)sessionStorage.setItem("font",v);var s=sessionStorage.getItem("font");if(s&&s!=="jakarta")document.documentElement.dataset.font=s}catch(e){}})()`,
           }}
         />
+        {/* TEST: ?sora=matt|skygge|dyp|satin|glans|konge|gullstrek|kontur varianter av Sora i marineblått (?sora=av tilbake) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("sora");if(v)sessionStorage.setItem("sora",v);var s=sessionStorage.getItem("sora");if(s&&s!=="av")document.documentElement.dataset.sora=s}catch(e){}})()`,
+          }}
+        />
         {/* TEST: ?farge=marine|grafitt|blekk|solv|tofarge prøver andre farger på overskriften (?farge=perle tilbake) */}
         <script
           dangerouslySetInnerHTML={{
