@@ -568,3 +568,7 @@ html[data-linje="s6"][data-ot="u1"][data-sora="gullstrek"] .hero-bg .hero-text::
 /* 7 kontur: «FOTBALLKORT» som omriss, «KJØP OG SELG» fylt */
 html[data-linje="s6"][data-ot="u1"][data-sora="kontur"] .hero-accent { -webkit-text-fill-color: transparent; -webkit-text-stroke: 2px #0b1426; }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"][data-sora="kontur"] .hero-accent { -webkit-text-stroke-width: 1.5px; } }
+/* 9 helkontur: hele overskriften som marineblått omriss, uten skygge */
+html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-accent { -webkit-text-fill-color: transparent; -webkit-text-stroke: 2px #0b1426; }
+html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub.hero-sub { filter: none; }
+@media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-accent { -webkit-text-stroke-width: 1.5px; } }
