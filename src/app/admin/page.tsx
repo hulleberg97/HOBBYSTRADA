@@ -88,7 +88,18 @@ export default async function AdminPage() {
                       id={l.id!}
                       actions={[
                         { label: "Godkjenn", status: "active", tone: "primary" },
-                        { label: "Avvis", status: "rejected", tone: "danger" },
+                        {
+                          label: "Avvis",
+                          status: "rejected",
+                          tone: "danger",
+                          reasons: [
+                            "Bildene viser ikke kortet tydelig",
+                            "Mangler eller har feil opplysninger om kortet",
+                            "Ikke et fotballkort",
+                            "Mistanke om falskt eller kopiert kort",
+                            "Bryter annonsereglene",
+                          ],
+                        },
                       ]}
                     />
                   </OwnerListingRow>

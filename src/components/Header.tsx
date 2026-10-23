@@ -4,13 +4,14 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { CircleUserIcon, HeartIcon, LayoutGridIcon, ChevronDownIcon, MenuIcon, MessageCircleIcon, SearchIcon, XIcon } from "lucide-react";
+import { BellIcon, CircleUserIcon, HeartIcon, LayoutGridIcon, ChevronDownIcon, MenuIcon, MessageCircleIcon, SearchIcon, XIcon } from "lucide-react";
 import { FavoriteCount } from "./FavoriteButton";
 import { useUser } from "./useUser";
 import { SearchSuggest } from "./SearchSuggest";
 
 // Lastes bare for innloggede, så Supabase-koden ikke følger med for alle besøkende
 const UnreadBadge = dynamic(() => import("./UnreadBadge").then((m) => m.UnreadBadge), { ssr: false });
+const NotificationBadge = dynamic(() => import("./NotificationBadge").then((m) => m.NotificationBadge), { ssr: false });
 
 const MOBILE_NAV = [
   ["/products", "Markedet"],
@@ -158,6 +159,16 @@ export function Header() {
                 {user && <UnreadBadge />}
               </Link>
             )}
+            {user && (
+              <Link
+                href="/varsler"
+                aria-label="Varsler"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
+              >
+                <BellIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                <NotificationBadge />
+              </Link>
+            )}
             <Link
               href="/favoritter"
               aria-label="Favoritter"
@@ -212,7 +223,7 @@ export function Header() {
           className="fixed inset-x-0 bottom-0 z-50 flex flex-col overflow-y-auto overscroll-contain border-t border-slate-200 bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 xl:hidden"
         >
           <nav className="mx-auto flex w-full max-w-[1320px] flex-col sm:px-2" aria-label="Mobilmeny">
-            {(user ? [["/meldinger", "Meldinger"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
+            {(user ? [["/meldinger", "Meldinger"], ["/varsler", "Varsler"], ...MOBILE_NAV] : MOBILE_NAV).map(([href, label]) => (
               <Link
                 key={href}
                 onClick={() => setMenu(false)}

@@ -1,10 +1,11 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { BOOSTS, type BoostKey } from "./boosts";
+import { BOOSTS, boostDate, type BoostKey } from "./boosts";
+import { addNotification } from "./notifications";
 
 /** Aktiverer en betalt bestilling: setter løftet på annonsen og markerer bestillingen som betalt. */
 export async function activateBoost(db: SupabaseClient, orderId: string) {
-  const { data: order } = await db.from("boost_orders").select("id, listing_id, plan, status").eq("id", orderId).maybeSingle();
+  const { data: order } = await db.from("boost_orders").select("id, listing_id, user_id, plan, status").eq("id", orderId).maybeSingle();
   if (!order || order.status === "paid") return;
   const days = BOOSTS[order.plan as BoostKey].days;
   const until = new Date(Date.now() + days * 864e5).toISOString();
@@ -13,4 +14,11 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
   if (order.plan === "frontpage") patch.frontpage_until = until;
   if (order.listing_id) await db.from("listings").update(patch).eq("id", order.listing_id);
   await db.from("boost_orders").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", order.id);
+  const { data: l } = order.listing_id ? await db.from("listings").select("slug, title").eq("id", order.listing_id).maybeSingle() : { data: null };
+  await addNotification(db, order.user_id, {
+    kind: "boost",
+    title: "Hurra! Annonsen din er løftet!",
+    body: `${BOOSTS[order.plan as BoostKey].name} på «${l?.title ?? "annonsen"}» varer til ${boostDate(until)}.`,
+    href: l ? `/products/${l.slug}` : "/account",
+  });
 }

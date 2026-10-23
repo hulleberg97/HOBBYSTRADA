@@ -64,7 +64,7 @@ export default function PrivacyPage() {
                 items={[
                   "Annonser: kortdata, pris, tilstand, beskrivelse, bilder og sted.",
                   "Meldinger: det du skriver og bildene du sender i chatten med andre brukere.",
-                  "Varsler om nye kort: søkene du har lagret.",
+                  "Lagrede søk: søkene du vil ha varsel om.",
                   "Henvendelser: navn, e-post og meldingen når du kontakter oss eller rapporterer en annonse.",
                   "Annonseløft: hvilken pakke du kjøper, for hvilken annonse. Selve betalingen skjer i Vipps, og vi ser aldri bank- eller kortopplysningene dine.",
                 ]}
@@ -114,11 +114,18 @@ export default function PrivacyPage() {
                 kept="5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Sletter du kontoen, fjernes e-postadressen fra betalingen."
               />
               <Purpose
-                title="Varsler om nye kort"
-                what="Sende deg e-post når et nytt kort passer et søk du har lagret."
+                title="Lagrede søk"
+                what="Gi deg beskjed på e-post og under Varsler når et nytt kort passer et søk du har lagret."
                 data="Søket og e-postadressen din."
-                basis="Samtykke (art. 6 nr. 1 a). Du slår varslene av når som helst på Min side."
+                basis="Samtykke (art. 6 nr. 1 a). Du sletter søket når som helst på Min side."
                 kept="Til du sletter søket eller kontoen."
+              />
+              <Purpose
+                title="Varsler på nettsiden"
+                what="Gi deg beskjed under Varsler når annonsen din blir godkjent eller avvist, når et løft er aktivert eller snart går ut, og når nye kort passer søkene dine."
+                data="Hva som skjedde, annonsens tittel og tidspunkt."
+                basis="Avtale med deg (art. 6 nr. 1 b)."
+                kept="90 dager, eller til du sletter kontoen."
               />
               <Purpose
                 title="Henvendelser og rapporter"
@@ -188,7 +195,7 @@ export default function PrivacyPage() {
                   "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, bildene, varslene og meldingene til deg. Betalinger beholder vi så lenge bokføringsloven krever.",
                   "Dataportabilitet: du kan få opplysningene du har gitt oss i et maskinlesbart format.",
                   "Protestere: der grunnlaget er berettiget interesse, kan du protestere mot behandlingen.",
-                  "Trekke samtykke: varsler om nye kort slår du av på Min side.",
+                  "Trekke samtykke: lagrede søk sletter du på Min side.",
                   "Klage: du kan klage til Datatilsynet (datatilsynet.no).",
                 ]}
               />

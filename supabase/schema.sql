@@ -313,3 +313,18 @@ alter table public.boost_orders alter column listing_id drop not null;
 alter table public.boost_orders drop constraint if exists boost_orders_listing_id_fkey;
 alter table public.boost_orders add constraint boost_orders_listing_id_fkey
   foreign key (listing_id) references public.listings(id) on delete set null;
+
+-- Varsler på nettsiden (supabase/010_varsler.sql)
+create table if not exists public.notifications (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  kind text not null,
+  title text not null,
+  body text,
+  href text,
+  read_at timestamptz,
+  created_at timestamptz not null default now()
+);
+create index if not exists notifications_user_created on public.notifications (user_id, created_at desc);
+alter table public.notifications enable row level security;
+grant all on public.notifications to service_role;

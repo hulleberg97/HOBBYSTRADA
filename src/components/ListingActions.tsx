@@ -3,17 +3,25 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-type Action = { label: string; status?: string; del?: boolean; tone?: "primary" | "danger" };
+/** reasons: velg en grunn før handlingen utføres (brukes når admin avviser en annonse). */
+type Action = { label: string; status?: string; del?: boolean; tone?: "primary" | "danger"; reasons?: string[] };
 
 export function ListingActions({ id, actions }: { id: string; actions: Action[] }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [error, setError] = useState("");
+  const [asking, setAsking] = useState<Action | null>(null);
+  const [reason, setReason] = useState("");
 
   const run = async (a: Action) => {
     if (a.del && !confirmDelete) {
       setConfirmDelete(true);
+      return;
+    }
+    if (a.reasons && asking !== a) {
+      setAsking(a);
+      setReason(a.reasons[0]);
       return;
     }
     setBusy(true);
@@ -21,11 +29,12 @@ export function ListingActions({ id, actions }: { id: string; actions: Action[] 
     const res = await fetch(`/api/listings/${id}`, {
       method: a.del ? "DELETE" : "PATCH",
       headers: { "content-type": "application/json" },
-      body: a.del ? undefined : JSON.stringify({ status: a.status }),
+      body: a.del ? undefined : JSON.stringify({ status: a.status, ...(a.reasons ? { reason } : {}) }),
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
     setConfirmDelete(false);
+    setAsking(null);
     if (!res.ok) setError(data.error ?? "Noe gikk galt.");
     else router.refresh();
   };
@@ -49,6 +58,29 @@ export function ListingActions({ id, actions }: { id: string; actions: Action[] 
           {a.del && confirmDelete ? "Bekreft sletting" : a.label}
         </button>
       ))}
+      {asking?.reasons && (
+        <span className="flex w-full flex-wrap items-center gap-2">
+          <label className="sr-only" htmlFor={`grunn-${id}`}>
+            Grunn
+          </label>
+          <select
+            id={`grunn-${id}`}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            className="h-9 rounded-full border border-slate-300 bg-white px-3 text-xs text-slate-800"
+          >
+            {asking.reasons.map((r) => (
+              <option key={r}>{r}</option>
+            ))}
+          </select>
+          <button type="button" disabled={busy} onClick={() => run(asking)} className="inline-flex h-9 items-center rounded-full px-4 text-xs font-semibold text-destructive ring-1 ring-inset ring-destructive/30 hover:bg-destructive/5 disabled:opacity-50">
+            Bekreft avvisning
+          </button>
+          <button type="button" onClick={() => setAsking(null)} className="text-xs font-medium text-slate-500 underline">
+            Avbryt
+          </button>
+        </span>
+      )}
       {confirmDelete && (
         <button type="button" onClick={() => setConfirmDelete(false)} className="text-xs font-medium text-slate-500 underline">
           Avbryt

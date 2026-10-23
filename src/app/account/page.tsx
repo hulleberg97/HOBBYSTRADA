@@ -169,7 +169,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         )}
         {tab === "varsler" && (
           <section>
-            <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Varsler om nye kort</h2>
+            <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Lagrede søk</h2>
             <SavedSearches items={searches ?? []} />
           </section>
         )}

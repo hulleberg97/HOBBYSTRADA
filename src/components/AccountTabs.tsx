@@ -3,7 +3,7 @@ import Link from "next/link";
 const TABS = [
   ["annonser", "Annonser", "/account"],
   ["meldinger", "Meldinger", "/meldinger"],
-  ["varsler", "Varsler", "/account?fane=varsler"],
+  ["varsler", "Lagrede søk", "/account?fane=varsler"],
   ["konto", "Konto", "/account?fane=konto"],
 ] as const;
 

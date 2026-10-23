@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
 import { settlePending } from "@/lib/settle-boost";
+import { addNotification } from "@/lib/notifications";
 
 /**
  * Daglig opprydding (Vercel Cron, kl. 03:17 UTC). Sletter data vi ikke lenger trenger:
@@ -54,6 +55,21 @@ export async function GET(req: Request) {
     for (const u of (r.images ?? []) as string[]) if (u.includes(marker)) usedFolders.add(decodeURIComponent(u.split(marker)[1].split("/")[0]));
   }
   result.listing_images = await removeOrphans(db, "listing-images", (folder) => usedFolders.has(folder));
+
+  await del("notifications", db.from("notifications").delete({ count: "exact" }).lt("created_at", new Date(Date.now() - 90 * 864e5).toISOString()));
+
+  // Løft som går ut det neste døgnet: én påminnelse til selgeren
+  const soon = new Date(Date.now() + 864e5).toISOString();
+  const { data: expiring } = await db.from("listings").select("slug, title, owner_id, bumped_until").eq("status", "active").gt("bumped_until", new Date().toISOString()).lte("bumped_until", soon);
+  let reminded = 0;
+  for (const l of expiring ?? []) {
+    const href = `/products/${l.slug}`;
+    const { count } = await db.from("notifications").select("id", { count: "exact", head: true }).eq("kind", "boost_expiring").eq("href", href).gt("created_at", new Date(Date.now() - 3 * 864e5).toISOString());
+    if (count) continue;
+    await addNotification(db, l.owner_id, { kind: "boost_expiring", title: "Løftet går ut snart", body: `Løftet på «${l.title}» går ut i løpet av det neste døgnet. Du kan løfte annonsen igjen når du vil.`, href: `/annonseloft?annonse=${l.slug}` });
+    reminded++;
+  }
+  result.reminded = reminded;
 
   // Betalte annonseløft som ikke ble fanget opp underveis
   const activated = await settlePending(db).catch(() => 0);

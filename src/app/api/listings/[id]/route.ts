@@ -3,7 +3,7 @@ import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
-import { notifySavedSearches } from "@/lib/notify";
+import { notifySavedSearches, notifyReview } from "@/lib/notify";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -14,7 +14,7 @@ async function load(id: string) {
   const db = adminClient();
   const user = await getUser();
   if (!db || !user) return { error: NextResponse.json({ error: "Du må være logget inn." }, { status: 401 }) };
-  const { data: listing } = await db.from("listings").select("id, slug, owner_id, status").eq("id", id).maybeSingle();
+  const { data: listing } = await db.from("listings").select("id, slug, title, owner_id, status").eq("id", id).maybeSingle();
   if (!listing) return { error: NextResponse.json({ error: "Fant ikke annonsen." }, { status: 404 }) };
   const admin = isAdmin(user);
   if (listing.owner_id !== user.id && !admin) return { error: NextResponse.json({ error: "Dette er ikke din annonse." }, { status: 403 }) };
@@ -25,7 +25,7 @@ async function load(id: string) {
 export async function PATCH(req: Request, { params }: Ctx) {
   const r = await load((await params).id);
   if (r.error) return r.error;
-  const { status, price, description, location, condition, fanSlot, club, league } = await req.json().catch(() => ({}));
+  const { status, price, description, location, condition, fanSlot, club, league, reason } = await req.json().catch(() => ({}));
   const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (status) {
     const allowed = r.admin ? ADMIN_STATUSES : OWNER_STATUSES;
@@ -69,6 +69,9 @@ export async function PATCH(req: Request, { params }: Ctx) {
   revalidatePath("/", "layout");
   // Første gang en annonse publiseres: varsle dem som har et lagret søk som passer.
   if (status === "active" && r.listing.status === "pending") after(() => notifySavedSearches(r.db, r.listing.id));
+  // Selgeren får beskjed når admin godkjenner eller avviser en ny annonse
+  if (r.admin && r.listing.status === "pending" && (status === "active" || status === "rejected"))
+    after(() => notifyReview(r.db, r.listing, status === "active", typeof reason === "string" ? reason.slice(0, 120) : ""));
   return NextResponse.json({ ok: true });
 }
 
