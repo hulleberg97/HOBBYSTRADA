@@ -36,7 +36,8 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
   const c = COPY[mode];
   // Med Vipps slått på verifiserer alle seg med Vipps. E-post er bare for kontoer som finnes fra før.
   const vippsOnly = vipps && (mode === "login" || mode === "register");
-  const [showEmail, setShowEmail] = useState(false);
+  // Bare Vipps for alle. ?epost=1 viser e-postinnlogging for testkontoen frem til lansering.
+  const showEmail = params.get("epost") === "1";
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,14 +117,8 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                     </Link>
                     .
                   </p>
-                  {mode === "login" && !showEmail && (
-                    <button
-                      type="button"
-                      onClick={() => setShowEmail(true)}
-                      className="mt-6 w-full text-center text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
-                    >
-                      Har du konto med e-post fra før? Logg inn med e-post
-                    </button>
+                  {mode === "login" && (
+                    <p className="mt-6 text-center text-sm text-slate-600">Ny her? Kontoen lages automatisk første gang du logger inn med Vipps.</p>
                   )}
                 </div>
               )}
@@ -225,7 +220,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
               )}
             </>
           )}
-          {mode === "login" && (
+          {mode === "login" && !vippsOnly && (
             <p className="mt-8 text-center text-sm text-muted-foreground">
               Har du ikke konto?{" "}
               <Link className="font-semibold text-foreground underline underline-offset-4" href="/auth/register">
@@ -233,7 +228,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
               </Link>
             </p>
           )}
-          {mode === "register" && (
+          {mode === "register" && !vippsOnly && (
             <p className="mt-8 text-center text-sm text-muted-foreground">
               Har du allerede konto?{" "}
               <Link className="font-semibold text-foreground underline underline-offset-4" href="/auth/login">
