@@ -573,3 +573,11 @@ html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub > 
 html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub.hero-sub { filter: none; }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-accent { -webkit-text-stroke-width: 1.5px; } }
 html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .tittel-under { -webkit-text-stroke: 0; -webkit-text-fill-color: #a8822f; }
+/* Mindre overskrift i Sora marineblått, med gull på den lille linja (?sora=liten og ?sora=mini) */
+html[data-linje="s6"][data-ot="u1"]:is([data-sora="liten"], [data-sora="mini"]) .tittel-under { -webkit-text-fill-color: #a8822f; }
+html[data-linje="s6"][data-ot="u1"][data-sora="liten"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+html[data-linje="s6"][data-ot="u1"][data-sora="mini"] .hero-bg .hero-sub.hero-sub { font-size: clamp(1.5rem, 2.4vw, 2.1rem); letter-spacing: -0.02em; }
+@media (max-width: 767px) {
+  html[data-linje="s6"][data-ot="u1"][data-sora="liten"] .hero-bg .hero-sub.hero-sub { font-size: 1.8rem; }
+  html[data-linje="s6"][data-ot="u1"][data-sora="mini"] .hero-bg .hero-sub.hero-sub { font-size: 1.45rem; }
+}
