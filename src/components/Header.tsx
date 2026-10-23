@@ -95,7 +95,7 @@ export function Header() {
         <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
           <Link className="flex shrink-0 items-center gap-2" href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={169} height={28} className="h-[22px] w-auto sm:h-[28px]" />
+            <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={169} height={28} fetchPriority="high" className="h-[22px] w-auto sm:h-[28px]" />
           </Link>
           <nav className="ml-auto hidden items-center gap-1 xl:flex" aria-label="Hovedmeny">
             <Link
@@ -149,16 +149,15 @@ export function Header() {
             >
               {searchOpen ? <XIcon className="h-5 w-5" aria-hidden="true" /> : <SearchIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />}
             </button>
-            {user !== undefined && (
-              <Link
-                href={user ? "/meldinger" : "/auth/login?next=/meldinger"}
-                aria-label="Meldinger"
-                className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
-              >
-                <MessageCircleIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                {user && <UnreadBadge />}
-              </Link>
-            )}
+            {/* Alltid med fra start, så ikonene ikke flytter seg når innloggingen er sjekket */}
+            <Link
+              href={user ? "/meldinger" : "/auth/login?next=/meldinger"}
+              aria-label="Meldinger"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
+            >
+              <MessageCircleIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+              {user && <UnreadBadge />}
+            </Link>
             {user && (
               <Link
                 href="/varsler"
