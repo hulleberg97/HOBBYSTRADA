@@ -520,7 +520,7 @@ html[data-linje="s6"][data-ot="u1"][data-bg="pearl"] .hero-bg .hero-sub.hero-sub
 html[data-linje="s6"][data-ot="u1"][data-bg="pearl"] .tittel-under { -webkit-text-fill-color: #44546e; }
 
 /* TEST ?bg=perle og ?bg=perle-marine: frosset glass i perlemorhvitt (hvitt med svake skjær av rosa, blått og gull) */
-html[data-glans]:is([data-bg="perle"], [data-bg="perle-marine"]) #hero.hero-bg[data-farge="lys"] { background:
+html[data-glans][data-bg^="perle"] #hero.hero-bg[data-farge="lys"] { background:
   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
   linear-gradient(115deg, rgb(255 255 255 / 0.7) 0%, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / 0) 62%, rgb(255 255 255 / 0.6) 100%),
   radial-gradient(28% 38% at 14% 28%, rgb(236 214 232 / 0.9), transparent 72%),
@@ -541,3 +541,26 @@ html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .hero-bg .hero-sub >
 html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .hero-accent { -webkit-text-fill-color: #0b1426; }
 html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.8)) drop-shadow(0 10px 22px rgb(60 50 80 / 0.2)); }
 html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .tittel-under { -webkit-text-fill-color: #4b5568; }
+
+/* TEST: flere tekstfarger på perlemor. Felles: lys, myk skygge og gråblå liten linje */
+html[data-linje="s6"][data-ot="u1"]:is([data-bg="perle-gull"], [data-bg="perle-grafitt"], [data-bg="perle-krom"], [data-bg="perle-champagne"], [data-bg="perle-tofarge"]) .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.8)) drop-shadow(0 10px 22px rgb(60 50 80 / 0.2)); }
+html[data-linje="s6"][data-ot="u1"]:is([data-bg="perle-gull"], [data-bg="perle-grafitt"], [data-bg="perle-krom"], [data-bg="perle-champagne"], [data-bg="perle-tofarge"]) .tittel-under { -webkit-text-fill-color: #4b5568; }
+/* perle-gull: marineblått, med «FOTBALLKORT» i merkevarens gull */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-gull"] .hero-bg .hero-sub > span { -webkit-text-fill-color: #0b1426; }
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-gull"] .hero-accent { -webkit-text-fill-color: #a8822f; }
+/* perle-grafitt: nesten svart grafitt, nøytral og moderne */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-grafitt"] .hero-bg .hero-sub > span,
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-grafitt"] .hero-accent { -webkit-text-fill-color: #1d2127; }
+/* perle-krom: marineblå med skrå metallisk glans */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-krom"] .hero-bg .hero-sub > span,
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-krom"] .hero-accent {
+  background-image: linear-gradient(100deg, #0b1426 0%, #33507f 28%, #0b1426 50%, #3b5786 74%, #0b1426 100%); background-size: 100% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+/* perle-champagne: varm champagnegull med skrå metallisk glans */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-champagne"] .hero-bg .hero-sub > span,
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-champagne"] .hero-accent {
+  background-image: linear-gradient(100deg, #7d5b17 0%, #c9a456 28%, #8a6620 50%, #d1ae62 74%, #7d5b17 100%); background-size: 100% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+/* perle-tofarge: «KJØP OG SELG» marineblått, «FOTBALLKORT» dempet gråblått */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-tofarge"] .hero-bg .hero-sub > span { -webkit-text-fill-color: #0b1426; }
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-tofarge"] .hero-accent { -webkit-text-fill-color: #64748b; }
