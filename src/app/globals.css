@@ -527,6 +527,13 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
   html[data-linje="s6"][data-ot="u1"][data-mob="b2"] .tittel-under { font-size: 9px !important; margin-bottom: 0.45rem; }
   html[data-mob="b2"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-top: 0.25rem; }
   html[data-mob="b2"] .hero-bg[data-oppsett="vifte"] .hero-fan { margin-top: -0.5rem; }
+  /* b4: som b1 (én linje), men større: overskriften fyller nesten hele bredden og kortene er større, som et forstørret b1 */
+  html[data-mob="b4"] #hero { min-height: 0; }
+  html[data-mob="b4"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: 440px; --w: 41%; }
+  html[data-mob="b4"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 1rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b4"] .hero-accent { display: inline; flex-basis: auto; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b4"] .hero-bg .hero-sub.hero-sub { font-size: 6.15vw; letter-spacing: -0.025em; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b4"] .tittel-under { font-size: 2.6vw !important; margin-bottom: 0.5rem; }
   /* b3: overskriften under vifta og prisboblen, med god luft */
   html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-text { order: 2; margin: 1.5rem 0 1.25rem; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
