@@ -23,7 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
-        {/* TEST: ?mob=b prøver vifta på telefon med samme bue som på PC (?mob=av tilbake) */}
+        {/* TEST: ?mob=b|b1|b2|b3 prøver vifta på telefon med samme bue som på PC (?mob=av tilbake) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("mob");if(v)sessionStorage.setItem("mob",v);var s=sessionStorage.getItem("mob");if(s&&s!=="av")document.documentElement.dataset.mob=s}catch(e){}})()`,

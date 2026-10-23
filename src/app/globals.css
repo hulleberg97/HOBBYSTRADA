@@ -514,4 +514,22 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
   html[data-mob="b"] #hero { min-height: 0; }
   html[data-mob="b"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: 380px; --w: 31%; }
   html[data-mob="b"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 1rem; }
+  /* b1, b2, b3 bygger på b */
+  html:is([data-mob="b1"], [data-mob="b2"], [data-mob="b3"]) #hero { min-height: 0; }
+  html:is([data-mob="b1"], [data-mob="b2"], [data-mob="b3"]) .hero-bg[data-oppsett="vifte"] .hero-fan { height: 380px; --w: 31%; }
+  html:is([data-mob="b1"], [data-mob="b2"], [data-mob="b3"]) .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 1rem; }
+  /* b1: mindre overskrift på én linje */
+  html[data-linje="s6"][data-ot="u1"][data-mob="b1"] .hero-accent { display: inline; flex-basis: auto; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b1"] .hero-bg .hero-sub.hero-sub { font-size: 1.32rem; letter-spacing: -0.02em; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b1"] .tittel-under { font-size: 9px !important; margin-bottom: 0.45rem; }
+  /* b2: mindre overskrift på to linjer, vifta tettere inntil */
+  html[data-linje="s6"][data-ot="u1"][data-mob="b2"] .hero-bg .hero-sub.hero-sub { font-size: 1.45rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b2"] .tittel-under { font-size: 9px !important; margin-bottom: 0.45rem; }
+  html[data-mob="b2"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-top: 0.25rem; }
+  html[data-mob="b2"] .hero-bg[data-oppsett="vifte"] .hero-fan { margin-top: -0.5rem; }
+  /* b3: overskriften under vifta og prisboblen, med god luft */
+  html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-text { order: 2; margin: 1.5rem 0 1.25rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-sub.hero-sub { font-size: 1.6rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .tittel-under { font-size: 9.5px !important; }
 }
