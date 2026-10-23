@@ -5,7 +5,12 @@ import "server-only";
  * portal.vippsmobilepay.com og denne adressen er lagt inn som redirect URI:
  *   {NEXT_PUBLIC_SITE_URL}/auth/vipps/callback
  */
-export const hasVippsLogin = () => process.env.VIPPS_LOGIN === "true" && Boolean(process.env.VIPPS_CLIENT_ID && process.env.VIPPS_CLIENT_SECRET);
+// Egne nøkler for innlogging (VIPPS_LOGIN_CLIENT_ID/SECRET) når Vipps Login er på et annet salgssted enn betaling.
+// Uten dem brukes betalingsnøklene.
+const clientId = () => process.env.VIPPS_LOGIN_CLIENT_ID || process.env.VIPPS_CLIENT_ID;
+const clientSecret = () => process.env.VIPPS_LOGIN_CLIENT_SECRET || process.env.VIPPS_CLIENT_SECRET;
+
+export const hasVippsLogin = () => process.env.VIPPS_LOGIN === "true" && Boolean(clientId() && clientSecret());
 
 const base = () => (process.env.VIPPS_TEST === "true" ? "https://apitest.vipps.no" : "https://api.vipps.no");
 export const redirectUri = (origin: string) => `${process.env.NEXT_PUBLIC_SITE_URL ?? origin}/auth/vipps/callback`;
@@ -30,7 +35,7 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
   const d = await discover();
   const u = new URL(d.authorization_endpoint);
   u.search = new URLSearchParams({
-    client_id: process.env.VIPPS_CLIENT_ID!,
+    client_id: clientId()!,
     response_type: "code",
     scope: "openid name phoneNumber email address",
     state,
@@ -55,7 +60,7 @@ const cityName = (s: unknown) =>
 /** Bytter koden fra Vipps mot brukerens bekreftede navn, telefon og e-post. */
 export async function exchangeCode({ code, nonce, origin }: { code: string; nonce: string; origin: string }): Promise<VippsUser> {
   const d = await discover();
-  const basic = Buffer.from(`${process.env.VIPPS_CLIENT_ID}:${process.env.VIPPS_CLIENT_SECRET}`).toString("base64");
+  const basic = Buffer.from(`${clientId()}:${clientSecret()}`).toString("base64");
   const res = await fetch(d.token_endpoint, {
     method: "POST",
     headers: { authorization: `Basic ${basic}`, "content-type": "application/x-www-form-urlencoded" },
