@@ -572,4 +572,4 @@ html[data-linje="s6"][data-ot="u1"][data-sora="kontur"] .hero-accent { -webkit-t
 html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-accent { -webkit-text-fill-color: transparent; -webkit-text-stroke: 2px #0b1426; }
 html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub.hero-sub { filter: none; }
 @media (max-width: 767px) { html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-bg .hero-sub > span, html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .hero-accent { -webkit-text-stroke-width: 1.5px; } }
-html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .tittel-under { -webkit-text-stroke: 0; -webkit-text-fill-color: #4b5568; }
+html[data-linje="s6"][data-ot="u1"][data-sora="helkontur"] .tittel-under { -webkit-text-stroke: 0; -webkit-text-fill-color: #a8822f; }
