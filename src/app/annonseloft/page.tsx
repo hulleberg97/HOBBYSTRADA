@@ -6,7 +6,9 @@ import { PageHeader } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Annonseløft" };
 
-export default function BoostPage() {
+export default async function BoostPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper
+  await searchParams;
   return (
     <>
       <PageHeader center eyebrow="Annonseløft" title="Få kortet ditt sett først" lead="Gi annonsen mer synlighet, og selg raskere til samlere i hele Norge." />

@@ -8,7 +8,9 @@ import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = { title: "Kontakt" };
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper
+  await searchParams;
   return (
     <div>
       <PageHeader eyebrow="Kontakt" title="Ta kontakt med oss" lead="Spørsmål om en annonse, annonseløft eller noe annet? Send oss en melding."></PageHeader>
