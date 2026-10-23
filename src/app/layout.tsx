@@ -33,6 +33,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var v=new URLSearchParams(location.search).get("opp");if(v)sessionStorage.setItem("opp",v);var s=sessionStorage.getItem("opp");if(s&&s!=="av")document.documentElement.dataset.opp=s}catch(e){}})()`,
           }}
         />
+        {/* TEST: ?pris=kort|liten|av prøver andre plasseringer av prisboblen under vifta (?pris=vanlig tilbake) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("pris");if(v)sessionStorage.setItem("pris",v);var s=sessionStorage.getItem("pris");if(s&&s!=="vanlig")document.documentElement.dataset.pris=s}catch(e){}})()`,
+          }}
+        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{

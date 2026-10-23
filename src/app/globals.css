@@ -663,3 +663,14 @@ html[data-linje="s6"][data-ot="u1"][data-opp^="under-"]:not([data-opp="under-a"]
 html[data-opp="under-3"] .hero-bg .hero-buttons .hero-primary.hero-primary { background: #0b1426 !important; color: #ffffff; }
 html[data-opp="under-3"] .hero-bg .hero-buttons .hero-primary.hero-primary:hover { background: #1b2a47 !important; }
 html[data-opp="under-3"] .hero-bg .hero-buttons .hero-ghost.hero-ghost { background: #ffffff; color: #0b1426; }
+
+/* TEST ?pris=…: prisboblen under vifta et annet sted, så det ikke blir rotete med overskriften under */
+/* kort: boblen løftes opp og ligger over den nedre kanten av kortene */
+html[data-pris="kort"] .fan-pill-wrap { bottom: 19%; }
+@media (max-width: 639px) { html[data-pris="kort"] .fan-pill-wrap { bottom: 24%; } }
+/* liten: bare pris og pil (navnet står allerede på kortet), litt opp mot kortene */
+html[data-pris="liten"] .fan-pill-wrap { bottom: 16%; }
+html[data-pris="liten"] .fan-pill > span:first-child { display: none; }
+html[data-pris="liten"] .fan-pill { gap: 0.6rem; padding-left: 1rem; }
+/* av: ingen boble, kortene er lenker */
+html[data-pris="av"] .fan-pill-wrap { display: none; }
