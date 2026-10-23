@@ -518,3 +518,26 @@ html[data-linje="s6"][data-ot="u1"][data-bg="pearl"] .hero-accent {
   background-size: 100% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 html[data-linje="s6"][data-ot="u1"][data-bg="pearl"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 2px 2px rgb(40 55 85 / 0.5)) drop-shadow(0 8px 18px rgb(40 55 85 / 0.4)) drop-shadow(0 18px 40px rgb(40 55 85 / 0.28)); }
 html[data-linje="s6"][data-ot="u1"][data-bg="pearl"] .tittel-under { -webkit-text-fill-color: #44546e; }
+
+/* TEST ?bg=perle og ?bg=perle-marine: frosset glass i perlemorhvitt (hvitt med svake skjær av rosa, blått og gull) */
+html[data-glans]:is([data-bg="perle"], [data-bg="perle-marine"]) #hero.hero-bg[data-farge="lys"] { background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
+  linear-gradient(115deg, rgb(255 255 255 / 0.7) 0%, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / 0) 62%, rgb(255 255 255 / 0.6) 100%),
+  radial-gradient(28% 38% at 14% 28%, rgb(236 214 232 / 0.9), transparent 72%),
+  radial-gradient(26% 36% at 86% 22%, rgb(208 224 244 / 0.9), transparent 72%),
+  radial-gradient(30% 30% at 76% 82%, rgb(246 230 200 / 0.75), transparent 72%),
+  radial-gradient(34% 30% at 22% 84%, rgb(220 232 246 / 0.8), transparent 72%),
+  radial-gradient(34% 44% at 50% 46%, rgb(255 255 255 / 0.95), transparent 78%),
+  linear-gradient(180deg, #f1eef3 0%, #ebeef4 55%, #f3f1ec 100%); }
+/* Perlemorhvit tekst: sterkere, kjølig skygge så den skiller seg fra den lyse bakgrunnen */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle"] .hero-bg .hero-sub > span,
+html[data-linje="s6"][data-ot="u1"][data-bg="perle"] .hero-accent {
+  background-image: linear-gradient(100deg, #ffffff 0%, #f3ecf5 22%, #e4edf8 42%, #fdf6e8 62%, #eaf2fb 80%, #ffffff 100%);
+  background-size: 100% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+html[data-linje="s6"][data-ot="u1"][data-bg="perle"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 2px 2px rgb(50 55 80 / 0.55)) drop-shadow(0 8px 18px rgb(50 55 80 / 0.45)) drop-shadow(0 18px 40px rgb(50 55 80 / 0.3)); }
+html[data-linje="s6"][data-ot="u1"][data-bg="perle"] .tittel-under { -webkit-text-fill-color: #4b5568; }
+/* Marineblå tekst på perlemor */
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .hero-bg .hero-sub > span,
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .hero-accent { -webkit-text-fill-color: #0b1426; }
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .hero-bg .hero-sub.hero-sub { filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.8)) drop-shadow(0 10px 22px rgb(60 50 80 / 0.2)); }
+html[data-linje="s6"][data-ot="u1"][data-bg="perle-marine"] .tittel-under { -webkit-text-fill-color: #4b5568; }
