@@ -534,6 +534,16 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
   html[data-linje="s6"][data-ot="u1"][data-mob="b4"] .hero-accent { display: inline; flex-basis: auto; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b4"] .hero-bg .hero-sub.hero-sub { font-size: 6.15vw; letter-spacing: -0.025em; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b4"] .tittel-under { font-size: 2.6vw !important; margin-bottom: 0.5rem; }
+  /* b5: overskriften under vifta (som b3) med store kort (som b4). Høyden følger skjermbredden, så prisboblen
+     alltid ligger rett under speilbildet av kortene, og gulvskyggen ligger over boblen i stedet for bak den */
+  html[data-mob="b5"] #hero { min-height: 0; }
+  html[data-mob="b5"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: calc(152px + 73vw); --w: 41%; }
+  html[data-mob="b5"] .hero-fan::after { bottom: 82px; }
+  html[data-mob="b5"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 0.5rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .hero-bg .hero-text { order: 2; margin: 1.25rem 0 1.25rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .hero-bg .hero-sub.hero-sub { font-size: 1.6rem; }
+  html[data-linje="s6"][data-ot="u1"][data-mob="b5"] .tittel-under { font-size: 9.5px !important; }
   /* b3: overskriften under vifta og prisboblen, med god luft */
   html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-text { order: 2; margin: 1.5rem 0 1.25rem; }
   html[data-linje="s6"][data-ot="u1"][data-mob="b3"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
