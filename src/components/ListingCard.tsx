@@ -71,7 +71,9 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
               <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>
               {!listing.soldAt && (
                 <span className="card-time-short hidden" suppressHydrationWarning>
-                  {timeAgo(listing.createdAt).replace(/^For /, "")}
+                  {/* Mobil: «5 dager», ellers «5 dager siden» */}
+                  <span className="sm:hidden">{timeAgo(listing.createdAt).replace(/^For /, "").replace(/ siden$/, "")}</span>
+                  <span className="hidden sm:inline">{timeAgo(listing.createdAt).replace(/^For /, "")}</span>
                 </span>
               )}
             </span>
