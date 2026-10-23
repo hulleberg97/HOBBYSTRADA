@@ -576,7 +576,15 @@ html[data-linje="s6"][data-ot="u1"][data-opp="tolinjer"] .hero-bg .hero-sub.hero
 html[data-linje="s6"][data-ot="u1"][data-opp="tolinjer"] .hero-accent { display: block; flex-basis: 100%; }
 html[data-linje="s6"][data-ot="u1"][data-opp="under"] .hero-bg .hero-text { order: 2; margin: 0.5rem 0 1.5rem; }
 html[data-linje="s6"][data-ot="u1"][data-opp="under"] .hero-bg .hero-grid > :not(.hero-text) { order: 1; }
-html[data-linje="s6"][data-ot="u1"][data-opp="linjeunder"] .tittel-under { order: 2; margin: 0.9rem 0 0; }
+html[data-linje="s6"][data-ot="u1"]:is([data-opp="linjeunder"], [data-opp="linjeunder2"]) .tittel-under { order: 2; margin: 0.9rem 0 0; }
+/* linjeunder2: som linjeunder, men på telefon en mindre vifte som ligner PC (små kort i bue, flere synlige) */
+@media (max-width: 639px) {
+  html[data-opp="linjeunder2"] #hero { min-height: 0; }
+  html[data-opp="linjeunder2"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: 290px; --w: 31%; --fan-pc: 1; }
+  html[data-linje="s6"][data-ot="u1"][data-opp="linjeunder2"] .hero-bg .hero-sub.hero-sub { font-size: 2rem; }
+  html[data-linje="s6"][data-ot="u1"][data-opp="linjeunder2"] .tittel-under { margin-top: 0.6rem; font-size: 10px !important; }
+  html[data-opp="linjeunder2"] .hero-bg[data-oppsett="vifte"] .hero-grid { padding-bottom: 0.5rem; }
+}
 @media (max-width: 767px) {
   html[data-linje="s6"][data-ot="u1"][data-opp="stor"] .hero-bg .hero-sub.hero-sub { font-size: 2.9rem; }
   html[data-linje="s6"][data-ot="u1"][data-opp="liten"] .hero-bg .hero-sub.hero-sub { font-size: 1.7rem; }
