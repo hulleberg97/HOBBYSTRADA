@@ -535,17 +535,19 @@ html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 .mag-stort { width: min(62%, calc(var(--scene) * 0.6)); } .mag-tre > a { width: min(46%, calc(var(--scene) * 0.5)); }
 @media (min-width: 640px) { .mag { --scene: clamp(240px, 100svh - 560px, 400px); } .mag-stort { width: min(52%, calc(var(--scene) * 0.6)); } .mag-tre > a { width: min(40%, calc(var(--scene) * 0.55)); } }
 @media (min-width: 1024px) { .mag { --scene: clamp(240px, 100svh - 460px, 560px); } .mag-stort { width: min(58%, calc(var(--scene) * 0.62)); } .mag-tre > a { width: min(40%, calc(var(--scene) * 0.58)); } }
-@media (min-width: 1024px) and (min-height: 860px) { .mag { --scene: clamp(240px, 100svh - 520px, 560px); } }
+@media (min-width: 1024px) and (min-height: 760px) { .mag { --scene: clamp(240px, 100svh - 520px, 560px); } }
+@media (min-width: 1024px) and (min-height: 900px) { .mag { --scene: clamp(240px, 100svh - 600px, 560px); } }
 .mag ul li .fan-slab { box-shadow: 0 10px 24px -12px rgb(11 20 38 / 0.5) !important; }
 /* Kortraden: kortene tegnes i full størrelse og krympes til 62 %, så teksten på dem ser riktig ut */
 .mag ul li { width: 160px; height: 256px; } .mag ul li > a { width: 200px; transform: scale(0.8); transform-origin: top left; }
 .mag-rull-ramme { padding-bottom: 72px; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
-/* Høye PC-skjermer: enda større kort i raden */
-@media (min-width: 1024px) and (min-height: 860px) { .mag ul li { width: 190px; height: 304px; } .mag ul li > a { transform: scale(0.95); } .mag-rull-ramme { padding-bottom: 80px; } }
-.mag-rull { animation: mag-rull 30s linear infinite; }
+/* PC: kortene i raden vokser med skjermhøyden. Lave laptopskjermer får mindre overskrift og scene, så raden får plass. */
+@media (min-width: 1024px) and (max-height: 759px) { .mag ul li { width: 176px; height: 282px; } .mag ul li > a { transform: scale(0.88); } .mag-rull-ramme { padding-bottom: 56px; } .mag { --scene: clamp(200px, 100svh - 480px, 560px); } .mag-tittel { font-size: 3.6rem; } .mag-topp { padding-top: 1rem; } }
+@media (min-width: 1024px) and (min-height: 760px) { .mag ul li { width: 190px; height: 304px; } .mag ul li > a { transform: scale(0.95); } .mag-rull-ramme { padding-bottom: 80px; } }
+@media (min-width: 1024px) and (min-height: 900px) { .mag ul li { width: 230px; height: 368px; } .mag ul li > a { transform: scale(1.15); } .mag-rull-ramme { padding-bottom: 96px; } }
+.mag-rull { animation: mag-rull 24s linear infinite; }
 .mag-rull:hover, .mag-rull:focus-within { animation-play-state: paused; }
 @keyframes mag-rull { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-100% / 3), 0, 0); } }
-@media (prefers-reduced-motion: reduce) { .mag-rull { animation: none; } }
 @media (max-width: 1023px) { .mag ul li { width: 93px; height: 149px; } .mag ul li > a { width: 150px; } .mag-rull-ramme { padding-bottom: 44px; } .mag-rull { animation-duration: 24s; } }
 /* Hånd: litt høyere vifte, så de ytterste kortene får plass når de roterer ut */
 html[data-vis="hand"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(420px, calc(100svh - 280px), 760px); }
