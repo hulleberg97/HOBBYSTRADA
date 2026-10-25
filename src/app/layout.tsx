@@ -27,12 +27,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" className={`${schibsted.variable} ${headlineFont}`}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" data-vis="magasin" data-stort="ren" data-tittel2="d" data-skrift="fraunces" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
-        {/* TEST: ?vis=hand|pakke|magasin prøver nye oppsett av toppen (?vis=av tilbake) */}
+        {/* Forsiden: magasinoppsett er standard (data-vis osv. på <html>). ?vis=av, ?stort=av, ?tittel2=av, ?skrift=av viser de gamle variantene, andre verdier prøver alternativer. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vis");if(v)sessionStorage.setItem("vis",v);var s=sessionStorage.getItem("vis");if(s&&s!=="av")document.documentElement.dataset.vis=s;var k=new URLSearchParams(location.search).get("stort");if(k)sessionStorage.setItem("stort",k);var t=sessionStorage.getItem("stort");if(t&&t!=="av")document.documentElement.dataset.stort=t;var q=new URLSearchParams(location.search).get("tittel2");if(q)sessionStorage.setItem("tittel2",q);var u=sessionStorage.getItem("tittel2");if(u&&u!=="av")document.documentElement.dataset.tittel2=u;var f=new URLSearchParams(location.search).get("skrift");if(f)sessionStorage.setItem("skrift",f);var g=sessionStorage.getItem("skrift");if(g&&g!=="av")document.documentElement.dataset.skrift=g}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search),h=document.documentElement;["vis","stort","tittel2","skrift"].forEach(function(k){var v=q.get(k);if(v)sessionStorage.setItem(k,v);var s=sessionStorage.getItem(k);if(s==="av")delete h.dataset[k];else if(s)h.dataset[k]=s})}catch(e){}})()`,
           }}
         />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}

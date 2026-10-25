@@ -93,9 +93,9 @@ export default async function Home() {
                 <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Trygg handel. Logg inn med Vipps.</p>
               </div>
               <div className="mt-d hidden">
-                <p className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
+                <h1 className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
                   Finn ditt <span className="mt-strek">neste</span> kort
-                </p>
+                </h1>
                 <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Markedsplass for kjøp og salg av fotballkort.</p>
               </div>
               <div className="mag-knapper mt-7 flex flex-wrap gap-2.5">
@@ -110,7 +110,7 @@ export default async function Home() {
             </div>
             <div className="mag-scene relative">
               <Link href={`/products/${fanList[0].slug}`} className="mag-stort absolute -right-[14%] top-[4%] block rotate-[8deg] sm:-right-[10%] lg:-right-[6%]">
-                <Slab l={fanList[0]} eager />
+                <Slab l={fanList[0]} />
               </Link>
               <Link href={`/products/${fanList[0].slug}`} className="fan-pill absolute bottom-2 left-0 flex items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da] lg:bottom-10">
                 <span className="min-w-0">
@@ -144,10 +144,10 @@ export default async function Home() {
           <div className="mag-rull-ramme mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
             <ul className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>
-                fanList.slice(1).map((l) => (
+                fanList.map((l, i) => (
                   <li key={`${k}-${l.slug}`} className="mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
                     <Link href={`/products/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
-                      <Slab l={l} />
+                      <Slab l={l} eager={k === 0 && i < 6} />
                     </Link>
                   </li>
                 )),
