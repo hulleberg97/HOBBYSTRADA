@@ -675,3 +675,12 @@ html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 50px; }
   html[data-stort="ren"] .mag-rull-ramme { padding-bottom: 82px; }
   html[data-stort="ren"][data-tittel2="g"] .mt-h { font-size: 1.75rem; }
 }
+/* PC: kortraden vokser med skjermhøyden, så høye skjermer ser ut som en laptop (samme proporsjoner, ikke mer luft) */
+@media (min-width: 1024px) and (min-height: 800px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 220px; height: 352px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.1); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 107px; } html[data-vis="magasin"] .mag { --scene: clamp(220px, 100svh - 600px, 560px); } }
+@media (min-width: 1024px) and (min-height: 880px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 244px; height: 390px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.22); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 117px; } html[data-vis="magasin"] .mag { --scene: clamp(240px, 100svh - 640px, 560px); } }
+@media (min-width: 1024px) and (min-height: 1000px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 290px; height: 464px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.45); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 138px; } html[data-vis="magasin"] .mag { --scene: clamp(240px, 100svh - 760px, 560px); } }
+@media (min-width: 1024px) and (min-height: 1080px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 310px; height: 496px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.55); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 147px; } html[data-vis="magasin"] .mag { --scene: clamp(240px, 100svh - 820px, 560px); } }
+/* Brede skjermer: raden går helt ut i kantene */
+html[data-vis="magasin"] .mag-rull-ramme { max-width: none; }
+/* «Ingen» på lav laptop: samme stramme topp som de andre */
+@media (min-width: 1024px) and (max-height: 759px) { html[data-stort="ingen"] .mag-topp { padding-top: 0.4rem; } }
