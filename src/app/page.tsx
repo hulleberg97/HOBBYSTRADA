@@ -42,7 +42,7 @@ export default async function Home() {
           <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
-              <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[5rem]">
+              <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[4.2rem]">
                 Kjøp og selg
                 <br />
                 fotballkort
