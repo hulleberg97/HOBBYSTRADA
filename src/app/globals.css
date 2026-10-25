@@ -537,11 +537,11 @@ html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 /* Kortraden: kortene tegnes i full størrelse og krympes til 62 %, så teksten på dem ser riktig ut */
 .mag ul li { width: 124px; height: 198px; } .mag ul li > a { width: 200px; transform: scale(0.62); transform-origin: top left; }
 .mag-rull-ramme { padding-bottom: 58px; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
-.mag-rull { animation: mag-rull 60s linear infinite; }
+.mag-rull { animation: mag-rull 30s linear infinite; }
 .mag-rull:hover, .mag-rull:focus-within { animation-play-state: paused; }
 @keyframes mag-rull { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-100% / 3), 0, 0); } }
 @media (prefers-reduced-motion: reduce) { .mag-rull { animation: none; } }
-@media (max-width: 1023px) { .mag ul li { width: 93px; height: 149px; } .mag ul li > a { width: 150px; } .mag-rull-ramme { padding-bottom: 44px; } .mag-rull { animation-duration: 45s; } }
+@media (max-width: 1023px) { .mag ul li { width: 93px; height: 149px; } .mag ul li > a { width: 150px; } .mag-rull-ramme { padding-bottom: 44px; } .mag-rull { animation-duration: 24s; } }
 /* Hånd: litt høyere vifte, så de ytterste kortene får plass når de roterer ut */
 html[data-vis="hand"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(420px, calc(100svh - 280px), 760px); }
 @media (max-width: 639px) { html[data-vis="hand"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: min(62svh, 520px); --w: 48%; } }
