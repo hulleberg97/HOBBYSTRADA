@@ -142,10 +142,10 @@ export default async function Home() {
           </div>
           {/* Kortraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
           <div className="mag-rull-ramme mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
-            <ul className="mag-rull flex w-max gap-3 pt-3 lg:gap-4" aria-label="Flere kort">
+            <ul className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>
                 fanList.slice(1).map((l) => (
-                  <li key={`${k}-${l.slug}`} className="shrink-0" aria-hidden={k > 0 ? true : undefined}>
+                  <li key={`${k}-${l.slug}`} className="mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
                     <Link href={`/products/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
                       <Slab l={l} />
                     </Link>

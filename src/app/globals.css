@@ -540,7 +540,7 @@ html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 .mag ul li .fan-slab { box-shadow: 0 10px 24px -12px rgb(11 20 38 / 0.5) !important; }
 /* Kortraden: kortene tegnes i full størrelse og krympes til 62 %, så teksten på dem ser riktig ut */
 .mag ul li { width: 160px; height: 256px; } .mag ul li > a { width: 200px; transform: scale(0.8); transform-origin: top left; }
-.mag-rull-ramme { padding-bottom: 72px; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.mag-rull-ramme { padding-bottom: 72px; mask-image: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent); }
 /* PC: kortene i raden vokser med skjermhøyden. Lave laptopskjermer får mindre overskrift og scene, så raden får plass. */
 @media (min-width: 1024px) and (max-height: 759px) { .mag ul li { width: 176px; height: 282px; } .mag ul li > a { transform: scale(0.88); } .mag-rull-ramme { padding-bottom: 56px; } .mag { --scene: clamp(200px, 100svh - 480px, 560px); } .mag-tittel { font-size: 3.6rem; } .mag-topp { padding-top: 1rem; } }
 @media (min-width: 1024px) and (min-height: 760px) { .mag ul li { width: 190px; height: 304px; } .mag ul li > a { transform: scale(0.95); } .mag-rull-ramme { padding-bottom: 80px; } }
