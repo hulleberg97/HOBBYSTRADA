@@ -96,7 +96,7 @@ export default async function Home() {
                 <p className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
                   Finn ditt <span className="mt-strek">neste</span> kort
                 </p>
-                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Norges markedsplass for kjøp og salg av fotballkort.</p>
+                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Markedsplass for kjøp og salg av fotballkort.</p>
               </div>
               <div className="mag-knapper mt-7 flex flex-wrap gap-2.5">
                 <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
