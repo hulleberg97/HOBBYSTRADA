@@ -27,6 +27,9 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
 
 let cardW = 200; // kortets bredde i px, målt når siden lastes
 let halfW = 300; // halve bredden av vifta i px
+/** TEST ?vis=hand|pakke: «hand» = kortene holdes som i en hånd, «pakke» = kortene glir ut av en pakke ved lasting. */
+type Vis = "vifte" | "hand" | "pakke";
+let vis: Vis = "vifte";
 
 /**
  * Plassering for et kort som står p plasser fra midten (kan være desimaltall). Kortene står på en rad i ekte 3D:
@@ -56,6 +59,26 @@ function place(p: number) {
   };
 }
 
+/** Hånd: kortene roterer ut fra et punkt langt under vifta, som når du holder kort i hånden. */
+function placeHand(p: number) {
+  const narrow = halfW < 300;
+  const deg = p * (narrow ? 13 : 10);
+  const rad = (deg * Math.PI) / 180;
+  const R = narrow ? Math.max(300, halfW * 1.4) : Math.max(520, halfW * 1.15); // avstand til dreiepunktet
+  const x = R * Math.sin(rad);
+  const y = R * (1 - Math.cos(rad));
+  const a = Math.abs(p);
+  const vis = narrow ? 2.6 : 3.6; // så mange kort til hver side synes
+  return {
+    transform: `translate(-50%, 0) translate3d(${x.toFixed(1)}px, ${(y - 10).toFixed(1)}px, ${(-a * 24).toFixed(1)}px) rotate(${deg.toFixed(2)}deg)`,
+    opacity: Math.min(1, Math.max(0, (vis - a) / 0.8)),
+    dim: 0,
+    gloss: Math.max(0, 1 - a / 0.55),
+    glossX: -p * 170,
+  };
+}
+
+
 /** Avstand fra midten for kort i, gitt hvor langt vifta har glidd. */
 function offsetOf(i: number, shift: number, n: number) {
   let p = (((i - shift) % n) + n) % n;
@@ -65,7 +88,7 @@ function offsetOf(i: number, shift: number, n: number) {
 
 /** Kortet i plastholder med HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter. */
 /** «eager»: kortene som synes når siden åpnes lastes først, resten etterpå. */
-function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
+export function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
   return (
     <div
       data-top={l.frontpage ? "true" : undefined}
@@ -117,10 +140,22 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
   const glosses = useRef<(HTMLDivElement | null)[]>([]);
   const box = useRef<HTMLDivElement>(null);
   const [center, setCenter] = useState(0);
+  const packRef = useRef<HTMLDivElement>(null); // pakken som kortene glir ut av (?vis=pakke)
 
   useEffect(() => {
     const el = box.current;
     if (!el || n < 2) return;
+    vis = (document.documentElement.dataset.vis as Vis) || "vifte";
+    if (packRef.current) packRef.current.hidden = vis !== "pakke";
+    const t0 = performance.now();
+    // Hånd: vifta vipper svakt etter musepekeren
+    let tiltX = 0;
+    const onMove = (e: PointerEvent) => {
+      if (vis !== "hand" || e.pointerType !== "mouse") return;
+      const r = el.getBoundingClientRect();
+      tiltX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    };
+    window.addEventListener("pointermove", onMove);
     const measure = () => {
       if (!el.offsetWidth) return; // skjult vifte (bredde 0) skal ikke overstyre målene
       cardW = refs.current[0]?.offsetWidth || cardW;
@@ -168,13 +203,30 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
       last = now;
       if (!visible || document.hidden) return;
       speed += ((onCard || focused ? 0 : base) - speed) * (1 - Math.exp(-dt * 3));
-      shift = (shift + speed * dt) % n;
+      if (vis === "hand") {
+        // Hånd: ingen gliding, bare et svakt sving, og vipp etter musa
+        shift = Math.sin((now - t0) / 2600) * 0.35;
+        const stage = el.querySelector<HTMLElement>("[data-stage]");
+        if (stage) stage.style.transform = `rotateY(${(tiltX * 7).toFixed(2)}deg) rotateX(${(-2).toFixed(1)}deg)`;
+      } else shift = (shift + speed * dt) % n;
+      const packK = vis === "pakke" ? Math.min(1, Math.max(0, (now - t0 - 450) / 1100)) : 1;
+      if (vis === "pakke" && packK >= 1 && packRef.current && !packRef.current.hidden) packRef.current.hidden = true;
       let nearest = 0;
       let best = 9;
       refs.current.forEach((node, i) => {
         if (!node) return;
         const p = offsetOf(i, shift, n);
-        const s = place(p);
+        let s = vis === "hand" ? placeHand(p) : place(p);
+        if (packK < 1) {
+          // Pakke: kortet står i stabelen (midten, lite) og glir mot målet
+          const e = 1 - Math.pow(1 - packK, 3);
+          const m = s.transform.match(/translate3d\(([-\d.]+)(%|px), ([-\d.]+)px, ([-\d.]+)px\) rotate(?:Y)?\(([-\d.]+)deg\)(?: scale\(([-\d.]+)\))?/);
+          if (m) {
+            const [, tx, unit, ty, tz, rot, sc] = m;
+            const S = sc ? +sc : 1;
+            s = { ...s, transform: `translate(-50%, 0) translate3d(${(+tx * e).toFixed(2)}${unit}, ${(+ty * e + 40 * (1 - e)).toFixed(1)}px, ${(+tz * e).toFixed(1)}px) ${vis === "hand" ? "rotate" : "rotateY"}(${(+rot * e).toFixed(2)}deg) scale(${(S * e + 0.55 * (1 - e)).toFixed(3)})`, opacity: packK < 0.04 ? 0 : s.opacity };
+          }
+        }
         // Bare transform og opacity endres i hvert bilde. Det tar skjermkortet seg av uten å tegne kortene på nytt.
         set(i, node, "transform", s.transform);
         set(i, node, "opacity", s.opacity.toFixed(3));
@@ -195,6 +247,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
     raf = requestAnimationFrame(frame);
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", measure);
       io.disconnect();
       el.removeEventListener("pointerover", over);
@@ -213,7 +266,15 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         className="pointer-events-none absolute bottom-[9%] left-1/2 h-[60px] w-[70%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(214,178,95,0.45),rgba(214,178,95,0.12)_60%,transparent)]"
       />
       {/* Scenen kortene står i. Med ekte 3D regner nettleseren ut hvilke kort som ligger foran. */}
-      <div className="absolute inset-0 [perspective:1100px] [transform-style:preserve-3d]">
+      <div ref={packRef} hidden aria-hidden="true" className="pakke pointer-events-none absolute left-1/2 top-[8%] z-[150] w-[min(46%,230px)]">
+          <div className="aspect-[3/4] rounded-[10px] bg-[linear-gradient(160deg,#1a2d52,#0b1426)] p-[8%] shadow-[0_30px_60px_-20px_rgba(2,6,23,0.7)] ring-1 ring-inset ring-[#cfa653]/70">
+            <div className="flex h-full flex-col items-center justify-center gap-2 rounded-[6px] border border-[#cfa653]/50">
+              <Mark className="h-[28%] w-auto" cards="#f7f3ea" bar="#cfa653" />
+              <span className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f7f3ea]">Hobbystrada</span>
+            </div>
+          </div>
+        </div>
+      <div data-stage className="absolute inset-0 [perspective:1100px] [transform-style:preserve-3d]">
         {cards.map((l, i) => {
           const s = place(offsetOf(i, 0, n));
           return (

@@ -12,7 +12,8 @@ import {
   ShirtIcon,
   StarIcon,
 } from "lucide-react";
-import { HeroFan } from "@/components/HeroFan";
+import { HeroFan, Slab } from "@/components/HeroFan";
+import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { fanCards } from "@/lib/fan";
 import { ListingGrid } from "@/components/ListingCard";
@@ -35,7 +36,55 @@ export default async function Home() {
   const fanList = fanCards(fanPinned, fanPaid, fanFill);
   return (
     <div className="bg-background">
-      <section className="bg-background">
+      {/* TEST ?vis=magasin: magasinforside – stor overskrift til venstre, ett stort kort ut av høyre kant, de andre i en rad under */}
+      {fanList[0] && (
+        <section className="vis-magasin mag bg-background">
+          <div className="mx-auto grid max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-8 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-14">
+            <div className="relative z-10">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
+              <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[5rem]">
+                Kjøp og selg
+                <br />
+                fotballkort
+              </p>
+              <div className="mt-7 flex flex-wrap gap-2.5">
+                <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
+                  Se alle annonser
+                  <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link className="inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-slate-300 transition hover:ring-slate-500" href="/sell">
+                  Legg ut kort
+                </Link>
+              </div>
+            </div>
+            <div className="relative h-[300px] sm:h-[400px] lg:h-[560px]">
+              <Link href={`/products/${fanList[0].slug}`} className="mag-stort absolute -right-[18%] top-0 block w-[62%] rotate-[8deg] sm:-right-[12%] sm:w-[52%] lg:-right-[16%] lg:w-[58%]">
+                <Slab l={fanList[0]} eager />
+              </Link>
+              <Link href={`/products/${fanList[0].slug}`} className="fan-pill absolute bottom-2 left-0 flex items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da] lg:bottom-10">
+                <span className="min-w-0">
+                  <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{fanList[0].player}</span>
+                  <span className="block truncate text-[11px] text-[#6b6455] sm:text-xs">{fanList[0].set}</span>
+                </span>
+                <span className="shrink-0 font-heading text-sm font-bold text-[#8a6a24] sm:text-base">{formatPrice(fanList[0].price)}</span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
+                  <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
+          </div>
+          <ul className="mx-auto flex max-w-[1320px] gap-3 overflow-x-auto px-6 pb-8 pt-4 [scrollbar-width:none] sm:px-8 lg:gap-4 lg:pb-12">
+            {fanList.slice(1, 8).map((l) => (
+              <li key={l.slug} className="w-[150px] shrink-0 lg:w-[200px]">
+                <Link href={`/products/${l.slug}`} className="block transition hover:-translate-y-1">
+                  <Slab l={l} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      <section className="vis-vifte bg-background">
         <div className="mx-auto max-w-[1320px] sm:px-6 sm:pt-6 lg:px-8">
           <div
             id="hero"

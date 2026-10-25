@@ -23,6 +23,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
+        {/* TEST: ?vis=hand|pakke|magasin prøver nye oppsett av toppen (?vis=av tilbake) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vis");if(v)sessionStorage.setItem("vis",v);var s=sessionStorage.getItem("vis");if(s&&s!=="av")document.documentElement.dataset.vis=s}catch(e){}})()`,
+          }}
+        />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
         <script
           dangerouslySetInnerHTML={{
