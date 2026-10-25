@@ -38,8 +38,8 @@ export default async function Home() {
     <div className="bg-background">
       {/* TEST ?vis=magasin: magasinforside – stor overskrift til venstre, ett stort kort ut av høyre kant, de andre i en rad under */}
       {fanList[0] && (
-        <section className="vis-magasin mag bg-background">
-          <div className="mx-auto grid max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-8 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-14">
+        <section className="vis-magasin mag flex flex-col justify-between bg-background">
+          <div className="mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
               <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[5rem]">
@@ -52,13 +52,13 @@ export default async function Home() {
                   Se alle annonser
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <Link className="inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-slate-300 transition hover:ring-slate-500" href="/sell">
+                <Link className="inline-flex h-12 items-center rounded-full px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-[#0b1426]/30 transition hover:bg-[#0b1426]/5" href="/sell">
                   Legg ut kort
                 </Link>
               </div>
             </div>
-            <div className="relative h-[300px] sm:h-[400px] lg:h-[560px]">
-              <Link href={`/products/${fanList[0].slug}`} className="mag-stort absolute -right-[18%] top-0 block w-[62%] rotate-[8deg] sm:-right-[12%] sm:w-[52%] lg:-right-[16%] lg:w-[58%]">
+            <div className="mag-scene relative">
+              <Link href={`/products/${fanList[0].slug}`} className="mag-stort absolute -right-[14%] top-[4%] block rotate-[8deg] sm:-right-[10%] lg:-right-[6%]">
                 <Slab l={fanList[0]} eager />
               </Link>
               <Link href={`/products/${fanList[0].slug}`} className="fan-pill absolute bottom-2 left-0 flex items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da] lg:bottom-10">
@@ -73,15 +73,20 @@ export default async function Home() {
               </Link>
             </div>
           </div>
-          <ul className="mx-auto flex max-w-[1320px] gap-3 overflow-x-auto px-6 pb-8 pt-4 [scrollbar-width:none] sm:px-8 lg:gap-4 lg:pb-12">
-            {fanList.slice(1, 8).map((l) => (
-              <li key={l.slug} className="w-[150px] shrink-0 lg:w-[200px]">
-                <Link href={`/products/${l.slug}`} className="block transition hover:-translate-y-1">
-                  <Slab l={l} />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {/* Kortraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
+          <div className="mag-rull-ramme mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
+            <ul className="mag-rull flex w-max gap-3 pt-3 lg:gap-4" aria-label="Flere kort">
+              {[0, 1, 2].flatMap((k) =>
+                fanList.slice(1).map((l) => (
+                  <li key={`${k}-${l.slug}`} className="shrink-0" aria-hidden={k > 0 ? true : undefined}>
+                    <Link href={`/products/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
+                      <Slab l={l} />
+                    </Link>
+                  </li>
+                )),
+              )}
+            </ul>
+          </div>
         </section>
       )}
       <section className="vis-vifte bg-background">
