@@ -517,7 +517,7 @@ html[data-linje="s6"][data-ot="u1"] .tittel-under { -webkit-text-fill-color: #a8
 
 /* TEST ?vis=…: nye oppsett av toppen */
 .vis-magasin { display: none; }
-html[data-vis="magasin"] .vis-magasin { display: block; }
+html[data-vis="magasin"] .vis-magasin { display: flex; }
 html[data-vis="magasin"] .vis-vifte { display: none; }
 html[data-vis="magasin"] .mag { overflow: hidden; background:
   radial-gradient(28% 38% at 14% 28%, rgb(236 214 232 / 0.9), transparent 72%),
@@ -530,9 +530,9 @@ html[data-vis="magasin"] .mag { overflow: hidden; background:
 /* Magasin: hele toppen (tekst, stort kort og kortraden) tilpasser seg skjermhøyden, så ingenting havner under kanten */
 html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 .mag-scene { height: clamp(170px, calc(100svh - 580px), 300px); }
-.mag-stort { width: min(62%, calc(clamp(170px, 100svh - 580px, 300px) * 0.6)); }
-@media (min-width: 640px) { .mag-scene { height: clamp(240px, calc(100svh - 560px), 400px); } .mag-stort { width: min(52%, calc(clamp(240px, 100svh - 560px, 400px) * 0.6)); } }
-@media (min-width: 1024px) { .mag-scene { height: clamp(300px, calc(100svh - 380px), 560px); } .mag-stort { width: min(58%, calc(clamp(300px, 100svh - 380px, 560px) * 0.62)); } }
+.mag-stort { width: min(62%, calc(clamp(170px, 100svh - 580px, 300px) * 0.6)); } .mag-tre > a { width: min(46%, calc(clamp(170px, 100svh - 580px, 300px) * 0.5)); }
+@media (min-width: 640px) { .mag-scene { height: clamp(240px, calc(100svh - 560px), 400px); } .mag-stort { width: min(52%, calc(clamp(240px, 100svh - 560px, 400px) * 0.6)); } .mag-tre > a { width: min(40%, calc(clamp(240px, 100svh - 560px, 400px) * 0.55)); } }
+@media (min-width: 1024px) { .mag-scene { height: clamp(300px, calc(100svh - 380px), 560px); } .mag-stort { width: min(58%, calc(clamp(300px, 100svh - 380px, 560px) * 0.62)); } .mag-tre > a { width: min(40%, calc(clamp(300px, 100svh - 380px, 560px) * 0.58)); } }
 .mag ul li .fan-slab { box-shadow: 0 10px 24px -12px rgb(11 20 38 / 0.5) !important; }
 /* Kortraden: kortene tegnes i full størrelse og krympes til 62 %, så teksten på dem ser riktig ut */
 .mag ul li { width: 124px; height: 198px; } .mag ul li > a { width: 200px; transform: scale(0.62); transform-origin: top left; }
@@ -590,3 +590,19 @@ html[data-vis="hand"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(4
   html[data-vis="m3"] #hero .hero-buttons { margin-top: 0.9rem; }
   html[data-vis="m3"] #hero .hero-fan { height: clamp(300px, calc(100svh - 300px), 600px); --w: min(52%, calc((100svh - 300px) * 0.5 - 10px)); }
 }
+
+/* TEST ?stort=ingen|vifte|tre: hva som står til høyre for overskriften på magasinforsiden */
+html[data-stort="ingen"] .mag-scene { display: none; }
+html[data-stort="ingen"] .mag { justify-content: center; gap: 1rem; }
+html[data-stort="ingen"] .mag-topp { grid-template-columns: 1fr; justify-items: center; text-align: center; padding-top: 1rem; }
+html[data-stort="ingen"] .mag-knapper { justify-content: center; }
+html[data-stort="ingen"] .mag ul li { width: 156px; height: 250px; } html[data-stort="ingen"] .mag ul li > a { transform: scale(0.78); }
+html[data-stort="ingen"] .mag-rull-ramme { padding-bottom: 70px; }
+@media (max-width: 1023px) { html[data-stort="ingen"] .mag ul li { width: 142px; height: 228px; } html[data-stort="ingen"] .mag ul li > a { transform: scale(0.95); } html[data-stort="ingen"] .mag-rull-ramme { padding-bottom: 64px; } }
+html[data-stort="vifte"] .mag-stort, html[data-stort="vifte"] .mag-scene > .fan-pill, html[data-stort="tre"] .mag-stort { display: none; }
+html[data-stort="vifte"] .mag-vifte { display: block; }
+html[data-stort="vifte"] .mag-vifte .hero-fan { height: 100%; max-width: none; --w: 44%; }
+@media (min-width: 1024px) { html[data-stort="vifte"] .mag-vifte .hero-fan { --w: min(34%, calc(clamp(300px, 100svh - 380px, 560px) * 0.45)); } }
+html[data-stort="tre"] .mag-tre { display: block; }
+html[data-stort="tre"] .mag-tre > a { filter: drop-shadow(0 30px 40px rgb(11 20 38 / 0.3)); }
+html[data-stort="tre"] .mag-scene > .fan-pill { display: none; }

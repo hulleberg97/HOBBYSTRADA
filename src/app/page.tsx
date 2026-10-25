@@ -39,7 +39,7 @@ export default async function Home() {
       {/* TEST ?vis=magasin: magasinforside – stor overskrift til venstre, ett stort kort ut av høyre kant, de andre i en rad under */}
       {fanList[0] && (
         <section className="vis-magasin mag flex flex-col justify-between bg-background">
-          <div className="mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
+          <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
               <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[5rem]">
@@ -47,7 +47,7 @@ export default async function Home() {
                 <br />
                 fotballkort
               </p>
-              <div className="mt-7 flex flex-wrap gap-2.5">
+              <div className="mag-knapper mt-7 flex flex-wrap gap-2.5">
                 <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
                   Se alle annonser
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -71,6 +71,22 @@ export default async function Home() {
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
+              {/* TEST ?stort=vifte: den levende vifta i stedet for det store kortet */}
+              <div className="mag-vifte absolute inset-0 hidden">
+                <HeroFan cards={fanList} />
+              </div>
+              {/* TEST ?stort=tre: tre kort i vifte, stillestående */}
+              <div className="mag-tre absolute inset-0 hidden">
+                {fanList.slice(0, 3).map((l, i) => (
+                  <Link
+                    key={l.slug}
+                    href={`/products/${l.slug}`}
+                    className={`absolute block ${i === 0 ? "left-[4%] top-[10%] -rotate-[12deg]" : i === 1 ? "left-[30%] top-[2%] z-10" : "left-[56%] top-[10%] rotate-[12deg]"}`}
+                  >
+                    <Slab l={l} eager />
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
           {/* Kortraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}

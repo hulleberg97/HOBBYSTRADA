@@ -26,7 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* TEST: ?vis=hand|pakke|magasin prøver nye oppsett av toppen (?vis=av tilbake) */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vis");if(v)sessionStorage.setItem("vis",v);var s=sessionStorage.getItem("vis");if(s&&s!=="av")document.documentElement.dataset.vis=s}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vis");if(v)sessionStorage.setItem("vis",v);var s=sessionStorage.getItem("vis");if(s&&s!=="av")document.documentElement.dataset.vis=s;var k=new URLSearchParams(location.search).get("stort");if(k)sessionStorage.setItem("stort",k);var t=sessionStorage.getItem("stort");if(t&&t!=="av")document.documentElement.dataset.stort=t}catch(e){}})()`,
           }}
         />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
