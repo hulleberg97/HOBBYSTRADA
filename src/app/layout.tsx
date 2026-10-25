@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Schibsted_Grotesk, Sora } from "next/font/google";
+import { Bricolage_Grotesque, Fraunces, Instrument_Serif, Plus_Jakarta_Sans, Schibsted_Grotesk, Sora, Syne, Unbounded } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,7 +10,13 @@ const schibsted = Schibsted_Grotesk({ variable: "--nf-schibsted", subsets: ["lat
 const tJakarta = Plus_Jakarta_Sans({ variable: "--t-jakarta", subsets: ["latin"], weight: ["800"] });
 // Skriften i den store overskriften over vifta (Sora). Jakarta brukes av backupen ?ot=av.
 const tSora = Sora({ variable: "--t-sora", subsets: ["latin"], weight: ["800"] });
-const headlineFont = `${tJakarta.variable} ${tSora.variable}`;
+// TEST ?skrift=…: skrifttyper til overskriften
+const fBricolage = Bricolage_Grotesque({ variable: "--f-bricolage", subsets: ["latin"], weight: ["800"] });
+const fSerif = Instrument_Serif({ variable: "--f-serif", subsets: ["latin"], weight: ["400"], style: ["normal", "italic"] });
+const fUnbounded = Unbounded({ variable: "--f-unbounded", subsets: ["latin"], weight: ["700"] });
+const fSyne = Syne({ variable: "--f-syne", subsets: ["latin"], weight: ["800"] });
+const fFraunces = Fraunces({ variable: "--f-fraunces", subsets: ["latin"], weight: ["700"], style: ["normal", "italic"] });
+const headlineFont = `${tJakarta.variable} ${tSora.variable} ${fBricolage.variable} ${fSerif.variable} ${fUnbounded.variable} ${fSyne.variable} ${fFraunces.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://hobbystrada.vercel.app"),
@@ -26,7 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* TEST: ?vis=hand|pakke|magasin prøver nye oppsett av toppen (?vis=av tilbake) */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vis");if(v)sessionStorage.setItem("vis",v);var s=sessionStorage.getItem("vis");if(s&&s!=="av")document.documentElement.dataset.vis=s;var k=new URLSearchParams(location.search).get("stort");if(k)sessionStorage.setItem("stort",k);var t=sessionStorage.getItem("stort");if(t&&t!=="av")document.documentElement.dataset.stort=t;var q=new URLSearchParams(location.search).get("tittel2");if(q)sessionStorage.setItem("tittel2",q);var u=sessionStorage.getItem("tittel2");if(u&&u!=="av")document.documentElement.dataset.tittel2=u}catch(e){}})()`,
+            __html: `(function(){try{var v=new URLSearchParams(location.search).get("vis");if(v)sessionStorage.setItem("vis",v);var s=sessionStorage.getItem("vis");if(s&&s!=="av")document.documentElement.dataset.vis=s;var k=new URLSearchParams(location.search).get("stort");if(k)sessionStorage.setItem("stort",k);var t=sessionStorage.getItem("stort");if(t&&t!=="av")document.documentElement.dataset.stort=t;var q=new URLSearchParams(location.search).get("tittel2");if(q)sessionStorage.setItem("tittel2",q);var u=sessionStorage.getItem("tittel2");if(u&&u!=="av")document.documentElement.dataset.tittel2=u;var f=new URLSearchParams(location.search).get("skrift");if(f)sessionStorage.setItem("skrift",f);var g=sessionStorage.getItem("skrift");if(g&&g!=="av")document.documentElement.dataset.skrift=g}catch(e){}})()`,
           }}
         />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}
