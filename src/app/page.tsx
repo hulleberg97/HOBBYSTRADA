@@ -41,12 +41,39 @@ export default async function Home() {
         <section className="vis-magasin mag flex flex-col justify-between bg-background">
           <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
-              <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[4.2rem]">
-                Kjøp og selg
-                <br />
-                fotballkort
-              </p>
+              <div className="mt-std">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
+                <p className="mag-tittel mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[4.2rem]">
+                  Kjøp og selg
+                  <br />
+                  fotballkort
+                </p>
+              </div>
+              {/* TEST ?tittel2=a|b|c|d: nye overskrifter */}
+              <div className="mt-a hidden">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for fotballkort</p>
+                <p className="mt-3 font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
+                  Samlingen din
+                  <br />
+                  <span className="text-[#a8822f]">starter her.</span>
+                </p>
+              </div>
+              <div className="mt-b hidden">
+                <p className="font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">Fotballkort.</p>
+                <p className="mt-1 text-[1.3rem] font-medium leading-snug tracking-[-0.01em] text-[#6b655e] sm:text-[1.6rem] lg:text-[1.9rem]">Kjøpt og solgt av samlere.</p>
+              </div>
+              <div className="mt-c hidden">
+                <p className="mag-tittel text-[2.8rem] leading-[0.9] tracking-[-0.04em] sm:text-[4.2rem] lg:text-[5.2rem]">Fotballkort</p>
+                <p className="mt-hode mx-auto mt-3 flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a6a24] sm:text-xs lg:mt-4">
+                  <span>Kjøp</span><span aria-hidden="true">·</span><span>Selg</span><span aria-hidden="true">·</span><span>Bytt</span>
+                </p>
+              </div>
+              <div className="mt-d hidden">
+                <p className="font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
+                  Finn ditt <span className="mt-strek">neste</span> kort
+                </p>
+                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Annonser fra samlere. Logg inn med Vipps.</p>
+              </div>
               <div className="mag-knapper mt-7 flex flex-wrap gap-2.5">
                 <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
                   Se alle annonser
