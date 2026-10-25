@@ -542,9 +542,9 @@ html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 .mag ul li { width: 160px; height: 256px; } .mag ul li > a { width: 200px; transform: scale(0.8); transform-origin: top left; }
 .mag-rull-ramme { padding-bottom: 72px; mask-image: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent); }
 /* PC: kortene i raden vokser med skjermhøyden. Lave laptopskjermer får mindre overskrift og scene, så raden får plass. */
-@media (min-width: 1024px) and (max-height: 759px) { .mag ul li { width: 176px; height: 282px; } .mag ul li > a { transform: scale(0.88); } .mag-rull-ramme { padding-bottom: 56px; } .mag { --scene: clamp(200px, 100svh - 480px, 560px); } .mag-tittel { font-size: 3.6rem; } .mag-topp { padding-top: 1rem; } }
-@media (min-width: 1024px) and (min-height: 760px) { .mag ul li { width: 190px; height: 304px; } .mag ul li > a { transform: scale(0.95); } .mag-rull-ramme { padding-bottom: 80px; } }
-@media (min-width: 1024px) and (min-height: 900px) { .mag ul li { width: 230px; height: 368px; } .mag ul li > a { transform: scale(1.15); } .mag-rull-ramme { padding-bottom: 96px; } }
+@media (min-width: 1024px) and (max-height: 759px) { .mag ul li { width: 176px; height: 282px; } .mag ul li > a { transform: scale(0.88); } .mag-rull-ramme { padding-bottom: 56px; } .mag { --scene: clamp(185px, 100svh - 495px, 560px); } .mag-tittel { font-size: 3.6rem; } .mag-topp { padding-top: 1rem; } }
+@media (min-width: 1024px) { .mag ul li { width: 190px; height: 304px; } .mag ul li > a { transform: scale(0.95); } .mag-rull-ramme { padding-bottom: 92px; } }
+
 .mag-rull { animation: mag-rull 32s linear infinite; }
 .mag-rull:hover, .mag-rull:focus-within { animation-play-state: paused; }
 @keyframes mag-rull { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-100% / 3), 0, 0); } }
@@ -620,8 +620,6 @@ html[data-stort="tre"] .mag-scene > .fan-pill { display: none; }
   :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li { width: 190px; height: 304px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li > a { transform: scale(0.95); } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 60px; }
   :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull { animation-duration: 38s; }
 }
-@media (min-width: 1024px) and (min-height: 760px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li { width: 230px; height: 368px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li > a { transform: scale(1.15); } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 80px; } }
-@media (min-width: 1024px) and (min-height: 900px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li { width: 260px; height: 416px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li > a { transform: scale(1.3); } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 100px; } }
 @media (max-width: 1023px) {
   :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-stort, :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-scene > .fan-pill { display: none; }
   :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-tre { display: block; }
@@ -656,10 +654,7 @@ html[data-vis="magasin"] .mag-rull-ramme { margin-top: auto; }
 html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 50px; }
 @media (min-width: 1024px) { html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 92px; } }
 @media (min-width: 1024px) and (max-height: 759px) { html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 86px; } }
-@media (min-width: 1024px) and (min-height: 900px) { html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 110px; } }
-@media (min-width: 1024px) and (max-height: 759px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li { width: 176px; height: 282px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li > a { transform: scale(0.88); } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 86px; } }
-@media (min-width: 1024px) and (min-height: 760px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 110px; } }
-@media (min-width: 1024px) and (min-height: 900px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 125px; } }
+@media (min-width: 1024px) and (max-height: 759px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li { width: 190px; height: 304px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li > a { transform: scale(0.95); } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 72px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-topp { padding-top: 0.4rem; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-knapper { margin-top: 1.1rem; } }
 
 /* TEST ?stort=ren: som «rad» på PC, og på telefon bare overskrift og en stor kortrad */
 @media (max-width: 1023px) {
