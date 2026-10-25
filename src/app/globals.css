@@ -611,3 +611,19 @@ html[data-stort="vifte"] .mag-vifte .hero-fan { height: 100%; max-width: none; -
 html[data-stort="tre"] .mag-tre { display: block; }
 html[data-stort="tre"] .mag-tre > a { filter: drop-shadow(0 30px 40px rgb(11 20 38 / 0.3)); }
 html[data-stort="tre"] .mag-scene > .fan-pill { display: none; }
+/* TEST ?stort=rad: PC har bare overskrift og en stor kortrad, telefon beholder de tre kortene over */
+@media (min-width: 1024px) {
+  html[data-stort="rad"] .mag-scene { display: none; }
+  html[data-stort="rad"] .mag { justify-content: center; gap: 0.5rem; }
+  html[data-stort="rad"] .mag-topp { grid-template-columns: 1fr; justify-items: center; text-align: center; padding-top: 1rem; }
+  html[data-stort="rad"] .mag-knapper { justify-content: center; }
+  html[data-stort="rad"] .mag ul li { width: 190px; height: 304px; } html[data-stort="rad"] .mag ul li > a { transform: scale(0.95); } html[data-stort="rad"] .mag-rull-ramme { padding-bottom: 60px; }
+  html[data-stort="rad"] .mag-rull { animation-duration: 28s; }
+}
+@media (min-width: 1024px) and (min-height: 760px) { html[data-stort="rad"] .mag ul li { width: 230px; height: 368px; } html[data-stort="rad"] .mag ul li > a { transform: scale(1.15); } html[data-stort="rad"] .mag-rull-ramme { padding-bottom: 80px; } }
+@media (min-width: 1024px) and (min-height: 900px) { html[data-stort="rad"] .mag ul li { width: 260px; height: 416px; } html[data-stort="rad"] .mag ul li > a { transform: scale(1.3); } html[data-stort="rad"] .mag-rull-ramme { padding-bottom: 100px; } }
+@media (max-width: 1023px) {
+  html[data-stort="rad"] .mag-stort, html[data-stort="rad"] .mag-scene > .fan-pill { display: none; }
+  html[data-stort="rad"] .mag-tre { display: block; }
+  html[data-stort="rad"] .mag-tre > a { filter: drop-shadow(0 30px 40px rgb(11 20 38 / 0.3)); }
+}
