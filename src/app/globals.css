@@ -534,3 +534,45 @@ html[data-vis="hand"] .hero-bg[data-oppsett="vifte"] .hero-fan { height: clamp(4
 /* Pakke: pakken åpner seg og glir opp mens kortene kommer ut */
 .pakke { transform: translate(-50%, 0); animation: pakke-ut 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.45s both; }
 @keyframes pakke-ut { 0% { transform: translate(-50%, 0) scale(1); opacity: 1; } 40% { transform: translate(-50%, -8%) scale(1.04); opacity: 1; } 100% { transform: translate(-50%, -60%) scale(0.7); opacity: 0; } }
+
+/* TEST ?vis=m1|m2|m3: magasinforside med levende vifte. Alt får plass på skjermen uten å scrolle, på PC og telefon. */
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; text-align: left; margin: 0; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-title, :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-badge { display: none; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-buttons { display: flex; justify-content: flex-start; margin-top: 1.5rem; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-sub.hero-sub { display: flex; flex-direction: column; align-items: flex-start; margin: 0; max-width: none; text-align: left; line-height: 0.98; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-accent { display: block; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-sub > span { justify-content: flex-start; text-align: left; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero { min-height: calc(100svh - 72px); }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .tittel-under { order: -1; margin: 0 0 0.9rem; }
+:is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-grid > :not(.hero-text) { margin-top: 0; }
+@media (min-width: 1024px) {
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-grid { grid-template-columns: 0.8fr 1.2fr; align-items: center; gap: 1.5rem; padding: 1rem 1.5rem 0.5rem 3.5rem; }
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-sub.hero-sub { font-size: clamp(2.6rem, 3.9vw, 3.8rem); }
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-fan { margin-top: 0; height: clamp(380px, calc(100svh - 300px), 620px); --w: min(30%, calc((100svh - 300px) * 0.4)); }
+  html[data-vis="m1"] #hero .hero-fan { mask-image: linear-gradient(90deg, #000 80%, transparent 100%); }
+  html[data-vis="m2"] #hero .hero-fan { mask-image: linear-gradient(270deg, #000 80%, transparent 100%); }
+  /* m2: vifta til venstre, teksten til høyre */
+  html[data-vis="m2"] #hero .hero-grid { grid-template-columns: 1.2fr 0.8fr; padding: 1rem 3.5rem 0.5rem 1.5rem; }
+  html[data-vis="m2"] #hero .hero-text { order: 2; }
+  /* m3: smal tekstspalte oppe til venstre, vifta i hele bredden under */
+  html[data-vis="m3"] #hero .hero-grid { grid-template-columns: 1fr; gap: 0; padding: 1rem 2rem 0.5rem 3.5rem; }
+  html[data-vis="m3"] #hero .hero-text { position: relative; z-index: 2; max-width: 520px; }
+  html[data-vis="m3"] #hero .hero-sub.hero-sub { font-size: clamp(2.2rem, 3vw, 3rem); }
+  html[data-vis="m3"] #hero .hero-fan { margin-top: -5rem; height: clamp(360px, calc(100svh - 290px), 680px); --w: min(22%, calc((100svh - 330px) * 0.5)); }
+}
+@media (max-width: 1023px) {
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-grid { padding: 0.5rem 1.25rem 0.25rem; gap: 0; }
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-sub.hero-sub { font-size: 2.1rem; }
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-buttons { margin-top: 1.1rem; }
+  :is(html[data-vis="m1"], html[data-vis="m2"], html[data-vis="m3"]) #hero .hero-fan { margin-top: 0.25rem; height: clamp(280px, calc(100svh - 330px), 560px); --w: min(48%, calc((100svh - 330px) * 0.5 - 10px)); }
+  /* m2: midtstilt tekst, knappene nederst under vifta */
+  html[data-vis="m2"] #hero .hero-text { display: contents; }
+  html[data-vis="m2"] #hero .hero-sub.hero-sub { align-items: center; text-align: center; }
+  html[data-vis="m2"] #hero .hero-sub > span { justify-content: center; text-align: center; }
+  html[data-vis="m2"] #hero .hero-buttons { order: 3; justify-content: center; margin: 0 0 0.5rem; }
+  html[data-vis="m2"] #hero .hero-fan { height: clamp(280px, calc(100svh - 350px), 560px); }
+  /* m3: mindre overskrift og større vifte */
+  html[data-vis="m3"] #hero .hero-sub.hero-sub { font-size: 1.7rem; }
+  html[data-vis="m3"] #hero .hero-buttons { margin-top: 0.9rem; }
+  html[data-vis="m3"] #hero .hero-fan { height: clamp(300px, calc(100svh - 300px), 600px); --w: min(52%, calc((100svh - 300px) * 0.5 - 10px)); }
+}
