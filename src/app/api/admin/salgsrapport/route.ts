@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   const lines = [
     ["Nr", "Dato", "Kjøper", "E-post", "Ytelse", "Annonse", "Beløp (kr)", "Betalingsmåte", "Kvittering"].map(cell).join(";"),
     ...rows.map((r) => [r.no, invoiceDate(r.paidAt), r.buyerName, r.buyerEmail, `Annonseløft: ${r.plan} (${r.days} dager)`, r.listingTitle, r.amount.toFixed(2).replace(".", ","), "Vipps", `${site}/kvittering/${r.id}`].map(cell).join(";")),
-    ["", "", "", "", "", "Sum", rows.reduce((s, r) => s + r.amount, 0).toFixed(2).replace(".", ","), "", ""].map(cell).join(";"),
+    ["", "", "", "", "", "Brutto omsetning (bokføres kredit salgskonto)", rows.reduce((s, r) => s + r.amount, 0).toFixed(2).replace(".", ","), "", ""].map(cell).join(";"),
   ];
   const name = `salgsrapport-hobbystrada${from ? `-${from}` : ""}${p.get("til") ? `-${p.get("til")}` : ""}.csv`;
   return new Response("﻿" + lines.join("\r\n"), { headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": `attachment; filename="${name}"` } });

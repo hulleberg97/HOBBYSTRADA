@@ -19,9 +19,9 @@ import { FanSlotSelect } from "@/components/FanSlotSelect";
 export const metadata: Metadata = { title: "Administrasjon", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
-/** Dato 90 dager tilbake, som ÅÅÅÅ-MM-DD. Egen funksjon, så Date.now() ikke kalles under rendering. */
-function since90() {
-  return new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
+/** Dato n dager tilbake, som ÅÅÅÅ-MM-DD. Egen funksjon, så Date.now() ikke kalles under rendering. */
+function since90(days = 90) {
+  return new Date(Date.now() - days * 864e5).toISOString().slice(0, 10);
 }
 const date = (d: string) => new Date(d).toLocaleString("nb-NO", { dateStyle: "medium", timeStyle: "short" });
 
@@ -242,7 +242,7 @@ export default async function AdminPage() {
         <section>
           <h2 className={h2}>Salg siste 90 dager ({sales.length})</h2>
           <p className="mt-1 text-sm text-slate-600">Hvert betalt løft får et fortløpende salgsdokumentnummer. Rapporten under er til regnskapet, og hver rad har lenke til kvitteringen.</p>
-          <SalesReport />
+          <SalesReport now={since90(0)} />
           {sales.length > 0 && (
             <ul className="mt-4 divide-y divide-slate-100 rounded-3xl bg-white px-5 ring-1 ring-slate-200">
               {sales.map((r) => (
