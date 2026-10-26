@@ -7,6 +7,7 @@ import {
   FlagIcon,
   LayoutGridIcon,
   PenLineIcon,
+  PlusIcon,
   ScanSearchIcon,
   ShieldCheckIcon,
   ShirtIcon,
@@ -103,7 +104,8 @@ export default async function Home() {
                   Se alle annonser
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <Link className="inline-flex h-12 items-center rounded-full px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-[#0b1426]/30 transition hover:bg-[#0b1426]/5" href="/sell">
+                <Link className="knapp-selg inline-flex h-12 items-center gap-1.5 rounded-full px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-[#0b1426]/30 transition hover:bg-[#0b1426]/5" href="/sell">
+                  <PlusIcon className="knapp-pluss hidden h-4 w-4" aria-hidden="true" />
                   Legg ut kort
                 </Link>
               </div>
