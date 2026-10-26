@@ -7,10 +7,11 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   if (!hasVippsLogin()) return NextResponse.redirect(new URL("/auth/login", url.origin));
   const next = url.searchParams.get("next") ?? "/account";
+  const adult = url.searchParams.get("alder") === "1"; // egenerklæring om 18 år, kreves for nye kontoer
   const state = randomBytes(16).toString("hex");
   const nonce = randomBytes(16).toString("hex");
   const res = NextResponse.redirect(await authorizeUrl({ state, nonce, origin: url.origin }));
-  res.cookies.set("vipps_oidc", JSON.stringify({ state, nonce, next: next.startsWith("/") ? next : "/account" }), {
+  res.cookies.set("vipps_oidc", JSON.stringify({ state, nonce, adult, next: next.startsWith("/") ? next : "/account" }), {
     httpOnly: true,
     secure: url.protocol === "https:",
     sameSite: "lax",

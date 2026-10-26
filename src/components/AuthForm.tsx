@@ -28,10 +28,11 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
   const vippsError = {
     vipps: "Innloggingen med Vipps ble avbrutt eller feilet. Prøv igjen.",
     "vipps-koblet": "Denne Vipps-kontoen er allerede koblet til en annen bruker.",
-    alder: "Du må være minst 18 år for å ha konto på HOBBYSTRADA.",
+    alder: "Du må bekrefte at du er minst 18 år for å lage konto på HOBBYSTRADA.",
     utestengt: "Denne kontoen er stengt fordi den har brutt brukervilkårene. Mener du dette er feil, kan du klage via kontaktskjemaet.",
   }[params.get("feil") ?? ""];
   const [busy, setBusy] = useState(false);
+  const [adult, setAdult] = useState(false); // egenerklæring: minst 18 år
   const [error, setError] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [done, setDone] = useState("");
@@ -111,7 +112,17 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
               {vippsOnly && (
                 <div className="mb-8">
                   {vippsError && <p className="mb-3 text-sm text-destructive">{vippsError}</p>}
-                  <VippsButton href={`/auth/vipps?next=${encodeURIComponent(next)}`} label={mode === "login" ? "Logg inn med Vipps" : "Fortsett med Vipps"} />
+                  <label className="mb-4 flex cursor-pointer items-start gap-3 text-sm text-slate-700">
+                    <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
+                    <span>Jeg bekrefter at jeg er minst 18 år.</span>
+                  </label>
+                  {adult ? (
+                    <VippsButton href={`/auth/vipps?alder=1&next=${encodeURIComponent(next)}`} label={mode === "login" ? "Logg inn med Vipps" : "Fortsett med Vipps"} />
+                  ) : (
+                    <span aria-disabled="true" className="flex h-12 w-full cursor-not-allowed items-center justify-center rounded-full bg-[#ff5b24]/40 text-sm font-semibold text-white">
+                      {mode === "login" ? "Logg inn med Vipps" : "Fortsett med Vipps"}
+                    </span>
+                  )}
                   <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
                     Vi får navnet, e-posten og poststedet ditt fra Vipps. Ved å fortsette godtar du{" "}
                     <Link href="/terms" target="_blank" className="underline underline-offset-2">

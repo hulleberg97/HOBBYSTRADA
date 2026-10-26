@@ -15,7 +15,7 @@ async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
   // Stedet fra Vipps fylles inn hvis kontoen ikke har et fra før.
   const { data } = await db.auth.admin.getUserById(userId);
   const meta = data.user?.user_metadata ?? {};
-  const fresh: Record<string, unknown> = { ...meta, ...(v.city && !meta.location ? { location: v.city } : {}), ...(v.age !== null ? { adult: v.age >= 18 } : {}) };
+  const fresh: Record<string, unknown> = { ...meta, ...(v.city && !meta.location ? { location: v.city } : {}) };
   delete fresh.inactivity_warned_at; // innlogging nullstiller varselet om sletting av inaktiv konto
   if (JSON.stringify(fresh) !== JSON.stringify(meta)) await db.auth.admin.updateUserById(userId, { user_metadata: fresh });
 }
@@ -41,9 +41,6 @@ export async function GET(req: Request) {
     // Utestengte brukere kan ikke logge inn eller lage ny konto
     const { data: blocked } = await db.from("blocked_users").select("vipps_sub").eq("vipps_sub", v.sub).maybeSingle();
     if (blocked) return fail("utestengt");
-    // 18-årsgrense for konto. Fødselsdatoen brukes bare her og lagres ikke; vi husker bare at brukeren er over 18.
-    if (v.age !== null && v.age < 18) return fail("alder");
-    if (v.age === null) console.warn("Vipps sendte ikke fødselsdato – slå på birthDate for innloggingen i Vipps-portalen");
     const { data: linked } = await db.from("profiles").select("id").eq("vipps_sub", v.sub).maybeSingle();
     const current = await getUser();
 
@@ -61,11 +58,13 @@ export async function GET(req: Request) {
       if (!data.user?.email) return fail("vipps");
       email = data.user.email;
     } else {
+      // Ny konto: brukeren må ha bekreftet at de er over 18 (egenerklæring på innloggingssiden)
+      if (!saved.adult) return fail("alder");
       email = v.emailVerified && v.email ? v.email : `vipps-${v.sub}@brukere.hobbystrada.no`;
       await db.auth.admin.createUser({
         email,
         email_confirm: true,
-        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, ...(v.city ? { location: v.city } : {}) },
+        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, adult: true, adult_confirmed_at: new Date().toISOString(), ...(v.city ? { location: v.city } : {}) },
       }); // feiler stille hvis kontoen finnes fra før – da logger vi inn på den
     }
 

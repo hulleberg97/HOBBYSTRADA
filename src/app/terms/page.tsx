@@ -39,7 +39,8 @@ export default function TermsPage() {
             <>
               <p>Du må ha en konto for å legge ut annonser, sende meldinger og kjøpe annonseløft. Du logger inn med Vipps.</p>
               <p className="mt-3">
-                Du må være minst 18 år for å ha konto. Alderen sjekkes mot fødselsdatoen fra Vipps når du logger inn. Datoen lagres ikke.
+                Du må være minst 18 år for å ha konto. Når du lager konto, bekrefter du at du er minst 18 år. Gir du uriktige opplysninger om alder,
+                kan kontoen stenges.
               </p>
               <p className="mt-3">
                 HOBBYSTRADA er for private samlere. Selger du kort som ledd i næringsvirksomhet, kan du ikke bruke tjenesten.

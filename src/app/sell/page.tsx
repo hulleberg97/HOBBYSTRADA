@@ -42,7 +42,7 @@ export default async function SellPage() {
               Alle selgere bekrefter navnet sitt med Vipps. Det gjør markedet tryggere for kjøperne, og annonsene dine får merket «Verifisert med Vipps».
             </p>
             <div className="mt-6">
-              <VippsButton href="/auth/vipps?next=/sell" label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
+              <VippsButton href={user ? "/auth/vipps?next=/sell" : "/auth/login?next=/sell"} label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
               Vi får navnet, e-posten og poststedet ditt fra Vipps. Gateadressen lagres ikke.
