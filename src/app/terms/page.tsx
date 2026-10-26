@@ -118,8 +118,8 @@ export default function TermsPage() {
               </p>
               <p className="mt-3">
                 Fjernes en annonse med aktivt annonseløft fordi den bryter vilkårene, får du ikke refundert løftet ved alvorlige eller gjentatte brudd. Ellers
-                refunderer vi den delen av perioden som ikke er brukt. Bruker du angreretten innen 14 dager, får du uansett tilbake den delen av perioden
-                som ikke er brukt. Fjernet vi annonsen ved en feil, refunderer vi løftet eller gir deg et nytt.
+                refunderer vi den delen av perioden som ikke er brukt. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den
+                delen av perioden som ikke er brukt. Fjernet vi annonsen ved en feil, refunderer vi løftet eller gir deg et nytt.
               </p>
             </>
           ),

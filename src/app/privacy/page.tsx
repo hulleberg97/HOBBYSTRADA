@@ -93,9 +93,9 @@ export default function PrivacyPage() {
               <Purpose
                 title="Konto og innlogging"
                 what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps». Når du lager konto, bekrefter du at du er minst 18 år."
-                data="Navn, e-post, poststed, Vipps-ID og tidspunktet du bekreftet at du er over 18 år."
+                data="Navn, e-post, poststed, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter kontoen. Da slettes også koblingen til Vipps. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
+                kept="Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
               />
               <Purpose
                 title="Annonser"

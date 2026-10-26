@@ -27,6 +27,7 @@ export const BLOCK_RULES = [
   "Spam eller reklame",
   "Handel utenom det vilkårene tillater",
   "Flere kontoer eller misbruk av kontoen",
+  "Uriktige opplysninger om alder (under 18 år)",
 ] as const;
 
 /** Inaktive kontoer: varsel etter 23 måneder uten innlogging, sletting etter 24. */
