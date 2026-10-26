@@ -34,7 +34,8 @@ export default function PrivacyPage() {
           body: (
             <p>
               Her forklarer vi hvilke personopplysninger HOBBYSTRADA behandler når du bruker nettsiden, hvorfor vi gjør det, hvor lenge vi tar vare på dem og
-              hvilke rettigheter du har. Erklæringen gjelder hobbystrada.no. Ved vesentlige endringer gir vi beskjed på nettsiden.
+              hvilke rettigheter du har. Erklæringen gjelder hobbystrada.no. Ved vesentlige endringer gir vi beskjed på nettsiden og på e-post til deg som har
+              konto.
             </p>
           ),
         },
@@ -55,10 +56,12 @@ export default function PrivacyPage() {
               <p>Fra Vipps, når du logger inn:</p>
               <List
                 items={[
-                  "Navn, e-post og adresse. Vi lagrer navnet, e-posten og poststedet. Gateadressen lagres ikke, og vi henter ikke telefonnummeret ditt.",
+                  "Navn og e-post.",
+                  "Adresse. Vipps sender oss hele adressen din, men vi lagrer bare poststedet. Resten av adressen lagres ikke. Vi henter ikke telefonnummeret ditt.",
                   "En fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn.",
                 ]}
               />
+              <p className="mt-3">Fornavnet ditt fra Vipps brukes som brukernavnet ditt på nettsiden.</p>
               <p className="mt-4">Fra deg:</p>
               <List
                 items={[
@@ -69,12 +72,14 @@ export default function PrivacyPage() {
                   "Annonseløft: hvilken pakke du kjøper, for hvilken annonse. Selve betalingen skjer i Vipps, og vi ser aldri bank- eller kortopplysningene dine.",
                 ]}
               />
+              <p className="mt-4">Fra andre brukere:</p>
+              <List items={["Rapporter: hvis en annen bruker rapporterer en annonse du har lagt ut, behandler vi rapporten og det den sier om deg og annonsen."]} />
               <p className="mt-4">Automatisk, når du bruker nettsiden:</p>
               <List
                 items={[
                   "Informasjonskapsler som holder deg innlogget (se punkt 10).",
                   "IP-adresse når du sender kontaktskjema eller rapporterer en annonse, for å stoppe spam.",
-                  "Tekniske logger hos driftsleverandøren vår (IP-adresse, tidspunkt og hvilken side som ble åpnet), for å holde nettsiden trygg og i drift.",
+                  "Tekniske logger hos driftsleverandørene våre, Supabase og Vercel (IP-adresse, tidspunkt og hva som ble åpnet eller hentet), for å holde nettsiden trygg og i drift.",
                 ]}
               />
             </>
@@ -90,34 +95,41 @@ export default function PrivacyPage() {
                 what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps»."
                 data="Navn, e-post, poststed og Vipps-ID."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter kontoen. Da slettes også koblingen til Vipps."
+                kept="Til du sletter kontoen. Da slettes også koblingen til Vipps. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
               />
               <Purpose
                 title="Annonser"
-                what="Vise annonsene dine i markedet. Andre ser brukernavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
-                data="Annonseinnhold, bilder, brukernavn og sted."
+                what="Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
+                data="Annonseinnhold, bilder, fornavn og sted."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager."
+                kept="Til du sletter annonsen eller kontoen. Annonser du har merket som solgt, blir stående under Min side til du sletter dem. Avviste annonser slettes etter 30 dager."
               />
               <Purpose
                 title="Meldinger mellom brukere"
-                what="Formidle meldinger mellom kjøper og selger, og gi deg beskjed på e-post når noen skriver til deg. Den andre parten ser brukernavnet ditt, ikke e-postadressen."
-                data="Meldinger, bilder i chatten, brukernavn og e-post (bare til varslingen)."
-                basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="12 måneder etter siste melding i samtalen. Bilder slettes sammen med samtalen."
+                what="Formidle meldinger mellom kjøper og selger, og gi deg beskjed på e-post når noen skriver til deg. Den andre parten ser fornavnet ditt, ikke e-postadressen."
+                data="Meldinger, bilder i chatten, fornavn og e-post (bare til varslingen)."
+                basis="Avtale med deg (art. 6 nr. 1 b). Når vi beholder en samtale etter at du har slettet kontoen, er grunnlaget berettiget interesse (art. 6 nr. 1 f): den andre parten har behov for å beholde samtalen, for eksempel som dokumentasjon på hva dere avtalte."
+                kept="12 måneder etter siste melding i samtalen. Bilder slettes sammen med samtalen. Sletter du kontoen, blir meldingene og bildene du har sendt stående hos den du har skrevet med, merket «Slettet bruker» i stedet for navnet ditt, til samtalen slettes."
+              />
+              <Purpose
+                title="Gjennomgang av meldinger ved rapport eller mistanke om svindel"
+                what="Undersøke rapporter om annonser og mistanke om svindel. Vi leser ikke meldingene deres i andre tilfeller."
+                data="Meldinger og bilder i samtaler som gjelder den rapporterte annonsen eller den mistenkte svindelen."
+                basis="Berettiget interesse (art. 6 nr. 1 f): å beskytte brukerne mot svindel og holde markedet trygt."
+                kept="Vi lager ikke egne kopier. Meldingene slettes etter de vanlige reglene for meldinger."
               />
               <Purpose
                 title="Annonseløft og betaling"
                 what="Ta betalt for annonseløft gjennom Vipps og aktivere løftet."
-                data="Pakke, beløp, tidspunkt, annonsens tittel og e-postadressen din."
+                data="Pakke, beløp, tidspunkt, annonsens tittel, navnet ditt og e-postadressen din."
                 basis="Avtale med deg (art. 6 nr. 1 b) og bokføringsloven (art. 6 nr. 1 c)."
-                kept="5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Sletter du kontoen, fjernes e-postadressen fra betalingen."
+                kept="5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Sletter du kontoen, fjerner vi e-postadressen fra betalingen, men beholder navnet ditt og de andre opplysningene om kjøpet."
               />
               <Purpose
                 title="Lagrede søk"
                 what="Gi deg beskjed på e-post og under Varsler når et nytt kort passer et søk du har lagret."
                 data="Søket og e-postadressen din."
-                basis="Samtykke (art. 6 nr. 1 a). Du sletter søket når som helst på Min side."
+                basis="Avtale med deg (art. 6 nr. 1 b). Du kan slette søket når som helst på Min side."
                 kept="Til du sletter søket eller kontoen."
               />
               <Purpose
@@ -129,17 +141,24 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Henvendelser og rapporter"
-                what="Svare deg når du kontakter oss, og behandle rapporter om annonser."
-                data="Navn, e-post og innholdet i henvendelsen."
+                what="Svare deg når du kontakter oss, og behandle rapporter om annonser. Selgeren får ikke vite hvem som har rapportert annonsen, med mindre loven pålegger oss å oppgi det."
+                data="Navn, e-post og innholdet i henvendelsen eller rapporten. For rapporter også hvilken annonse det gjelder, og det rapporten sier om selgeren."
                 basis="Berettiget interesse (art. 6 nr. 1 f): å kunne svare deg og holde markedet trygt."
                 kept="Henvendelser: 12 måneder. Rapporter: 12 måneder etter at de er behandlet."
+              />
+              <Purpose
+                title="Utestengelse"
+                what="Stenge ute brukere som bryter brukervilkårene, og hindre at de lager ny konto. Når en bruker stenges ute, slettes kontoen og annonsene på samme måte som når du sletter kontoen selv. Avgjørelsen tas av et menneske. Du får beskjed på e-post med begrunnelse, og kan klage til post@hobbystrada.no."
+                data="Vipps-ID, tidspunktet for utestengelsen og hvilket vilkår som er brutt."
+                basis="Berettiget interesse (art. 6 nr. 1 f): å håndheve vilkårene og beskytte brukerne og markedet."
+                kept="Vipps-ID-en står på en sperreliste i to år fra utestengelsen og slettes deretter."
               />
               <Purpose
                 title="Sikkerhet, svindel og spam"
                 what="Stoppe svindel, spam og misbruk av nettsiden."
                 data="IP-adresse og tekniske logger."
                 basis="Berettiget interesse (art. 6 nr. 1 f): å beskytte brukerne og nettsiden."
-                kept="IP-adresse ved kontaktskjema og rapporter: ett døgn. Tekniske logger: kort tid hos driftsleverandøren."
+                kept="IP-adresse ved kontaktskjema og rapporter: ett døgn. Tekniske logger hos Supabase og Vercel: inntil 7 dager."
               />
               <p className="mt-4">
                 Der grunnlaget er berettiget interesse, har vi vurdert at interessen vår ikke veier tyngre enn personvernet ditt. Du kan be om å få se vurderingen.
@@ -154,11 +173,11 @@ export default function PrivacyPage() {
               <p>Vi selger aldri personopplysninger. Disse får opplysninger, og bare det de trenger:</p>
               <List
                 items={[
-                  "Andre brukere: brukernavn, sted og annonser, og det du skriver i chatten med dem.",
-                  "Vipps MobilePay AS: innlogging og betaling. Vipps er selv ansvarlig for opplysningene de behandler om deg.",
+                  "Andre brukere: fornavnet ditt, stedet og annonsene dine, og det du skriver og sender i chatten med dem.",
+                  "Vipps MobilePay AS (org.nr. 918 713 867): innlogging og betaling. Vipps er selv ansvarlig for opplysningene de behandler om deg.",
                   "Supabase: database og lagring av bilder (databehandler).",
                   "Vercel: drift av nettsiden (databehandler).",
-                  "E-postleverandøren vår: sending av e-post fra nettsiden (databehandler).",
+                  "Domene AS (org.nr. 880 478 982), en norsk leverandør: sending av e-post fra post@hobbystrada.no (databehandler).",
                   "Myndigheter, hvis loven krever det, for eksempel ved etterforskning av svindel.",
                 ]}
               />
@@ -168,11 +187,22 @@ export default function PrivacyPage() {
         {
           title: "6. Overføring ut av EU/EØS",
           body: (
-            <p>
-              Databasen ligger i EU (Stockholm), og serverne som behandler opplysningene dine ligger i EU (Frankfurt). Supabase og Vercel er amerikanske
-              selskaper. Hvis de får tilgang til opplysninger fra USA, skjer det med grunnlag i EUs standardavtaler (standard contractual clauses) eller
-              EU–US Data Privacy Framework.
-            </p>
+            <>
+              <p>
+                Opplysningene dine lagres og behandles hovedsakelig i EU. Databasen og bildene ligger i Stockholm (Supabase), og nettsiden driftes fra
+                Frankfurt (Vercel). E-post sendes via en norsk leverandør.
+              </p>
+              <p className="mt-3">
+                Supabase og Vercel er amerikanske selskaper og kan få tilgang til opplysninger fra USA, for eksempel ved feilsøking og brukerstøtte. Vercels
+                nettverk er globalt, så noe trafikk og logging kan skje utenfor EU. Slike overføringer har dette grunnlaget:
+              </p>
+              <List
+                items={[
+                  "Vercel er sertifisert under EU–US Data Privacy Framework, som EU-kommisjonen har godkjent som et tilstrekkelig beskyttelsesnivå. Sertifiseringen er offentlig på dataprivacyframework.gov.",
+                  "Supabase bruker EUs standardpersonvernbestemmelser (kommisjonsbeslutning 2021/914) i databehandleravtalen med oss. Avtalen finner du på supabase.com/legal/dpa, eller du kan få en kopi ved å skrive til oss.",
+                ]}
+              />
+            </>
           ),
         },
         {
@@ -180,7 +210,8 @@ export default function PrivacyPage() {
           body: (
             <p>
               Du kan se på annonsene uten å logge inn. For å legge ut kort, chatte eller kjøpe annonseløft må du logge inn med Vipps, fordi vi trenger å vite
-              hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene av nettsiden.
+              hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene av nettsiden. Du må være minst 18 år for å ha konto, eller
+              ha samtykke fra foresatte, se <Link href="/terms">brukervilkårene</Link>.
             </p>
           ),
         },
@@ -192,33 +223,43 @@ export default function PrivacyPage() {
                 items={[
                   "Innsyn: du kan få vite hvilke opplysninger vi har om deg, og få en kopi.",
                   "Retting: du kan be oss rette opplysninger som er feil.",
-                  "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, bildene, varslene og meldingene til deg. Betalinger beholder vi så lenge bokføringsloven krever.",
-                  "Dataportabilitet: du kan få opplysningene du har gitt oss i et maskinlesbart format.",
+                  "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger og bilder du har sendt i chatten, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes (se punkt 4). Betalinger beholder vi så lenge bokføringsloven krever. Er du stengt ute, beholder vi Vipps-ID-en på sperrelisten i to år.",
+                  "Begrensning: du kan be oss begrense bruken av opplysningene, for eksempel mens vi sjekker om de er riktige, eller mens vi vurderer en protest.",
+                  "Dataportabilitet: du kan få opplysningene du har gitt oss, i et maskinlesbart format.",
                   "Protestere: der grunnlaget er berettiget interesse, kan du protestere mot behandlingen.",
-                  "Trekke samtykke: lagrede søk sletter du på Min side.",
                   "Klage: du kan klage til Datatilsynet (datatilsynet.no).",
                 ]}
               />
               <p className="mt-3">
-                Skriv til <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> for å bruke rettighetene dine. Vi svarer senest innen én måned.
+                Skriv til <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> for å bruke rettighetene dine. Vi svarer uten ugrunnet opphold og senest innen
+                én måned. Er henvendelsen omfattende, kan vi forlenge fristen med inntil to måneder. Da får du beskjed innen én måned, med begrunnelse. Vi kan be
+                deg bekrefte hvem du er, for eksempel ved å logge inn.
               </p>
             </>
           ),
         },
         {
           title: "9. Automatiserte avgjørelser",
-          body: <p>Vi tar ingen avgjørelser om deg automatisk, og vi lager ikke profiler av deg. Annonser godkjennes av et menneske.</p>,
+          body: (
+            <p>
+              Vi tar ingen avgjørelser om deg automatisk, og vi lager ikke profiler av deg. Annonser godkjennes og brukere stenges ute bare etter vurdering av
+              et menneske.
+            </p>
+          ),
         },
         {
           title: "10. Informasjonskapsler og lagring i nettleseren",
           body: (
             <>
-              <p>Vi bruker bare det som er nødvendig for at nettsiden skal virke. Vi bruker ikke informasjonskapsler til reklame eller sporing.</p>
+              <p>
+                Vi bruker bare det som er nødvendig for at nettsiden skal virke, eller som du selv ber om. Vi bruker ikke informasjonskapsler til reklame,
+                analyse eller sporing.
+              </p>
               <List
                 items={[
-                  "Innlogging: holder deg innlogget til du logger ut.",
-                  "Vipps-innlogging: en kortvarig kapsel som sikrer innloggingen, og som slettes når du er logget inn.",
-                  "Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss.",
+                  "Innlogging (sb-…-auth-token): holder deg innlogget. Fornyes ved hvert besøk, slettes når du logger ut, og senest 90 dager etter siste besøk.",
+                  "Vipps-innlogging (vipps_oidc): en kortvarig kapsel som sikrer innloggingen. Slettes når du er logget inn, og senest etter 10 minutter.",
+                  "Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss. De ligger der til du fjerner dem eller tømmer nettleseren.",
                 ]}
               />
             </>
@@ -228,8 +269,9 @@ export default function PrivacyPage() {
           title: "11. Sikkerhet",
           body: (
             <p>
-              All trafikk er kryptert. Bare de som drifter nettsiden har tilgang til opplysningene, og bilder i chatten vises bare for de to i samtalen.
-              Leverandørene våre har databehandleravtaler med oss og behandler bare opplysningene på våre vegne.
+              All trafikk er kryptert. Bare driftsansvarlig hos HOBBYSTRADA har tilgang til opplysningene. Meldinger leses bare ved rapport om en annonse eller
+              mistanke om svindel (se punkt 4). Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via lenker som slutter å virke etter
+              ett døgn. Leverandørene våre har databehandleravtaler med oss og behandler bare opplysningene på våre vegne.
             </p>
           ),
         },

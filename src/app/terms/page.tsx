@@ -47,8 +47,9 @@ export default function TermsPage() {
           title: "Fjerning av annonser",
           body: (
             <p>
-              Vi kan fjerne annonser og stenge kontoer som bryter vilkårene, uten forvarsel. Annonseløft refunderes ikke for annonser som fjernes for
-              regelbrudd.
+              Vi kan fjerne annonser og stenge kontoer som bryter vilkårene, uten forvarsel. Stenges kontoen din, slettes den sammen med annonsene, og
+              du får en e-post med begrunnelse. Du kan ikke lage ny konto. Mener du avgjørelsen er feil, kan du klage til post@hobbystrada.no, så svarer vi
+              innen én måned. Annonseløft refunderes ikke for annonser som fjernes for regelbrudd.
             </p>
           ),
         },

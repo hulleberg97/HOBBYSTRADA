@@ -15,7 +15,9 @@ async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
   // Stedet fra Vipps fylles inn hvis kontoen ikke har et fra før.
   const { data } = await db.auth.admin.getUserById(userId);
   const meta = data.user?.user_metadata ?? {};
-  if (v.city && !meta.location) await db.auth.admin.updateUserById(userId, { user_metadata: { ...meta, location: v.city } });
+  const fresh: Record<string, unknown> = { ...meta, ...(v.city && !meta.location ? { location: v.city } : {}) };
+  delete fresh.inactivity_warned_at; // innlogging nullstiller varselet om sletting av inaktiv konto
+  if (JSON.stringify(fresh) !== JSON.stringify(meta)) await db.auth.admin.updateUserById(userId, { user_metadata: fresh });
 }
 
 /** Vipps sender brukeren hit etter innlogging. Logger inn, lager konto første gang, eller kobler Vipps til innlogget konto. */
@@ -36,6 +38,9 @@ export async function GET(req: Request) {
 
   try {
     const v = await exchangeCode({ code, nonce: saved.nonce, origin: url.origin });
+    // Utestengte brukere kan ikke logge inn eller lage ny konto
+    const { data: blocked } = await db.from("blocked_users").select("vipps_sub").eq("vipps_sub", v.sub).maybeSingle();
+    if (blocked) return fail("utestengt");
     const { data: linked } = await db.from("profiles").select("id").eq("vipps_sub", v.sub).maybeSingle();
     const current = await getUser();
 

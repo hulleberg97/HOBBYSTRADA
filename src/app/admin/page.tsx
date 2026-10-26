@@ -10,6 +10,7 @@ import { hasVipps } from "@/lib/vipps";
 import { settlePending } from "@/lib/settle-boost";
 import { formatPrice } from "@/lib/format";
 import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingActions";
+import { BlockUser } from "@/components/BlockUser";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
 
@@ -251,6 +252,7 @@ export default async function AdminPage() {
                     ]}
                   />
                   {l.status === "active" && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
+                  {r.owner_id && <BlockUser listingId={l.id!} seller={l.seller} />}
                 </OwnerListingRow>
               );
             })}

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase-admin";
 import { settlePending } from "@/lib/settle-boost";
 import { addNotification } from "@/lib/notifications";
+import { INACTIVE_DELETE_DAYS, INACTIVE_WARN_DAYS, deleteAccount } from "@/lib/account";
+import { brandedEmail, isPlaceholderEmail, sendEmail } from "@/lib/email";
 
 /**
  * Daglig opprydding (Vercel Cron, kl. 03:17 UTC). Sletter data vi ikke lenger trenger:
@@ -9,6 +11,8 @@ import { addNotification } from "@/lib/notifications";
  * - avviste annonser (med bilder) eldre enn 30 dager
  * - rapporter som er ferdigbehandlet for over 12 måneder siden
  * - bilder som ikke lenger hører til en samtale eller annonse
+ * - sperrelisten: utestengte Vipps-ID-er eldre enn 2 år
+ * - inaktive kontoer: e-postvarsel etter 23 måneder uten innlogging, sletting etter 24
  */
 const months = (n: number) => new Date(Date.now() - n * 30 * 864e5).toISOString();
 
@@ -71,6 +75,9 @@ export async function GET(req: Request) {
   }
   result.reminded = reminded;
 
+  await del("blocked_users", db.from("blocked_users").delete({ count: "exact" }).lt("blocked_at", months(24)));
+  Object.assign(result, await inactiveAccounts(db));
+
   // Betalte annonseløft som ikke ble fanget opp underveis
   const activated = await settlePending(db).catch(() => 0);
   return NextResponse.json({ ok: true, deleted: result, activated });
@@ -88,4 +95,44 @@ async function removeOrphans(db: NonNullable<ReturnType<typeof adminClient>>, bu
     removed += files.length;
   }
   return removed;
+}
+
+/**
+ * Inaktive kontoer. Varsel på e-post når siste innlogging er over 23 måneder siden, sletting når den er over 24 måneder
+ * og varselet ble sendt for minst 30 dager siden. Innlogging nullstiller varselet (se Vipps-callback).
+ */
+async function inactiveAccounts(db: NonNullable<ReturnType<typeof adminClient>>) {
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
+  const admin = process.env.ADMIN_EMAIL?.toLowerCase();
+  let warned = 0;
+  let deleted = 0;
+  const now = Date.now();
+  for (let page = 1; page < 50; page++) {
+    const { data } = await db.auth.admin.listUsers({ page, perPage: 1000 });
+    const users = data?.users ?? [];
+    for (const u of users) {
+      if (!u.email || u.email.toLowerCase() === admin) continue;
+      const lastSeen = new Date(u.last_sign_in_at ?? u.created_at).getTime();
+      const idleDays = (now - lastSeen) / 864e5;
+      const meta = u.user_metadata ?? {};
+      const warnedAt = meta.inactivity_warned_at ? new Date(meta.inactivity_warned_at as string).getTime() : 0;
+      if (idleDays >= INACTIVE_DELETE_DAYS && (warnedAt ? now - warnedAt >= 30 * 864e5 : isPlaceholderEmail(u.email))) {
+        if (!(await deleteAccount(db, u.id))) deleted++;
+      } else if (idleDays >= INACTIVE_WARN_DAYS && !warnedAt && !isPlaceholderEmail(u.email)) {
+        const intro = "Du har ikke logget inn på HOBBYSTRADA på nesten to år. Kontoen din slettes om 30 dager, sammen med annonsene dine. Vil du beholde den, er det nok å logge inn.";
+        const ok = await sendEmail({
+          to: u.email,
+          subject: "Kontoen din slettes om 30 dager",
+          text: `${intro}\n\nLogg inn: ${site}/auth/login`,
+          html: brandedEmail({ title: "Kontoen din slettes om 30 dager", intro, button: "Logg inn og behold kontoen", url: `${site}/auth/login`, outro: "Gjør du ingenting, slettes kontoen automatisk. Betalinger beholder vi så lenge bokføringsloven krever." }),
+        });
+        if (ok) {
+          await db.auth.admin.updateUserById(u.id, { user_metadata: { ...meta, inactivity_warned_at: new Date(now).toISOString() } });
+          warned++;
+        }
+      }
+    }
+    if (users.length < 1000) break;
+  }
+  return { inactive_warned: warned, inactive_deleted: deleted };
 }

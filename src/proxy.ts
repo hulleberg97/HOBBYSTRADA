@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import { COOKIE } from "@/lib/supabase";
 import { NextResponse, type NextRequest } from "next/server";
 import { ACCESS_COOKIE, accessToken, sitePassword } from "@/lib/private";
 
@@ -29,6 +30,7 @@ async function refreshSession(req: NextRequest) {
   let res = NextResponse.next({ request: req });
   if (!url || !key) return res;
   const db = createServerClient(url, key, {
+    cookieOptions: COOKIE,
     cookies: {
       getAll: () => req.cookies.getAll(),
       setAll: (list) => {

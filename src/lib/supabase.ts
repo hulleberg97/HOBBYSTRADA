@@ -6,6 +6,9 @@ export const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export const hasSupabase = Boolean(supabaseUrl && supabaseAnonKey);
 
+/** Innloggingskapselen (sb-…-auth-token) fornyes ved hvert besøk og slettes senest 90 dager etter siste besøk. */
+export const COOKIE = { maxAge: 60 * 60 * 24 * 90 };
+
 /** Klient uten innlogging, for offentlige data. Virker også mens siden bygges. */
 export function publicClient() {
   if (!hasSupabase) return null;
@@ -14,7 +17,7 @@ export function publicClient() {
 
 export function browserClient() {
   if (!hasSupabase) return null;
-  return createBrowserClient(supabaseUrl!, supabaseAnonKey!);
+  return createBrowserClient(supabaseUrl!, supabaseAnonKey!, { cookieOptions: COOKIE });
 }
 
 export async function serverClient() {
@@ -22,6 +25,7 @@ export async function serverClient() {
   const { cookies } = await import("next/headers");
   const store = await cookies();
   return createServerClient(supabaseUrl!, supabaseAnonKey!, {
+    cookieOptions: COOKIE,
     cookies: {
       getAll: () => store.getAll(),
       setAll: (list) => {

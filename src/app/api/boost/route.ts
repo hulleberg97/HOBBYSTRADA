@@ -36,11 +36,14 @@ export async function POST(req: Request) {
   const row = { listing_id: listing.id, user_id: user.id, buyer_email: user.email, plan, amount: b.price, status: "pending" };
   let { data: order, error } = await db
     .from("boost_orders")
-    .insert({ ...row, listing_title: listing.title, consent_at: new Date().toISOString() })
+    .insert({ ...row, listing_title: listing.title, buyer_name: user.fullName, consent_at: new Date().toISOString() })
     .select("id")
     .single();
   // Databasen mangler consent_at til supabase/003_juridisk.sql er kjørt.
   // Databasen mangler listing_title til supabase/009_betalinger_personvern.sql er kjørt.
+  // Databasen mangler buyer_name til supabase/011_sperreliste.sql er kjørt.
+  if (error && /buyer_name/.test(error.message))
+    ({ data: order, error } = await db.from("boost_orders").insert({ ...row, listing_title: listing.title, consent_at: new Date().toISOString() }).select("id").single());
   if (error && /listing_title/.test(error.message))
     ({ data: order, error } = await db.from("boost_orders").insert({ ...row, consent_at: new Date().toISOString() }).select("id").single());
   if (error && /consent_at/.test(error.message)) ({ data: order, error } = await db.from("boost_orders").insert(row).select("id").single());
