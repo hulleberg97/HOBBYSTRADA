@@ -221,12 +221,17 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                           )}
                         </p>
                       </div>
-                      <p className="shrink-0 font-semibold text-slate-950">{formatPrice(p.amount)}</p>
+                      <p className="shrink-0 text-right font-semibold text-slate-950">
+                        {formatPrice(p.amount)}
+                        <Link href={`/kvittering/${p.id}`} className="block text-xs font-normal text-slate-500 underline underline-offset-2">
+                          Kvittering
+                        </Link>
+                      </p>
                     </li>
                   ))}
                 </ul>
               )}
-              <p className="mt-3 text-xs text-slate-500">Kvitteringen for hver betaling finner du i Vipps-appen.</p>
+              <p className="mt-3 text-xs text-slate-500">Kvitteringen kan skrives ut eller lagres som PDF. Vipps-appen viser også betalingen.</p>
             </div>
             <DeleteAccount />
           </section>

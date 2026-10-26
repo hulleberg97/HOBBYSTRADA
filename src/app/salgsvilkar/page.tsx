@@ -38,7 +38,7 @@ export default function SalesTermsPage() {
           title: "Betaling",
           body: (
             <p>
-              Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps, og du får kvittering i Vipps-appen.
+              Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps. Kvitteringen finner du under Min side, og du kan skrive den ut eller lagre den som PDF. Prisene er uten merverdiavgift, fordi HOBBYSTRADA ikke er registrert i Merverdiavgiftsregisteret.
             </p>
           ),
         },

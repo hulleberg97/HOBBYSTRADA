@@ -11,12 +11,18 @@ import { settlePending } from "@/lib/settle-boost";
 import { formatPrice } from "@/lib/format";
 import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingActions";
 import { BlockUser } from "@/components/BlockUser";
+import { SalesReport } from "@/components/SalesReport";
+import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
 
 export const metadata: Metadata = { title: "Administrasjon", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
+/** Dato 90 dager tilbake, som ÅÅÅÅ-MM-DD. Egen funksjon, så Date.now() ikke kalles under rendering. */
+function since90() {
+  return new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
+}
 const date = (d: string) => new Date(d).toLocaleString("nb-NO", { dateStyle: "medium", timeStyle: "short" });
 
 export default async function AdminPage() {
@@ -34,6 +40,7 @@ export default async function AdminPage() {
     db.from("listings").select("*").in("status", ["active", "sold", "hidden"]).order("created_at", { ascending: false }),
   ]);
 
+  const sales = await listInvoices(db, since90());
   const { data: reports } = await db.from("reports").select("*").eq("handled", false).order("created_at", { ascending: false });
   const { data: reported } = reports?.length
     ? await db
@@ -231,6 +238,29 @@ export default async function AdminPage() {
             )}
           </section>
         </div>
+
+        <section>
+          <h2 className={h2}>Salg siste 90 dager ({sales.length})</h2>
+          <p className="mt-1 text-sm text-slate-600">Hvert betalt løft får et fortløpende salgsdokumentnummer. Rapporten under er til regnskapet, og hver rad har lenke til kvitteringen.</p>
+          <SalesReport />
+          {sales.length > 0 && (
+            <ul className="mt-4 divide-y divide-slate-100 rounded-3xl bg-white px-5 ring-1 ring-slate-200">
+              {sales.map((r) => (
+                <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 py-3 text-sm">
+                  <span className="text-slate-500">#{r.no ?? "–"}</span>
+                  <span className="text-slate-600">{invoiceDate(r.paidAt)}</span>
+                  <span className="min-w-0 flex-1 truncate font-medium text-slate-900">
+                    {r.buyerName} · {r.plan} · {r.listingTitle}
+                  </span>
+                  <span className="font-semibold text-slate-950">{formatPrice(r.amount)}</span>
+                  <a href={`/kvittering/${r.id}`} className="text-xs underline underline-offset-2">
+                    Kvittering
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         <section>
           <h2 className={h2}>Alle annonser ({all?.length ?? 0})</h2>
