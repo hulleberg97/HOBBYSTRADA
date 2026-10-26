@@ -13,7 +13,7 @@ export function BlockUser({ listingId, seller }: { listingId: string; seller: st
   const [error, setError] = useState("");
 
   async function run() {
-    if (!confirm(`Stenge ute ${seller}? Kontoen og annonsene slettes, og Vipps-ID-en sperres i to år.`)) return;
+    if (!confirm(`Stenge ute ${seller}? Kontoen sperres og annonsene skjules nå. Alt slettes om 30 dager hvis ingen klage får medhold. Vipps-ID-en sperres i to år.`)) return;
     setBusy(true);
     setError("");
     const res = await fetch("/api/admin/block", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ listingId, rule }) });

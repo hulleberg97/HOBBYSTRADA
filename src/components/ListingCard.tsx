@@ -37,10 +37,14 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             )}
           </div>
           <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
-            {listing.featured && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">
+            {/* Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
+            {(listing.featured || listing.bumpedAt) && (
+              <span
+                title={listing.frontpage ? "Toppannonse" : listing.featured ? "Fremhevet" : "Topp av listen"}
+                className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground"
+              >
                 {listing.frontpage && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
-                {listing.frontpage ? "Toppannonse" : "Fremhevet"}
+                Annonseløft
               </span>
             )}
             {/* Kjøperne ser bare aktive annonser, så bare «Solgt» trenger et merke */}

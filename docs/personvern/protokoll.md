@@ -16,7 +16,7 @@ Personvernforordningen artikkel 30. Gjelder hobbystrada.no.
 
 | Nr | Behandling | Formål | Kategorier av registrerte | Opplysninger | Grunnlag | Mottakere | Lagringstid |
 |---|---|---|---|---|---|---|---|
-| 1 | Konto og innlogging | Gi brukeren en konto, logge inn med Vipps, vise «Verifisert med Vipps» | Brukere | Navn, e-post, poststed, Vipps-ID, tidspunkt for siste innlogging | Avtale (art. 6 nr. 1 b) | Supabase, Vipps | Til kontoen slettes. Automatisk sletting etter 24 måneder uten innlogging, med varsel etter 23 |
+| 1 | Konto og innlogging | Gi brukeren en konto, logge inn med Vipps, sjekke 18-årsgrensen, vise «Verifisert med Vipps» | Brukere | Navn, e-post, poststed, Vipps-ID, om brukeren er over 18 (fødselsdato fra Vipps brukes bare til sjekken og lagres ikke), tidspunkt for siste innlogging | Avtale (art. 6 nr. 1 b) | Supabase, Vipps | Til kontoen slettes. Automatisk sletting etter 24 måneder uten innlogging, med varsel etter 23 |
 | 2 | Annonser | Vise annonser i markedet, manuell godkjenning | Brukere (selgere) | Annonseinnhold, bilder, fornavn, sted | Avtale (art. 6 nr. 1 b) | Alle besøkende (uten e-post), Supabase | Til brukeren sletter annonsen eller kontoen. Avviste slettes etter 30 dager |
 | 3 | Meldinger mellom brukere | Formidle meldinger mellom kjøper og selger, varsle på e-post | Brukere | Meldinger, bilder, fornavn, e-post (til varsling) | Avtale (art. 6 nr. 1 b). Berettiget interesse (f) når samtalen beholdes etter at én part har slettet kontoen | Den andre parten, Supabase, Domene AS | 12 måneder etter siste melding |
 | 4 | Gjennomgang av meldinger | Undersøke rapporter og mistanke om svindel | Brukere | Meldinger og bilder i de aktuelle samtalene | Berettiget interesse (art. 6 nr. 1 f) | Ingen eksterne | Ingen egne kopier |
@@ -24,7 +24,7 @@ Personvernforordningen artikkel 30. Gjelder hobbystrada.no.
 | 6 | Lagrede søk | Varsle når nye kort passer et søk | Brukere | Søket, e-post | Avtale (art. 6 nr. 1 b) | Supabase, Domene AS | Til søket eller kontoen slettes |
 | 7 | Varsler på nettsiden | Beskjed om godkjenning, avvisning, løft og søketreff | Brukere | Hendelse, annonsens tittel, tidspunkt | Avtale (art. 6 nr. 1 b) | Supabase | 90 dager |
 | 8 | Henvendelser og rapporter | Svare på kontaktskjema, behandle rapporter om annonser | Alle som kontakter oss, selgere som rapporteres | Navn, e-post, innhold, hvilken annonse | Berettiget interesse (art. 6 nr. 1 f) | Supabase, Domene AS | 12 måneder (rapporter: etter behandling) |
-| 9 | Utestengelse | Håndheve vilkårene, hindre ny konto | Utestengte brukere | Vipps-ID, tidspunkt, hvilket vilkår som er brutt | Berettiget interesse (art. 6 nr. 1 f) | Supabase | 2 år |
+| 9 | Utestengelse | Håndheve vilkårene, hindre ny konto | Utestengte brukere | Vipps-ID, konto-ID, tidspunkt, hvilket vilkår som er brutt, skjulte annonser (til kontoen slettes etter 30 dager eller etter klage) | Berettiget interesse (art. 6 nr. 1 f) | Supabase | Sperreliste 2 år, kontoen 30 dager |
 | 10 | Sikkerhet, svindel og spam | Stoppe spam og misbruk | Alle besøkende | IP-adresse, tekniske logger | Berettiget interesse (art. 6 nr. 1 f) | Supabase, Vercel | IP ved skjema: ett døgn. Logger: inntil 7 dager |
 | 11 | Informasjonskapsler | Holde brukeren innlogget, sikre Vipps-innlogging | Brukere | Innloggingskapsel, Vipps-kapsel | Nødvendig for tjenesten (ekomloven § 3-15) | Ingen | Innlogging: 90 dager etter siste besøk. Vipps: 10 minutter |
 

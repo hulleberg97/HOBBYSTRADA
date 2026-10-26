@@ -25,6 +25,7 @@ export function BoostPicker() {
   const [busy, setBusy] = useState<BoostKey | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [consent, setConsent] = useState(false);
+  const [consentLoss, setConsentLoss] = useState(false);
   // Annonsene brukeren kan løfte. undefined mens de lastes, null hvis ikke innlogget.
   const [hentet, setMine] = useState<{ slug: string; title: string; price: number; image: string | null; boost: string | null }[] | null>();
 
@@ -46,7 +47,7 @@ export function BoostPicker() {
       document.getElementById("boost-listing")?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
-    if (!consent) {
+    if (!consent || !consentLoss) {
       setMsg({ ok: false, text: "Bekreft at løftet kan starte med en gang før du går videre." });
       return;
     }
@@ -56,7 +57,7 @@ export function BoostPicker() {
       const res = await fetch("/api/boost", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ listing, plan: key, consent }),
+        body: JSON.stringify({ listing, plan: key, consent, consentLoss }),
       });
       const data = await res.json().catch(() => ({}));
       if (data.url) {
@@ -138,17 +139,24 @@ export function BoostPicker() {
           </ul>
         )}
         <p className="mt-2 text-xs text-muted-foreground">Løftet aktiveres på annonsen etter at betalingen er gjennomført.</p>
-        <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
-          <input
-            type="checkbox"
-            checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]"
-          />
+        <p className="mt-4 text-xs text-muted-foreground">
+          Du har 14 dagers angrerett. For at løftet skal starte før fristen er ute, må du be om det og bekrefte at du vet hva det betyr.
+        </p>
+        <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
+          <span>Jeg ber om at løftet starter med en gang betalingen er gjennomført, før angrefristen på 14 dager er ute.</span>
+        </label>
+        <label className="mt-2 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
+          <input type="checkbox" checked={consentLoss} onChange={(e) => setConsentLoss(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
           <span>
-            Jeg ber om at løftet starter med en gang etter betaling, og forstår at angreretten da faller bort.{" "}
+            Jeg forstår at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over, og at jeg betaler for den delen av perioden som er
+            brukt hvis jeg angrer før det.{" "}
             <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
               Salgsvilkår
+            </Link>{" "}
+            ·{" "}
+            <Link href="/angreskjema" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
+              Angreskjema
             </Link>
           </span>
         </label>

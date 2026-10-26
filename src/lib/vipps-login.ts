@@ -38,7 +38,7 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
     client_id: clientId()!,
     response_type: "code",
     // Bare det vi bruker: navn, e-post og poststed (fra adressen; gateadressen lagres ikke)
-    scope: "openid name email address",
+    scope: "openid name email address birthDate",
     state,
     nonce,
     redirect_uri: redirectUri(origin),
@@ -46,7 +46,20 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
   return u.toString();
 }
 
-export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean; city: string | null };
+/** age: alder i hele år fra fødselsdatoen Vipps sender, eller null hvis Vipps ikke sendte den. Datoen selv lagres aldri. */
+export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean; city: string | null; age: number | null };
+
+/** Alder i hele år fra «ÅÅÅÅ-MM-DD» (Vipps sender også «DD.MM.ÅÅÅÅ» i noen oppsett). */
+export function ageFrom(birthdate: unknown, now = new Date()): number | null {
+  if (typeof birthdate !== "string") return null;
+  const m = birthdate.match(/^(\d{4})-(\d{2})-(\d{2})/) ?? birthdate.match(/^(\d{2})\.(\d{2})\.(\d{4})/)?.slice(0).reverse();
+  if (!m) return null;
+  const [y, mo, d] = birthdate.includes("-") ? [+m[1], +m[2], +m[3]] : [+m[0], +m[1], +m[2]];
+  if (!y || !mo || !d) return null;
+  let age = now.getFullYear() - y;
+  if (now.getMonth() + 1 < mo || (now.getMonth() + 1 === mo && now.getDate() < d)) age--;
+  return age;
+}
 
 /** «KONGSBERG» → «Kongsberg», «MO I RANA» → «Mo i Rana». */
 const cityName = (s: unknown) =>
@@ -84,5 +97,6 @@ export async function exchangeCode({ code, nonce, origin }: { code: string; nonc
     email: u.email ? String(u.email).toLowerCase() : null,
     emailVerified: Boolean(u.email_verified),
     city: cityName(u.address?.region ?? u.address?.locality),
+    age: ageFrom(u.birthdate),
   };
 }

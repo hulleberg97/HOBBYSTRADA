@@ -13,6 +13,8 @@ export async function getUser() {
     name: (meta.username as string) || (meta.name as string) || data.user.email || "",
     fullName: displayName(meta, data.user.email),
     location: (meta.location as string) || "",
+    // Over 18 (fra Vipps). null når vi ikke vet det ennå, f.eks. kontoer fra før alderssjekken.
+    adult: typeof meta.adult === "boolean" ? (meta.adult as boolean) : null,
   };
 }
 

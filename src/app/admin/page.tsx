@@ -11,6 +11,7 @@ import { settlePending } from "@/lib/settle-boost";
 import { formatPrice } from "@/lib/format";
 import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingActions";
 import { BlockUser } from "@/components/BlockUser";
+import { Unblock } from "@/components/Unblock";
 import { SalesReport } from "@/components/SalesReport";
 import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
@@ -41,6 +42,12 @@ export default async function AdminPage() {
   ]);
 
   const sales = await listInvoices(db, since90());
+  const { data: blocked } = await db.from("blocked_users").select("vipps_sub, rule, blocked_at, user_id, delete_after").not("user_id", "is", null).order("blocked_at", { ascending: false });
+  const blockedNames = new Map<string, string>();
+  for (const b of blocked ?? []) {
+    const { data: u } = await db.auth.admin.getUserById(b.user_id as string);
+    blockedNames.set(b.vipps_sub as string, (u.user?.user_metadata?.name as string) || u.user?.email || "Ukjent");
+  }
   const { data: reports } = await db.from("reports").select("*").eq("handled", false).order("created_at", { ascending: false });
   const { data: reported } = reports?.length
     ? await db
@@ -238,6 +245,25 @@ export default async function AdminPage() {
             )}
           </section>
         </div>
+
+        {(blocked?.length ?? 0) > 0 && (
+          <section>
+            <h2 className={h2}>Utestengte brukere ({blocked!.length})</h2>
+            <p className="mt-1 text-sm text-slate-600">Kontoen er sperret og annonsene skjult. Slettes automatisk på datoen under, med mindre en klage får medhold.</p>
+            <ul className="mt-4 divide-y divide-slate-100 rounded-3xl bg-white px-5 ring-1 ring-slate-200">
+              {blocked!.map((b) => (
+                <li key={b.vipps_sub as string} className="flex flex-wrap items-center justify-between gap-3 py-3 text-sm">
+                  <span className="font-medium text-slate-900">{blockedNames.get(b.vipps_sub as string)}</span>
+                  <span className="text-slate-600">{b.rule as string}</span>
+                  <span className="text-slate-500">
+                    Stengt {date(b.blocked_at as string)} · slettes {date(b.delete_after as string)}
+                  </span>
+                  <Unblock vippsSub={b.vipps_sub as string} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section>
           <h2 className={h2}>Salg siste 90 dager ({sales.length})</h2>

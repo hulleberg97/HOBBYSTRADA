@@ -75,6 +75,14 @@ export async function GET(req: Request) {
   }
   result.reminded = reminded;
 
+  // Utestengte kontoer slettes 30 dager etter utestengelsen (Vipps-ID-en blir på sperrelisten i 2 år)
+  const { data: due } = await db.from("blocked_users").select("vipps_sub, user_id").not("user_id", "is", null).lt("delete_after", new Date().toISOString());
+  let blockedDeleted = 0;
+  for (const b of due ?? []) {
+    if (!(await deleteAccount(db, b.user_id as string))) blockedDeleted++;
+    await db.from("blocked_users").update({ user_id: null, delete_after: null, listing_ids: null }).eq("vipps_sub", b.vipps_sub);
+  }
+  result.blocked_deleted = blockedDeleted;
   await del("blocked_users", db.from("blocked_users").delete({ count: "exact" }).lt("blocked_at", months(24)));
   Object.assign(result, await inactiveAccounts(db));
 

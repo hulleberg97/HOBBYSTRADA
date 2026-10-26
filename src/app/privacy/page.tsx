@@ -58,6 +58,7 @@ export default function PrivacyPage() {
                 items={[
                   "Navn og e-post.",
                   "Adresse. Vipps sender oss hele adressen din, men vi lagrer bare poststedet. Resten av adressen lagres ikke. Vi henter ikke telefonnummeret ditt.",
+                  "Fødselsdato. Vi bruker den bare til å sjekke at du er over 18 år når du logger inn. Datoen lagres ikke; vi husker bare at du er over 18.",
                   "En fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn.",
                 ]}
               />
@@ -92,8 +93,8 @@ export default function PrivacyPage() {
               <p>Vi bruker bare opplysningene til formålene under. Grunnlaget er hentet fra personvernforordningen artikkel 6.</p>
               <Purpose
                 title="Konto og innlogging"
-                what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps»."
-                data="Navn, e-post, poststed og Vipps-ID."
+                what="Gi deg en konto, logge deg inn med Vipps, sjekke at du er over 18 år og vise merket «Verifisert med Vipps»."
+                data="Navn, e-post, poststed, Vipps-ID og at du er over 18 år."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
                 kept="Til du sletter kontoen. Da slettes også koblingen til Vipps. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
               />
@@ -148,8 +149,8 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Utestengelse"
-                what="Stenge ute brukere som bryter brukervilkårene, og hindre at de lager ny konto. Når en bruker stenges ute, slettes kontoen og annonsene på samme måte som når du sletter kontoen selv. Avgjørelsen tas av et menneske. Du får beskjed på e-post med begrunnelse, og kan klage til post@hobbystrada.no."
-                data="Vipps-ID, tidspunktet for utestengelsen og hvilket vilkår som er brutt."
+                what="Stenge ute brukere som bryter brukervilkårene, og hindre at de lager ny konto. Når en bruker stenges ute, sperres kontoen og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen, eller når en klage er avgjort, på samme måte som når du sletter kontoen selv. Avgjørelsen tas av et menneske. Du får beskjed på e-post med begrunnelse, og kan klage til post@hobbystrada.no innen 30 dager."
+                data="Vipps-ID, konto-ID, tidspunktet for utestengelsen, hvilket vilkår som er brutt, og hvilke annonser som ble skjult (til kontoen er slettet)."
                 basis="Berettiget interesse (art. 6 nr. 1 f): å håndheve vilkårene og beskytte brukerne og markedet."
                 kept="Vipps-ID-en står på en sperreliste i to år fra utestengelsen og slettes deretter."
               />
@@ -210,8 +211,8 @@ export default function PrivacyPage() {
           body: (
             <p>
               Du kan se på annonsene uten å logge inn. For å legge ut kort, chatte eller kjøpe annonseløft må du logge inn med Vipps, fordi vi trenger å vite
-              hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene av nettsiden. Du må være minst 18 år for å ha konto, eller
-              ha samtykke fra foresatte, se <Link href="/terms">brukervilkårene</Link>.
+              hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene av nettsiden. Du må være minst 18 år for å ha konto, se{" "}
+              <Link href="/terms">brukervilkårene</Link>.
             </p>
           ),
         },

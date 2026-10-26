@@ -22,9 +22,10 @@ export default function RefundPage() {
           title: "Annonseløft",
           body: (
             <p>
-              Annonseløft er en digital tjeneste som starter med en gang betalingen er gjennomført. Før du betaler, ber du uttrykkelig om at løftet starter
-              straks, og bekrefter at angreretten da faller bort (angrerettloven § 22). Hvis noe gikk galt med betalingen eller løftet ikke ble aktivert,
-              refunderer vi hele beløpet.
+              Annonseløft er en tjeneste som starter med en gang betalingen er gjennomført, fordi du ber om det når du bestiller. Du har likevel 14 dagers
+              angrerett: angrer du før perioden er over, betaler du for dagene som er brukt og får resten tilbake. Når perioden er over, er løftet levert
+              fullt ut, og angreretten har gått tapt. Hvis noe gikk galt med betalingen eller løftet ikke ble aktivert, refunderer vi hele beløpet. Fjernet
+              vi annonsen ved en feil, refunderer vi løftet eller gir deg et nytt.
             </p>
           ),
         },

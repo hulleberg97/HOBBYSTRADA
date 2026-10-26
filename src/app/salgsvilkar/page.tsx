@@ -30,7 +30,7 @@ export default function SalesTermsPage() {
             <>
               <p>Annonseløft gir annonsen din bedre synlighet i en bestemt periode:</p>
               <List items={Object.values(BOOSTS).map((b) => `${b.name}: ${formatPrice(b.price)} for ${b.days} dager`)} />
-              <p>Alle priser er oppgitt i norske kroner. Det kommer ingen andre gebyrer i tillegg.</p>
+              <p>Alle priser er oppgitt i norske kroner, uten merverdiavgift fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Du må være 18 år for å kjøpe annonseløft.</p>
             </>
           ),
         },
@@ -46,26 +46,36 @@ export default function SalesTermsPage() {
           title: "Levering",
           body: (
             <p>
-              Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang betalingen er gjennomført, og varer i perioden du har valgt. Selges
-              kortet før perioden er over, stopper løftet når annonsen markeres som solgt.
+              Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang betalingen er gjennomført, og varer i perioden du har valgt. Du får
+              bekreftelse på e-post. Sletter du annonsen eller merker den som solgt før perioden er over, stopper løftet, og resten av perioden refunderes
+              ikke.
             </p>
           ),
         },
         {
           title: "Angrerett",
           body: (
-            <p>
-              Før du betaler, ber du uttrykkelig om at løftet starter med en gang, og bekrefter at angreretten da faller bort (angrerettloven § 22 bokstav n).
-              Angreretten gjelder derfor ikke etter at løftet er aktivert.
-            </p>
+            <>
+              <p>
+                Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 20). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at
+                løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden
+                er over (angrerettloven §§ 19 og 22 bokstav c).
+              </p>
+              <p className="mt-3">
+                Angrer du før perioden er over, betaler du for den delen av perioden som er brukt, regnet i dager, og får resten tilbake til samme
+                betalingsmåte innen 14 dager (angrerettloven § 26). Du angrer ved å sende <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til{" "}
+                {COMPANY.email}.
+              </p>
+            </>
           ),
         },
         {
-          title: "Retur og refusjon",
+          title: "Hvis løftet ikke virker",
           body: (
             <p>
-              Hvis betalingen gikk gjennom, men løftet ikke ble aktivert, eller noe annet gikk galt fra vår side, refunderer vi hele beløpet til samme
-              betalingsmåte. Se også <Link href="/refund-policy">Retur og refusjon</Link>.
+              Blir løftet ikke levert som avtalt, gi beskjed til {COMPANY.email}. Vi retter feilen eller forlenger løftet. Lykkes ikke det, får du et
+              forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett. Se også{" "}
+              <Link href="/refund-policy">Retur og refusjon</Link>.
             </p>
           ),
         },

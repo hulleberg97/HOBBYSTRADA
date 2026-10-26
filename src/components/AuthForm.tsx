@@ -28,6 +28,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
   const vippsError = {
     vipps: "Innloggingen med Vipps ble avbrutt eller feilet. Prøv igjen.",
     "vipps-koblet": "Denne Vipps-kontoen er allerede koblet til en annen bruker.",
+    alder: "Du må være minst 18 år for å ha konto på HOBBYSTRADA.",
     utestengt: "Denne kontoen er stengt fordi den har brutt brukervilkårene. Mener du dette er feil, kan du klage via kontaktskjemaet.",
   }[params.get("feil") ?? ""];
   const [busy, setBusy] = useState(false);

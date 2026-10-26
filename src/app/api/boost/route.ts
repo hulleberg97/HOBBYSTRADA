@@ -11,12 +11,13 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const plan = body.plan as BoostKey;
   if (!(plan in BOOSTS)) return NextResponse.json({ error: "Ukjent pakke." }, { status: 400 });
-  if (body.consent !== true) return NextResponse.json({ error: "Bekreft at løftet kan starte med en gang." }, { status: 400 });
+  if (body.consent !== true || body.consentLoss !== true) return NextResponse.json({ error: "Kryss av for begge punktene om angrerett." }, { status: 400 });
 
   const db = adminClient();
   const user = await getUser();
   if (!db) return NextResponse.json({ error: "Annonseløft er ikke slått på ennå." }, { status: 503 });
   if (!user) return NextResponse.json({ error: "Logg inn for å løfte annonsen din." }, { status: 401 });
+  if (user.adult === false) return NextResponse.json({ error: "Du må være 18 år for å kjøpe annonseløft." }, { status: 403 });
 
   // Godta både lenke og tittel
   const text = String(body.listing ?? "").trim();
