@@ -26,13 +26,13 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
     await sendEmail({
       to: u.user.email,
       subject: `Bekreftelse: ${plan.name}`,
-      text: `${intro}\n\nKvittering: ${site}/kvittering/${order.id}\n\nAngrerett: du har 14 dager. Løftet startet etter ditt ønske, og angrer du før perioden er over, betaler du for den delen som er brukt. Angreskjema: ${site}/angreskjema`,
+      text: `${intro}\n\nKvittering: ${site}/kvittering/${order.id}\n\nLøftet startet etter ditt ønske, og angreretten opphørte da det ble aktivert. Vilkår: ${site}/salgsvilkar`,
       html: brandedEmail({
         title: "Bekreftelse på annonseløft",
         intro,
         button: "Se kvitteringen",
         url: `${site}/kvittering/${order.id}`,
-        outro: `Angrerett: du har 14 dager. Løftet startet etter ditt ønske, og angrer du før perioden er over, betaler du for den delen som er brukt. Angreskjema: ${site}/angreskjema`,
+        outro: `Løftet startet etter ditt ønske, og angreretten opphørte da det ble aktivert. Vilkår: ${site}/salgsvilkar`,
       }),
     });
   }
