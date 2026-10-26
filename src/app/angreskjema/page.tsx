@@ -42,7 +42,11 @@ export default function Page() {
               <dd>______________________________</dd>
             </div>
             <div className={row}>
-              <dt className="text-slate-500">E-post</dt>
+              <dt className="text-slate-500">Adresse</dt>
+              <dd>______________________________</dd>
+            </div>
+            <div className={row}>
+              <dt className="text-slate-500">E-post (valgfritt)</dt>
               <dd>______________________________</dd>
             </div>
             <div className={row}>

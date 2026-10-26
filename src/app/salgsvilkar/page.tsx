@@ -12,7 +12,7 @@ export default function SalesTermsPage() {
   return (
     <LegalPage
       title="Salgsvilkår"
-      updated="oktober 2026"
+      updated="26. oktober 2026"
       sections={[
         {
           title: "Selger",

@@ -8,7 +8,7 @@ export default function RefundPage() {
   return (
     <LegalPage
       title="Refusjon av annonseløft"
-      updated="oktober 2026"
+      updated="26. oktober 2026"
       sections={[
         {
           title: "Gjelder bare annonseløft",

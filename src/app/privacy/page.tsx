@@ -27,7 +27,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Personvern"
-      updated="oktober 2026"
+      updated="26. oktober 2026"
       sections={[
         {
           title: "1. Om denne erklæringen",

@@ -7,7 +7,7 @@ export default function CookiePage() {
   return (
     <LegalPage
       title="Informasjonskapsler"
-      updated="oktober 2026"
+      updated="26. oktober 2026"
       sections={[
         {
           title: "Hva vi bruker",
