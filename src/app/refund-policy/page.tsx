@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Retur og refusjon" };
+export const metadata: Metadata = { title: "Refusjon av annonseløft" };
 
 export default function RefundPage() {
   return (
     <LegalPage
-      title="Retur og refusjon"
+      title="Refusjon av annonseløft"
       updated="oktober 2026"
       sections={[
         {
-          title: "Kjøp av kort",
+          title: "Gjelder bare annonseløft",
           body: (
             <p>
-              Kort kjøpes direkte fra selgeren. Retur og reklamasjon avtales med selgeren. Handel mellom privatpersoner reguleres av kjøpsloven, ikke
-              forbrukerkjøpsloven. Spør selgeren om tilstand og be om bilder før du betaler.
+              Denne siden gjelder annonseløft, som er den eneste tjenesten HOBBYSTRADA selger. Kort kjøpes direkte fra andre brukere. HOBBYSTRADA er ikke
+              part i den handelen, og retur og reklamasjon av kort avtales med selgeren. Se <Link href="/terms">vilkårene</Link>.
             </p>
           ),
         },
@@ -22,15 +23,17 @@ export default function RefundPage() {
           title: "Annonseløft",
           body: (
             <p>
-              Annonseløft starter med en gang betalingen er gjennomført, fordi du ber om det når du bestiller, og regnes som levert i det løftet er aktivert
-              på annonsen. Du frasier deg angreretten ved bestilling, så etter aktivering kan kjøpet ikke angres. Hvis noe gikk galt med betalingen eller
-              løftet ikke ble aktivert, refunderer vi hele beløpet. Fjernet vi annonsen ved en feil, refunderer vi løftet eller gir deg et nytt.
+              Annonseløft starter med en gang betalingen er gjennomført, fordi du ber om det når du bestiller. Du har likevel 14 dagers angrerett: angrer du
+              før perioden er over, betaler du for dagene som er brukt og får resten tilbake innen 14 dager. Når perioden er over, er løftet levert fullt
+              ut, og angreretten har gått tapt. Hvis noe gikk galt med betalingen eller løftet ikke ble aktivert, refunderer vi hele beløpet. Fjernet vi
+              annonsen ved en feil, refunderer vi løftet eller gir deg et nytt. Sletter du annonsen selv, eller merker den som solgt, refunderes ikke resten
+              av perioden.
             </p>
           ),
         },
         {
           title: "Slik ber du om refusjon",
-          body: <p>Send oss en melding via kontaktskjemaet med emnet «Annonseløft og betaling», og oppgi hvilken annonse det gjelder.</p>,
+          body: <p>Send <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til post@hobbystrada.no, og oppgi kvitteringsnummeret. Pengene kommer tilbake til samme betalingsmåte innen 14 dager.</p>,
         },
       ]}
     />

@@ -55,9 +55,9 @@ export default function Page() {
             </div>
           </dl>
           <p className="mt-6 text-sm text-slate-600">
-            Angrefristen er 14 dager fra avtalen ble inngått. Ved bestilling ber du om at løftet starter med en gang, og aksepterer at angreretten opphører
-            når løftet er aktivert på annonsen. Skjemaet gjelder derfor bare hvis løftet ikke ble aktivert. Da refunderer vi hele beløpet til samme
-            betalingsmåte innen 14 dager. Se <Link href="/salgsvilkar">salgsvilkårene</Link>.
+            Angrefristen er 14 dager fra avtalen ble inngått. Har du bedt om at løftet starter med en gang, betaler du for den delen av perioden som er brukt
+            når vi mottar meldingen, og får resten tilbake til samme betalingsmåte innen 14 dager. Er perioden over, er løftet levert fullt ut, og angreretten
+            har gått tapt. Se <Link href="/salgsvilkar">salgsvilkårene</Link>.
           </p>
         </div>
       </div>

@@ -140,16 +140,17 @@ export function BoostPicker() {
         )}
         <p className="mt-2 text-xs text-muted-foreground">Løftet aktiveres på annonsen etter at betalingen er gjennomført.</p>
         <p className="mt-4 text-xs text-muted-foreground">
-          Når du kjøper tjenester på nett, har du vanligvis 14 dagers angrerett. Annonseløft leveres umiddelbart, så for å kjøpe må du frasi deg angreretten.
+          Du har 14 dagers angrerett. For at løftet skal starte før fristen er ute, må du be om det og bekrefte at du vet hva det betyr.
         </p>
         <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
-          <span>Jeg ber om at løftet starter med en gang betalingen er gjennomført.</span>
+          <span>Jeg ber om at løftet starter med en gang.</span>
         </label>
         <label className="mt-2 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" checked={consentLoss} onChange={(e) => setConsentLoss(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
           <span>
-            Jeg aksepterer at angreretten opphører når løftet er aktivert på annonsen.{" "}
+            Jeg forstår at angreretten går tapt når løftet er levert fullt ut, og at jeg betaler for den delen av perioden som er brukt hvis jeg angrer før
+            det.{" "}
             <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
               Salgsvilkår
             </Link>{" "}

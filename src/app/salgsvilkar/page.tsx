@@ -57,13 +57,14 @@ export default function SalesTermsPage() {
           body: (
             <>
               <p>
-                Når du kjøper tjenester over internett, har du vanligvis 14 dagers angrerett (angrerettloven § 20). For å kjøpe annonseløft må du frasi deg
-                angreretten, fordi løftet leveres umiddelbart. Før du betaler, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført,
-                og aksepterer at angreretten opphører når løftet anses levert (angrerettloven §§ 19 og 22 bokstav c).
+                Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 20). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at
+                løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden
+                er over (angrerettloven §§ 19 og 22 bokstav c).
               </p>
               <p className="mt-3">
-                Løftet anses levert umiddelbart etter at det er aktivert på annonsen. Etter det kan kjøpet ikke angres. Angreskjema finner du på siden{" "}
-                <Link href="/angreskjema">Angreskjema</Link>.
+                Angrer du før perioden er over, betaler du for den delen av perioden som er brukt, regnet i dager, og får resten tilbake til samme
+                betalingsmåte innen 14 dager (angrerettloven § 26). Du angrer ved å sende <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til{" "}
+                {COMPANY.email}.
               </p>
             </>
           ),
@@ -74,7 +75,7 @@ export default function SalesTermsPage() {
             <p>
               Blir løftet ikke levert som avtalt, gi beskjed til {COMPANY.email}. Vi retter feilen eller forlenger løftet. Lykkes ikke det, får du et
               forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett. Se også{" "}
-              <Link href="/refund-policy">Retur og refusjon</Link>.
+              <Link href="/refund-policy">Refusjon av annonseløft</Link>.
             </p>
           ),
         },

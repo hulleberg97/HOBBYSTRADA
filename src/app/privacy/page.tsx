@@ -100,10 +100,10 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Annonser"
-                what="Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
+                what="Vise annonsene dine i markedet, og solgte annonser i prisarkivet, så samlere kan se hva kort har gått for. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
                 data="Annonseinnhold, bilder, fornavn og sted."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter annonsen eller kontoen. Annonser du har merket som solgt, blir stående under Min side til du sletter dem. Avviste annonser slettes etter 30 dager."
+                kept="Til du sletter annonsen eller kontoen. Annonser du merker som solgt, vises i prisarkivet «Solgte kort» med fornavn, sted og bilder i 12 måneder, og slettes deretter automatisk. Avviste annonser slettes etter 30 dager."
               />
               <Purpose
                 title="Meldinger mellom brukere"
@@ -263,6 +263,10 @@ export default function PrivacyPage() {
                   "Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss. De ligger der til du fjerner dem eller tømmer nettleseren.",
                 ]}
               />
+              <p className="mt-3">
+                Siden vi ikke bruker informasjonskapsler som krever samtykke, har vi ikke noe samtykkeverktøy. Knappen «Administrer informasjonskapsler»
+                nederst på siden viser bare denne informasjonen.
+              </p>
             </>
           ),
         },

@@ -69,7 +69,7 @@ export default function TermsPage() {
                   "Lotterier, trekninger, «breaks» og lignende, der kjøperen betaler for en sjanse til å få bestemte kort, er forbudt.",
                   "Annonsen skal gjelde fotballkort.",
                   "Én annonse per kort. Ikke legg ut samme kort flere ganger.",
-                  "Merk annonsen som solgt, eller slett den, når kortet er solgt.",
+                  "Merk annonsen som solgt, eller slett den, når kortet er solgt. Solgte annonser vises i prisarkivet «Solgte kort» i 12 måneder og slettes deretter.",
                 ]}
               />
               <p className="mt-3">
@@ -146,10 +146,10 @@ export default function TermsPage() {
                 følger disse vilkårene og <Link href="/salgsvilkar">salgsvilkårene</Link>. Du får bekreftelse på e-post, og kvitteringen ligger under Min side.
               </p>
               <p className="mt-3">
-                <strong>Angrerett.</strong> Når du kjøper tjenester over internett, har du vanligvis 14 dagers angrerett. For å kjøpe annonseløft må du
-                frasi deg angreretten, fordi løftet leveres umiddelbart. Når du bestiller, ber du om at løftet starter med en gang betalingen er
-                gjennomført, og aksepterer at angreretten opphører når løftet anses levert. Løftet anses levert umiddelbart etter at det er aktivert på
-                annonsen. Angreskjema finner du <Link href="/angreskjema">her</Link>.
+                <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven. Når du bestiller, kan du be om at løftet starter med en gang
+                betalingen er gjennomført. Da bekrefter du samtidig at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over. Angrer
+                du før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer ved å sende{" "}
+                <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til {COMPANY.email}.
               </p>
               <p className="mt-3">
                 <strong>Hvis løftet ikke virker.</strong> Blir løftet ikke levert som avtalt, gi beskjed til {COMPANY.email}. Vi retter feilen eller

@@ -8,7 +8,7 @@ import { brandedEmail, isPlaceholderEmail, sendEmail } from "@/lib/email";
 /**
  * Daglig opprydding (Vercel Cron, kl. 03:17 UTC). Sletter data vi ikke lenger trenger:
  * - meldinger, samtaler og henvendelser eldre enn 12 måneder
- * - avviste annonser (med bilder) eldre enn 30 dager
+ * - avviste annonser (med bilder) eldre enn 30 dager, solgte annonser eldre enn 12 måneder
  * - rapporter som er ferdigbehandlet for over 12 måneder siden
  * - bilder som ikke lenger hører til en samtale eller annonse
  * - sperrelisten: utestengte Vipps-ID-er eldre enn 2 år
@@ -46,6 +46,8 @@ export async function GET(req: Request) {
     if (files?.length) await db.storage.from("listing-images").remove(files.map((f) => `${l.slug}/${f.name}`));
   }
   await del("rejected_listings", db.from("listings").delete({ count: "exact" }).eq("status", "rejected").lt("updated_at", months(1)));
+  // Solgte annonser vises i prisarkivet i 12 måneder, deretter slettes de (bildene ryddes av removeOrphans under)
+  await del("sold_listings", db.from("listings").delete({ count: "exact" }).eq("status", "sold").lt("updated_at", months(12)));
 
   // Bilder som ikke lenger hører til en samtale eller en annonse (f.eks. etter sletting)
   const { data: convs } = await db.from("conversations").select("id");

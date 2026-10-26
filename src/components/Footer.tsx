@@ -70,7 +70,7 @@ export function Footer() {
                 ["/terms", "Vilkår"],
                 ["/salgsvilkar", "Salgsvilkår"],
                 ["/privacy", "Personvern"],
-                ["/refund-policy", "Retur og refusjon"],
+                ["/refund-policy", "Refusjon"],
               ] as const
             ).map(([href, label]) => (
               <Link key={href} href={href} className="relative transition before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] hover:text-white">

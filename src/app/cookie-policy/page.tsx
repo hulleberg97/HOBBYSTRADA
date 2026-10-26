@@ -16,9 +16,9 @@ export default function CookiePage() {
               <p>Vi bruker bare informasjonskapsler og lokal lagring som trengs for at siden skal virke:</p>
               <List
                 items={[
-                  "Innlogging: holder deg innlogget mens du bruker siden.",
-                  "Favoritter: husker kortene du har lagret, i nettleseren din.",
-                  "Samtykke: husker at du har lest denne meldingen.",
+                  "Innlogging (sb-…-auth-token): holder deg innlogget. Fornyes ved hvert besøk, slettes når du logger ut, og senest 90 dager etter siste besøk.",
+                  "Vipps-innlogging (vipps_oidc): sikrer innloggingen og slettes etter 10 minutter.",
+                  "Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.",
                 ]}
               />
             </>
@@ -26,7 +26,7 @@ export default function CookiePage() {
         },
         {
           title: "Hva vi ikke bruker",
-          body: <p>Vi bruker ikke informasjonskapsler for sporing, analyse eller annonser.</p>,
+          body: <p>Vi bruker ikke informasjonskapsler for sporing, analyse eller annonser. Derfor har vi ingen samtykkeverktøy. Knappen «Administrer informasjonskapsler» nederst på siden viser bare denne informasjonen.</p>,
         },
         {
           title: "Slik sletter du dem",
