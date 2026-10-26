@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { COOKIE } from "@/lib/supabase";
+import { cookieLife } from "@/lib/supabase";
 import { NextResponse, type NextRequest } from "next/server";
 import { ACCESS_COOKIE, accessToken, sitePassword } from "@/lib/private";
 
@@ -30,13 +30,12 @@ async function refreshSession(req: NextRequest) {
   let res = NextResponse.next({ request: req });
   if (!url || !key) return res;
   const db = createServerClient(url, key, {
-    cookieOptions: COOKIE,
     cookies: {
       getAll: () => req.cookies.getAll(),
       setAll: (list) => {
         list.forEach(({ name, value }) => req.cookies.set(name, value));
         res = NextResponse.next({ request: req });
-        list.forEach(({ name, value, options }) => res.cookies.set(name, value, options));
+        list.forEach(({ name, value, options }) => res.cookies.set(name, value, cookieLife(options)));
       },
     },
   });
