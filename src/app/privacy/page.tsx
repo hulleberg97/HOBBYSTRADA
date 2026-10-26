@@ -123,7 +123,7 @@ export default function PrivacyPage() {
                 what="Ta betalt for annonseløft gjennom Vipps og aktivere løftet."
                 data="Pakke, beløp, tidspunkt, annonsens tittel, navnet ditt og e-postadressen din."
                 basis="Avtale med deg (art. 6 nr. 1 b) og bokføringsloven (art. 6 nr. 1 c)."
-                kept="5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Sletter du kontoen, fjerner vi e-postadressen fra betalingen, men beholder navnet ditt og de andre opplysningene om kjøpet."
+                kept="5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Kvitteringen er et salgsdokument som loven krever at oppbevares uendret, så navnet og e-postadressen på den beholdes også etter at du har slettet kontoen."
               />
               <Purpose
                 title="Lagrede søk"
@@ -223,7 +223,7 @@ export default function PrivacyPage() {
                 items={[
                   "Innsyn: du kan få vite hvilke opplysninger vi har om deg, og få en kopi.",
                   "Retting: du kan be oss rette opplysninger som er feil.",
-                  "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger og bilder du har sendt i chatten, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes (se punkt 4). Betalinger beholder vi så lenge bokføringsloven krever. Er du stengt ute, beholder vi Vipps-ID-en på sperrelisten i to år.",
+                  "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger og bilder du har sendt i chatten, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes (se punkt 4). Betalinger beholder vi uendret så lenge bokføringsloven krever (se punkt 4). Er du stengt ute, beholder vi Vipps-ID-en på sperrelisten i to år.",
                   "Begrensning: du kan be oss begrense bruken av opplysningene, for eksempel mens vi sjekker om de er riktige, eller mens vi vurderer en protest.",
                   "Dataportabilitet: du kan få opplysningene du har gitt oss, i et maskinlesbart format.",
                   "Protestere: der grunnlaget er berettiget interesse, kan du protestere mot behandlingen.",

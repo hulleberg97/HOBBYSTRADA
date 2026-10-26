@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Sletter en konto og alt som hører til den: annonser, bilder, varsler og lagrede søk.
- * Betalinger beholdes i 5 år (bokføringsloven), men e-postadressen fjernes. I samtaler vises brukeren som «Slettet bruker».
+ * Betalinger (salgsdokumentet) beholdes uendret i 5 år etter bokføringsloven, også e-postadressen. I samtaler vises brukeren som «Slettet bruker».
  * Brukes når brukeren sletter selv, når en konto stenges ute, og når en inaktiv konto slettes.
  */
 export async function deleteAccount(db: SupabaseClient, userId: string): Promise<string | null> {
@@ -14,7 +14,6 @@ export async function deleteAccount(db: SupabaseClient, userId: string): Promise
   // Annonsene slettes eksplisitt, ellers ville de bli stående uten eier.
   const { error: listingError } = await db.from("listings").delete().eq("owner_id", userId);
   if (listingError) return "Kunne ikke slette annonsene.";
-  await db.from("boost_orders").update({ buyer_email: null }).eq("user_id", userId);
   await db.from("conversations").update({ buyer_name: "Slettet bruker" }).eq("buyer_id", userId);
   await db.from("conversations").update({ seller_name: "Slettet bruker" }).eq("seller_id", userId);
   const { error } = await db.auth.admin.deleteUser(userId);

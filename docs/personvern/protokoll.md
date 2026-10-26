@@ -20,7 +20,7 @@ Personvernforordningen artikkel 30. Gjelder hobbystrada.no.
 | 2 | Annonser | Vise annonser i markedet, manuell godkjenning | Brukere (selgere) | Annonseinnhold, bilder, fornavn, sted | Avtale (art. 6 nr. 1 b) | Alle besøkende (uten e-post), Supabase | Til brukeren sletter annonsen eller kontoen. Avviste slettes etter 30 dager |
 | 3 | Meldinger mellom brukere | Formidle meldinger mellom kjøper og selger, varsle på e-post | Brukere | Meldinger, bilder, fornavn, e-post (til varsling) | Avtale (art. 6 nr. 1 b). Berettiget interesse (f) når samtalen beholdes etter at én part har slettet kontoen | Den andre parten, Supabase, Domene AS | 12 måneder etter siste melding |
 | 4 | Gjennomgang av meldinger | Undersøke rapporter og mistanke om svindel | Brukere | Meldinger og bilder i de aktuelle samtalene | Berettiget interesse (art. 6 nr. 1 f) | Ingen eksterne | Ingen egne kopier |
-| 5 | Annonseløft og betaling | Ta betalt via Vipps, aktivere løftet | Brukere (kjøpere av løft) | Pakke, beløp, tidspunkt, annonsens tittel, navn, e-post | Avtale (b) og bokføringsloven (c) | Vipps, Supabase | 5 år etter regnskapsårets slutt. E-post fjernes når kontoen slettes |
+| 5 | Annonseløft og betaling | Ta betalt via Vipps, aktivere løftet | Brukere (kjøpere av løft) | Pakke, beløp, tidspunkt, annonsens tittel, navn, e-post | Avtale (b) og bokføringsloven (c) | Vipps, Supabase | 5 år etter regnskapsårets slutt. Salgsdokumentet oppbevares uendret, også etter at kontoen er slettet |
 | 6 | Lagrede søk | Varsle når nye kort passer et søk | Brukere | Søket, e-post | Avtale (art. 6 nr. 1 b) | Supabase, Domene AS | Til søket eller kontoen slettes |
 | 7 | Varsler på nettsiden | Beskjed om godkjenning, avvisning, løft og søketreff | Brukere | Hendelse, annonsens tittel, tidspunkt | Avtale (art. 6 nr. 1 b) | Supabase | 90 dager |
 | 8 | Henvendelser og rapporter | Svare på kontaktskjema, behandle rapporter om annonser | Alle som kontakter oss, selgere som rapporteres | Navn, e-post, innhold, hvilken annonse | Berettiget interesse (art. 6 nr. 1 f) | Supabase, Domene AS | 12 måneder (rapporter: etter behandling) |
@@ -31,6 +31,6 @@ Personvernforordningen artikkel 30. Gjelder hobbystrada.no.
 ## Rutiner
 
 - **Innsyn, retting, sletting, begrensning, dataportabilitet, protest:** henvendelser til post@hobbystrada.no besvares uten ugrunnet opphold og senest innen én måned. Identitet bekreftes ved innlogging.
-- **Sletting av konto:** brukeren sletter selv på Min side. Annonser, bilder, varsler, lagrede søk og Vipps-kobling slettes umiddelbart. Betalinger beholdes uten e-post. I samtaler vises «Slettet bruker».
+- **Sletting av konto:** brukeren sletter selv på Min side. Annonser, bilder, varsler, lagrede søk og Vipps-kobling slettes umiddelbart. Betalinger beholdes uendret (bokføringsloven § 10). I samtaler vises «Slettet bruker».
 - **Avvik og brudd (art. 33–34):** oppdages et brudd på personopplysningssikkerheten, vurderes risiko samme dag. Datatilsynet varsles innen 72 timer hvis bruddet kan medføre risiko. Berørte brukere varsles på e-post hvis risikoen er høy.
 - **Databehandleravtaler (art. 28):** Supabase DPA godkjent i Supabase-panelet. Vercel DPA inngår i Vercels vilkår. Domene AS: standard databehandleravtale.

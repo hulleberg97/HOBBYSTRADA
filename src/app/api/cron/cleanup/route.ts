@@ -124,7 +124,7 @@ async function inactiveAccounts(db: NonNullable<ReturnType<typeof adminClient>>)
           to: u.email,
           subject: "Kontoen din slettes om 30 dager",
           text: `${intro}\n\nLogg inn: ${site}/auth/login`,
-          html: brandedEmail({ title: "Kontoen din slettes om 30 dager", intro, button: "Logg inn og behold kontoen", url: `${site}/auth/login`, outro: "Gjør du ingenting, slettes kontoen automatisk. Betalinger beholder vi så lenge bokføringsloven krever." }),
+          html: brandedEmail({ title: "Kontoen din slettes om 30 dager", intro, button: "Logg inn og behold kontoen", url: `${site}/auth/login`, outro: "Gjør du ingenting, slettes kontoen automatisk. Betalinger beholder vi uendret så lenge bokføringsloven krever." }),
         });
         if (ok) {
           await db.auth.admin.updateUserById(u.id, { user_metadata: { ...meta, inactivity_warned_at: new Date(now).toISOString() } });
