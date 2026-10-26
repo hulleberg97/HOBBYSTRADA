@@ -13,6 +13,7 @@ import { ListingActions, MarkPaid, ResolveReport } from "@/components/ListingAct
 import { BlockUser } from "@/components/BlockUser";
 import { Unblock } from "@/components/Unblock";
 import { SalesReport } from "@/components/SalesReport";
+import { TestMail } from "@/components/TestMail";
 import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
@@ -269,6 +270,7 @@ export default async function AdminPage() {
           <h2 className={h2}>Salg siste 90 dager ({sales.length})</h2>
           <p className="mt-1 text-sm text-slate-600">Hvert betalt løft får et fortløpende salgsdokumentnummer. Rapporten under er til regnskapet, og hver rad har lenke til kvitteringen.</p>
           <SalesReport now={since90(0)} />
+          <TestMail />
           {sales.length > 0 && (
             <ul className="mt-4 divide-y divide-slate-100 rounded-3xl bg-white px-5 ring-1 ring-slate-200">
               {sales.map((r) => (

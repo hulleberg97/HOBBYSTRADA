@@ -2,12 +2,8 @@ import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { BOOSTS, boostDate, type BoostKey } from "./boosts";
 import { addNotification } from "./notifications";
-import { brandedEmail, isPlaceholderEmail, sendEmail } from "./email";
-import { boostDate as fmt } from "./boosts";
-import { COMPANY } from "./company";
-
-const COMPANY_NAME = COMPANY.name;
-const COMPANY_EMAIL = COMPANY.email;
+import { isPlaceholderEmail, sendEmail } from "./email";
+import { boostConfirmation } from "./boost-mail";
 
 /** Aktiverer en betalt bestilling: setter løftet på annonsen og markerer bestillingen som betalt. */
 export async function activateBoost(db: SupabaseClient, orderId: string) {
@@ -22,26 +18,8 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
   // Bekreftelse på e-post sendes før løftet aktiveres (angrerettloven § 18, ehandelsloven § 12)
   const { data: u } = order.user_id ? await db.auth.admin.getUserById(order.user_id) : { data: { user: null } };
   if (u.user?.email && !isPlaceholderEmail(u.user.email)) {
-    const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
-    const plan = BOOSTS[order.plan as BoostKey];
-    const amount = Number((await db.from("boost_orders").select("amount, invoice_no").eq("id", order.id).maybeSingle()).data?.amount ?? plan.price);
-    const intro = `Takk for kjøpet. ${plan.name} på «${l?.title ?? "annonsen"}» aktiveres nå og varer til ${fmt(until)}.`;
-    const details = `Dette kjøpte du: ${plan.name}, ${plan.days} dager, ${amount} kr uten merverdiavgift (${COMPANY_NAME} er ikke mva-registrert). Betalt med Vipps. Levering startet ${fmt(new Date().toISOString())}.`;
-    const consent = "Ved bestillingen ba du om at løftet skulle starte med en gang, og bekreftet at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over.";
-    const withdrawal = `Angrerett: du har 14 dager fra kjøpet. Angrer du før perioden er over, betaler du for dagene som er brukt og får resten tilbake til samme betalingsmåte senest 14 dager etter at vi har fått beskjed. Du angrer med knappen «Angre kjøpet» på kvitteringen, med angreskjemaet (${site}/angreskjema) eller ved å skrive til ${COMPANY_EMAIL}.`;
-    await sendEmail({
-      to: u.user.email,
-      subject: `Bekreftelse: ${plan.name}`,
-      text: `${intro}\n\n${details}\n\n${consent}\n\n${withdrawal}\n\nKvittering: ${site}/kvittering/${order.id}\nSalgsvilkår: ${site}/salgsvilkar`,
-      html: brandedEmail({
-        title: "Bekreftelse på annonseløft",
-        intro,
-        quote: `${details}\n\n${consent}\n\n${withdrawal}`,
-        button: "Se kvitteringen",
-        url: `${site}/kvittering/${order.id}`,
-        outro: `Salgsvilkårene finner du på ${site}/salgsvilkar. Ta vare på denne e-posten, den er bekreftelsen på avtalen.`,
-      }),
-    });
+    const amount = Number((await db.from("boost_orders").select("amount").eq("id", order.id).maybeSingle()).data?.amount ?? BOOSTS[order.plan as BoostKey].price);
+    await sendEmail({ to: u.user.email, ...boostConfirmation({ plan: order.plan as BoostKey, title: l?.title ?? "annonsen", amount, orderId: order.id, until }) });
   }
   if (order.listing_id) await db.from("listings").update(patch).eq("id", order.listing_id);
   await db.from("boost_orders").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", order.id);
