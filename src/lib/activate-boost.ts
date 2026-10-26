@@ -4,6 +4,10 @@ import { BOOSTS, boostDate, type BoostKey } from "./boosts";
 import { addNotification } from "./notifications";
 import { brandedEmail, isPlaceholderEmail, sendEmail } from "./email";
 import { boostDate as fmt } from "./boosts";
+import { COMPANY } from "./company";
+
+const COMPANY_NAME = COMPANY.name;
+const COMPANY_EMAIL = COMPANY.email;
 
 /** Aktiverer en betalt bestilling: setter løftet på annonsen og markerer bestillingen som betalt. */
 export async function activateBoost(db: SupabaseClient, orderId: string) {
@@ -22,17 +26,22 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
   if (u.user?.email && !isPlaceholderEmail(u.user.email)) {
     const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
     const plan = BOOSTS[order.plan as BoostKey];
+    const amount = Number((await db.from("boost_orders").select("amount, invoice_no").eq("id", order.id).maybeSingle()).data?.amount ?? plan.price);
     const intro = `Takk for kjøpet. ${plan.name} på «${l?.title ?? "annonsen"}» er aktivert og varer til ${fmt(until)}.`;
+    const details = `Dette kjøpte du: ${plan.name}, ${plan.days} dager, ${amount} kr uten merverdiavgift (${COMPANY_NAME} er ikke mva-registrert). Betalt med Vipps. Levering startet ${fmt(new Date().toISOString())}.`;
+    const consent = "Ved bestillingen ba du om at løftet skulle starte med en gang, og bekreftet at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over.";
+    const withdrawal = `Angrerett: du har 14 dager fra kjøpet. Angrer du før perioden er over, betaler du for dagene som er brukt og får resten tilbake til samme betalingsmåte senest 14 dager etter at vi har fått beskjed. Du angrer med knappen «Angre kjøpet» på kvitteringen, med angreskjemaet (${site}/angreskjema) eller ved å skrive til ${COMPANY_EMAIL}.`;
     await sendEmail({
       to: u.user.email,
       subject: `Bekreftelse: ${plan.name}`,
-      text: `${intro}\n\nKvittering: ${site}/kvittering/${order.id}\n\nAngrerett: du har 14 dager. Løftet startet etter ditt ønske, og angrer du før perioden er over, betaler du for den delen som er brukt. Angreskjema: ${site}/angreskjema`,
+      text: `${intro}\n\n${details}\n\n${consent}\n\n${withdrawal}\n\nKvittering: ${site}/kvittering/${order.id}\nSalgsvilkår: ${site}/salgsvilkar`,
       html: brandedEmail({
         title: "Bekreftelse på annonseløft",
         intro,
+        quote: `${details}\n\n${consent}\n\n${withdrawal}`,
         button: "Se kvitteringen",
         url: `${site}/kvittering/${order.id}`,
-        outro: `Angrerett: du har 14 dager. Løftet startet etter ditt ønske, og angrer du før perioden er over, betaler du for den delen som er brukt. Angreskjema: ${site}/angreskjema`,
+        outro: `Salgsvilkårene finner du på ${site}/salgsvilkar. Ta vare på denne e-posten, den er bekreftelsen på avtalen.`,
       }),
     });
   }

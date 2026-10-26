@@ -26,7 +26,7 @@ export default function CookiePage() {
         },
         {
           title: "Hva vi ikke bruker",
-          body: <p>Vi bruker ikke informasjonskapsler for sporing, analyse eller annonser. Derfor har vi ingen samtykkeverktøy. Knappen «Administrer informasjonskapsler» nederst på siden viser bare denne informasjonen.</p>,
+          body: <p>Vi bruker ikke informasjonskapsler for sporing, analyse eller annonser. Derfor har vi ingen samtykkeverktøy. Knappen «Om informasjonskapsler» nederst på siden viser bare denne informasjonen.</p>,
         },
         {
           title: "Slik sletter du dem",

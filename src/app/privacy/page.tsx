@@ -100,10 +100,17 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Annonser"
-                what="Vise annonsene dine i markedet, og solgte annonser i prisarkivet, så samlere kan se hva kort har gått for. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
+                what="Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
                 data="Annonseinnhold, bilder, fornavn og sted."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter annonsen eller kontoen. Annonser du merker som solgt, vises i prisarkivet «Solgte kort» med fornavn, sted og bilder i 12 måneder, og slettes deretter automatisk. Avviste annonser slettes etter 30 dager."
+                kept="Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager."
+              />
+              <Purpose
+                title="Prisarkivet «Solgte kort»"
+                what="Vise hva kort har blitt solgt for, så samlere kan vurdere priser. Solgte annonser vises i arkivet med kort, pris, salgsdato og bilder, uten fornavnet og stedet ditt."
+                data="Kortdata, pris, salgsdato og bilder."
+                basis="Berettiget interesse (art. 6 nr. 1 f): å gi samlere et pålitelig prisbilde. Du kan protestere, så fjerner vi annonsen fra arkivet."
+                kept="12 måneder etter salget, deretter slettes annonsen automatisk. Sletter du annonsen eller kontoen, forsvinner den fra arkivet med en gang."
               />
               <Purpose
                 title="Meldinger mellom brukere"
@@ -149,7 +156,7 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Utestengelse"
-                what="Stenge ute brukere som bryter brukervilkårene, og hindre at de lager ny konto. Når en bruker stenges ute, sperres kontoen og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen, eller når en klage er avgjort, på samme måte som når du sletter kontoen selv. Avgjørelsen tas av et menneske. Du får beskjed på e-post med begrunnelse, og kan klage til post@hobbystrada.no innen 30 dager."
+                what="Stenge ute brukere som bryter brukervilkårene, og hindre at de lager ny konto. Når en bruker stenges ute, sperres kontoen og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen. Klager du innen fristen, slettes de først når klagen er avgjort. Slettingen skjer på samme måte som når du sletter kontoen selv. Avgjørelsen tas av et menneske. Du får beskjed på e-post med begrunnelse, og kan klage til post@hobbystrada.no innen 30 dager."
                 data="Vipps-ID, konto-ID, tidspunktet for utestengelsen, hvilket vilkår som er brutt, og hvilke annonser som ble skjult (til kontoen er slettet)."
                 basis="Berettiget interesse (art. 6 nr. 1 f): å håndheve vilkårene og beskytte brukerne og markedet."
                 kept="Vipps-ID-en står på en sperreliste i to år fra utestengelsen og slettes deretter."
@@ -264,7 +271,7 @@ export default function PrivacyPage() {
                 ]}
               />
               <p className="mt-3">
-                Siden vi ikke bruker informasjonskapsler som krever samtykke, har vi ikke noe samtykkeverktøy. Knappen «Administrer informasjonskapsler»
+                Siden vi ikke bruker informasjonskapsler som krever samtykke, har vi ikke noe samtykkeverktøy. Knappen «Om informasjonskapsler»
                 nederst på siden viser bare denne informasjonen.
               </p>
             </>

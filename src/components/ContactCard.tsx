@@ -95,6 +95,8 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
             </span>
           )}
         </div>
+        {/* Solgte kort vises uten selger og sted (prisarkivet) */}
+        {l.status !== "sold" && (
         <div className="mt-5 flex items-center gap-3 rounded-2xl bg-slate-50 p-3">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary font-heading text-base font-semibold text-primary-foreground">
             {l.seller[0]?.toUpperCase()}
@@ -119,6 +121,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
             </div>
           </div>
         </div>
+        )}
         {l.status === "active" && (
           <div className="mt-5">
             <div className="grid gap-2.5">

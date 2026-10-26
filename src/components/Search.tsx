@@ -102,6 +102,10 @@ export function Search({ listings }: { listings: Listing[] }) {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-slate-600" aria-live="polite">
             <span className="font-semibold text-slate-950">{result.length}</span> {result.length === 1 ? "annonse" : "annonser"}
+            {" · "}
+            <Link href="/terms#sortering" className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
+              Slik sorteres annonsene
+            </Link>
           </p>
           <Link
             className="inline-flex h-10 items-center gap-2 rounded-full border border-slate-300 bg-white px-4 text-sm font-medium text-slate-800 transition hover:border-primary hover:text-primary"

@@ -29,7 +29,13 @@ export default function SalesTermsPage() {
           body: (
             <>
               <p>Annonseløft gir annonsen din bedre synlighet i en bestemt periode:</p>
-              <List items={Object.values(BOOSTS).map((b) => `${b.name}: ${formatPrice(b.price)} for ${b.days} dager`)} />
+              <List
+                items={[
+                  `${BOOSTS.top.name} (${BOOSTS.top.days} dager): annonsen legges øverst i markedet. Pris: ${formatPrice(BOOSTS.top.price)}.`,
+                  `${BOOSTS.featured.name} (${BOOSTS.featured.days} dager): annonsen legges øverst i markedet og får et fremhevet merke. Pris: ${formatPrice(BOOSTS.featured.price)}.`,
+                  `${BOOSTS.frontpage.name} (${BOOSTS.frontpage.days} dager): som Fremhevet, og annonsen vises også i kortraden på forsiden. Pris: ${formatPrice(BOOSTS.frontpage.price)}.`,
+                ]}
+              />
               <p>Alle priser er oppgitt i norske kroner, uten merverdiavgift fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Du må være 18 år for å kjøpe annonseløft.</p>
             </>
           ),
@@ -38,7 +44,17 @@ export default function SalesTermsPage() {
           title: "Betaling",
           body: (
             <p>
-              Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps. Kvitteringen finner du under Min side, og du kan skrive den ut eller lagre den som PDF. Prisene er uten merverdiavgift, fordi HOBBYSTRADA ikke er registrert i Merverdiavgiftsregisteret.
+              Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps. Kvitteringen finner du under Min side, og du kan skrive den ut eller lagre den som PDF.
+            </p>
+          ),
+        },
+        {
+          title: "Slik bestiller du",
+          body: (
+            <p>
+              Velg annonse og pakke på siden <Link href="/annonseloft">Annonseløft</Link>, kryss av for oppstart, og betal i Vipps. Før du betaler, ser du
+              valgt pakke og pris, og kan gå tilbake og endre valget. Avtalen inngås på norsk. Bestillingen og kvitteringen lagres hos oss og er tilgjengelig
+              under Min side.
             </p>
           ),
         },
@@ -48,7 +64,7 @@ export default function SalesTermsPage() {
             <p>
               Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang betalingen er gjennomført, og varer i perioden du har valgt. Du får
               bekreftelse på e-post. Sletter du annonsen eller merker den som solgt før perioden er over, stopper løftet, og resten av perioden refunderes
-              ikke.
+              ikke. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den delen av perioden som ikke er brukt.
             </p>
           ),
         },
@@ -57,14 +73,15 @@ export default function SalesTermsPage() {
           body: (
             <>
               <p>
-                Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 20). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at
+                Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 21). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at
                 løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden
                 er over (angrerettloven §§ 19 og 22 bokstav c).
               </p>
               <p className="mt-3">
-                Angrer du før perioden er over, betaler du for den delen av perioden som er brukt, regnet i dager, og får resten tilbake til samme
-                betalingsmåte innen 14 dager (angrerettloven § 26). Du angrer ved å sende <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til{" "}
-                {COMPANY.email}.
+                Angrer du før perioden er over, betaler du for den delen av perioden som er brukt, regnet i dager (angrerettloven § 26). Resten får du
+                tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi har fått beskjed (angrerettloven § 24). Du angrer med knappen «Angre
+                kjøpet» på kvitteringen under Min side, ved å sende <Link href="/angreskjema">angreskjemaet</Link>, eller med en e-post til {COMPANY.email}.
+                Du får bekreftelse på e-post med en gang vi har mottatt meldingen.
               </p>
             </>
           ),
@@ -84,7 +101,7 @@ export default function SalesTermsPage() {
           body: (
             <p>
               Er du ikke fornøyd, send oss en melding via <Link href="/contact">kontaktskjemaet</Link> med emnet «Annonseløft og betaling», eller på e-post til{" "}
-              {COMPANY.email}. Vi svarer vanligvis innen ett døgn. Kommer vi ikke til enighet, kan du klage til Forbrukerrådet.
+              {COMPANY.email}. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du klage til Forbrukerrådet.
             </p>
           ),
         },

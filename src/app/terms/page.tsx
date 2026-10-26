@@ -108,8 +108,8 @@ export default function TermsPage() {
                 hvorfor. Avgjørelsen tas av et menneske.
               </p>
               <p className="mt-3">
-                Når kontoen stenges, skjules annonsene dine, og du kan ikke logge inn. Kontoen og annonsene slettes 30 dager etter utestengelsen, eller når en
-                klage er avgjort. Du kan ikke lage ny konto før det har gått to år.
+                Når kontoen stenges, skjules annonsene dine, og du kan ikke logge inn. Kontoen og annonsene slettes 30 dager etter utestengelsen. Klager du
+                innen fristen, slettes de først når klagen er avgjort. Du kan ikke lage ny konto før det har gått to år.
               </p>
               <p className="mt-3">
                 Mener du at avgjørelsen er feil, kan du klage til {COMPANY.email} innen 30 dager. Vi svarer innen én måned. Får du medhold, legger vi ut
@@ -158,7 +158,7 @@ export default function TermsPage() {
               </p>
               <p className="mt-3">
                 <strong>Hvis du avslutter annonsen selv.</strong> Sletter du annonsen eller merker den som solgt mens løftet er aktivt, får du ikke refundert
-                resten av perioden.
+                resten av perioden. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den delen av perioden som ikke er brukt.
               </p>
             </>
           ),
@@ -167,10 +167,10 @@ export default function TermsPage() {
           title: "Slik sorteres annonsene",
           body: (
             <p id="sortering">
-              Annonser med aktivt annonseløft vises øverst i markedet, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er merket «Annonseløft».
-              Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser likt, uavhengig av
-              løft. Kortraden på forsiden viser toppannonser først, deretter de nyeste annonsene. Bortsett fra annonseløft påvirker betaling ikke
-              rekkefølgen.
+              Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
+              merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
+              likt, uavhengig av løft. Kortraden på forsiden viser toppannonser først, deretter de nyeste annonsene. Prisarkivet «Solgte kort» sorteres etter
+              salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
             </p>
           ),
         },
@@ -216,8 +216,9 @@ export default function TermsPage() {
               </p>
               <p className="mt-3">
                 Vi er ikke ansvarlige for indirekte tap, som tapt fortjeneste eller tapt handel. Vårt samlede ansvar overfor deg er begrenset til det du har
-                betalt for annonseløft de siste 12 månedene. Begrensningene gjelder ikke hvis vi har opptrådt forsettlig eller grovt uaktsomt. De begrenser
-                heller ikke rettighetene du har som forbruker etter ufravikelig lov, blant annet digitalytelsesloven og angrerettloven.
+                betalt for annonseløft de siste 12 månedene, men minst 1 000 kr. Begrensningene gjelder ikke hvis vi har opptrådt forsettlig eller grovt
+                uaktsomt. De begrenser heller ikke rettighetene du har etter ufravikelig lov, blant annet digitalytelsesloven, angrerettloven og
+                personvernreglene.
               </p>
             </>
           ),

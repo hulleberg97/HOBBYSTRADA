@@ -11,7 +11,7 @@ export default function Page() {
   const row = "grid gap-1 border-b border-dashed border-slate-300 py-3 sm:grid-cols-[220px_1fr]";
   return (
     <div className="min-h-screen">
-      <PageHeader eyebrow="Juridisk" title="Angreskjema" lead="Bruk dette skjemaet hvis du vil gå fra avtalen om annonseløft. Du kan også sende de samme opplysningene i en vanlig e-post." />
+      <PageHeader eyebrow="Juridisk" title="Angreskjema" lead="Bruk dette skjemaet hvis du vil gå fra avtalen om annonseløft. Du kan også trykke «Angre kjøpet» på kvitteringen under Min side, eller sende en vanlig e-post. Enhver tydelig melding om at du angrer, er nok." />
       <div className="container-custom max-w-3xl pb-16 pt-10">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
           <p className="text-sm text-slate-600">
@@ -31,7 +31,7 @@ export default function Page() {
             </div>
             <div className={row}>
               <dt className="text-slate-500">Kvitteringsnummer</dt>
-              <dd>Salgsdokument nr.: __________ (står på kvitteringen under Min side)</dd>
+              <dd>Salgsdokument nr.: __________ (hvis du har det, står på kvitteringen under Min side)</dd>
             </div>
             <div className={row}>
               <dt className="text-slate-500">Bestilt den</dt>

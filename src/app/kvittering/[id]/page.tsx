@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/format";
 import { getInvoice, invoiceDate } from "@/lib/invoice";
 import { adminClient } from "@/lib/supabase-admin";
 import { PrintButton } from "@/components/PrintButton";
+import { WithdrawBoost } from "@/components/WithdrawBoost";
 
 export const metadata: Metadata = { title: "Kvittering", robots: { index: false } };
 
@@ -81,8 +82,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </table>
           <p className="mt-6 text-xs text-slate-500">
             Beløpet er uten merverdiavgift. {COMPANY.name} er ikke registrert i Merverdiavgiftsregisteret. Betalingen er gjennomført i sin helhet, ingen
-            forfall. Angrerett: tjenesten ble levert straks etter at du ba om det, og angreretten falt bort (se salgsvilkårene).
+            forfall. Angrerett: du ba om at løftet skulle starte med en gang, og bekreftet at angreretten går tapt når løftet er levert fullt ut. Angrer du
+            innen 14 dager og før perioden er over, betaler du for dagene som er brukt og får resten tilbake (se salgsvilkårene).
           </p>
+          {inv.userId === user.id && <WithdrawBoost orderId={inv.id} days={inv.days} amount={inv.amount} paidAt={inv.paidAt} />}
         </article>
       </div>
     </div>

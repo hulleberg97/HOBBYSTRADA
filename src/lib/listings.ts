@@ -134,7 +134,8 @@ export async function getSoldListings(): Promise<Listing[]> {
     db.from("listings").select(cols).eq("status", "sold").order("updated_at", { ascending: false }).limit(500),
   );
   if (error) return [];
-  return (data as unknown as Row[]).map(fromRow);
+  // Arkivet viser kort, pris, dato og bilder, ikke hvem som solgte eller hvor (personvern)
+  return (data as unknown as Row[]).map(fromRow).map((l) => ({ ...l, seller: "", location: "", sellerVerified: false }));
 }
 
 export function newest(list: Listing[]) {

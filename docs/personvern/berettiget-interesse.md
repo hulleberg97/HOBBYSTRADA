@@ -36,6 +36,12 @@ Hver behandling vurderes i tre steg: (1) er interessen berettiget, (2) er behand
 - **Nødvendig:** uten en sperreliste kan en utestengt bruker logge inn på nytt med samme Vipps-konto og få ny konto umiddelbart. Vipps-ID er den eneste stabile identifikatoren vi har.
 - **Avveining:** sperrelisten inneholder bare Vipps-ID, tidspunkt og hvilket vilkår som er brutt. Den beskriver et vilkårsbrudd, ikke et lovbrudd, så artikkel 10 kommer ikke til anvendelse. Avgjørelsen tas av et menneske, brukeren får begrunnelse på e-post og kan klage, og oppføringen slettes etter to år. Interessen veier tyngre.
 
+## 6. Prisarkivet «Solgte kort»
+
+- **Interesse:** gi samlere et pålitelig bilde av hva kort faktisk selges for. Det er nyttig for både kjøpere og selgere, og gjør markedet tryggere.
+- **Nødvendig:** prisbildet krever at solgte annonser vises en stund etter salget, med kort, pris, dato og bilder.
+- **Avveining:** arkivet viser ikke fornavn eller sted, så oppføringen kan ikke knyttes til selgeren av andre enn dem som allerede kjente annonsen. Oppføringen slettes etter 12 måneder, og med en gang hvis selgeren sletter annonsen eller kontoen. Selgeren kan protestere, og da fjernes annonsen fra arkivet. Interessen veier tyngre.
+
 ## Protest
 
 Protesterer en bruker mot en av behandlingene over, vurderes saken konkret. Behandlingen stanses med mindre vi kan påvise tvingende berettigede grunner som går foran brukerens interesser, eller behandlingen er nødvendig for å fastsette, gjøre gjeldende eller forsvare et rettskrav (art. 21 nr. 1).
