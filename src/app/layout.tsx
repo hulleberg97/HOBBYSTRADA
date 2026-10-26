@@ -32,7 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Forsiden: magasinoppsett er standard (data-vis osv. på <html>). ?vis=av, ?stort=av, ?tittel2=av, ?skrift=av viser de gamle variantene, andre verdier prøver alternativer. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search),h=document.documentElement;["vis","stort","tittel2","skrift","knapp"].forEach(function(k){var v=q.get(k);if(v)sessionStorage.setItem(k,v);var s=sessionStorage.getItem(k);if(s==="av")delete h.dataset[k];else if(s)h.dataset[k]=s})}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search),h=document.documentElement;["vis","stort","tittel2","skrift","knapp","pill"].forEach(function(k){var v=q.get(k);if(v)sessionStorage.setItem(k,v);var s=sessionStorage.getItem(k);if(s==="av")delete h.dataset[k];else if(s)h.dataset[k]=s})}catch(e){}})()`,
           }}
         />
         {/* Backup: ?ot=av viser den gamle overskriften (huskes mens fanen er åpen), ?ot=u1 tilbake */}

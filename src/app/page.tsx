@@ -14,6 +14,7 @@ import {
   StarIcon,
 } from "lucide-react";
 import { HeroFan, Slab } from "@/components/HeroFan";
+import { RowPill } from "@/components/RowPill";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { fanCards } from "@/lib/fan";
@@ -143,13 +144,43 @@ export default async function Home() {
             </div>
           </div>
           {/* Kortraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
-          <div className="mag-rull-ramme mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
+          <div className="mag-rull-ramme relative mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
+            {/* TEST ?pill=midt|topp: prislapp nederst, over speilingen. «midt» følger kortet i midten, «topp» viser toppannonsen. */}
+            <div className="pill-midt pointer-events-none absolute inset-x-0 bottom-3 z-10 hidden justify-center px-4 lg:bottom-5 [&>a]:pointer-events-auto">
+              <RowPill cards={fanList} />
+            </div>
+            <div className="pill-topp pointer-events-none absolute inset-x-0 bottom-3 z-10 hidden justify-center px-4 lg:bottom-5">
+              <Link
+                href={`/products/${fanList[0].slug}`}
+                className="fan-pill pointer-events-auto flex items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da]"
+              >
+                <span className="min-w-0">
+                  <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">Toppannonse</span>
+                  <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{fanList[0].player}</span>
+                </span>
+                <span className="shrink-0 font-heading text-sm font-bold text-[#8a6a24] sm:text-base">{formatPrice(fanList[0].price)}</span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
+                  <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
             <ul className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>
                 fanList.map((l, i) => (
-                  <li key={`${k}-${l.slug}`} className="mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
+                  <li key={`${k}-${l.slug}`} data-slug={l.slug} className="relative mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
                     <Link href={`/products/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
                       <Slab l={l} eager={k === 0 && i < 6} />
+                    </Link>
+                    {/* TEST ?pill=hver: liten prislapp under hvert kort, glir med raden */}
+                    <Link
+                      href={`/products/${l.slug}`}
+                      tabIndex={-1}
+                      className="pill-hver fan-pill absolute left-1/2 top-full z-10 mt-2 hidden -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-[#f7f5f0] py-1 pl-3 pr-1 text-[12px] font-semibold text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da]"
+                    >
+                      <span className="text-[#8a6a24]">{formatPrice(l.price)}</span>
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#cfa653]">
+                        <ArrowRightIcon className="h-3 w-3" aria-hidden="true" />
+                      </span>
                     </Link>
                   </li>
                 )),
