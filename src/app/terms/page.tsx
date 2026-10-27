@@ -11,7 +11,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Vilkår for bruk"
-      updated="26. oktober 2026"
+      updated="27. oktober 2026"
       sections={[
         {
           title: "Om tjenesten",
