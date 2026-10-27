@@ -560,7 +560,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               />
             </div>
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">Kjøperne ser brukernavnet og stedet ditt. All kontakt skjer i chatten.</p>
+          <p className="mt-2 text-xs text-muted-foreground">Kjøperne ser fornavnet og stedet ditt. All kontakt skjer i chatten.</p>
           {user && (
             <p className="mt-5 rounded-lg bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
               Du er logget inn som <span className="font-semibold text-foreground">{user.email}</span>. Meldinger fra kjøpere kommer under Meldinger, og du får

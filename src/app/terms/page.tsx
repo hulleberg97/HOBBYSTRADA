@@ -37,7 +37,10 @@ export default function TermsPage() {
           title: "Konto",
           body: (
             <>
-              <p>Du må ha en konto for å legge ut annonser, sende meldinger og kjøpe annonseløft. Du logger inn med Vipps.</p>
+              <p>
+                Du må ha en konto for å legge ut annonser, sende meldinger og kjøpe annonseløft. Du logger inn med Vipps. Navnet fra Vipps kan ikke endres
+                på nettsiden. Fornavnet ditt vises på annonsene, og hele navnet vises for dem du chatter med, så kjøper og selger vet hvem de handler med.
+              </p>
               <p className="mt-3">
                 Du må være minst 18 år for å ha konto. Når du lager konto, bekrefter du at du er minst 18 år. Gir du uriktige opplysninger om alder,
                 kan kontoen stenges.
