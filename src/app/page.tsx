@@ -31,11 +31,12 @@ export default async function Home() {
     .slice(0, 4);
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
   const c = categoryCounts(all);
-  // Kortvifta: alle toppannonser, deretter de nyeste – helst med ekte bilde
+  // Kortraden: festede kort, alle toppannonser, så Fremhevet og Topp av listen, og til slutt de nyeste – helst med ekte bilde
   const fanPinned = all.filter((l) => l.fanSlot);
   const fanPaid = all.filter((l) => l.frontpage);
-  const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))].slice(0, 10);
-  const fanList = fanCards(fanPinned, fanPaid, fanFill);
+  const fanBoosted = all.filter((l) => !l.frontpage && (l.featured || l.bumpedAt));
+  const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))];
+  const fanList = fanCards(fanPinned, fanPaid, fanBoosted, fanFill);
   return (
     <div className="bg-background">
       {/* TEST ?vis=magasin: magasinforside – stor overskrift til venstre, ett stort kort ut av høyre kant, de andre i en rad under */}

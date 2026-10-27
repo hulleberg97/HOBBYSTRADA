@@ -31,9 +31,9 @@ export default function SalesTermsPage() {
               <p>Annonseløft gir annonsen din bedre synlighet i en bestemt periode:</p>
               <List
                 items={[
-                  `${BOOSTS.top.name} (${BOOSTS.top.days} dager): annonsen legges øverst i markedet. Pris: ${formatPrice(BOOSTS.top.price)}.`,
-                  `${BOOSTS.featured.name} (${BOOSTS.featured.days} dager): annonsen legges øverst i markedet og får et fremhevet merke. Pris: ${formatPrice(BOOSTS.featured.price)}.`,
-                  `${BOOSTS.frontpage.name} (${BOOSTS.frontpage.days} dager): som Fremhevet, og annonsen vises også i kortraden på forsiden. Pris: ${formatPrice(BOOSTS.frontpage.price)}.`,
+                  `${BOOSTS.top.name} (${BOOSTS.top.days} dager): annonsen legges øverst i markedet, og vises i kortraden på forsiden når det er ledig plass. Pris: ${formatPrice(BOOSTS.top.price)}.`,
+                  `${BOOSTS.featured.name} (${BOOSTS.featured.days} dager): annonsen legges øverst i markedet, får et fremhevet merke, og vises i kortraden på forsiden når det er ledig plass. Pris: ${formatPrice(BOOSTS.featured.price)}.`,
+                  `${BOOSTS.frontpage.name} (${BOOSTS.frontpage.days} dager): som Fremhevet, og annonsen har garantert plass i kortraden på forsiden hele perioden. Pris: ${formatPrice(BOOSTS.frontpage.price)}.`,
                 ]}
               />
               <p>Alle priser er oppgitt i norske kroner, uten merverdiavgift fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Du må være 18 år for å kjøpe annonseløft.</p>

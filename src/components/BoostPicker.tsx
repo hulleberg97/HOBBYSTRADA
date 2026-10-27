@@ -9,14 +9,14 @@ import { formatPrice, initials } from "@/lib/format";
 import { useUser } from "./useUser";
 
 const PLANS: { key: BoostKey; Icon: typeof SparklesIcon; perks: string[]; popular?: boolean }[] = [
-  { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Selg raskere uten å bruke mye"] },
+  { key: "top", Icon: ArrowUpToLineIcon, perks: ["Over alle vanlige annonser i markedet", "Kan vises i kortraden på forsiden", "Selg raskere uten å bruke mye"] },
   {
     key: "featured",
     Icon: SparklesIcon,
-    perks: ["Gullmerke og gullramme", "Vises under «Utvalgte kort» på forsiden", "Foran Topp av listen og vanlige annonser"],
+    perks: ["Gullmerke og gullramme", "Vises under «Utvalgte kort» på forsiden", "Kan vises i kortraden på forsiden", "Foran Topp av listen og vanlige annonser"],
     popular: true,
   },
-  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Plass i kortvifta på forsiden", "Aller først i markedet"] },
+  { key: "frontpage", Icon: CrownIcon, perks: ["Alt i Fremhevet", "Garantert plass i kortraden på forsiden", "Aller først i markedet"] },
 ];
 
 export function BoostPicker() {

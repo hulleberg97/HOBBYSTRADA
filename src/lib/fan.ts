@@ -1,19 +1,34 @@
 import type { Listing } from "./types";
 
+/** Raden fylles med Fremhevet og Topp av listen opp til dette antallet. Toppannonser og festede kort kommer alltid med. */
 const MAX_CARDS = 10;
+/** Gratisannonser fyller bare opp til dette antallet, så raden ikke står tom. */
+const MIN_CARDS = 8;
 
 /**
- * Kortene i vifta, i rekkefølgen de vises frem. Kort admin har festet står på sin faste plass (1 = først).
- * Toppannonser er med hele perioden – er de flere enn de ledige plassene, blir vifta lengre. Resten er de nyeste.
+ * Kortene i raden på forsiden, i rekkefølgen de vises frem.
+ * 1. Kort admin har festet står på sin faste plass (1 = først).
+ * 2. Toppannonser er alltid med hele perioden, uansett hvor mange de er.
+ * 3. Fremhevet og Topp av listen (i markedsrekkefølge) fyller opp til MAX_CARDS.
+ * 4. Nyeste gratisannonser fyller bare opp til MIN_CARDS.
  */
-export function fanCards(pinned: Listing[], paid: Listing[], fill: Listing[]) {
-  const taken = new Set(pinned.map((l) => l.slug));
-  const free = 5 - pinned.length;
-  const extra = paid.length > free ? paid.slice(0, MAX_CARDS - pinned.length) : [...paid, ...fill];
-  const candidates = extra.filter((l, i, all) => !taken.has(l.slug) && all.findIndex((x) => x.slug === l.slug) === i);
-  const size = Math.max(5, pinned.length + Math.min(candidates.length, MAX_CARDS - pinned.length));
+export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[], fill: Listing[]) {
+  const placed = new Set(pinned.map((l) => l.slug));
+  const rest: Listing[] = [];
+  const take = (list: Listing[], cap: number) => {
+    for (const l of list) {
+      if (placed.has(l.slug)) continue;
+      if (pinned.length + rest.length >= cap) return;
+      placed.add(l.slug);
+      rest.push(l);
+    }
+  };
+  take(paid, Infinity);
+  take(boosted, MAX_CARDS);
+  take(fill, MIN_CARDS);
+  const size = Math.max(pinned.length + rest.length, ...pinned.map((l) => l.fanSlot ?? 0));
   const ranked: (Listing | undefined)[] = Array(size).fill(undefined);
   for (const l of pinned) if (l.fanSlot) ranked[l.fanSlot - 1] = l;
-  for (let i = 0; i < size; i++) if (!ranked[i]) ranked[i] = candidates.shift();
+  for (let i = 0; i < size; i++) if (!ranked[i]) ranked[i] = rest.shift();
   return ranked.filter(Boolean) as Listing[];
 }

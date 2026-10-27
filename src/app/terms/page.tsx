@@ -174,7 +174,8 @@ export default function TermsPage() {
             <p id="sortering">
               Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
               merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
-              likt, uavhengig av løft. Kortraden på forsiden viser toppannonser først, deretter de nyeste annonsene. Prisarkivet «Solgte kort» sorteres etter
+              likt, uavhengig av løft. Kortraden på forsiden viser toppannonser først, deretter annonser med Fremhevet og Topp av listen, og til slutt de nyeste annonsene når det er
+              plass. Har raden få kort, kan vi selv feste utvalgte annonser der. Prisarkivet «Solgte kort» sorteres etter
               salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
             </p>
           ),
