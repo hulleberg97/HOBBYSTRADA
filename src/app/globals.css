@@ -484,6 +484,8 @@ html[data-glans] :is(.bg-white, .card-frame):not(select, [aria-current="true"], 
 html[data-glans] .card-frame { background: radial-gradient(70% 60% at 50% 40%, #ffffff 0%, #f6f7f8 65%, #eef0f2 100%); }
 html main .text-slate-400 { color: var(--nb-dempet); }
 html main .bg-slate-50, html main .bg-slate-100 { background-color: var(--nb-flate); }
+/* Egne meldinger i chatten er mørke med hvit tekst, også etter regelen over */
+html main [data-mine="true"] .bg-slate-100 { background-color: #0b1426; }
 /* Bobler med farge (fylt lys grå, ingen kant) på hvit side – gir struktur */
 html { --nb-boble: #eceef2; --nb-boble-hover: #dfe3e9; }
 html[data-glans] :is(a, button).rounded-full:is(.bg-white, .bg-slate-100, .bg-slate-200):not([aria-current="true"], [aria-current="page"], [aria-pressed="true"], [aria-checked="true"]),
