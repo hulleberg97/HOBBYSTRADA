@@ -540,20 +540,14 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
           <Step n="04" title="Se over og send inn" />
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="s-username" className={label}>
-                Brukernavn *
-              </label>
-              <input
-                id="s-username"
-                name="username"
-                required
-                maxLength={40}
-                placeholder="Vises i annonsen"
-                autoComplete="nickname"
-                // Brukernavnet vises offentlig – aldri hele e-postadressen
-                defaultValue={user?.name.includes("@") ? user.name.split("@")[0] : user?.name}
-                className={field}
-              />
+              <p className={label}>Brukernavn</p>
+              <p className={`${field} flex items-center justify-between gap-2 bg-slate-50 text-slate-700`}>
+                <span className="truncate">{user?.name.includes("@") ? user.name.split("@")[0] : user?.name}</span>
+                <Link href="/account?fane=konto" className="shrink-0 text-xs text-slate-500 underline underline-offset-2">
+                  Endre
+                </Link>
+              </p>
+              <p className="mt-1 text-xs text-slate-500">Vises i annonsen. Navnet ditt vises bare i chatten.</p>
             </div>
             <div>
               <label htmlFor="s-location" className={label}>

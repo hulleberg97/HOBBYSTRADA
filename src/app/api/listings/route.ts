@@ -43,7 +43,7 @@ export async function POST(req: Request) {
   const player = str(f, "player", 80);
   const set = str(f, "set", 100);
   const price = Number(str(f, "price", 9));
-  const username = str(f, "username", 40);
+  const username = (user.name.includes("@") ? user.name.split("@")[0] : user.name).slice(0, 40); // brukernavnet fra kontoen, ikke fra skjemaet
   const location = str(f, "location", 60);
   const email = user.email;
   const name = user.name;

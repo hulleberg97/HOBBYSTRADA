@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { adminClient } from "@/lib/supabase-admin";
+import { displayName } from "@/lib/user-name";
 import { getUser, needsVipps } from "@/lib/auth";
 import { rateLimit } from "@/lib/rate-limit";
 import { getListing } from "@/lib/listings";
@@ -27,8 +29,10 @@ export async function POST(req: Request) {
   if (!sellerId) return NextResponse.json({ error: "Meldinger er ikke slått på ennå." }, { status: 503 });
   if (sellerId === user.id) return NextResponse.json({ error: "Dette er din egen annonse." }, { status: 400 });
 
+  // I chatten vises navnet fra Vipps, ikke brukernavnet
+  const sellerName = await realName(sellerId, listing.seller);
   const id = await openConversation({
-    listing: { slug: listing.slug, title: listing.title, image: listing.image, seller: listing.seller },
+    listing: { slug: listing.slug, title: listing.title, image: listing.image, seller: sellerName },
     sellerId,
     buyer: { id: user.id, name: user.fullName },
   });
@@ -36,4 +40,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Meldingen ble ikke sendt. Prøv igjen om litt." }, { status: 500 });
   }
   return NextResponse.json({ ok: true, id });
+}
+
+/** Fullt navn på en bruker (fra Vipps), med brukernavnet som reserve. */
+async function realName(userId: string, fallback: string) {
+  const db = adminClient();
+  if (!db) return fallback;
+  const { data } = await db.auth.admin.getUserById(userId);
+  return data.user ? displayName(data.user.user_metadata, data.user.email ?? "") || fallback : fallback;
 }

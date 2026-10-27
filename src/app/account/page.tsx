@@ -11,6 +11,7 @@ import { paidBoosts, recentBoosts, settlePending } from "@/lib/settle-boost";
 import { isPlaceholderEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/format";
 import { BoostNotice } from "@/components/BoostNotice";
+import { UsernameForm } from "@/components/UsernameForm";
 import { activeBoost, boostDate } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
@@ -53,7 +54,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
             <Eyebrow>Min side</Eyebrow>
             <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 [overflow-wrap:anywhere] sm:text-[44px]">
               {/* Fornavnet holder; er navnet en e-post, brukes delen før @ */}
-              Hei, {user.name.includes("@") ? user.name.split("@")[0] : user.name.split(" ")[0]}
+              Hei, {(user.fullName || user.name).includes("@") ? user.name.split("@")[0] : (user.fullName || user.name).split(" ")[0]}
             </h1>
             <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
               {email}
@@ -179,7 +180,15 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Kontoen din</h2>
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-[140px_1fr]">
                 <dt className="text-slate-500">Navn</dt>
-                <dd className="font-medium text-slate-900">{user.fullName || user.name}</dd>
+                <dd className="font-medium text-slate-900">
+                  {user.fullName || user.name}
+                  <span className="ml-2 text-xs font-normal text-slate-500">Fra Vipps. Vises bare i chatten.</span>
+                </dd>
+                <dt className="text-slate-500">Brukernavn</dt>
+                <dd>
+                  <UsernameForm current={user.name} />
+                  <p className="mt-1 text-xs text-slate-500">Vises på annonsene dine.</p>
+                </dd>
                 <dt className="text-slate-500">E-post</dt>
                 <dd className="font-medium text-slate-900">{email}</dd>
                 <dt className="text-slate-500">Sted</dt>

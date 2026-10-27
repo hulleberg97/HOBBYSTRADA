@@ -62,7 +62,7 @@ const SECTIONS = [
     items: [
       [
         "Hvordan handler jeg trygt?",
-        "Be om bilder eller video av kortet, gjerne med en lapp med dagens dato ved siden av. Sjekk at mottakeren i Vipps eller banken har samme fornavn som selgeren i annonsen, og møt selgeren hvis dere bor i nærheten. Vurder frakt med sporing for best mulig trygghet, og vær ekstra varsom hvis prisen er langt under markedet.",
+        "Be om bilder eller video av kortet, gjerne med en lapp med dagens dato ved siden av. Sjekk at mottakeren i Vipps eller banken har samme navn som selgeren oppgir i chatten, og møt selgeren hvis dere bor i nærheten. Vurder frakt med sporing for best mulig trygghet, og vær ekstra varsom hvis prisen er langt under markedet.",
       ],
       [
         "Hvem har ansvaret hvis noe går galt?",
