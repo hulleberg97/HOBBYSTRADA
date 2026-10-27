@@ -11,7 +11,6 @@ import { paidBoosts, recentBoosts, settlePending } from "@/lib/settle-boost";
 import { isPlaceholderEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/format";
 import { BoostNotice } from "@/components/BoostNotice";
-import { UsernameForm } from "@/components/UsernameForm";
 import { activeBoost, boostDate } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
 import { ListingActions } from "@/components/ListingActions";
@@ -182,12 +181,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                 <dt className="text-slate-500">Navn</dt>
                 <dd className="font-medium text-slate-900">
                   {user.fullName || user.name}
-                  <span className="ml-2 text-xs font-normal text-slate-500">Fra Vipps. Vises bare i chatten.</span>
-                </dd>
-                <dt className="text-slate-500">Brukernavn</dt>
-                <dd>
-                  <UsernameForm current={user.name} />
-                  <p className="mt-1 text-xs text-slate-500">Vises på annonsene dine.</p>
+                  <span className="ml-2 text-xs font-normal text-slate-500">Fra Vipps. Fornavnet vises på annonsene, hele navnet i chatten.</span>
                 </dd>
                 <dt className="text-slate-500">E-post</dt>
                 <dd className="font-medium text-slate-900">{email}</dd>

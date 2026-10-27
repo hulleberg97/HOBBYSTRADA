@@ -540,14 +540,9 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
           <Step n="04" title="Se over og send inn" />
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <p className={label}>Brukernavn</p>
-              <p className={`${field} flex items-center justify-between gap-2 bg-slate-50 text-slate-700`}>
-                <span className="truncate">{user?.name.includes("@") ? user.name.split("@")[0] : user?.name}</span>
-                <Link href="/account?fane=konto" className="shrink-0 text-xs text-slate-500 underline underline-offset-2">
-                  Endre
-                </Link>
-              </p>
-              <p className="mt-1 text-xs text-slate-500">Vises i annonsen. Navnet ditt vises bare i chatten.</p>
+              <p className={label}>Navn i annonsen</p>
+              <p className={`${field} flex items-center bg-slate-50 text-slate-700`}>{user?.name.includes("@") ? user.name.split("@")[0] : user?.name}</p>
+              <p className="mt-1 text-xs text-slate-500">Fornavnet ditt fra Vipps. Kjøperne ser hele navnet ditt i chatten.</p>
             </div>
             <div>
               <label htmlFor="s-location" className={label}>

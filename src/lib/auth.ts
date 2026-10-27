@@ -10,7 +10,8 @@ export async function getUser() {
   return {
     id: data.user.id,
     email: data.user.email ?? "",
-    name: (meta.username as string) || (meta.name as string) || data.user.email || "",
+    // Fornavnet fra Vipps brukes på annonsene. Kontoer uten Vipps-navn bruker brukernavn eller e-post.
+    name: ((meta.name as string) || "").split(" ")[0] || (meta.username as string) || data.user.email || "",
     fullName: displayName(meta, data.user.email),
     location: (meta.location as string) || "",
     // Over 18 (fra Vipps). null når vi ikke vet det ennå, f.eks. kontoer fra før alderssjekken.

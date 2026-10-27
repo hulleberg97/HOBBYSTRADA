@@ -11,11 +11,12 @@ async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
     .from("profiles")
     .upsert({ id: userId, vipps_sub: v.sub, verified_name: v.name, verified_at: new Date().toISOString() });
   if (error) throw new Error(`Kunne ikke lagre profil: ${error.message}`);
-  await db.from("listings").update({ seller_verified: true }).eq("owner_id", userId);
+  const firstName = v.name.split(" ")[0];
+  await db.from("listings").update({ seller_verified: true, ...(firstName ? { seller_name: firstName } : {}) }).eq("owner_id", userId);
   // Stedet fra Vipps fylles inn hvis kontoen ikke har et fra før.
   const { data } = await db.auth.admin.getUserById(userId);
   const meta = data.user?.user_metadata ?? {};
-  const fresh: Record<string, unknown> = { ...meta, ...(v.city && !meta.location ? { location: v.city } : {}) };
+  const fresh: Record<string, unknown> = { ...meta, name: v.name || meta.name, username: v.name.split(" ")[0] || meta.username, ...(v.city && !meta.location ? { location: v.city } : {}) };
   delete fresh.inactivity_warned_at; // innlogging nullstiller varselet om sletting av inaktiv konto
   if (JSON.stringify(fresh) !== JSON.stringify(meta)) await db.auth.admin.updateUserById(userId, { user_metadata: fresh });
 }

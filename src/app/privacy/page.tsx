@@ -61,7 +61,7 @@ export default function PrivacyPage() {
                   "En fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn.",
                 ]}
               />
-              <p className="mt-3">Brukernavnet ditt er fornavnet fra Vipps til du velger et annet på Min side. Navnet fra Vipps kan ikke endres.</p>
+              <p className="mt-3">Fornavnet fra Vipps vises på annonsene dine, og hele navnet vises for dem du chatter med. Navnet kan ikke endres på nettsiden.</p>
               <p className="mt-4">Fra deg:</p>
               <List
                 items={[
@@ -93,20 +93,20 @@ export default function PrivacyPage() {
               <Purpose
                 title="Konto og innlogging"
                 what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps». Når du lager konto, bekrefter du at du er minst 18 år."
-                data="Navn, e-post, poststed, Vipps-ID, brukernavn og tidspunktet du bekreftet at du er minst 18 år."
+                data="Navn, e-post, poststed, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
                 kept="Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
               />
               <Purpose
                 title="Annonser"
-                what="Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser brukernavnet ditt, stedet og innholdet i annonsen, aldri navnet eller e-postadressen din."
-                data="Annonseinnhold, bilder, brukernavn og sted."
+                what="Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
+                data="Annonseinnhold, bilder, fornavn og sted."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
                 kept="Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager."
               />
               <Purpose
                 title="Prisarkivet «Solgte kort»"
-                what="Vise hva kort har blitt solgt for, så samlere kan vurdere priser. Solgte annonser vises i arkivet med kort, pris, salgsdato og bilder, uten brukernavnet, navnet og stedet ditt."
+                what="Vise hva kort har blitt solgt for, så samlere kan vurdere priser. Solgte annonser vises i arkivet med kort, pris, salgsdato og bilder, uten navnet og stedet ditt."
                 data="Kortdata, pris, salgsdato og bilder."
                 basis="Berettiget interesse (art. 6 nr. 1 f): å gi samlere et pålitelig prisbilde. Du kan protestere, så fjerner vi annonsen fra arkivet."
                 kept="12 måneder etter salget, deretter slettes annonsen automatisk. Sletter du annonsen eller kontoen, forsvinner den fra arkivet med en gang."
@@ -180,7 +180,7 @@ export default function PrivacyPage() {
               <p>Vi selger aldri personopplysninger. Disse får opplysninger, og bare det de trenger:</p>
               <List
                 items={[
-                  "Andre brukere: brukernavnet ditt, stedet og annonsene dine. I chatten ser den andre parten navnet ditt og det du skriver og sender.",
+                  "Andre brukere: fornavnet ditt, stedet og annonsene dine. I chatten ser den andre parten hele navnet ditt og det du skriver og sender.",
                   "Vipps MobilePay AS (org.nr. 918 713 867): innlogging og betaling. Vipps er selv ansvarlig for opplysningene de behandler om deg.",
                   "Supabase: database og lagring av bilder (databehandler).",
                   "Vercel: drift av nettsiden (databehandler).",
