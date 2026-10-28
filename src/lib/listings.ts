@@ -74,18 +74,19 @@ export function fromRow(r: Row): Listing {
 const BASE_COLUMNS =
   "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at, fan_slot";
 /** Kolonner som kommer med senere SQL-filer (004_vipps.sql, 016_innehaver.sql). Mangler de, hentes annonsene uten. */
-const optional = new Set(["seller_verified", "owner_listing"]);
-export const publicColumns = () => [BASE_COLUMNS, ...optional].join(", ");
+const OPTIONAL = ["seller_verified", "owner_listing"];
+export const publicColumns = (optional: string[] = OPTIONAL) => [BASE_COLUMNS, ...optional].join(", ");
 export const PUBLIC_COLUMNS = BASE_COLUMNS;
 
-/** Kjører spørringen, og prøver igjen uten kolonner databasen ikke har ennå. */
+/** Kjører spørringen, og prøver igjen uten kolonner databasen ikke har ennå. Sjekkes på nytt hver gang, så nye kolonner tas i bruk straks SQL-en er kjørt. */
 async function withColumns<T>(run: (cols: string) => PromiseLike<{ data: T; error: { message: string } | null }>) {
-  let res = await run(publicColumns());
+  let optional = OPTIONAL;
+  let res = await run(publicColumns(optional));
   while (res.error) {
-    const missing = [...optional].find((c) => res.error && res.error.message.includes(c));
+    const missing = optional.find((c) => res.error && res.error.message.includes(c));
     if (!missing) break;
-    optional.delete(missing);
-    res = await run(publicColumns());
+    optional = optional.filter((c) => c !== missing);
+    res = await run(publicColumns(optional));
   }
   return res;
 }
