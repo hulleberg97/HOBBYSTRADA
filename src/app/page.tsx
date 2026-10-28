@@ -13,8 +13,7 @@ import {
   ShirtIcon,
   StarIcon,
 } from "lucide-react";
-import { HeroFan, Slab } from "@/components/HeroFan";
-import { RowPill } from "@/components/RowPill";
+import { Slab } from "@/components/HeroFan";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
@@ -40,62 +39,11 @@ export default async function Home() {
   const fanList = fanCards(fanPinned, fanPaid, fanBoosted, fanFill);
   return (
     <div className="bg-background">
-      {/* TEST ?vis=magasin: magasinforside – stor overskrift til venstre, ett stort kort ut av høyre kant, de andre i en rad under */}
+      {/* Forsiden: overskrift øverst og kortraden nederst */}
       {fanList[0] && (
         <section className="vis-magasin mag flex flex-col justify-between bg-background">
           <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
-              <div className="mt-std">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for samlere</p>
-                <p className="mag-tittel mt-h mt-3 text-[2.6rem] leading-[0.92] sm:text-[3.6rem] lg:text-[4.2rem]">
-                  Kjøp og selg
-                  <br />
-                  fotballkort
-                </p>
-              </div>
-              {/* TEST ?tittel2=a|b|c|d: nye overskrifter */}
-              <div className="mt-a hidden">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for fotballkort</p>
-                <p className="mt-h mt-3 font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
-                  Samlingen din
-                  <br />
-                  <span className="text-[#a8822f]">starter her.</span>
-                </p>
-              </div>
-              <div className="mt-b hidden">
-                <p className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">Fotballkort.</p>
-                <p className="mt-1 text-[1.3rem] font-medium leading-snug tracking-[-0.01em] text-[#6b655e] sm:text-[1.6rem] lg:text-[1.9rem]">Kjøpt og solgt av samlere.</p>
-              </div>
-              <div className="mt-c hidden">
-                <p className="mag-tittel mt-h text-[2.8rem] leading-[0.9] tracking-[-0.04em] sm:text-[4.2rem] lg:text-[5.2rem]">Fotballkort</p>
-                <p className="mt-hode mx-auto mt-3 flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a6a24] sm:text-xs lg:mt-4">
-                  <span>Kjøp</span><span aria-hidden="true">·</span><span>Selg</span><span aria-hidden="true">·</span><span>Bytt</span>
-                </p>
-              </div>
-              <div className="mt-e hidden">
-                <p className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
-                  Markedsplassen for
-                  <br />
-                  <span className="text-[#a8822f]">fotballkort</span>
-                </p>
-                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Kjøp og selg kort med andre samlere.</p>
-              </div>
-              <div className="mt-f hidden">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for fotballkort</p>
-                <p className="mt-h mt-3 font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
-                  Kjøp. Selg.
-                  <br />
-                  <span className="text-[#a8822f]">Samle.</span>
-                </p>
-              </div>
-              <div className="mt-g hidden">
-                <p className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
-                  Kjøp og selg fotballkort
-                  <br />
-                  <span className="text-[#a8822f]">med andre samlere</span>
-                </p>
-                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Trygg handel. Logg inn med Vipps.</p>
-              </div>
               <div className="mt-d hidden">
                 <h1 className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
                   Finn ditt <span className="mt-strek">neste</span> kort
@@ -113,44 +61,9 @@ export default async function Home() {
                 </Link>
               </div>
             </div>
-            <div className="mag-scene relative">
-              <Link href={`/products/${fanList[0].slug}`} className="mag-stort absolute -right-[14%] top-[4%] block rotate-[8deg] sm:-right-[10%] lg:-right-[6%]">
-                <Slab l={fanList[0]} />
-              </Link>
-              <Link href={`/products/${fanList[0].slug}`} className="fan-pill absolute bottom-2 left-0 flex items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da] lg:bottom-10">
-                <span className="min-w-0">
-                  <span className="block truncate text-[13px] font-semibold leading-tight sm:text-sm">{fanList[0].player}</span>
-                  <span className="block truncate text-[11px] text-[#6b6455] sm:text-xs">{fanList[0].set}</span>
-                </span>
-                <span className="shrink-0 font-heading text-sm font-bold text-[#8a6a24] sm:text-base">{formatPrice(fanList[0].price)}</span>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#cfa653] text-[#0b1426]">
-                  <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              {/* TEST ?stort=vifte: den levende vifta i stedet for det store kortet */}
-              <div className="mag-vifte absolute inset-0 hidden">
-                <HeroFan cards={fanList} />
-              </div>
-              {/* TEST ?stort=tre: tre kort i vifte, stillestående */}
-              <div className="mag-tre absolute inset-0 hidden">
-                {fanList.slice(0, 3).map((l, i) => (
-                  <Link
-                    key={l.slug}
-                    href={`/products/${l.slug}`}
-                    className={`absolute block ${i === 0 ? "left-[4%] top-[10%] -rotate-[12deg]" : i === 1 ? "left-[30%] top-[2%] z-10" : "left-[56%] top-[10%] rotate-[12deg]"}`}
-                  >
-                    <Slab l={l} eager />
-                  </Link>
-                ))}
-              </div>
-            </div>
           </div>
           {/* Kortraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
           <div className="mag-rull-ramme relative mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
-            {/* TEST ?pill=midt: prislapp nederst, over speilingen, som følger kortet i midten. */}
-            <div className="pill-midt pointer-events-none absolute inset-x-0 bottom-3 z-10 hidden justify-center px-4 lg:bottom-5 [&>a]:pointer-events-auto">
-              <RowPill cards={fanList} />
-            </div>
             <ul className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>
                 fanList.map((l, i) => (
@@ -176,67 +89,6 @@ export default async function Home() {
           </div>
         </section>
       )}
-      <section className="vis-vifte bg-background">
-        <div className="mx-auto max-w-[1320px] sm:px-6 sm:pt-6 lg:px-8">
-          <div
-            id="hero"
-            data-oppsett="vifte"
-            data-tekst="5"
-            data-farge="lys"
-            className="hero-bg relative overflow-hidden text-white sm:rounded-[28px]"
-          >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--accent))_50%,transparent)] opacity-60"
-            ></div>
-            <div className="hero-grid relative grid items-center gap-2 px-6 pt-10 sm:px-10 sm:pt-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-0 lg:py-10 lg:pl-16 lg:pr-4">
-              <div className="hero-text min-w-0">
-                {/* Antallet vises først når det er stort nok til å imponere */}
-                {all.length >= 20 && (
-                  <p className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 ring-1 ring-inset ring-white/15">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
-                    {all.length} aktive annonser nå
-                  </p>
-                )}
-                <p className="hero-title font-heading text-[clamp(2.2rem,4.8vw,4.25rem)] font-bold leading-[0.95] tracking-[-0.04em]">
-                  Fotballkort.
-                  <br className="hero-br" /> <span className="hero-gold text-gold-light">Kjøp og selg.</span>
-                </p>
-                {/* Overskriften som vises over vifta er sidens h1 */}
-                <h1 className="hero-sub mt-5 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">
-                  <span>
-                    Kjøp og selg <span className="hero-accent">fotballkort</span>
-                    <span className="tittel-under">Norges markedsplass for samlere</span>
-                  </span>
-                </h1>
-                <div className="hero-buttons mt-7 flex gap-2.5 sm:mt-8 sm:gap-3">
-                  <Link
-                    className="hero-primary inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-white px-5 text-[13px] font-semibold text-primary transition hover:bg-gold-light sm:h-12 sm:px-6 sm:text-sm"
-                    href="/products"
-                  >
-                    Se alle annonser
-                    <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                  <Link
-                    className="hero-ghost inline-flex h-11 items-center whitespace-nowrap rounded-full px-5 text-[13px] font-semibold text-white ring-1 ring-inset ring-white/35 transition hover:bg-white/10 sm:h-12 sm:px-6 sm:text-sm"
-                    href="/sell"
-                  >
-                    Legg ut kort
-                  </Link>
-                </div>
-              </div>
-              <div className="mt-10 sm:mt-6 lg:mt-0">
-                <HeroFan cards={fanList} />
-              </div>
-            </div>
-            {/* Kortene som glir ut til høyre tones inn i bakgrunnen i stedet for å kuttes av kanten */}
-            <div
-              aria-hidden="true"
-              className="hero-edge pointer-events-none absolute inset-y-0 right-0 z-[300] hidden w-28 bg-[linear-gradient(90deg,transparent,#0b1830_85%)] lg:block"
-            ></div>
-          </div>
-        </div>
-      </section>
       <section className="bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <h2 className="sr-only">Kategorier</h2>

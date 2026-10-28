@@ -15,18 +15,13 @@ const startsWith = (path: string, list: string[]) =>
 export async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const password = sitePassword();
-  // Lesetilgang uten passord på vercel.app-adressen, så juridiske verktøy kan gå gjennom hele nettsiden før lansering
-  const openHost = req.nextUrl.hostname.endsWith(".vercel.app");
-  if (password && !openHost && !startsWith(path, OPEN_PATHS) && !startsWith(path, LEGAL_PATHS) && req.cookies.get(ACCESS_COOKIE)?.value !== (await accessToken(password))) {
+  if (password && !startsWith(path, OPEN_PATHS) && !startsWith(path, LEGAL_PATHS) && req.cookies.get(ACCESS_COOKIE)?.value !== (await accessToken(password))) {
     if (path.startsWith("/api/")) return NextResponse.json({ error: "Nettsiden er ikke åpnet ennå." }, { status: 401 });
     const gate = new URL("/privat", req.url);
     gate.searchParams.set("neste", path + req.nextUrl.search);
     return NextResponse.redirect(gate);
   }
-  const res = startsWith(path, AUTH_PATHS) ? await refreshSession(req) : NextResponse.next();
-  // Den åpne adressen skal ikke i søkemotorer før lansering
-  if (openHost) res.headers.set("X-Robots-Tag", "noindex, nofollow");
-  return res;
+  return startsWith(path, AUTH_PATHS) ? refreshSession(req) : NextResponse.next();
 }
 
 /** Fornyer innloggingen, slik Supabase anbefaler. */

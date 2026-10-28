@@ -15,6 +15,7 @@ import { Unblock } from "@/components/Unblock";
 import { SalesReport } from "@/components/SalesReport";
 import { TestMail } from "@/components/TestMail";
 import { RyddTestdata } from "@/components/RyddTestdata";
+import { sitePassword } from "@/lib/private";
 import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
@@ -283,7 +284,7 @@ export default async function AdminPage() {
           <p className="mt-1 text-sm text-slate-600">Hvert betalt løft får et fortløpende salgsdokumentnummer. Rapporten under er til regnskapet, og hver rad har lenke til kvitteringen.</p>
           <SalesReport now={since90(0)} />
           <TestMail />
-          <RyddTestdata kontoer={kontoer} />
+          {sitePassword() && <RyddTestdata kontoer={kontoer} />}
           {sales.length > 0 && (
             <ul className="mt-4 divide-y divide-slate-100 rounded-3xl bg-white px-5 ring-1 ring-slate-200">
               {sales.map((r) => (
