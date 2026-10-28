@@ -546,14 +546,14 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
             </div>
             <div>
               <label htmlFor="s-location" className={label}>
-                Sted *
+                Poststed *
               </label>
               <input
                 id="s-location"
                 name="location"
                 required
                 maxLength={60}
-                placeholder="F.eks. Bergen"
+                placeholder="F.eks. Kongsberg"
                 autoComplete="address-level2"
                 defaultValue={user?.location}
                 className={field}

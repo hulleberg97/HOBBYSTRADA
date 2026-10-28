@@ -56,9 +56,7 @@ export default function PrivacyPage() {
               <p>Fra Vipps, når du logger inn:</p>
               <List
                 items={[
-                  "Navn og e-post.",
-                  "Adresse. Vipps sender oss hele adressen din, men vi lagrer bare poststedet. Resten av adressen lagres ikke. Vi henter ikke telefonnummeret ditt.",
-                  "En fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn.",
+                  "Navn, e-post og en fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn. Vi henter ikke adressen eller telefonnummeret ditt. Poststedet oppgir du selv når du legger ut en annonse.",
                 ]}
               />
               <p className="mt-3">Fornavnet fra Vipps vises på annonsene dine, og hele navnet vises for dem du chatter med. Navnet kan ikke endres på nettsiden.</p>
@@ -93,7 +91,7 @@ export default function PrivacyPage() {
               <Purpose
                 title="Konto og innlogging"
                 what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps». Når du lager konto, bekrefter du at du er minst 18 år."
-                data="Navn, e-post, poststed, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
+                data="Navn, e-post, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
                 kept="Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
               />

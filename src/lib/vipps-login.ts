@@ -38,7 +38,7 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
     client_id: clientId()!,
     response_type: "code",
     // Bare det vi bruker: navn, e-post og poststed (fra adressen; gateadressen lagres ikke)
-    scope: "openid name email address",
+    scope: "openid name email",
     state,
     nonce,
     redirect_uri: redirectUri(origin),
@@ -46,18 +46,10 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
   return u.toString();
 }
 
-export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean; city: string | null };
+export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean };
 
 
 /** «KONGSBERG» → «Kongsberg», «MO I RANA» → «Mo i Rana». */
-const cityName = (s: unknown) =>
-  typeof s === "string" && s.trim()
-    ? s
-        .trim()
-        .toLowerCase()
-        .replace(/(^|[\s-])(\p{L})/gu, (m, sep, ch) => sep + ch.toUpperCase())
-        .replace(/ I /g, " i ")
-    : null;
 
 /** Bytter koden fra Vipps mot brukerens bekreftede navn, telefon og e-post. */
 export async function exchangeCode({ code, nonce, origin }: { code: string; nonce: string; origin: string }): Promise<VippsUser> {
@@ -84,6 +76,5 @@ export async function exchangeCode({ code, nonce, origin }: { code: string; nonc
     name: [u.given_name, u.family_name].filter(Boolean).join(" ") || u.name || "",
     email: u.email ? String(u.email).toLowerCase() : null,
     emailVerified: Boolean(u.email_verified),
-    city: cityName(u.address?.region ?? u.address?.locality),
   };
 }

@@ -13,10 +13,10 @@ async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
   if (error) throw new Error(`Kunne ikke lagre profil: ${error.message}`);
   const firstName = v.name.split(" ")[0];
   await db.from("listings").update({ seller_verified: true, ...(firstName ? { seller_name: firstName } : {}) }).eq("owner_id", userId);
-  // Stedet fra Vipps fylles inn hvis kontoen ikke har et fra før.
+  // Poststedet hentes ikke fra Vipps. Det huskes fra forrige annonse (se api/listings).
   const { data } = await db.auth.admin.getUserById(userId);
   const meta = data.user?.user_metadata ?? {};
-  const fresh: Record<string, unknown> = { ...meta, name: v.name || meta.name, username: v.name.split(" ")[0] || meta.username, ...(v.city && !meta.location ? { location: v.city } : {}) };
+  const fresh: Record<string, unknown> = { ...meta, name: v.name || meta.name, username: v.name.split(" ")[0] || meta.username };
   delete fresh.inactivity_warned_at; // innlogging nullstiller varselet om sletting av inaktiv konto
   if (JSON.stringify(fresh) !== JSON.stringify(meta)) await db.auth.admin.updateUserById(userId, { user_metadata: fresh });
 }
@@ -65,7 +65,7 @@ export async function GET(req: Request) {
       await db.auth.admin.createUser({
         email,
         email_confirm: true,
-        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, adult: true, adult_confirmed_at: new Date().toISOString(), ...(v.city ? { location: v.city } : {}) },
+        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, adult: true, adult_confirmed_at: new Date().toISOString() },
       }); // feiler stille hvis kontoen finnes fra før – da logger vi inn på den
     }
 
