@@ -43,6 +43,19 @@ export function Footer() {
               <img src="/brand/logo-hvit.svg" alt="HOBBYSTRADA" width={169} height={28} className="h-[28px] w-auto" />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Annonser for fotballkort i Norge. Kjøper og selger gjør avtalen direkte.</p>
+            <a
+              href="https://www.instagram.com/hobbystrada"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="HOBBYSTRADA på Instagram"
+              className="mt-5 inline-flex h-10 w-10 items-center justify-center rounded-full ring-1 ring-white/20 text-white/70 transition hover:bg-white/10 hover:text-white"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
           </div>
           <div className="fot-kol columns-2 gap-8 sm:grid sm:grid-cols-3 [&>div]:mb-8 [&>div]:break-inside-avoid sm:[&>div]:mb-0">
             {COLS.map((c) => (

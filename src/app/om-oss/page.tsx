@@ -142,6 +142,14 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <section className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
+        <p className="text-[15px] text-slate-700">
+          Følg HOBBYSTRADA på Instagram:{" "}
+          <a href="https://www.instagram.com/hobbystrada" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-900 underline underline-offset-4">
+            @hobbystrada
+          </a>
+        </p>
+      </section>
       <section className="mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <SellCta />
       </section>
