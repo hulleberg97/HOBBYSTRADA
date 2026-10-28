@@ -324,6 +324,11 @@ export default async function AdminPage() {
                     ]}
                   />
                   {l.status === "active" && !l.ownerListing && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
+                  {l.status === "active" && (
+                    <a href={`/api/admin/ig/${l.slug}`} className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50">
+                      Instagram-bilde
+                    </a>
+                  )}
                   {r.owner_id && <BlockUser listingId={l.id!} seller={l.seller} />}
                 </OwnerListingRow>
               );
