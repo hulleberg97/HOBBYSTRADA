@@ -30,17 +30,7 @@ export default function PrivacyPage() {
       updated="28. oktober 2026"
       sections={[
         {
-          title: "1. Om denne erklæringen",
-          body: (
-            <p>
-              Her forklarer vi hvilke personopplysninger HOBBYSTRADA behandler når du bruker nettsiden, hvorfor vi gjør det, hvor lenge vi tar vare på dem og
-              hvilke rettigheter du har. Erklæringen gjelder hobbystrada.no. Ved vesentlige endringer gir vi beskjed på nettsiden og på e-post til deg som har
-              konto.
-            </p>
-          ),
-        },
-        {
-          title: "2. Hvem som er ansvarlig",
+          title: "1. Hvem som er ansvarlig",
           body: (
             <p>
               {COMPANY.name} (org.nr. {COMPANY.orgnr}), {COMPANY.street}, {COMPANY.postal}, er behandlingsansvarlig. Har du spørsmål om personvern eller vil
@@ -50,7 +40,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "3. Hvilke opplysninger vi behandler, og hvor de kommer fra",
+          title: "2. Hvilke opplysninger vi behandler, og hvor de kommer fra",
           body: (
             <>
               <p>Fra Vipps, når du logger inn:</p>
@@ -75,7 +65,7 @@ export default function PrivacyPage() {
               <p className="mt-4">Automatisk, når du bruker nettsiden:</p>
               <List
                 items={[
-                  "Informasjonskapsler som holder deg innlogget (se punkt 10).",
+                  "Informasjonskapsler som holder deg innlogget (se punkt 9).",
                   "IP-adresse når du sender kontaktskjema eller rapporterer en annonse, for å stoppe spam.",
                   "Tekniske logger hos driftsleverandørene våre, Supabase og Vercel (IP-adresse, tidspunkt og hva som ble åpnet eller hentet), for å holde nettsiden trygg og i drift.",
                 ]}
@@ -84,7 +74,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "4. Hva vi bruker opplysningene til, og grunnlaget",
+          title: "3. Hva vi bruker opplysningene til, og grunnlaget",
           body: (
             <>
               <p>Vi bruker bare opplysningene til formålene under. Grunnlaget er hentet fra personvernforordningen artikkel 6.</p>
@@ -93,7 +83,7 @@ export default function PrivacyPage() {
                 what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps». Når du lager konto, bekrefter du at du er minst 18 år."
                 data="Navn, e-post, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 8)."
+                kept="Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 7)."
               />
               <Purpose
                 title="Annonser"
@@ -172,7 +162,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "5. Hvem vi deler opplysningene med",
+          title: "4. Hvem vi deler opplysningene med",
           body: (
             <>
               <p>Vi selger aldri personopplysninger. Disse får opplysninger, og bare det de trenger:</p>
@@ -190,7 +180,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "6. Overføring ut av EU/EØS",
+          title: "5. Overføring ut av EU/EØS",
           body: (
             <>
               <p>
@@ -211,7 +201,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "7. Må du gi oss opplysningene?",
+          title: "6. Må du gi oss opplysningene?",
           body: (
             <p>
               Du kan se på annonsene uten å logge inn. For å legge ut kort, chatte eller kjøpe annonseløft må du logge inn med Vipps, fordi vi trenger å vite
@@ -221,14 +211,14 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "8. Dine rettigheter",
+          title: "7. Dine rettigheter",
           body: (
             <>
               <List
                 items={[
                   "Innsyn: du kan få vite hvilke opplysninger vi har om deg, og få en kopi.",
                   "Retting: du kan be oss rette opplysninger som er feil.",
-                  "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger og bilder du har sendt i chatten, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes (se punkt 4). Betalinger beholder vi uendret så lenge bokføringsloven krever (se punkt 4). Er du stengt ute, beholder vi Vipps-ID-en på sperrelisten i to år.",
+                  "Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger og bilder du har sendt i chatten, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes (se punkt 3). Betalinger beholder vi uendret så lenge bokføringsloven krever (se punkt 3). Er du stengt ute, beholder vi Vipps-ID-en på sperrelisten i to år.",
                   "Begrensning: du kan be oss begrense bruken av opplysningene, for eksempel mens vi sjekker om de er riktige, eller mens vi vurderer en protest.",
                   "Dataportabilitet: du kan få opplysningene du har gitt oss, i et maskinlesbart format.",
                   "Protestere: der grunnlaget er berettiget interesse, kan du protestere mot behandlingen.",
@@ -244,7 +234,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "9. Automatiserte avgjørelser",
+          title: "8. Automatiserte avgjørelser",
           body: (
             <p>
               Vi tar ingen avgjørelser om deg automatisk, og vi lager ikke profiler av deg. Annonser godkjennes og brukere stenges ute bare etter vurdering av
@@ -253,7 +243,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "10. Informasjonskapsler og lagring i nettleseren",
+          title: "9. Informasjonskapsler og lagring i nettleseren",
           body: (
             <>
               <p>
@@ -275,11 +265,11 @@ export default function PrivacyPage() {
           ),
         },
         {
-          title: "11. Sikkerhet",
+          title: "10. Sikkerhet",
           body: (
             <p>
               All trafikk er kryptert. Bare driftsansvarlig hos HOBBYSTRADA har tilgang til opplysningene. Meldinger leses bare ved rapport om en annonse eller
-              mistanke om svindel (se punkt 4). Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via lenker som slutter å virke etter
+              mistanke om svindel (se punkt 3). Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via lenker som slutter å virke etter
               ett døgn. Leverandørene våre har databehandleravtaler med oss og behandler bare opplysningene på våre vegne.
             </p>
           ),
