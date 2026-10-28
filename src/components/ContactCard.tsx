@@ -109,7 +109,6 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               </Link>
               {l.sellerVerified && <VerifiedBadge />}
             </span>
-            {l.ownerListing && <p className="mt-0.5 text-xs font-medium text-slate-700">Annonse fra innehaveren av HOBBYSTRADA</p>}
             <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1">
                 <MapPinIcon className="h-3.5 w-3.5" aria-hidden="true" />

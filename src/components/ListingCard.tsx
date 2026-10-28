@@ -74,7 +74,6 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
             {listing.sellerVerified && <VerifiedBadge compact />}
-            {listing.ownerListing && <span className="basis-full text-[11px] font-medium text-slate-600">Annonse fra innehaveren av HOBBYSTRADA</span>}
             <span className="card-time inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
               <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>

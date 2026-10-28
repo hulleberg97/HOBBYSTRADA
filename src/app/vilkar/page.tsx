@@ -87,23 +87,6 @@ export default function TermsPage() {
           ),
         },
         {
-          title: "Annonser fra innehaveren av HOBBYSTRADA",
-          id: "annonser-fra-innehaveren",
-          body: (
-            <>
-              <p>
-                Innehaveren av HOBBYSTRADA ULLEBERG er selv samler og kan selge kort fra sin private samling på HOBBYSTRADA. Slike annonser er merket «Annonse
-                fra innehaveren av HOBBYSTRADA», og de følger de samme reglene som alle andre annonser. Salget er privat og skjer ikke som ledd i
-                næringsvirksomhet. Forbrukerrettighetene etter forbrukerkjøpsloven og angrerettloven gjelder derfor ikke.
-              </p>
-              <p className="mt-3">
-                Innehaverens annonser får ikke annonseløft og festes ikke i kortraden på forsiden. Opplysninger om andre brukere, som meldinger, lagrede søk og
-                rapporter, brukes aldri til innehaverens egne kjøp eller salg.
-              </p>
-            </>
-          ),
-        },
-        {
           title: "Rapportere annonser og brukere",
           body: (
             <p>
@@ -182,7 +165,7 @@ export default function TermsPage() {
               merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
               likt, uavhengig av løft. Kortraden på forsiden viser toppannonser først, deretter annonser med Fremhevet og Topp av listen, og til slutt de nyeste annonsene når det er
               plass. Har raden få kort, kan vi selv feste annonser fra andre brukere der. Festede annonser er merket «Valgt av HOBBYSTRADA», ikke «Annonseløft»,
-              og selgeren betaler ikke for plasseringen. Innehaverens egne annonser festes ikke. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
+              og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
             </p>
           ),
         },
