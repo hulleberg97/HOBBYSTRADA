@@ -72,7 +72,7 @@ export default function TermsPage() {
                   "Forfalskninger, kopier (reprints) uten tydelig merking og stjålne kort er forbudt.",
                   "Lotterier, trekninger, «breaks» og lignende, der kjøperen betaler for en sjanse til å få bestemte kort, er forbudt.",
                   "Annonsen skal gjelde fotballkort.",
-                  "Én annonse per kort. Ikke legg ut samme kort flere ganger.",
+                  "Én annonse per kort. Ikke legg ut samme kort flere ganger. Du kan selge flere kort samlet i én annonse (lot), så lenge bildene og beskrivelsen viser alle kortene som er med.",
                   "Merk annonsen som solgt, eller slett den, når kortet er solgt. Solgte annonser vises i prisarkivet «Solgte kort» i 12 måneder og slettes deretter.",
                 ]}
               />
