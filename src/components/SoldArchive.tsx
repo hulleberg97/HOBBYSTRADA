@@ -24,7 +24,7 @@ export function SoldArchive({ listings }: { listings: Listing[] }) {
 
   return (
     <div>
-      <PageHeader eyebrow="Prisarkiv" title="Solgte kort" lead="Se hva kortene faktisk ble solgt for. Bruk det når du setter pris eller vurderer et kjøp.">
+      <PageHeader eyebrow="Prisarkiv" title="Solgte kort" lead="Se hva solgte kort var lagt ut for. Bruk det som et utgangspunkt når du setter pris eller vurderer et kjøp.">
         <form
           role="search"
           onSubmit={(e) => e.preventDefault()}

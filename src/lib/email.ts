@@ -119,7 +119,7 @@ export function brandedEmail({
       </td></tr>
       <tr><td align="center" style="padding:22px 16px 0;font-family:${font};font-size:12px;line-height:1.6;color:#7c8594">
         <a href="${site}" style="color:#0f1d2b;font-weight:700;text-decoration:none;letter-spacing:.06em">HOBBYSTRADA</a><br>
-        Fotballkort fra samlere i hele Norge<br>
+        Fotballkort fra samlere<br>
         ${esc(reason)}
       </td></tr>
     </table>

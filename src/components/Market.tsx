@@ -96,7 +96,7 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
           <div className="max-w-xl">
             <Eyebrow>Markedet</Eyebrow>
             <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Finn ditt neste kort</h1>
-            <p className="mt-3 text-base text-slate-600 sm:text-lg">Fotballkort fra samlere i hele Norge.</p>
+            <p className="mt-3 text-base text-slate-600 sm:text-lg">Fotballkort fra samlere.</p>
           </div>
           <form
             role="search"
@@ -227,7 +227,7 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
             {result.length} treff
           </span>
           <Link href="/solgt" className="tap ml-auto text-sm font-medium text-slate-600 underline-offset-4 hover:text-primary hover:underline">
-            Se hva kort har solgt for
+            Se prisene på solgte kort
           </Link>
         </div>
         {chips.length > 0 && (

@@ -106,9 +106,9 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Prisarkivet «Solgte kort»"
-                what="Vise hva kort har blitt solgt for, så samlere kan vurdere priser. Solgte annonser vises i arkivet med kort, pris, salgsdato og bilder, uten navnet og stedet ditt."
+                what="Vise hvilken pris solgte kort var lagt ut for, så samlere kan vurdere priser. Solgte annonser vises i arkivet med kort, pris, salgsdato og bilder, uten navnet og stedet ditt."
                 data="Kortdata, pris, salgsdato og bilder."
-                basis="Berettiget interesse (art. 6 nr. 1 f): å gi samlere et pålitelig prisbilde. Du kan protestere, så fjerner vi annonsen fra arkivet."
+                basis="Berettiget interesse (art. 6 nr. 1 f): å gi samlere et prisbilde. Du kan protestere, så fjerner vi annonsen fra arkivet."
                 kept="12 måneder etter salget, deretter slettes annonsen automatisk. Sletter du annonsen eller kontoen, forsvinner den fra arkivet med en gang."
               />
               <Purpose

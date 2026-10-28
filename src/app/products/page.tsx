@@ -6,7 +6,7 @@ import { getListings } from "@/lib/listings";
 export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Markedet",
-  description: "Fotballkort fra samlere i hele Norge. Kjøp direkte fra selgeren.",
+  description: "Fotballkort fra samlere. Kjøp direkte fra selgeren.",
 };
 
 export default async function ProductsPage() {

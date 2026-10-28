@@ -265,8 +265,8 @@ export default async function Home() {
                   <PenLineIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Autografkort</span>
                   <span className="text-xs font-medium text-slate-600">
-                    <span className="sm:hidden">{c.autograf}</span>
-                    <span className="hidden sm:inline">{c.autograf} {c.autograf === 1 ? "annonse" : "annonser"}</span>
+                    {c.autograf}
+                    <span className="hidden sm:inline"> {c.autograf === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
@@ -282,8 +282,8 @@ export default async function Home() {
                     Patch / relic
                   </span>
                   <span className="text-xs font-medium text-slate-600">
-                    <span className="sm:hidden">{c.relic}</span>
-                    <span className="hidden sm:inline">{c.relic} {c.relic === 1 ? "annonse" : "annonser"}</span>
+                    {c.relic}
+                    <span className="hidden sm:inline"> {c.relic === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
@@ -304,8 +304,8 @@ export default async function Home() {
                     Nummererte kort
                   </span>
                   <span className="text-xs font-medium text-slate-600">
-                    <span className="sm:hidden">{c.numbered}</span>
-                    <span className="hidden sm:inline">{c.numbered} {c.numbered === 1 ? "annonse" : "annonser"}</span>
+                    {c.numbered}
+                    <span className="hidden sm:inline"> {c.numbered === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
@@ -319,8 +319,8 @@ export default async function Home() {
                   <StarIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Rookies</span>
                   <span className="text-xs font-medium text-slate-600">
-                    <span className="sm:hidden">{c.rookie}</span>
-                    <span className="hidden sm:inline">{c.rookie} {c.rookie === 1 ? "annonse" : "annonser"}</span>
+                    {c.rookie}
+                    <span className="hidden sm:inline"> {c.rookie === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
@@ -334,8 +334,8 @@ export default async function Home() {
                   <BadgeCheckIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Base</span>
                   <span className="text-xs font-medium text-slate-600">
-                    <span className="sm:hidden">{c.base}</span>
-                    <span className="hidden sm:inline">{c.base} {c.base === 1 ? "annonse" : "annonser"}</span>
+                    {c.base}
+                    <span className="hidden sm:inline"> {c.base === 1 ? "annonse" : "annonser"}</span>
                   </span>
                 </Link>
               </li>
@@ -348,8 +348,8 @@ export default async function Home() {
                 <LayoutGridIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Alle kort</span>
                 <span className="text-xs font-medium text-slate-600">
-                  <span className="sm:hidden">{c.all}</span>
-                    <span className="hidden sm:inline">{c.all} {c.all === 1 ? "annonse" : "annonser"}</span>
+                  {c.all}
+                    <span className="hidden sm:inline"> {c.all === 1 ? "annonse" : "annonser"}</span>
                 </span>
               </Link>
             </li>
@@ -381,7 +381,7 @@ export default async function Home() {
           <div className="flex items-end justify-between gap-6">
             <div>
               <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Nyeste annonser</h2>
-              <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Nylig lagt ut av samlere i hele Norge</p>
+              <p className="mt-1 text-sm text-slate-700 sm:text-[15px]">Nylig lagt ut</p>
             </div>
             <Link
               className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"

@@ -23,7 +23,7 @@ const MOBILE_NAV = [
 const HELP = [
   ["/#trygg-handel", "Trygg handel", "Slik handler du trygt"],
   ["/annonseloft", "Annonseløft", "Selg raskere med synlighet"],
-  ["/solgt", "Solgte kort", "Se hva kort har solgt for"],
+  ["/solgt", "Solgte kort", "Se prisene på solgte kort"],
   ["/faq", "Spørsmål og svar", "Svar på det folk lurer på"],
   ["/about", "Om oss", "Hvem står bak HOBBYSTRADA"],
   ["/contact", "Kontakt", "Send oss en melding"],

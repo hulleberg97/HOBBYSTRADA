@@ -38,7 +38,7 @@ Hver behandling vurderes i tre steg: (1) er interessen berettiget, (2) er behand
 
 ## 6. Prisarkivet «Solgte kort»
 
-- **Interesse:** gi samlere et pålitelig bilde av hva kort faktisk selges for. Det er nyttig for både kjøpere og selgere, og gjør markedet tryggere.
+- **Interesse:** gi samlere et prisbilde ut fra hva solgte kort var lagt ut for. Det er nyttig for både kjøpere og selgere, og gjør markedet tryggere.
 - **Nødvendig:** prisbildet krever at solgte annonser vises en stund etter salget, med kort, pris, dato og bilder.
 - **Avveining:** arkivet viser ikke fornavn eller sted, så oppføringen kan ikke knyttes til selgeren av andre enn dem som allerede kjente annonsen. Oppføringen slettes etter 12 måneder, og med en gang hvis selgeren sletter annonsen eller kontoen. Selgeren kan protestere, og da fjernes annonsen fra arkivet. Interessen veier tyngre.
 
