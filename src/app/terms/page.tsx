@@ -11,7 +11,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Vilkår for bruk"
-      updated="27. oktober 2026"
+      updated="28. oktober 2026"
       sections={[
         {
           title: "Om tjenesten",
@@ -56,7 +56,7 @@ export default function TermsPage() {
                 stenges (se «Fjerning av annonser og utestengelse»).
               </p>
               <p className="mt-3">
-                Merket «Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps. Det er ingen garanti for at brukeren er til å stole på.
+                Merket «Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps.
               </p>
             </>
           ),
