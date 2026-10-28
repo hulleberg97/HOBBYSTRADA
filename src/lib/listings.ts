@@ -36,6 +36,8 @@ type Row = {
 };
 
 export function fromRow(r: Row): Listing {
+  // Annonser fra innehaveren får ikke annonseløft, og viser aldri merkene «Annonseløft» eller «Toppannonse»
+  const owner = Boolean(r.owner_listing);
   return {
     id: r.id,
     slug: r.slug,
@@ -54,18 +56,18 @@ export function fromRow(r: Row): Listing {
     condition: r.condition,
     description: r.description,
     price: Number(r.price),
-    featured: Boolean(r.featured_until && new Date(r.featured_until) > new Date()),
-    frontpage: Boolean(r.frontpage_until && new Date(r.frontpage_until) > new Date()),
+    featured: !owner && Boolean(r.featured_until && new Date(r.featured_until) > new Date()),
+    frontpage: !owner && Boolean(r.frontpage_until && new Date(r.frontpage_until) > new Date()),
     image: r.images?.[0] ?? null,
     images: r.images ?? [],
     seller: r.seller_name,
     sellerVerified: Boolean(r.seller_verified),
     fanSlot: r.fan_slot ?? null,
-    ownerListing: Boolean(r.owner_listing),
+    ownerListing: owner,
     location: r.location,
     createdAt: r.created_at,
     soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
-    bumpedAt: r.bumped_until && new Date(r.bumped_until) > new Date() ? r.bumped_until : null,
+    bumpedAt: !owner && r.bumped_until && new Date(r.bumped_until) > new Date() ? r.bumped_until : null,
     status: r.status,
     ownerId: r.owner_id,
   };

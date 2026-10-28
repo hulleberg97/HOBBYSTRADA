@@ -197,7 +197,7 @@ export default async function ListingPage({ params }: Props) {
                     ))}
                   </ul>
                 </div>
-                {!l.featured && l.status === "active" && <OwnerBoost slug={l.slug} ownerId={l.ownerId} />}
+                {!l.featured && !l.ownerListing && l.status === "active" && <OwnerBoost slug={l.slug} ownerId={l.ownerId} />}
               </div>
             </div>
             {l.description && (
