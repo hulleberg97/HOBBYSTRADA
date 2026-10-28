@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
   // Godta både lenke og tittel
   const text = String(body.listing ?? "").trim();
-  const slug = text.match(/\/products\/([^/?#\s]+)/)?.[1] ?? text;
+  const slug = text.match(/\/marked\/([^/?#\s]+)/)?.[1] ?? text;
   type Found = { id: string; slug: string; title: string; owner_id: string | null; owner_listing?: boolean | null; frontpage_until?: string | null };
   // owner_listing kommer med supabase/016_innehaver.sql; før det hentes annonsen uten.
   const find = async (cols: string) => {

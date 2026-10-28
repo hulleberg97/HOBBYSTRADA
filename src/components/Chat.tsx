@@ -140,7 +140,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
         <ListingThumb image={c.listingImage} title={c.listingTitle} size="sm" />
         <div className="min-w-0 flex-1">
           <p className="truncate font-semibold text-slate-950">{c.otherName}</p>
-          <Link href={`/products/${c.listingSlug}`} className="block truncate text-xs text-slate-500 hover:underline">
+          <Link href={`/annonse/${c.listingSlug}`} className="block truncate text-xs text-slate-500 hover:underline">
             {c.listingTitle}
           </Link>
         </div>

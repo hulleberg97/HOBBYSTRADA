@@ -24,7 +24,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
   const card = useRef<HTMLDivElement>(null);
   const user = useUser();
   const router = useRouter();
-  const loginHref = `/auth/login?next=${encodeURIComponent(`/products/${l.slug}`)}`;
+  const loginHref = `/auth/login?next=${encodeURIComponent(`/annonse/${l.slug}`)}`;
   const own = Boolean(user && l.ownerId && user.id === l.ownerId);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
             </div>
             <p className="mt-1.5 text-xs text-slate-600">
               <strong className="font-semibold text-slate-800">Privat selger.</strong> Forbrukerkjøpsloven og angrerett gjelder ikke.{" "}
-              <Link href="/terms#ansvar-mellom-kjoper-og-selger" className="underline underline-offset-2 hover:text-slate-900">
+              <Link href="/vilkar#ansvar-mellom-kjoper-og-selger" className="underline underline-offset-2 hover:text-slate-900">
                 Les mer
               </Link>
             </p>
@@ -212,7 +212,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                   />
                   <p className="text-xs text-slate-500">Meldingen sendes i chatten på HOBBYSTRADA. E-postadressen din deles ikke med selgeren.</p>
                   {state === "error" && <p className="text-sm text-destructive">{error}</p>}
-                  {vippsNeeded && <VippsButton href={`/auth/vipps?next=${encodeURIComponent(`/products/${l.slug}`)}`} label="Bekreft med Vipps" />}
+                  {vippsNeeded && <VippsButton href={`/auth/vipps?next=${encodeURIComponent(`/annonse/${l.slug}`)}`} label="Bekreft med Vipps" />}
                   <button
                     type="submit"
                     disabled={state === "sending"}
@@ -237,7 +237,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </button>
           <Link
             className="tap-sm inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-            href={`/contact?rapport=${l.slug}`}
+            href={`/kontakt?rapport=${l.slug}`}
           >
             <FlagIcon className="h-4 w-4" aria-hidden="true" />
             Rapporter

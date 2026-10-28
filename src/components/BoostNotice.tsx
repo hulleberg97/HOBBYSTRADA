@@ -58,7 +58,7 @@ export function BoostNotice({ items }: { items: Notice[] }) {
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-slate-950">Hurra! Annonsen din er løftet!</p>
             <p className="mt-0.5 text-sm text-slate-700">
-              <Link href={`/products/${n.slug}`} className="font-medium underline underline-offset-2">
+              <Link href={`/annonse/${n.slug}`} className="font-medium underline underline-offset-2">
                 {n.title}
               </Link>
               : {n.text}

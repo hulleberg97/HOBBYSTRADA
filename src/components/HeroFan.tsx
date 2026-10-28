@@ -288,7 +288,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
               ref={(node) => {
                 refs.current[i] = node;
               }}
-              href={`/products/${l.slug}`}
+              href={`/annonse/${l.slug}`}
               aria-label={l.title}
               style={
                 {
@@ -331,7 +331,7 @@ export function HeroFan({ cards: list }: { cards: Listing[] }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-5 z-[200] sm:bottom-0 flex justify-center px-4">
           <Link
             key={`${c.slug}-${center}`}
-            href={`/products/${c.slug}`}
+            href={`/annonse/${c.slug}`}
             className="fan-pill pointer-events-auto flex animate-[stage-in_.5s_ease-out] items-center gap-4 rounded-full bg-[#f7f5f0] py-2 pl-5 pr-2 text-left text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da]"
           >
             <span className="min-w-0">

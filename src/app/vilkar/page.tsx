@@ -27,7 +27,7 @@ export default function TermsPage() {
               </p>
               <p className="mt-3">
                 Ved å opprette konto godtar du disse vilkårene. Hvordan vi behandler personopplysninger, står i{" "}
-                <Link href="/privacy">personvernerklæringen</Link>.
+                <Link href="/personvern">personvernerklæringen</Link>.
               </p>
             </>
           ),
@@ -241,7 +241,7 @@ export default function TermsPage() {
           body: (
             <p>
               Du kan slette kontoen din når som helst på Min side. Har du ikke logget inn på 24 måneder, sletter vi kontoen. Du får varsel på e-post 30 dager
-              før. Hva som slettes, og hva vi må beholde, står i <Link href="/privacy">personvernerklæringen</Link>.
+              før. Hva som slettes, og hva vi må beholde, står i <Link href="/personvern">personvernerklæringen</Link>.
             </p>
           ),
         },

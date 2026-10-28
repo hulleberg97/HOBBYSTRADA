@@ -7,7 +7,7 @@ export default function NotFound() {
       <h1 className="mt-3 font-heading text-4xl font-bold tracking-[-0.03em] text-slate-950">Fant ikke siden</h1>
       <p className="mx-auto mt-3 max-w-md text-slate-600">Adressen kan være feil, eller annonsen er solgt eller slettet.</p>
       <Link
-        href="/products"
+        href="/marked"
         className="mt-8 inline-flex h-12 items-center rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black"
       >
         Gå til markedet

@@ -74,7 +74,7 @@ export function SoldArchive({ listings }: { listings: Listing[] }) {
                 {hits.map((l) => (
                   <tr key={l.slug} className="hover:bg-slate-50">
                     <td className="px-4 py-3">
-                      <Link href={`/products/${l.slug}`} className="font-medium text-slate-950 hover:underline">
+                      <Link href={`/annonse/${l.slug}`} className="font-medium text-slate-950 hover:underline">
                         {l.title}
                       </Link>
                     </td>

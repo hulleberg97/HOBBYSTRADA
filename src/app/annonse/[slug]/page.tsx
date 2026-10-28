@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: l.title,
     description: `${l.title} – ${formatPrice(l.price)}. ${l.description.split("\n")[0]}`,
     openGraph: { title: l.title, images: l.image ? [l.image] : undefined },
-    alternates: { canonical: `/products/${l.slug}` },
+    alternates: { canonical: `/annonse/${l.slug}` },
   };
 }
 
@@ -79,7 +79,7 @@ export default async function ListingPage({ params }: Props) {
       priceCurrency: "NOK",
       availability: l.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
       itemCondition: "https://schema.org/UsedCondition",
-      url: `${site}/products/${l.slug}`,
+      url: `${site}/annonse/${l.slug}`,
     },
   };
 
@@ -91,7 +91,7 @@ export default async function ListingPage({ params }: Props) {
           <nav aria-label="Brødsmuler" className="flex min-w-0 items-center gap-1 text-sm text-slate-500">
             <Link
               className="tap-sm mr-1 inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-1 font-medium text-primary hover:bg-slate-100 sm:hidden"
-              href="/products"
+              href="/marked"
             >
               <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
               Tilbake
@@ -100,7 +100,7 @@ export default async function ListingPage({ params }: Props) {
               Forsiden
             </Link>
             <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
-            <Link className="hidden shrink-0 hover:text-slate-900 sm:inline" href="/products">
+            <Link className="hidden shrink-0 hover:text-slate-900 sm:inline" href="/marked">
               Markedet
             </Link>
             <ChevronRightIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden="true" />
@@ -246,7 +246,7 @@ export default async function ListingPage({ params }: Props) {
             <ul className="mt-6 divide-y divide-slate-100 overflow-hidden rounded-2xl ring-1 ring-slate-200">
               {history.map((h) => (
                 <li key={h.slug} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 px-4 py-3 text-sm">
-                  <Link href={`/products/${h.slug}`} className="min-w-0 font-medium text-slate-900 hover:underline">
+                  <Link href={`/annonse/${h.slug}`} className="min-w-0 font-medium text-slate-900 hover:underline">
                     {h.title}
                   </Link>
                   <span className="flex items-center gap-4 tabular-nums">
@@ -265,7 +265,7 @@ export default async function ListingPage({ params }: Props) {
             <div>
               <h2 className="font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[28px]">Du vil kanskje også like</h2>
             </div>
-            <Link className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/products">
+            <Link className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-medium text-slate-600 transition hover:text-primary" href="/marked">
               Se alle
               <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>

@@ -43,7 +43,7 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
 
   const go = (next: Filters) => {
     const qs = toQuery(next);
-    router.replace(qs ? `/products?${qs}` : "/products", { scroll: false });
+    router.replace(qs ? `/marked?${qs}` : "/marked", { scroll: false });
   };
   const update = (patch: Partial<Filters>) => go({ ...f, ...patch, page: patch.page ?? 1 });
 
@@ -193,7 +193,7 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
               </select>
               <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
             </div>
-            <Link href="/terms#slik-sorteres-annonsene" className="shrink-0 text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
+            <Link href="/vilkar#slik-sorteres-annonsene" className="shrink-0 text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
               Slik sorteres annonsene
             </Link>
           </div>

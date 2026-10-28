@@ -14,7 +14,7 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
   return (
     <div data-featured={listing.featured ? "true" : undefined} className="group relative flex h-full flex-col">
       <FavoriteButton slug={listing.slug} title={listing.title} />
-      <Link className="flex h-full flex-col" href={`/products/${listing.slug}`}>
+      <Link className="flex h-full flex-col" href={`/annonse/${listing.slug}`}>
         <div
           className={`card-frame relative aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-inset group-data-[featured=true]:ring-2 group-data-[featured=true]:ring-accent ${market ? "bg-slate-100 ring-slate-200" : "bg-slate-200/80 ring-slate-300"}`}
         >

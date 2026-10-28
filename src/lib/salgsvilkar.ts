@@ -57,18 +57,18 @@ export const SALGSVILKAR: SalesSection[] = [
   {
     title: "Hvis løftet ikke virker",
     blocks: [
-      `Blir løftet ikke levert som avtalt, gi beskjed til ${COMPANY.email}. Vi retter feilen eller forlenger løftet. Lykkes ikke det, får du et forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett. Se også [Refusjon av annonseløft](/refund-policy).`,
+      `Blir løftet ikke levert som avtalt, gi beskjed til ${COMPANY.email}. Vi retter feilen eller forlenger løftet. Lykkes ikke det, får du et forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett. Se også [Refusjon av annonseløft](/refusjon).`,
     ],
   },
   {
     title: "Klager",
     blocks: [
-      `Er du ikke fornøyd, send oss en melding via [kontaktskjemaet](/contact) med emnet «Annonseløft og betaling», eller på e-post til ${COMPANY.email}. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du klage til Forbrukerrådet.`,
+      `Er du ikke fornøyd, send oss en melding via [kontaktskjemaet](/kontakt) med emnet «Annonseløft og betaling», eller på e-post til ${COMPANY.email}. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du klage til Forbrukerrådet.`,
     ],
   },
   {
     title: "Personopplysninger",
-    blocks: ["Vi behandler bare opplysningene som trengs for å gjennomføre kjøpet. Se [personvernerklæringen](/privacy)."],
+    blocks: ["Vi behandler bare opplysningene som trengs for å gjennomføre kjøpet. Se [personvernerklæringen](/personvern)."],
   },
 ];
 

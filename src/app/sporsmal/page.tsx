@@ -115,7 +115,7 @@ export default function FaqPage() {
                 <p className="mt-1 text-sm text-slate-600">Send oss en melding, så hjelper vi deg.</p>
               </div>
             </div>
-            <Link className={btnPrimary} href="/contact">
+            <Link className={btnPrimary} href="/kontakt">
               Kontakt oss
             </Link>
           </div>

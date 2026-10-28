@@ -33,7 +33,7 @@ export function Favorites({ listings }: { listings: Listing[] }) {
             <p className="mt-4 font-heading text-xl font-bold text-slate-950">Ingen favoritter ennå</p>
             <p className="mt-1.5 text-sm text-slate-600">Trykk på hjertet på et kort for å lagre det her.</p>
             <Link
-              href="/products"
+              href="/marked"
               className="mt-6 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
             >
               Utforsk markedet

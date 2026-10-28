@@ -39,7 +39,7 @@ export default async function BoostPage({ searchParams }: { searchParams: Promis
           </dl>
           <p className="mt-8 text-sm text-muted-foreground">
             Har du ikke lagt ut kortet ennå?{" "}
-            <Link className="font-semibold text-foreground underline underline-offset-4" href="/sell">
+            <Link className="font-semibold text-foreground underline underline-offset-4" href="/selg">
               Legg ut kort
             </Link>
           </p>

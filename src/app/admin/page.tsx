@@ -162,7 +162,7 @@ export default async function AdminPage() {
                     <p className="mt-1 font-semibold text-slate-950">{r.reason}</p>
                     <p className="mt-0.5">
                       {l ? (
-                        <Link href={`/products/${l.slug}`} className="underline">
+                        <Link href={`/annonse/${l.slug}`} className="underline">
                           {l.title}
                         </Link>
                       ) : (
@@ -195,7 +195,7 @@ export default async function AdminPage() {
                       {BOOSTS[o.plan as BoostKey].name} – {formatPrice(Number(o.amount))}
                     </p>
                     <p className="text-sm text-slate-600">
-                      <Link href={`/products/${o.listings?.slug}`} className="underline">
+                      <Link href={`/annonse/${o.listings?.slug}`} className="underline">
                         {o.listings?.title ?? o.listing_title ?? "Slettet annonse"}
                       </Link>{" "}
                       · {o.buyer_email} · {date(o.created_at)}
@@ -219,7 +219,7 @@ export default async function AdminPage() {
                   <li key={m.id} className="rounded-3xl bg-white p-5 text-sm ring-1 ring-slate-200">
                     <p className="text-xs text-slate-500">
                       {date(m.created_at)} ·{" "}
-                      <Link href={`/products/${m.listing_slug}`} className="underline">
+                      <Link href={`/annonse/${m.listing_slug}`} className="underline">
                         annonsen
                       </Link>
                     </p>

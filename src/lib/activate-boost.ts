@@ -35,6 +35,6 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
     kind: "boost",
     title: "Hurra! Annonsen din er løftet!",
     body: `${BOOSTS[plan].name} på «${l?.title ?? "annonsen"}» varer til ${boostDate(until)}.`,
-    href: l ? `/products/${l.slug}` : "/account",
+    href: l ? `/annonse/${l.slug}` : "/account",
   });
 }

@@ -36,7 +36,7 @@ export function OwnerListingRow({ listing: l, extra, children }: { listing: List
         </span>
         <p className="mt-1.5 font-medium text-slate-950">
           {l.status === "active" || l.status === "sold" ? (
-            <Link href={`/products/${l.slug}`} className="hover:underline">
+            <Link href={`/annonse/${l.slug}`} className="hover:underline">
               {l.title}
             </Link>
           ) : (

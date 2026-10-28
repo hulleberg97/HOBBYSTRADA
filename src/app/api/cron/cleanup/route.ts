@@ -69,7 +69,7 @@ export async function GET(req: Request) {
   const { data: expiring } = await db.from("listings").select("slug, title, owner_id, bumped_until").eq("status", "active").gt("bumped_until", new Date().toISOString()).lte("bumped_until", soon);
   let reminded = 0;
   for (const l of expiring ?? []) {
-    const href = `/products/${l.slug}`;
+    const href = `/annonse/${l.slug}`;
     const { count } = await db.from("notifications").select("id", { count: "exact", head: true }).eq("kind", "boost_expiring").eq("href", href).gt("created_at", new Date(Date.now() - 3 * 864e5).toISOString());
     if (count) continue;
     await addNotification(db, l.owner_id, { kind: "boost_expiring", title: "Løftet går ut snart", body: `Løftet på «${l.title}» går ut i løpet av det neste døgnet. Du kan løfte annonsen igjen når du vil.`, href: `/annonseloft?annonse=${l.slug}` });

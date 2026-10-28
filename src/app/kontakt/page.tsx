@@ -38,9 +38,9 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             <h2 className="font-heading text-lg font-bold tracking-tight text-slate-950">Finn svar raskt</h2>
             <ul className="mt-3 divide-y divide-slate-100">
               {[
-                ["/faq", "Spørsmål og svar"],
+                ["/sporsmal", "Spørsmål og svar"],
                 ["/annonseloft", "Om annonseløft"],
-                ["/sell", "Slik legger du ut kort"],
+                ["/selg", "Slik legger du ut kort"],
               ].map(([href, label]) => (
                 <li key={href}>
                   <Link className="flex items-center justify-between py-3.5 text-[15px] font-medium text-slate-800 transition hover:text-primary" href={href}>

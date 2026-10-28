@@ -65,7 +65,7 @@ export function SellCta({ secondary }: { secondary?: { href: string; label: stri
         <p className="mt-2 max-w-lg text-[15px] text-slate-600">Legg dem ut på et par minutter og nå andre samlere.</p>
       </div>
       <div className="flex flex-wrap gap-2.5">
-        <Link className={btnPrimary} href="/sell">
+        <Link className={btnPrimary} href="/selg">
           Legg ut kort
           <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
         </Link>

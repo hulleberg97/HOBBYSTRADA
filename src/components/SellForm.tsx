@@ -576,7 +576,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
             <span>
               Jeg eier kortet, opplysningene stemmer, og jeg godtar at kjøpere kan sende meg meldinger om annonsen via HOBBYSTRADA. Jeg forstår at handelen
               skjer direkte mellom meg og kjøperen. Jeg godtar{" "}
-              <Link href="/terms" target="_blank" className="font-medium text-foreground underline underline-offset-2">
+              <Link href="/vilkar" target="_blank" className="font-medium text-foreground underline underline-offset-2">
                 vilkårene
               </Link>
               .

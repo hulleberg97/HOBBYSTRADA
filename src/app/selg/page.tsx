@@ -27,7 +27,7 @@ export default async function SellPage() {
               Med en konto får du alle meldinger fra kjøpere på ett sted, og du kan enkelt endre annonsene dine.
             </p>
             <div className="mt-6 grid gap-2">
-              <Link href="/auth/login?next=/sell" className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+              <Link href="/auth/login?next=/selg" className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
                 Logg inn
               </Link>
               <Link href="/auth/register" className="flex h-12 items-center justify-center rounded-full border border-border text-sm font-semibold">
@@ -42,7 +42,7 @@ export default async function SellPage() {
               Alle selgere bekrefter navnet sitt med Vipps. Det gjør markedet tryggere for kjøperne, og annonsene dine får merket «Verifisert med Vipps».
             </p>
             <div className="mt-6">
-              <VippsButton href={user ? "/auth/vipps?next=/sell" : "/auth/login?next=/sell"} label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
+              <VippsButton href={user ? "/auth/vipps?next=/selg" : "/auth/login?next=/selg"} label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
               Vi får navnet og e-posten din fra Vipps. Adressen og telefonnummeret ditt hentes ikke.

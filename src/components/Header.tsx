@@ -14,8 +14,8 @@ const UnreadBadge = dynamic(() => import("./UnreadBadge").then((m) => m.UnreadBa
 const NotificationBadge = dynamic(() => import("./NotificationBadge").then((m) => m.NotificationBadge), { ssr: false });
 
 const MOBILE_NAV = [
-  ["/products", "Markedet"],
-  ["/sell", "Legg ut kort"],
+  ["/marked", "Markedet"],
+  ["/selg", "Legg ut kort"],
   ["/favoritter", "Favoritter"],
 ];
 
@@ -24,9 +24,9 @@ const HELP = [
   ["/#trygg-handel", "Trygg handel", "Slik handler du trygt"],
   ["/annonseloft", "Annonseløft", "Selg raskere med synlighet"],
   ["/solgt", "Solgte kort", "Se prisene på solgte kort"],
-  ["/faq", "Spørsmål og svar", "Svar på det folk lurer på"],
-  ["/about", "Om oss", "Hvem står bak HOBBYSTRADA"],
-  ["/contact", "Kontakt", "Send oss en melding"],
+  ["/sporsmal", "Spørsmål og svar", "Svar på det folk lurer på"],
+  ["/om-oss", "Om oss", "Hvem står bak HOBBYSTRADA"],
+  ["/kontakt", "Kontakt", "Send oss en melding"],
 ];
 
 export function Header() {
@@ -80,7 +80,7 @@ export function Header() {
 
   const go = (term: string) => {
     // Søket går rett til markedet, der filtrene er
-    router.push(term.trim() ? `/products?q=${encodeURIComponent(term.trim())}` : "/products");
+    router.push(term.trim() ? `/marked?q=${encodeURIComponent(term.trim())}` : "/marked");
     setMenu(false);
     setSearchOpen(false);
   };
@@ -99,9 +99,9 @@ export function Header() {
           </Link>
           <nav className="ml-auto hidden items-center gap-1 xl:flex" aria-label="Hovedmeny">
             <Link
-              data-current={path.startsWith("/products") ? "true" : undefined}
+              data-current={path.startsWith("/marked") ? "true" : undefined}
               className="flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-primary data-[current=true]:bg-slate-100 data-[current=true]:text-primary"
-              href="/products"
+              href="/marked"
             >
               <LayoutGridIcon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
               Markedet
@@ -178,7 +178,7 @@ export function Header() {
             </Link>
             <Link
               className="hidden h-10 items-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black sm:flex"
-              href="/sell"
+              href="/selg"
             >
               Legg ut kort
             </Link>
@@ -260,7 +260,7 @@ export function Header() {
             <Link
               onClick={() => setMenu(false)}
               className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white"
-              href="/sell"
+              href="/selg"
             >
               Legg ut kort
             </Link>

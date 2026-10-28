@@ -45,7 +45,7 @@ export default function PrivacyPage() {
             <p>
               {COMPANY.name} (org.nr. {COMPANY.orgnr}), {COMPANY.street}, {COMPANY.postal}, er behandlingsansvarlig. Har du spørsmål om personvern eller vil
               bruke rettighetene dine, skriv til <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> eller bruk{" "}
-              <Link href="/contact">kontaktskjemaet</Link>. Vi har ikke personvernombud.
+              <Link href="/kontakt">kontaktskjemaet</Link>. Vi har ikke personvernombud.
             </p>
           ),
         },
@@ -216,7 +216,7 @@ export default function PrivacyPage() {
             <p>
               Du kan se på annonsene uten å logge inn. For å legge ut kort, chatte eller kjøpe annonseløft må du logge inn med Vipps, fordi vi trenger å vite
               hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene av nettsiden. Du må være minst 18 år for å ha konto, se{" "}
-              <Link href="/terms">brukervilkårene</Link>.
+              <Link href="/vilkar">brukervilkårene</Link>.
             </p>
           ),
         },

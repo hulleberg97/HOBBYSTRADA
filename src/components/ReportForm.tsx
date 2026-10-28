@@ -50,7 +50,7 @@ export function ReportForm({ slug }: { slug: string }) {
         <FlagIcon className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
         <span>
           Du rapporterer{" "}
-          <Link href={`/products/${slug}`} className="font-medium text-primary underline underline-offset-2">
+          <Link href={`/annonse/${slug}`} className="font-medium text-primary underline underline-offset-2">
             denne annonsen
           </Link>
           . Er du blitt svindlet, bør du også kontakte politiet.

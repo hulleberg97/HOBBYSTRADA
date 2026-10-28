@@ -37,7 +37,7 @@ export async function POST(req: Request) {
         to: process.env.ADMIN_EMAIL,
         replyTo: email ?? undefined,
         subject: `Rapport: ${reason} – ${listing.title}`,
-        text: `${listing.title}\n${site}/products/${listing.slug}\n\nGrunn: ${reason}\n\n${details}\n\nBehandle rapporten: ${site}/admin`,
+        text: `${listing.title}\n${site}/annonse/${listing.slug}\n\nGrunn: ${reason}\n\n${details}\n\nBehandle rapporten: ${site}/admin`,
       })
     : false;
   if (!db && !mailed) return NextResponse.json({ error: "Rapportering er ikke slått på ennå." }, { status: 503 });

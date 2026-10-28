@@ -67,7 +67,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               </Link>
             )}
             <Link
-              href="/sell"
+              href="/selg"
               className={`${listings.length === 0 ? "hidden" : "inline-flex"} h-11 md:hidden items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black`}
             >
               <PlusIcon className="h-4 w-4" aria-hidden="true" />
@@ -102,7 +102,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                 <p className="font-semibold text-slate-950">Du har ingen annonser ennå</p>
                 <p className="mt-1 text-sm text-slate-600">Legg ut det første kortet ditt på et par minutter.</p>
                 <Link
-                  href="/sell"
+                  href="/selg"
                   className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
                 >
                   <PlusIcon className="h-4 w-4" aria-hidden="true" />
@@ -216,7 +216,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                         </p>
                         <p className="truncate text-slate-500">
                           {p.slug ? (
-                            <Link href={`/products/${p.slug}`} className="underline underline-offset-2">
+                            <Link href={`/annonse/${p.slug}`} className="underline underline-offset-2">
                               {p.title}
                             </Link>
                           ) : (

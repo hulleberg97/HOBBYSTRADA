@@ -221,7 +221,7 @@ export async function addMessage(id: string, userId: string, body: string, offer
             title: row.listing_title,
             image: row.listing_image,
             price: listing?.price ? Number(listing.price) : null,
-            url: `${site()}/products/${row.listing_slug}`,
+            url: `${site()}/annonse/${row.listing_slug}`,
           },
           button: "Les og svar",
           url: `${site()}/meldinger/${id}`,

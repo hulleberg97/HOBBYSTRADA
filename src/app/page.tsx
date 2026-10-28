@@ -51,11 +51,11 @@ export default async function Home() {
                 <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Markedsplass for kjøp og salg av fotballkort.</p>
               </div>
               <div className="mag-knapper mt-7 flex flex-wrap gap-2.5">
-                <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/products">
+                <Link className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black" href="/marked">
                   Se alle annonser
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <Link className="knapp-selg inline-flex h-12 items-center gap-1.5 rounded-full px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-[#0b1426]/30 transition hover:bg-[#0b1426]/5" href="/sell">
+                <Link className="knapp-selg inline-flex h-12 items-center gap-1.5 rounded-full px-6 text-sm font-semibold text-primary ring-1 ring-inset ring-[#0b1426]/30 transition hover:bg-[#0b1426]/5" href="/selg">
                   <PlusIcon className="knapp-pluss hidden h-4 w-4" aria-hidden="true" />
                   Legg ut kort
                 </Link>
@@ -68,12 +68,12 @@ export default async function Home() {
               {[0, 1, 2].flatMap((k) =>
                 fanList.map((l, i) => (
                   <li key={`${k}-${l.slug}`} data-slug={l.slug} className="relative mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
-                    <Link href={`/products/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
+                    <Link href={`/annonse/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
                       <Slab l={l} eager={k === 0 && i < 6} />
                     </Link>
                     {/* TEST ?pill=hver: liten prislapp under hvert kort, glir med raden */}
                     <Link
-                      href={`/products/${l.slug}`}
+                      href={`/annonse/${l.slug}`}
                       tabIndex={-1}
                       className="pill-hver fan-pill absolute left-1/2 top-full z-10 mt-2 hidden -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-[#f7f5f0] py-1 pl-3 pr-1 text-[12px] font-semibold text-[#0b1426] shadow-[0_8px_24px_-14px_rgb(11_20_38/0.35)] ring-1 ring-inset ring-[#ebe6da]"
                     >
@@ -97,7 +97,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/search?q=autograf"
+                  href="/sok?q=autograf"
                 >
                   <PenLineIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Autografkort</span>
@@ -112,7 +112,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/search?q=relic"
+                  href="/sok?q=relic"
                 >
                   <ShirtIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">
@@ -129,7 +129,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/search?q=%2F"
+                  href="/sok?q=%2F"
                 >
                   <span
                     className="flex h-5 shrink-0 items-center justify-center text-[14px] font-medium leading-none tracking-tight text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8 sm:text-[22px]"
@@ -151,7 +151,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/search?q=RC"
+                  href="/sok?q=RC"
                 >
                   <StarIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Rookies</span>
@@ -166,7 +166,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/search?q=chrome"
+                  href="/sok?q=chrome"
                 >
                   <BadgeCheckIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Base</span>
@@ -180,7 +180,7 @@ export default async function Home() {
             <li className="shrink-0 snap-start sm:min-w-0">
               <Link
                 className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                href="/products"
+                href="/marked"
               >
                 <LayoutGridIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                 <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Alle kort</span>
@@ -203,7 +203,7 @@ export default async function Home() {
               </div>
               <Link
                 className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
-                href="/products"
+                href="/marked"
               >
                 Se alle
                 <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -222,7 +222,7 @@ export default async function Home() {
             </div>
             <Link
               className="tap inline-flex shrink-0 items-center gap-0.5 text-sm font-semibold text-slate-900 underline-offset-4 transition hover:underline"
-              href="/products"
+              href="/marked"
             >
               Se alle
               <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -264,7 +264,7 @@ export default async function Home() {
               </ol>
               <Link
                 className="mt-8 inline-flex h-11 w-max items-center gap-2 rounded-full px-5 text-sm font-semibold transition bg-white text-primary ring-1 ring-inset ring-slate-300"
-                href="/products"
+                href="/marked"
               >
                 Utforsk markedet
                 <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -299,7 +299,7 @@ export default async function Home() {
               </ol>
               <Link
                 className="mt-8 inline-flex h-11 w-max items-center gap-2 rounded-full px-5 text-sm font-semibold transition bg-primary text-white hover:bg-black"
-                href="/sell"
+                href="/selg"
               >
                 Legg ut kort
                 <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -333,7 +333,7 @@ export default async function Home() {
                 <FlagIcon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950">Rapporter mistenkelige annonser</h3>
-              <Link className={`${btnSecondary} mt-5 w-max`} href="/contact">
+              <Link className={`${btnSecondary} mt-5 w-max`} href="/kontakt">
                 Rapporter annonse
                 <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
               </Link>

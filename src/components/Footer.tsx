@@ -6,27 +6,27 @@ const COLS = [
   {
     title: "Markedet",
     links: [
-      ["/products", "Alle kort"],
-      ["/search?q=autograf", "Autografkort"],
-      ["/search?q=relic", "Patch / relic"],
+      ["/marked", "Alle kort"],
+      ["/sok?q=autograf", "Autografkort"],
+      ["/sok?q=relic", "Patch / relic"],
       ["/solgt", "Solgte kort"],
-      ["/search", "Søk"],
+      ["/sok", "Søk"],
     ],
   },
   {
     title: "Selg",
     links: [
-      ["/sell", "Legg ut kort"],
+      ["/selg", "Legg ut kort"],
       ["/annonseloft", "Annonseløft"],
-      ["/faq", "Spørsmål og svar"],
+      ["/sporsmal", "Spørsmål og svar"],
     ],
   },
   {
     title: "Om oss",
     links: [
-      ["/about", "Om markedet"],
+      ["/om-oss", "Om markedet"],
       ["/#trygg-handel", "Trygg handel"],
-      ["/contact", "Kontakt"],
+      ["/kontakt", "Kontakt"],
     ],
     account: true,
   },
@@ -67,10 +67,10 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {(
               [
-                ["/terms", "Vilkår"],
+                ["/vilkar", "Vilkår"],
                 ["/salgsvilkar", "Salgsvilkår"],
-                ["/privacy", "Personvern"],
-                ["/refund-policy", "Refusjon"],
+                ["/personvern", "Personvern"],
+                ["/refusjon", "Refusjon"],
               ] as const
             ).map(([href, label]) => (
               <Link key={href} href={href} className="relative transition before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] hover:text-white">

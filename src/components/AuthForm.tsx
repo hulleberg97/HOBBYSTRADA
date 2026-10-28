@@ -116,11 +116,11 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                     <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
                     <span>
                       Jeg bekrefter at jeg er minst 18 år, og godtar{" "}
-                      <Link href="/terms" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
+                      <Link href="/vilkar" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
                         vilkårene
                       </Link>{" "}
                       og{" "}
-                      <Link href="/privacy" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
+                      <Link href="/personvern" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
                         personvernerklæringen
                       </Link>
                       .
@@ -135,7 +135,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                   )}
                   <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
                     Vi får navnet, e-posten og poststedet ditt fra Vipps. Ved å fortsette godtar du{" "}
-                    <Link href="/terms" target="_blank" className="underline underline-offset-2">
+                    <Link href="/vilkar" target="_blank" className="underline underline-offset-2">
                       vilkårene
                     </Link>
                     .
@@ -229,7 +229,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                   {mode === "register" && (
                     <p className="text-xs leading-relaxed text-muted-foreground">
                       Ved å opprette konto godtar du{" "}
-                      <Link href="/terms" target="_blank" className="underline underline-offset-2">
+                      <Link href="/vilkar" target="_blank" className="underline underline-offset-2">
                         vilkårene
                       </Link>
                       . HOBBYSTRADA er en annonseplass og ikke part i handel mellom brukerne.

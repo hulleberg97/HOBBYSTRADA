@@ -15,7 +15,7 @@ export default function RefundPage() {
           body: (
             <p>
               Denne siden gjelder annonseløft, som er den eneste tjenesten HOBBYSTRADA selger. Kort kjøpes direkte fra andre brukere. HOBBYSTRADA er ikke
-              part i den handelen, og retur og reklamasjon av kort avtales med selgeren. Se <Link href="/terms">vilkårene</Link>.
+              part i den handelen, og retur og reklamasjon av kort avtales med selgeren. Se <Link href="/vilkar">vilkårene</Link>.
             </p>
           ),
         },

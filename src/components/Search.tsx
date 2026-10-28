@@ -21,7 +21,7 @@ export function Search({ listings }: { listings: Listing[] }) {
     setInput(q);
   }
 
-  const go = (term: string) => router.replace(term.trim() ? `/search?q=${encodeURIComponent(term.trim())}` : "/search", { scroll: false });
+  const go = (term: string) => router.replace(term.trim() ? `/sok?q=${encodeURIComponent(term.trim())}` : "/sok", { scroll: false });
   const query = q === "Rookie" ? "RC" : q;
   const result = q ? listings.filter((l) => matches(l, query)) : listings;
 
@@ -103,13 +103,13 @@ export function Search({ listings }: { listings: Listing[] }) {
           <p className="text-sm text-slate-600" aria-live="polite">
             <span className="font-semibold text-slate-950">{result.length}</span> {result.length === 1 ? "annonse" : "annonser"}
             {" · "}
-            <Link href="/terms#slik-sorteres-annonsene" className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
+            <Link href="/vilkar#slik-sorteres-annonsene" className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
               Slik sorteres annonsene
             </Link>
           </p>
           <Link
             className="inline-flex h-10 items-center gap-2 rounded-full border border-slate-300 bg-white px-4 text-sm font-medium text-slate-800 transition hover:border-primary hover:text-primary"
-            href={q ? `/products?q=${encodeURIComponent(q)}` : "/products"}
+            href={q ? `/marked?q=${encodeURIComponent(q)}` : "/marked"}
           >
             <SlidersHorizontalIcon className="h-4 w-4" aria-hidden="true" />
             Filter

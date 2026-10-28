@@ -17,7 +17,7 @@ export function BoostSuccess({ plan, until, listing }: { plan: BoostKey; until: 
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
         {BOOSTS[plan].name} er aktivert{until ? ` og varer til ${boostDate(until)}` : ""}. {BOOST_EFFECT[plan]}
       </p>
-      <Link href={`/products/${listing.slug}`} className="group mt-6 flex items-center gap-4 rounded-2xl p-3 text-left ring-1 ring-slate-200 transition hover:ring-slate-400">
+      <Link href={`/annonse/${listing.slug}`} className="group mt-6 flex items-center gap-4 rounded-2xl p-3 text-left ring-1 ring-slate-200 transition hover:ring-slate-400">
         <div className="h-[84px] w-[60px] shrink-0 overflow-hidden rounded-md bg-slate-100">
           {listing.image ? (
             <Image alt="" src={listing.image} width={120} height={168} className="h-full w-full object-cover" />
@@ -31,7 +31,7 @@ export function BoostSuccess({ plan, until, listing }: { plan: BoostKey; until: 
         </div>
       </Link>
       <div className="mt-6 flex flex-wrap justify-center gap-2">
-        <Link href={`/products/${listing.slug}`} className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black">
+        <Link href={`/annonse/${listing.slug}`} className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black">
           Se annonsen
           <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
         </Link>

@@ -100,7 +100,7 @@ export function BoostPicker({ frontpage }: { frontpage: FrontpageAvailability })
         ) : mine.length === 0 ? (
           <p className="mt-3 text-sm text-slate-600">
             Du har ingen aktive annonser ennå.{" "}
-            <Link href="/sell" className="font-semibold text-slate-900 underline underline-offset-2">
+            <Link href="/selg" className="font-semibold text-slate-900 underline underline-offset-2">
               Legg ut et kort
             </Link>
           </p>

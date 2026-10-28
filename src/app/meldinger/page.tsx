@@ -32,7 +32,7 @@ export default async function MessagesPage() {
             <MessageSquareIcon className="mx-auto h-8 w-8 text-slate-400" aria-hidden="true" />
             <p className="mt-3 font-semibold text-slate-950">Ingen meldinger ennå</p>
             <p className="mt-1 text-sm text-slate-600">Når du sender eller får en melding om et kort, finner du samtalen her.</p>
-            <Link href="/products" className="mt-5 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white">
+            <Link href="/marked" className="mt-5 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-white">
               Se kortene i markedet
             </Link>
           </div>

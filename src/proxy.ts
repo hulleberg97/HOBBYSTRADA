@@ -4,10 +4,10 @@ import { NextResponse, type NextRequest } from "next/server";
 import { ACCESS_COOKIE, accessToken, sitePassword } from "@/lib/private";
 
 // Sider som leser innloggingen på serveren. Resten mellomlagres og leser innloggingen i nettleseren.
-const AUTH_PATHS = ["/account", "/meldinger", "/admin", "/sell", "/api/", "/auth/", "/annonseloft/betaling"];
+const AUTH_PATHS = ["/account", "/meldinger", "/admin", "/selg", "/api/", "/auth/", "/annonseloft/betaling"];
 // Åpne selv i lukket modus: passordsiden, cron-jobben (har egen nøkkel), lenker fra e-post og Vipps, og de juridiske sidene.
 const OPEN_PATHS = ["/privat", "/api/privat", "/api/cron/", "/auth/callback", "/auth/vipps/callback", "/robots.txt"];
-const LEGAL_PATHS = ["/terms", "/privacy", "/salgsvilkar", "/refund-policy", "/cookie-policy", "/angreskjema"];
+const LEGAL_PATHS = ["/vilkar", "/personvern", "/salgsvilkar", "/refusjon", "/informasjonskapsler", "/angreskjema"];
 
 const startsWith = (path: string, list: string[]) =>
   list.some((p) => (p.endsWith("/") ? path.startsWith(p) : path === p || path.startsWith(`${p}/`)));

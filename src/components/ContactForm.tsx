@@ -115,7 +115,7 @@ export function ContactForm() {
             rows={6}
             required
             maxLength={4900}
-            defaultValue={report ? `Jeg vil rapportere denne annonsen: ${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/products/${report}\n\nGrunn: ` : ""}
+            defaultValue={report ? `Jeg vil rapportere denne annonsen: ${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/annonse/${report}\n\nGrunn: ` : ""}
             className={`${field} h-auto resize-y py-3`}
           ></textarea>
           <p className="mt-1.5 text-xs text-slate-500">Gjelder det en annonse? Lim inn lenken til annonsen, eller oppgi spiller og kortnummer.</p>

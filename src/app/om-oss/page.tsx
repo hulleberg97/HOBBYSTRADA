@@ -14,10 +14,10 @@ export default function AboutPage() {
         lead="HOBBYSTRADA er en norsk markedsplass bare for fotballkort. Her møtes samlere for å kjøpe, selge og finne kortene som mangler i samlingen."
       >
         <div className="mt-7 flex flex-wrap gap-2.5">
-          <Link className={btnPrimary} href="/products">
+          <Link className={btnPrimary} href="/marked">
             Se markedet
           </Link>
-          <Link className={btnSecondary} href="/sell">
+          <Link className={btnSecondary} href="/selg">
             Legg ut kort
           </Link>
         </div>
@@ -75,37 +75,37 @@ export default function AboutPage() {
             <div className="mt-6 flex flex-wrap gap-2">
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-                href="/search?q=Autografkort"
+                href="/sok?q=Autografkort"
               >
                 Autografkort
               </Link>
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-                href="/search?q=Relic"
+                href="/sok?q=Relic"
               >
                 Patch / relic
               </Link>
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-                href="/search?q=Rookies"
+                href="/sok?q=Rookies"
               >
                 Rookies
               </Link>
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-                href="/search?q=Nummererte"
+                href="/sok?q=Nummererte"
               >
                 Nummererte kort
               </Link>
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-                href="/search?q=Graderte"
+                href="/sok?q=Graderte"
               >
                 Graderte kort
               </Link>
               <Link
                 className="rounded-full bg-white px-4 py-2.5 text-sm font-medium text-slate-800 ring-1 ring-inset ring-slate-300 transition hover:ring-primary"
-                href="/search?q=Base"
+                href="/sok?q=Base"
               >
                 Base
               </Link>
