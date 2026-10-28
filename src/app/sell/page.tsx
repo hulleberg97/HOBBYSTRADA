@@ -45,7 +45,7 @@ export default async function SellPage() {
               <VippsButton href={user ? "/auth/vipps?next=/sell" : "/auth/login?next=/sell"} label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
-              Vi får navnet, e-posten og poststedet ditt fra Vipps. Gateadressen lagres ikke.
+              Vi får navnet og e-posten din fra Vipps. Adressen og telefonnummeret ditt hentes ikke.
             </p>
           </div>
         ) : (
