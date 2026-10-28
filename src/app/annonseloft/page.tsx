@@ -3,18 +3,24 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { BoostPicker } from "@/components/BoostPicker";
 import { PageHeader } from "@/components/ui";
+import { FRONTPAGE_SLOTS } from "@/lib/boosts";
+import { frontpageAvailability } from "@/lib/frontpage";
+import { adminClient } from "@/lib/supabase-admin";
 
 export const metadata: Metadata = { title: "Annonseløft" };
 
 export default async function BoostPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper
   await searchParams;
+  // Toppannonse selges bare når det er en ledig plass i kortraden
+  const db = adminClient();
+  const frontpage = db ? await frontpageAvailability(db) : { soldOut: false, nextFreeText: "", slots: FRONTPAGE_SLOTS };
   return (
     <>
       <PageHeader center eyebrow="Annonseløft" title="Få kortet ditt sett først" lead="Gi annonsen mer synlighet, og selg raskere til samlere i hele Norge." />
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <Suspense>
-          <BoostPicker />
+          <BoostPicker frontpage={{ soldOut: frontpage.soldOut, nextFreeText: frontpage.nextFreeText, slots: frontpage.slots }} />
         </Suspense>
         <div className="mx-auto mt-16 max-w-2xl">
           <h2 className="font-heading text-2xl font-semibold tracking-tight">Vanlige spørsmål</h2>
@@ -25,7 +31,10 @@ export default async function BoostPage({ searchParams }: { searchParams: Promis
             </div>
             <div className="py-5">
               <dt className="font-semibold">Hva om kortet selges før perioden er over?</dt>
-              <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">Da er jobben gjort. Løftet stopper når annonsen markeres som solgt.</dd>
+              <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                Løftet stopper når du merker annonsen som solgt eller sletter den. Resten av perioden refunderes ikke, med mindre du angrer kjøpet innen 14
+                dager.
+              </dd>
             </div>
           </dl>
           <p className="mt-8 text-sm text-muted-foreground">

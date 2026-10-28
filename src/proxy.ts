@@ -23,7 +23,10 @@ export async function proxy(req: NextRequest) {
     gate.searchParams.set("neste", path + req.nextUrl.search);
     return NextResponse.redirect(gate);
   }
-  return startsWith(path, AUTH_PATHS) ? refreshSession(req) : NextResponse.next();
+  const res = startsWith(path, AUTH_PATHS) ? await refreshSession(req) : NextResponse.next();
+  // Den åpne adressen skal ikke i søkemotorer før lansering
+  if (openHost) res.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return res;
 }
 
 /** Fornyer innloggingen, slik Supabase anbefaler. */

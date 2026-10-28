@@ -8,7 +8,7 @@ export default function RefundPage() {
   return (
     <LegalPage
       title="Refusjon av annonseløft"
-      updated="26. oktober 2026"
+      updated="28. oktober 2026"
       sections={[
         {
           title: "Gjelder bare annonseløft",
@@ -33,7 +33,7 @@ export default function RefundPage() {
         },
         {
           title: "Slik ber du om refusjon",
-          body: <p>Send <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til post@hobbystrada.no, og oppgi gjerne kvitteringsnummeret. Du kan også trykke «Angre kjøpet» på kvitteringen under Min side. Pengene kommer tilbake til samme betalingsmåte innen 14 dager.</p>,
+          body: <p>Send <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til post@hobbystrada.no, og oppgi gjerne kvitteringsnummeret. Du kan også trykke «Angre avtalen» på kvitteringen under Min side. Pengene kommer tilbake til samme betalingsmåte innen 14 dager.</p>,
         },
       ]}
     />

@@ -123,6 +123,11 @@ export function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
           <CrownIcon className="h-3.5 w-3.5" aria-label="Toppannonse" />
         </span>
       )}
+      {l.fanSlot && !l.frontpage ? (
+        <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#0b1426] px-2 py-0.5 text-[8px] font-semibold uppercase tracking-wider text-[#f7f3ea] ring-1 ring-white/70">
+          Valgt av HOBBYSTRADA
+        </span>
+      ) : null}
     </div>
   );
 }

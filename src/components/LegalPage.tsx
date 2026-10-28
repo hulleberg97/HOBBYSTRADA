@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { PageHeader } from "./ui";
+import { slugify } from "@/lib/format";
 
-export type LegalSection = { title: string; body: React.ReactNode };
+/** id: fast anker (f.eks. /terms#slik-sorteres-annonsene). Uten id lages den av tittelen. */
+export type LegalSection = { title: string; body: React.ReactNode; id?: string };
 
 export function LegalPage({ title, updated, sections }: { title: string; updated: string; sections: LegalSection[] }) {
   return (
@@ -10,7 +12,7 @@ export function LegalPage({ title, updated, sections }: { title: string; updated
       <div className="container-custom max-w-3xl pb-16 pt-10">
         <div className="space-y-8 text-base leading-relaxed text-slate-700">
           {sections.map((s) => (
-            <section key={s.title}>
+            <section key={s.title} id={s.id ?? slugify(s.title)} className="scroll-mt-24">
               <h2 className="mb-3 font-heading text-h4 font-semibold text-foreground">{s.title}</h2>
               {s.body}
             </section>

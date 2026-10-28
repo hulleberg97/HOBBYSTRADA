@@ -103,7 +103,7 @@ export function Search({ listings }: { listings: Listing[] }) {
           <p className="text-sm text-slate-600" aria-live="polite">
             <span className="font-semibold text-slate-950">{result.length}</span> {result.length === 1 ? "annonse" : "annonser"}
             {" · "}
-            <Link href="/terms#sortering" className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
+            <Link href="/terms#slik-sorteres-annonsene" className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
               Slik sorteres annonsene
             </Link>
           </p>

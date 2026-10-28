@@ -17,6 +17,7 @@ import { HeroFan, Slab } from "@/components/HeroFan";
 import { RowPill } from "@/components/RowPill";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
+import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
 import { fanCards } from "@/lib/fan";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
@@ -522,89 +523,34 @@ export default async function Home() {
             </Link>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <Link href="/annonseloft" className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold tracking-tight">Topp av listen</h3>
-                <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-800 ring-1 ring-slate-300">3 dager</span>
-              </div>
-              <p className="mt-6 flex items-baseline gap-1.5">
-                <span className="font-heading text-5xl font-bold tracking-[-0.05em]">39</span>
-                <span className="text-sm font-medium text-slate-700">kr</span>
-              </p>
-              <ul className="mt-6 space-y-2.5">
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Over alle vanlige annonser i markedet
-                </li>
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Selg raskere uten å bruke mye
-                </li>
-              </ul>
-                          <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
-                Velg
-                <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
-              </span>
-            </Link>
-            <Link href="/annonseloft"
-              data-highlight="true"
-              className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold tracking-tight">Fremhevet</h3>
-                <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">Mest valgt</span>
-              </div>
-              <p className="mt-6 flex items-baseline gap-1.5">
-                <span className="font-heading text-5xl font-bold tracking-[-0.05em]">79</span>
-                <span className="text-sm font-medium text-slate-700">kr / 7 dager</span>
-              </p>
-              <ul className="mt-6 space-y-2.5">
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Gullmerke og gullramme
-                </li>
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Vises under «Utvalgte kort» på forsiden
-                </li>
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Foran Topp av listen og vanlige annonser
-                </li>
-              </ul>
-                          <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
-                Velg
-                <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
-              </span>
-            </Link>
-            <Link href="/annonseloft" className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8 data-[highlight=true]:ring-2 data-[highlight=true]:ring-accent">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold tracking-tight">Toppannonse</h3>
-                <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-800 ring-1 ring-slate-300">30 dager</span>
-              </div>
-              <p className="mt-6 flex items-baseline gap-1.5">
-                <span className="font-heading text-5xl font-bold tracking-[-0.05em]">199</span>
-                <span className="text-sm font-medium text-slate-700">kr</span>
-              </p>
-              <ul className="mt-6 space-y-2.5">
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Plass i kortvifta på forsiden
-                </li>
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Alt i Fremhevet
-                </li>
-                <li className="flex items-start gap-2.5 text-sm text-slate-800">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
-                  Aller først i markedet
-                </li>
-              </ul>
-                          <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
-                Velg
-                <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
-              </span>
-            </Link>
+            {(["top", "featured", "frontpage"] as const).map((key) => (
+              <Link
+                key={key}
+                href="/annonseloft"
+                className="boost-card group relative flex flex-col rounded-3xl bg-white p-6 text-slate-950 ring-1 ring-slate-300/70 transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgb(11_20_38/0.35)] hover:ring-2 hover:ring-[#cfa653] active:translate-y-0 active:scale-[0.99] sm:p-8"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-lg font-semibold tracking-tight">{BOOSTS[key].name}</h3>
+                  <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-800 ring-1 ring-slate-300">{BOOSTS[key].days} dager</span>
+                </div>
+                <p className="mt-6 flex items-baseline gap-1.5">
+                  <span className="font-heading text-5xl font-bold tracking-[-0.05em]">{BOOSTS[key].price}</span>
+                  <span className="text-sm font-medium text-slate-700">kr</span>
+                </p>
+                <ul className="mt-6 space-y-2.5">
+                  {BOOST_PERKS[key].map((perk) => (
+                    <li key={perk} className="flex items-start gap-2.5 text-sm text-slate-800">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" aria-hidden="true" />
+                      {perk}
+                    </li>
+                  ))}
+                </ul>
+                <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#8a6a24]">
+                  Velg
+                  <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

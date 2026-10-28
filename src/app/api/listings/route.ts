@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUser, getVerification } from "@/lib/auth";
+import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { adminClient } from "@/lib/supabase-admin";
 import { slugify } from "@/lib/format";
@@ -50,6 +50,7 @@ export async function POST(req: Request) {
   if (!player || !set || !price || price < 1 || !username || !location || !email || !name || !f.get("confirm")) {
     return NextResponse.json({ error: "Fyll inn alle feltene som er merket med *." }, { status: 400 });
   }
+  if (!f.get("privat")) return NextResponse.json({ error: "Bekreft at du selger som privatperson." }, { status: 400 });
 
   const files = [f.get("front"), f.get("back"), ...f.getAll("extra")].filter((x): x is File => x instanceof File && x.size > 0).slice(0, 6);
   if (!(f.get("front") instanceof File)) return NextResponse.json({ error: "Legg til et bilde av forsiden." }, { status: 400 });
@@ -115,9 +116,22 @@ export async function POST(req: Request) {
     contact_phone: str(f, "phone", 20) || null,
     status: "pending",
   };
-  let { error } = await db.from("listings").insert({ ...row, seller_verified: Boolean(verified) });
-  // Databasen mangler seller_verified til supabase/004_vipps.sql er kjørt.
-  if (error && /seller_verified/.test(error.message)) ({ error } = await db.from("listings").insert(row));
+  const full: Record<string, unknown> = {
+    ...row,
+    seller_verified: Boolean(verified),
+    // Annonser fra innehaveren merkes, og kan verken løftes eller festes
+    owner_listing: isAdmin(user),
+    private_seller_at: new Date().toISOString(),
+  };
+  // Kolonner som kommer med senere SQL-filer (004_vipps.sql, 016_innehaver.sql): mangler en, lagres annonsen uten den.
+  const later = ["private_seller_at", "owner_listing", "seller_verified"];
+  let { error } = await db.from("listings").insert(full);
+  while (error) {
+    const missing = later.find((c) => error && error.message.includes(c));
+    if (!missing || !(missing in full)) break;
+    delete full[missing];
+    ({ error } = await db.from("listings").insert(full));
+  }
   if (error) {
     console.error("Kunne ikke lagre annonse", error.message);
     return NextResponse.json({ error: "Annonsen ble ikke lagret. Prøv igjen." }, { status: 500 });

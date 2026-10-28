@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage, List } from "@/components/LegalPage";
 import { COMPANY } from "@/lib/company";
-import { BOOSTS } from "@/lib/boosts";
 
 export const metadata: Metadata = { title: "Vilkår" };
 
@@ -88,6 +87,23 @@ export default function TermsPage() {
           ),
         },
         {
+          title: "Annonser fra innehaveren av HOBBYSTRADA",
+          id: "annonser-fra-innehaveren",
+          body: (
+            <>
+              <p>
+                Innehaveren av HOBBYSTRADA ULLEBERG er selv samler og kan selge kort fra sin private samling på HOBBYSTRADA. Slike annonser er merket «Annonse
+                fra innehaveren av HOBBYSTRADA», og de følger de samme reglene som alle andre annonser. Salget er privat og skjer ikke som ledd i
+                næringsvirksomhet. Forbrukerrettighetene etter forbrukerkjøpsloven og angrerettloven gjelder derfor ikke.
+              </p>
+              <p className="mt-3">
+                Innehaverens annonser får ikke annonseløft og festes ikke i kortraden på forsiden. Opplysninger om andre brukere, som meldinger, lagrede søk og
+                rapporter, brukes aldri til innehaverens egne kjøp eller salg.
+              </p>
+            </>
+          ),
+        },
+        {
           title: "Rapportere annonser og brukere",
           body: (
             <p>
@@ -133,18 +149,7 @@ export default function TermsPage() {
             <>
               <p>
                 <strong>Hva du kjøper.</strong> Annonseløft er en betalt tjeneste som HOBBYSTRADA selger. Et løft gir annonsen bedre synlighet i en bestemt
-                periode. Løftede annonser merkes «Annonseløft», så andre ser at plasseringen er betalt.
-              </p>
-              <List
-                items={[
-                  `${BOOSTS.top.name} (${BOOSTS.top.days} dager): annonsen legges øverst i markedet.`,
-                  `${BOOSTS.featured.name} (${BOOSTS.featured.days} dager): annonsen legges øverst i markedet og får et fremhevet merke.`,
-                  `${BOOSTS.frontpage.name} (${BOOSTS.frontpage.days} dager): som Fremhevet, og annonsen vises også i kortraden på forsiden.`,
-                ]}
-              />
-              <p className="mt-3">
-                <strong>Pris og periode.</strong> Prisene og periodene står på siden <Link href="/annonseloft">Annonseløft</Link>. Prisene er i norske kroner
-                og uten merverdiavgift, fordi foretaket ikke er merverdiavgiftsregistrert.
+                periode, og annonsen merkes «Annonseløft». Hva hver pakke inneholder og koster, står i <Link href="/salgsvilkar">salgsvilkårene</Link>.
               </p>
               <p className="mt-3">
                 <strong>Betaling.</strong> Du betaler med Vipps. Vilkårene til Vipps gjelder selve betalingen. Avtalen om annonseløft inngås med HOBBYSTRADA og
@@ -153,8 +158,8 @@ export default function TermsPage() {
               <p className="mt-3">
                 <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven. Når du bestiller, kan du be om at løftet starter med en gang
                 betalingen er gjennomført. Da bekrefter du samtidig at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over. Angrer
-                du før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer ved å sende{" "}
-                <Link href="/angreskjema">angreskjemaet</Link> eller en e-post til {COMPANY.email}.
+                du før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende{" "}
+                <Link href="/angreskjema">angreskjemaet</Link>, eller med en e-post til {COMPANY.email}.
               </p>
               <p className="mt-3">
                 <strong>Hvis løftet ikke virker.</strong> Blir løftet ikke levert som avtalt, gi beskjed til {COMPANY.email}. Vi retter feilen eller
@@ -170,18 +175,20 @@ export default function TermsPage() {
         },
         {
           title: "Slik sorteres annonsene",
+          id: "slik-sorteres-annonsene",
           body: (
             <p id="sortering">
               Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
               merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
               likt, uavhengig av løft. Kortraden på forsiden viser toppannonser først, deretter annonser med Fremhevet og Topp av listen, og til slutt de nyeste annonsene når det er
-              plass. Har raden få kort, kan vi selv feste utvalgte annonser der. Prisarkivet «Solgte kort» sorteres etter
-              salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
+              plass. Har raden få kort, kan vi selv feste annonser fra andre brukere der. Festede annonser er merket «Valgt av HOBBYSTRADA», ikke «Annonseløft»,
+              og selgeren betaler ikke for plasseringen. Innehaverens egne annonser festes ikke. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
             </p>
           ),
         },
         {
           title: "Ansvar mellom kjøper og selger",
+          id: "ansvar-mellom-kjoper-og-selger",
           body: (
             <>
               <p>

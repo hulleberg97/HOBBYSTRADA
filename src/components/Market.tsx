@@ -193,7 +193,7 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
               </select>
               <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
             </div>
-            <Link href="/terms#sortering" className="shrink-0 text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
+            <Link href="/terms#slik-sorteres-annonsene" className="shrink-0 text-xs text-slate-500 underline underline-offset-2 hover:text-slate-800">
               Slik sorteres annonsene
             </Link>
           </div>

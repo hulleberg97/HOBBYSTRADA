@@ -11,7 +11,7 @@ export default function Page() {
   const row = "grid gap-1 border-b border-dashed border-slate-300 py-3 sm:grid-cols-[220px_1fr]";
   return (
     <div className="min-h-screen">
-      <PageHeader eyebrow="Juridisk" title="Angreskjema" lead="Bruk dette skjemaet hvis du vil gå fra avtalen om annonseløft. Du kan også trykke «Angre kjøpet» på kvitteringen under Min side, eller sende en vanlig e-post. Enhver tydelig melding om at du angrer, er nok." />
+      <PageHeader eyebrow="Juridisk" title="Angreskjema" lead="Bruk dette skjemaet hvis du vil gå fra avtalen om annonseløft. Du kan også trykke «Angre avtalen» på kvitteringen under Min side, eller sende en vanlig e-post. Enhver tydelig melding om at du angrer, er nok." />
       <div className="container-custom max-w-3xl pb-16 pt-10">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
           <p className="text-sm text-slate-600">

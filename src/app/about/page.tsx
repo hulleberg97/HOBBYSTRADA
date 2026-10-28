@@ -63,7 +63,7 @@ export default function AboutPage() {
             </span>
             <h3 className="mt-5 text-lg font-bold tracking-tight text-slate-950">Synlighet når du vil</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-slate-600">
-              Vil du selge raskere, kan du løfte annonsen til toppen, gi den gullmerke eller vise den i kortvifta på forsiden.
+              Vil du selge raskere, kan du løfte annonsen til toppen, gi den gullmerke eller vise den i kortraden på forsiden.
             </p>
           </div>
         </div>

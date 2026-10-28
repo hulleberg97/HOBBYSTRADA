@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
-import { BOOSTS, type BoostKey } from "@/lib/boosts";
+import { BOOSTS, FRONTPAGE_SLOTS, type BoostKey } from "@/lib/boosts";
+import { frontpageAvailability } from "@/lib/frontpage";
 import { sendEmail } from "@/lib/email";
 import { createPayment, hasVipps } from "@/lib/vipps";
 
@@ -12,6 +13,13 @@ export async function POST(req: Request) {
   const plan = body.plan as BoostKey;
   if (!(plan in BOOSTS)) return NextResponse.json({ error: "Ukjent pakke." }, { status: 400 });
   if (body.consent !== true || body.consentLoss !== true) return NextResponse.json({ error: "Kryss av for begge punktene om angrerett." }, { status: 400 });
+  // Tidspunktet kunden krysset av for hver bekreftelse, så det kan dokumenteres (angrerettloven §§ 19 og 22 c)
+  const stamp = (v: unknown) => {
+    const t = new Date(String(v ?? "")).getTime();
+    return Number.isFinite(t) && t <= Date.now() + 60e3 ? new Date(t).toISOString() : new Date().toISOString();
+  };
+  const consentStartAt = stamp(body.consentAt);
+  const consentLossAt = stamp(body.consentLossAt);
 
   const db = adminClient();
   const user = await getUser();
@@ -22,32 +30,55 @@ export async function POST(req: Request) {
   // Godta både lenke og tittel
   const text = String(body.listing ?? "").trim();
   const slug = text.match(/\/products\/([^/?#\s]+)/)?.[1] ?? text;
-  let { data: listing } = await db.from("listings").select("id, slug, title, owner_id").eq("slug", slug).maybeSingle();
-  if (!listing) {
-    const found = await db.from("listings").select("id, slug, title, owner_id").eq("owner_id", user.id).ilike("title", `%${text}%`).limit(1).maybeSingle();
-    listing = found.data;
-  }
+  type Found = { id: string; slug: string; title: string; owner_id: string | null; owner_listing?: boolean | null; frontpage_until?: string | null };
+  // owner_listing kommer med supabase/016_innehaver.sql; før det hentes annonsen uten.
+  const find = async (cols: string) => {
+    const bySlug = await db.from("listings").select(cols).eq("slug", slug).maybeSingle();
+    if (bySlug.data) return bySlug;
+    return db.from("listings").select(cols).eq("owner_id", user.id).ilike("title", `%${text}%`).limit(1).maybeSingle();
+  };
+  let found = await find("id, slug, title, owner_id, owner_listing, frontpage_until");
+  if (found.error && /owner_listing/.test(found.error.message)) found = await find("id, slug, title, owner_id, frontpage_until");
+  const listing = found.data as unknown as Found | null;
   if (!listing) return NextResponse.json({ error: "Fant ikke annonsen. Lim inn lenken til den." }, { status: 404 });
 
   if (listing.owner_id !== user.id && !isAdmin(user)) {
     return NextResponse.json({ error: "Du kan bare løfte dine egne annonser." }, { status: 403 });
   }
+  if (listing.owner_listing) return NextResponse.json({ error: "Annonser fra innehaveren av HOBBYSTRADA får ikke annonseløft." }, { status: 403 });
+
+  // Ikke flere aktive toppannonser enn det er faste plasser i kortraden
+  if (plan === "frontpage") {
+    const live = listing.frontpage_until && new Date(listing.frontpage_until).getTime() > Date.now();
+    const slots = await frontpageAvailability(db);
+    if (!live && slots.taken >= FRONTPAGE_SLOTS) {
+      return NextResponse.json({ error: `Toppannonse er utsolgt. Alle ${FRONTPAGE_SLOTS} plassene i kortraden er tatt, ledig fra ${slots.nextFreeText}.` }, { status: 409 });
+    }
+  }
 
   const b = BOOSTS[plan];
-  const row = { listing_id: listing.id, user_id: user.id, buyer_email: user.email, plan, amount: b.price, status: "pending" };
-  let { data: order, error } = await db
-    .from("boost_orders")
-    .insert({ ...row, listing_title: listing.title, buyer_name: user.fullName, consent_at: new Date().toISOString() })
-    .select("id")
-    .single();
-  // Databasen mangler consent_at til supabase/003_juridisk.sql er kjørt.
-  // Databasen mangler listing_title til supabase/009_betalinger_personvern.sql er kjørt.
-  // Databasen mangler buyer_name til supabase/011_sperreliste.sql er kjørt.
-  if (error && /buyer_name/.test(error.message))
-    ({ data: order, error } = await db.from("boost_orders").insert({ ...row, listing_title: listing.title, consent_at: new Date().toISOString() }).select("id").single());
-  if (error && /listing_title/.test(error.message))
-    ({ data: order, error } = await db.from("boost_orders").insert({ ...row, consent_at: new Date().toISOString() }).select("id").single());
-  if (error && /consent_at/.test(error.message)) ({ data: order, error } = await db.from("boost_orders").insert(row).select("id").single());
+  const full: Record<string, unknown> = {
+    listing_id: listing.id,
+    user_id: user.id,
+    buyer_email: user.email,
+    plan,
+    amount: b.price,
+    status: "pending",
+    listing_title: listing.title,
+    buyer_name: user.fullName,
+    consent_at: consentStartAt,
+    consent_start_at: consentStartAt,
+    consent_loss_at: consentLossAt,
+  };
+  // Kolonner som kommer med senere SQL-filer (003, 009, 011, 016): mangler en, lagres bestillingen uten den.
+  const later = ["consent_start_at", "consent_loss_at", "buyer_name", "listing_title", "consent_at"];
+  let { data: order, error } = await db.from("boost_orders").insert(full).select("id").single();
+  while (error) {
+    const missing = later.find((c) => error && error.message.includes(c));
+    if (!missing || !(missing in full)) break;
+    delete full[missing];
+    ({ data: order, error } = await db.from("boost_orders").insert(full).select("id").single());
+  }
   if (error || !order) return NextResponse.json({ error: "Kunne ikke opprette bestillingen." }, { status: 500 });
 
   if (hasVipps()) {

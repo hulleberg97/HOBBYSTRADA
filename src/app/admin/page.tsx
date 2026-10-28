@@ -309,7 +309,7 @@ export default async function AdminPage() {
                       { label: "Slett", del: true, tone: "danger" as const },
                     ]}
                   />
-                  {l.status === "active" && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
+                  {l.status === "active" && !l.ownerListing && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
                   {r.owner_id && <BlockUser listingId={l.id!} seller={l.seller} />}
                 </OwnerListingRow>
               );

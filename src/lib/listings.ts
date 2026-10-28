@@ -25,6 +25,7 @@ type Row = {
   seller_name: string;
   seller_verified?: boolean;
   fan_slot?: number | null;
+  owner_listing?: boolean | null;
   location: string | null;
   created_at: string;
   updated_at?: string;
@@ -60,6 +61,7 @@ export function fromRow(r: Row): Listing {
     seller: r.seller_name,
     sellerVerified: Boolean(r.seller_verified),
     fanSlot: r.fan_slot ?? null,
+    ownerListing: Boolean(r.owner_listing),
     location: r.location,
     createdAt: r.created_at,
     soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
@@ -71,17 +73,19 @@ export function fromRow(r: Row): Listing {
 
 const BASE_COLUMNS =
   "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at, fan_slot";
-let hasVerifiedColumn = true;
-/** Offentlige kolonner. seller_verified kommer med supabase/004_vipps.sql; før det hentes annonsene uten. */
-export const publicColumns = () => (hasVerifiedColumn ? `${BASE_COLUMNS}, seller_verified` : BASE_COLUMNS);
+/** Kolonner som kommer med senere SQL-filer (004_vipps.sql, 016_innehaver.sql). Mangler de, hentes annonsene uten. */
+const optional = new Set(["seller_verified", "owner_listing"]);
+export const publicColumns = () => [BASE_COLUMNS, ...optional].join(", ");
 export const PUBLIC_COLUMNS = BASE_COLUMNS;
 
-/** Kjører spørringen, og prøver igjen uten seller_verified hvis databasen ikke er oppdatert ennå. */
+/** Kjører spørringen, og prøver igjen uten kolonner databasen ikke har ennå. */
 async function withColumns<T>(run: (cols: string) => PromiseLike<{ data: T; error: { message: string } | null }>) {
-  const res = await run(publicColumns());
-  if (res.error && hasVerifiedColumn && /seller_verified/.test(res.error.message)) {
-    hasVerifiedColumn = false;
-    return run(publicColumns());
+  let res = await run(publicColumns());
+  while (res.error) {
+    const missing = [...optional].find((c) => res.error && res.error.message.includes(c));
+    if (!missing) break;
+    optional.delete(missing);
+    res = await run(publicColumns());
   }
   return res;
 }

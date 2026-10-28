@@ -37,8 +37,12 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             )}
           </div>
           <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
-            {/* Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
-            {(listing.featured || listing.bumpedAt) && (
+            {/* Festede kort er valgt av oss, ikke betalt. Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
+            {listing.fanSlot ? (
+              <span title="Festet i kortraden av HOBBYSTRADA. Selgeren har ikke betalt for plasseringen." className="inline-flex items-center rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-semibold text-white">
+                Valgt av HOBBYSTRADA
+              </span>
+            ) : (listing.featured || listing.bumpedAt) && (
               <span
                 title={listing.frontpage ? "Toppannonse" : listing.featured ? "Fremhevet" : "Topp av listen"}
                 className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground"
@@ -70,6 +74,7 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
             {listing.sellerVerified && <VerifiedBadge compact />}
+            {listing.ownerListing && <span className="basis-full text-[11px] font-medium text-slate-600">Annonse fra innehaveren av HOBBYSTRADA</span>}
             <span className="card-time inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
               <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>

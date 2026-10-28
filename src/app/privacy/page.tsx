@@ -27,7 +27,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Personvern"
-      updated="27. oktober 2026"
+      updated="28. oktober 2026"
       sections={[
         {
           title: "1. Om denne erklæringen",
@@ -280,7 +280,8 @@ export default function PrivacyPage() {
           title: "11. Sikkerhet",
           body: (
             <p>
-              All trafikk er kryptert. Bare driftsansvarlig hos HOBBYSTRADA har tilgang til opplysningene. Meldinger leses bare ved rapport om en annonse eller
+              All trafikk er kryptert. Bare driftsansvarlig hos HOBBYSTRADA har tilgang til opplysningene. Driftsansvarlig selger også kort privat på
+              HOBBYSTRADA. Opplysninger om andre brukere brukes aldri til hans egne kjøp eller salg. Meldinger leses bare ved rapport om en annonse eller
               mistanke om svindel (se punkt 4). Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via lenker som slutter å virke etter
               ett døgn. Leverandørene våre har databehandleravtaler med oss og behandler bare opplysningene på våre vegne.
             </p>

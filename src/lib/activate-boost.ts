@@ -3,30 +3,38 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { BOOSTS, boostDate, type BoostKey } from "./boosts";
 import { addNotification } from "./notifications";
 import { isPlaceholderEmail, sendEmail } from "./email";
-import { boostConfirmation } from "./boost-mail";
+import { boostReceipt } from "./boost-mail";
 
-/** Aktiverer en betalt bestilling: setter løftet på annonsen og markerer bestillingen som betalt. */
+/**
+ * Aktiverer en betalt bestilling. Rekkefølge: bestillingen merkes betalt (salgsdokumentet får nummer),
+ * kvitteringen sendes på e-post, og først da settes løftet på annonsen (angrerettloven § 18).
+ */
 export async function activateBoost(db: SupabaseClient, orderId: string) {
-  const { data: order } = await db.from("boost_orders").select("id, listing_id, user_id, plan, status").eq("id", orderId).maybeSingle();
+  const { data: order } = await db.from("boost_orders").select("id, listing_id, user_id, plan, status, amount").eq("id", orderId).maybeSingle();
   if (!order || order.status === "paid") return;
-  const days = BOOSTS[order.plan as BoostKey].days;
+  const plan = order.plan as BoostKey;
+  const days = BOOSTS[plan].days;
+  const paidAt = new Date().toISOString();
   const until = new Date(Date.now() + days * 864e5).toISOString();
   const { data: l } = order.listing_id ? await db.from("listings").select("slug, title").eq("id", order.listing_id).maybeSingle() : { data: null };
-  const patch: Record<string, string> = { bumped_until: until };
-  if (order.plan !== "top") patch.featured_until = until;
-  if (order.plan === "frontpage") patch.frontpage_until = until;
-  // Bekreftelse på e-post sendes før løftet aktiveres (angrerettloven § 18, ehandelsloven § 12)
+
+  const { data: paid } = await db.from("boost_orders").update({ status: "paid", paid_at: paidAt }).eq("id", order.id).select("invoice_no").maybeSingle();
+
   const { data: u } = order.user_id ? await db.auth.admin.getUserById(order.user_id) : { data: { user: null } };
   if (u.user?.email && !isPlaceholderEmail(u.user.email)) {
-    const amount = Number((await db.from("boost_orders").select("amount").eq("id", order.id).maybeSingle()).data?.amount ?? BOOSTS[order.plan as BoostKey].price);
-    await sendEmail({ to: u.user.email, ...boostConfirmation({ plan: order.plan as BoostKey, title: l?.title ?? "annonsen", amount, orderId: order.id, until }) });
+    const amount = Number(order.amount ?? BOOSTS[plan].price);
+    const title = l?.title ?? "annonsen";
+    await sendEmail({ to: u.user.email, ...(await boostReceipt({ plan, title, amount, orderId: order.id, invoiceNo: paid?.invoice_no ?? null, paidAt, until })) });
   }
+
+  const patch: Record<string, string> = { bumped_until: until };
+  if (plan !== "top") patch.featured_until = until;
+  if (plan === "frontpage") patch.frontpage_until = until;
   if (order.listing_id) await db.from("listings").update(patch).eq("id", order.listing_id);
-  await db.from("boost_orders").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", order.id);
   await addNotification(db, order.user_id, {
     kind: "boost",
     title: "Hurra! Annonsen din er løftet!",
-    body: `${BOOSTS[order.plan as BoostKey].name} på «${l?.title ?? "annonsen"}» varer til ${boostDate(until)}.`,
+    body: `${BOOSTS[plan].name} på «${l?.title ?? "annonsen"}» varer til ${boostDate(until)}.`,
     href: l ? `/products/${l.slug}` : "/account",
   });
 }

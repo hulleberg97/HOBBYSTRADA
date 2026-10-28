@@ -1,6 +1,7 @@
 import nodemailer, { type Transporter } from "nodemailer";
 
-type Mail = { to: string; subject: string; text: string; html?: string; replyTo?: string };
+export type Attachment = { filename: string; content: Buffer; contentType: string };
+type Mail = { to: string; subject: string; text: string; html?: string; replyTo?: string; attachments?: Attachment[] };
 
 const from = () => process.env.EMAIL_FROM ?? "HOBBYSTRADA <post@hobbystrada.no>";
 
@@ -16,12 +17,12 @@ function smtp() {
 }
 
 /** Sender e-post via SMTP, eller via Resend når RESEND_API_KEY er satt. Returnerer false hvis e-post ikke er satt opp. */
-export async function sendEmail({ to, subject, text, html, replyTo }: Mail) {
+export async function sendEmail({ to, subject, text, html, replyTo, attachments }: Mail) {
   if (isPlaceholderEmail(to)) return false;
   const mailer = smtp();
   if (mailer) {
     try {
-      await mailer.sendMail({ from: from(), to, subject, text, html, replyTo });
+      await mailer.sendMail({ from: from(), to, subject, text, html, replyTo, attachments });
       return true;
     } catch (e) {
       console.error("E-post feilet", e);
@@ -33,7 +34,15 @@ export async function sendEmail({ to, subject, text, html, replyTo }: Mail) {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
-    body: JSON.stringify({ from: from(), to, subject, text, html, reply_to: replyTo }),
+    body: JSON.stringify({
+      from: from(),
+      to,
+      subject,
+      text,
+      html,
+      reply_to: replyTo,
+      attachments: attachments?.map((a) => ({ filename: a.filename, content: a.content.toString("base64") })),
+    }),
   });
   if (!res.ok) console.error("E-post feilet", res.status, await res.text());
   return res.ok;

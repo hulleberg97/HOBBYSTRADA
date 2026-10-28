@@ -14,7 +14,9 @@ async function load(id: string) {
   const db = adminClient();
   const user = await getUser();
   if (!db || !user) return { error: NextResponse.json({ error: "Du må være logget inn." }, { status: 401 }) };
-  const { data: listing } = await db.from("listings").select("id, slug, title, owner_id, status").eq("id", id).maybeSingle();
+  // owner_listing kommer med supabase/016_innehaver.sql; før det hentes annonsen uten.
+  const first = await db.from("listings").select("id, slug, title, owner_id, status, owner_listing").eq("id", id).maybeSingle();
+  const listing = first.error && /owner_listing/.test(first.error.message) ? (await db.from("listings").select("id, slug, title, owner_id, status").eq("id", id).maybeSingle()).data : first.data;
   if (!listing) return { error: NextResponse.json({ error: "Fant ikke annonsen." }, { status: 404 }) };
   const admin = isAdmin(user);
   if (listing.owner_id !== user.id && !admin) return { error: NextResponse.json({ error: "Dette er ikke din annonse." }, { status: 403 }) };
@@ -53,7 +55,9 @@ export async function PATCH(req: Request, { params }: Ctx) {
     patch.location = location.trim().slice(0, 60);
   }
   if (fanSlot !== undefined) {
-    if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort til vifta." }, { status: 403 });
+    if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort til kortraden." }, { status: 403 });
+    if (fanSlot !== null && (r.listing as { owner_listing?: boolean | null }).owner_listing)
+      return NextResponse.json({ error: "Annonser fra innehaveren av HOBBYSTRADA festes ikke i kortraden." }, { status: 400 });
     if (fanSlot !== null && ![1, 2, 3, 4, 5].includes(fanSlot)) return NextResponse.json({ error: "Ugyldig plass." }, { status: 400 });
     // Plassen kan bare ha ett kort: frigjør den først.
     if (fanSlot !== null) await r.db.from("listings").update({ fan_slot: null }).eq("fan_slot", fanSlot).neq("id", r.listing.id);
