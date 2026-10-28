@@ -82,10 +82,13 @@ export const PUBLIC_COLUMNS = BASE_COLUMNS;
 async function withColumns<T>(run: (cols: string) => PromiseLike<{ data: T; error: { message: string } | null }>) {
   let optional = OPTIONAL;
   let res = await run(publicColumns(optional));
-  while (res.error) {
-    const missing = optional.find((c) => res.error && res.error.message.includes(c));
-    if (!missing) break;
-    optional = optional.filter((c) => c !== missing);
+  while (res.error && optional.length) {
+    // «column … does not exist» nevner kolonnen. «permission denied» gjør det ikke: da fjernes den siste valgfrie kolonnen.
+    const named = optional.find((c) => res.error && res.error.message.includes(c));
+    const denied = /permission denied/i.test(res.error.message);
+    const drop = named ?? (denied ? optional[optional.length - 1] : undefined);
+    if (!drop) break;
+    optional = optional.filter((c) => c !== drop);
     res = await run(publicColumns(optional));
   }
   return res;
