@@ -5,8 +5,9 @@ import { ACCESS_COOKIE, accessToken, sitePassword } from "@/lib/private";
 
 // Sider som leser innloggingen på serveren. Resten mellomlagres og leser innloggingen i nettleseren.
 const AUTH_PATHS = ["/account", "/meldinger", "/admin", "/sell", "/api/", "/auth/", "/annonseloft/betaling"];
-// Åpne selv i lukket modus: passordsiden, cron-jobben (har egen nøkkel) og lenker fra e-post og Vipps.
+// Åpne selv i lukket modus: passordsiden, cron-jobben (har egen nøkkel), lenker fra e-post og Vipps, og de juridiske sidene.
 const OPEN_PATHS = ["/privat", "/api/privat", "/api/cron/", "/auth/callback", "/auth/vipps/callback", "/robots.txt"];
+const LEGAL_PATHS = ["/terms", "/privacy", "/salgsvilkar", "/refund-policy", "/cookie-policy", "/angreskjema"];
 
 const startsWith = (path: string, list: string[]) =>
   list.some((p) => (p.endsWith("/") ? path.startsWith(p) : path === p || path.startsWith(`${p}/`)));
@@ -14,7 +15,7 @@ const startsWith = (path: string, list: string[]) =>
 export async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const password = sitePassword();
-  if (password && !startsWith(path, OPEN_PATHS) && req.cookies.get(ACCESS_COOKIE)?.value !== (await accessToken(password))) {
+  if (password && !startsWith(path, OPEN_PATHS) && !startsWith(path, LEGAL_PATHS) && req.cookies.get(ACCESS_COOKIE)?.value !== (await accessToken(password))) {
     if (path.startsWith("/api/")) return NextResponse.json({ error: "Nettsiden er ikke åpnet ennå." }, { status: 401 });
     const gate = new URL("/privat", req.url);
     gate.searchParams.set("neste", path + req.nextUrl.search);
