@@ -1,5 +1,6 @@
 -- Annonser fra innehaveren av HOBBYSTRADA merkes, og kan verken løftes eller festes i kortraden.
 alter table public.listings add column if not exists owner_listing boolean not null default false;
+grant select (owner_listing) on public.listings to anon, authenticated;
 -- Selgerens erklæring på /sell: «Jeg selger som privatperson, ikke som ledd i næringsvirksomhet.»
 alter table public.listings add column if not exists private_seller_at timestamptz;
 -- Tidspunkt for hver av de to bekreftelsene i kassen for annonseløft (angrerettloven §§ 19 og 22 c).
