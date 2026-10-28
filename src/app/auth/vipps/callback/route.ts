@@ -65,7 +65,7 @@ export async function GET(req: Request) {
       await db.auth.admin.createUser({
         email,
         email_confirm: true,
-        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, adult: true, adult_confirmed_at: new Date().toISOString() },
+        user_metadata: { username: v.name.split(" ")[0] || "Samler", name: v.name, adult: true, adult_confirmed_at: new Date().toISOString(), terms_accepted_at: new Date().toISOString() },
       }); // feiler stille hvis kontoen finnes fra før – da logger vi inn på den
     }
 

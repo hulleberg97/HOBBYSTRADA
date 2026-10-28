@@ -47,7 +47,7 @@ export async function boostReceipt({
   until: string;
 }) {
   const p = BOOSTS[plan];
-  const head = `Salgsdokument nr. ${invoiceNo ?? "–"} · ${stamp(paidAt)}\nSelger: ${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}, ${COMPANY.email}`;
+  const head = `Salgsdokument nr. ${invoiceNo ?? "–"} · ${stamp(paidAt)}\nSelger: ${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}, ${COMPANY.email}, telefon ${COMPANY.phone}`;
   const body = `Pakke: ${p.name}, ${p.days} dager, for annonsen «${title}»\nPeriode: ${day(paidAt)} til ${day(until)}\nPris: ${amount} kr, uten merverdiavgift fordi foretaket ikke er merverdiavgiftsregistrert. Betalt med Vipps.`;
   const withdrawal = `Angrerett: Du har 14 dagers angrerett fra i dag. Du ba om at løftet skulle starte med en gang, og bekreftet at angreretten går tapt når perioden er over. Angrer du før det, betaler du for dagene som er brukt, og du får resten tilbake innen 14 dager. Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, med angreskjemaet, som ligger vedlagt, eller med en e-post til ${COMPANY.email}.`;
   const closing = "Vilkårene som gjaldt da du kjøpte, ligger vedlagt.";

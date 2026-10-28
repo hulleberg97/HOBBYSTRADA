@@ -18,7 +18,7 @@ export default function TermsPage() {
             <>
               <p>
                 HOBBYSTRADA drives av {COMPANY.name}, et enkeltpersonforetak registrert i Enhetsregisteret med org.nr. {COMPANY.orgnr}, {COMPANY.street},{" "}
-                {COMPANY.postal}, e-post <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>. Foretaket er ikke registrert i Merverdiavgiftsregisteret.
+                {COMPANY.postal}, e-post <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>, telefon {COMPANY.phone}. Foretaket er ikke registrert i Merverdiavgiftsregisteret.
               </p>
               <p className="mt-3">
                 HOBBYSTRADA er en annonseplass der samlere kjøper og selger fotballkort av hverandre. Vi formidler bare kontakt mellom kjøper og selger.

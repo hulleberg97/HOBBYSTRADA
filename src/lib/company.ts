@@ -5,4 +5,5 @@ export const COMPANY = {
   street: "Stalsbergs gate 4",
   postal: "3612 Kongsberg",
   email: "post@hobbystrada.no",
+  phone: "40 10 57 42",
 };

@@ -31,6 +31,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                   {COMPANY.email}
                 </a>
               </p>
+              <p>Telefon: {COMPANY.phone}</p>
             </address>
           </div>
           <div className="rounded-3xl bg-white p-6 ring-1 ring-slate-200">

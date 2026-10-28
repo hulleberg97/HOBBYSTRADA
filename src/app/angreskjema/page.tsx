@@ -21,7 +21,7 @@ export default function Page() {
         </div>
         <div className="rounded-3xl bg-white p-6 text-base leading-relaxed text-slate-700 ring-1 ring-slate-200 print:p-0 print:ring-0 sm:p-8">
           <p>
-            Til {COMPANY.name}, org.nr. {COMPANY.orgnr}, {COMPANY.street}, {COMPANY.postal}, e-post {COMPANY.email}.
+            Til {COMPANY.name}, org.nr. {COMPANY.orgnr}, {COMPANY.street}, {COMPANY.postal}, e-post {COMPANY.email}, telefon {COMPANY.phone}.
           </p>
           <p className="mt-4">Jeg melder med dette at jeg ønsker å gå fra min avtale om kjøp av følgende tjeneste:</p>
           <dl className="mt-4 text-sm">

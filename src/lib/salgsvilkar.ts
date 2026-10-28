@@ -13,7 +13,7 @@ export const SALGSVILKAR: SalesSection[] = [
   {
     title: "Selger",
     blocks: [
-      `${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}. E-post: ${COMPANY.email}. Vilkårene gjelder kjøp av annonseløft på HOBBYSTRADA. Kort i markedet kjøpes direkte fra andre brukere, og den handelen er HOBBYSTRADA ikke part i.`,
+      `${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}. E-post: ${COMPANY.email}. Telefon: ${COMPANY.phone}. Vilkårene gjelder kjøp av annonseløft på HOBBYSTRADA. Kort i markedet kjøpes direkte fra andre brukere, og den handelen er HOBBYSTRADA ikke part i.`,
     ],
   },
   {
@@ -80,7 +80,7 @@ export function plainText(text: string, site = "https://www.hobbystrada.no") {
 /** Angreskjemaet (angrerettloven § 8, standardskjemaet i forskriften), samme innhold som /angreskjema. */
 export function angreskjemaBlocks(): (string | string[])[] {
   return [
-    `Til ${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}, e-post ${COMPANY.email}.`,
+    `Til ${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}, e-post ${COMPANY.email}, telefon ${COMPANY.phone}.`,
     "Jeg melder med dette at jeg ønsker å gå fra min avtale om kjøp av følgende tjeneste:",
     [
       "Tjeneste: Annonseløft (pakke og annonse): ______________________________",

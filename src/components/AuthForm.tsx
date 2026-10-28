@@ -114,7 +114,17 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                   {vippsError && <p className="mb-3 text-sm text-destructive">{vippsError}</p>}
                   <label className="mb-4 flex cursor-pointer items-start gap-3 text-sm text-slate-700">
                     <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
-                    <span>Jeg bekrefter at jeg er minst 18 år.</span>
+                    <span>
+                      Jeg bekrefter at jeg er minst 18 år, og godtar{" "}
+                      <Link href="/terms" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
+                        vilkårene
+                      </Link>{" "}
+                      og{" "}
+                      <Link href="/privacy" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
+                        personvernerklæringen
+                      </Link>
+                      .
+                    </span>
                   </label>
                   {adult ? (
                     <VippsButton href={`/auth/vipps?alder=1&next=${encodeURIComponent(next)}`} label={mode === "login" ? "Logg inn med Vipps" : "Fortsett med Vipps"} />
