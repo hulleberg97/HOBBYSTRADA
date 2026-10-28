@@ -62,7 +62,7 @@ export function SellCta({ secondary }: { secondary?: { href: string; label: stri
       <div>
         <Eyebrow>Selg kortene dine</Eyebrow>
         <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">Har du kort i skuffen?</h2>
-        <p className="mt-2 max-w-lg text-[15px] text-slate-600">Legg dem ut på et par minutter og nå samlere i hele Norge.</p>
+        <p className="mt-2 max-w-lg text-[15px] text-slate-600">Legg dem ut på et par minutter og nå andre samlere.</p>
       </div>
       <div className="flex flex-wrap gap-2.5">
         <Link className={btnPrimary} href="/sell">

@@ -78,7 +78,7 @@ export default async function Home() {
                   <br />
                   <span className="text-[#a8822f]">fotballkort</span>
                 </p>
-                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Kjøp og selg kort med samlere i hele Norge.</p>
+                <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Kjøp og selg kort med andre samlere.</p>
               </div>
               <div className="mt-f hidden">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a8822f]">Norges markedsplass for fotballkort</p>
@@ -92,7 +92,7 @@ export default async function Home() {
                 <p className="mt-h font-[family-name:var(--t-sora)] text-[2.4rem] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#0b1426] sm:text-[3.2rem] lg:text-[3.8rem]">
                   Kjøp og selg fotballkort
                   <br />
-                  <span className="text-[#a8822f]">med samlere i hele Norge</span>
+                  <span className="text-[#a8822f]">med andre samlere</span>
                 </p>
                 <p className="mt-3 text-[13px] font-medium text-[#6b655e] sm:text-[15px] lg:text-base">Trygg handel. Logg inn med Vipps.</p>
               </div>

@@ -17,7 +17,7 @@ export default async function BoostPage({ searchParams }: { searchParams: Promis
   const frontpage = db ? await frontpageAvailability(db) : { soldOut: false, nextFreeText: "", slots: FRONTPAGE_SLOTS };
   return (
     <>
-      <PageHeader center eyebrow="Annonseløft" title="Få kortet ditt sett først" lead="Gi annonsen mer synlighet, og selg raskere til samlere i hele Norge." />
+      <PageHeader center eyebrow="Annonseløft" title="Få kortet ditt sett først" lead="Gi annonsen mer synlighet, og selg raskere til andre samlere." />
       <section className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <Suspense>
           <BoostPicker frontpage={{ soldOut: frontpage.soldOut, nextFreeText: frontpage.nextFreeText, slots: frontpage.slots }} />
