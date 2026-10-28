@@ -14,6 +14,7 @@ import { BlockUser } from "@/components/BlockUser";
 import { Unblock } from "@/components/Unblock";
 import { SalesReport } from "@/components/SalesReport";
 import { TestMail } from "@/components/TestMail";
+import { RyddTestdata } from "@/components/RyddTestdata";
 import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
@@ -43,6 +44,17 @@ export default async function AdminPage() {
   ]);
 
   const sales = await listInvoices(db, since90());
+  // Før lansering: andre kontoer enn admin, så testkontoer kan slettes fra admin
+  const { data: users } = await db.auth.admin.listUsers({ page: 1, perPage: 1000 });
+  const kontoer = (users?.users ?? [])
+    .filter((u) => u.id !== user!.id)
+    .map((u) => ({
+      id: u.id,
+      email: u.email ?? "",
+      name: String(u.user_metadata?.name ?? u.user_metadata?.username ?? ""),
+      created: new Date(u.created_at).toLocaleDateString("nb-NO"),
+      listings: (all ?? []).filter((l) => l.owner_id === u.id).length,
+    }));
   const { data: blocked } = await db.from("blocked_users").select("vipps_sub, rule, blocked_at, user_id, delete_after").not("user_id", "is", null).order("blocked_at", { ascending: false });
   const blockedNames = new Map<string, string>();
   for (const b of blocked ?? []) {
@@ -271,6 +283,7 @@ export default async function AdminPage() {
           <p className="mt-1 text-sm text-slate-600">Hvert betalt løft får et fortløpende salgsdokumentnummer. Rapporten under er til regnskapet, og hver rad har lenke til kvitteringen.</p>
           <SalesReport now={since90(0)} />
           <TestMail />
+          <RyddTestdata kontoer={kontoer} />
           {sales.length > 0 && (
             <ul className="mt-4 divide-y divide-slate-100 rounded-3xl bg-white px-5 ring-1 ring-slate-200">
               {sales.map((r) => (
