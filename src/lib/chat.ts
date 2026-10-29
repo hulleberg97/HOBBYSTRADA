@@ -169,6 +169,14 @@ export async function getConversation(id: string, userId: string, after?: string
   return { conversation, messages };
 }
 
+/** Bud i samtalen som er godtatt eller avslått, så en åpen chat kan oppdatere merkene uten omlasting. */
+export async function decidedOffers(conversationId: string) {
+  const db = adminClient();
+  if (!db) return [] as { id: string; status: "accepted" | "declined" }[];
+  const { data } = await db.from("chat_messages").select("id, offer_status").eq("conversation_id", conversationId).not("offer_status", "is", null);
+  return (data ?? []).map((m) => ({ id: String(m.id), status: m.offer_status as "accepted" | "declined" }));
+}
+
 /** Finner samtalen mellom kjøperen og selgeren om annonsen, eller lager en ny. */
 export async function openConversation(input: {
   listing: { slug: string; title: string; image: string | null; seller: string };

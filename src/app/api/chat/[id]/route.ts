@@ -1,18 +1,26 @@
 import { NextResponse } from "next/server";
 import { getUser, needsVipps } from "@/lib/auth";
 import { rateLimit } from "@/lib/rate-limit";
-import { addMessage, getConversation, MAX_IMAGE_BYTES, MAX_MESSAGE } from "@/lib/chat";
+import { addMessage, decidedOffers, getConversation, MAX_IMAGE_BYTES, MAX_MESSAGE } from "@/lib/chat";
 
 type Ctx = { params: Promise<{ id: string }> };
 
-/** Nye meldinger i samtalen (etter ?etter=tidspunkt). Merker samtalen som lest. */
+/** Nye meldinger i samtalen (etter ?etter=tidspunkt), besvarte bud og godtatt bud med Vipps-lenke. Merker samtalen som lest. */
 export async function GET(req: Request, { params }: Ctx) {
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "Logg inn." }, { status: 401 });
   const after = new URL(req.url).searchParams.get("etter") ?? undefined;
   const chat = await getConversation((await params).id, user.id, after && !isNaN(Date.parse(after)) ? after : undefined);
   if (!chat) return NextResponse.json({ error: "Fant ikke samtalen." }, { status: 404 });
-  return NextResponse.json({ messages: chat.messages });
+  const { acceptedOffer, payLink, sellerPhoneMissing } = chat.conversation;
+  const decided = await decidedOffers((await params).id);
+  return NextResponse.json({
+    messages: chat.messages,
+    decided,
+    acceptedOffer: acceptedOffer ?? null,
+    payLink: payLink ?? null,
+    sellerPhoneMissing: Boolean(sellerPhoneMissing),
+  });
 }
 
 export async function POST(req: Request, { params }: Ctx) {

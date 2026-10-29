@@ -52,9 +52,17 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     if (document.visibilityState !== "visible") return;
     const res = await fetch(`/api/chat/${c.id}${last ? `?etter=${encodeURIComponent(last)}` : ""}`, { cache: "no-store" }).catch(() => null);
     const data = res?.ok ? await res.json() : null;
-    if (data?.messages?.length) {
-      setMessages((prev) => [...prev, ...data.messages.filter((m: ChatMessage) => !prev.some((p) => p.id === m.id))]);
-    }
+    if (!data) return;
+    const decided: { id: string; status: "accepted" | "declined" }[] = data.decided ?? [];
+    setMessages((prev) => {
+      const fresh = (data.messages ?? []).filter((m: ChatMessage) => !prev.some((p) => p.id === m.id));
+      const all = fresh.length ? [...prev, ...fresh] : prev;
+      // Bud som er besvart siden sist får merket sitt (Godtatt / Avslått) uten omlasting
+      const changed = decided.some((d) => all.some((m) => m.id === d.id && m.offerStatus !== d.status));
+      return changed ? all.map((m) => ({ ...m, offerStatus: decided.find((d) => d.id === m.id)?.status ?? m.offerStatus })) : all;
+    });
+    if (data.acceptedOffer) setAccepted(data.acceptedOffer);
+    if (data.payLink) setPayLink(data.payLink);
   }, [c.id, last]);
 
   const latest = useRef(poll);
