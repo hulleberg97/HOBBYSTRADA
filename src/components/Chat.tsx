@@ -259,7 +259,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
           <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
             <p className="text-sm font-semibold text-emerald-900">Budet ditt på {formatPrice(accepted)} er godtatt</p>
             <p className="mt-1 text-xs leading-relaxed text-emerald-800">
-              Bud er bindende. Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke part i handelen.
+              Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke part i handelen.
             </p>
             {payLink ? (
               <a
