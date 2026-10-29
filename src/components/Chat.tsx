@@ -176,8 +176,8 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   };
 
   return (
-    <div className="mx-auto flex min-h-[calc(100dvh-128px)] max-w-[880px] flex-col bg-white md:min-h-[calc(100dvh-72px)]">
-      <div className="sticky top-[128px] z-10 flex items-center gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:px-6 md:top-[72px]">
+    <div className="mx-auto flex min-h-[calc(100dvh-72px)] max-w-[880px] flex-col bg-white">
+      <div className="sticky top-[72px] z-10 flex items-center gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:px-6">
         <Link href="/meldinger" aria-label="Tilbake til meldinger" className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100">
           <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
         </Link>
