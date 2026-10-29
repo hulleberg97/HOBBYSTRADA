@@ -30,9 +30,9 @@ export async function getVerification(userId: string) {
   const { adminClient } = await import("./supabase-admin");
   const db = adminClient();
   if (!db) return null;
-  const { data, error } = await db.from("profiles").select("verified_name, verified_at").eq("id", userId).maybeSingle();
+  const { data, error } = await db.from("profiles").select("verified_name, verified_at, phone").eq("id", userId).maybeSingle();
   if (error || !data?.verified_at) return null;
-  return { name: data.verified_name as string, at: data.verified_at as string };
+  return { name: data.verified_name as string, at: data.verified_at as string, phone: (data.phone as string | null) ?? null };
 }
 
 /** Med Vipps slått på må alle være verifisert med Vipps for å legge ut kort og sende meldinger. */

@@ -34,4 +34,6 @@ export type Listing = {
   fanSlot?: number | null;
   /** Annonse fra innehaveren av HOBBYSTRADA. Merkes, og kan verken løftes eller festes. */
   ownerListing?: boolean;
+  /** Selgeren har godtatt et bud i chatten. Vises som «Reservert» til kortet merkes solgt. */
+  reserved?: boolean;
 };

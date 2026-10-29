@@ -3,7 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { adminClient } from "./supabase-admin";
 
 /** Typer varsel. Styrer ikonet i varsellisten. */
-export type NotificationKind = "approved" | "rejected" | "boost" | "boost_expiring" | "saved_search";
+export type NotificationKind = "approved" | "rejected" | "boost" | "boost_expiring" | "saved_search" | "offer";
 
 export type Notification = { id: string; kind: NotificationKind; title: string; body: string | null; href: string | null; read: boolean; createdAt: string };
 

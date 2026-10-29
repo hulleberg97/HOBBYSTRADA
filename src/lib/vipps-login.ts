@@ -38,7 +38,7 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
     client_id: clientId()!,
     response_type: "code",
     // Bare det vi bruker: navn, e-post og poststed (fra adressen; gateadressen lagres ikke)
-    scope: "openid name email",
+    scope: process.env.VIPPS_HENT_TELEFON === "1" ? "openid name email phoneNumber" : "openid name email",
     state,
     nonce,
     redirect_uri: redirectUri(origin),
@@ -46,7 +46,7 @@ export async function authorizeUrl({ state, nonce, origin }: { state: string; no
   return u.toString();
 }
 
-export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean };
+export type VippsUser = { sub: string; name: string; email: string | null; emailVerified: boolean; phone: string | null };
 
 
 /** «KONGSBERG» → «Kongsberg», «MO I RANA» → «Mo i Rana». */
@@ -76,5 +76,7 @@ export async function exchangeCode({ code, nonce, origin }: { code: string; nonc
     name: [u.given_name, u.family_name].filter(Boolean).join(" ") || u.name || "",
     email: u.email ? String(u.email).toLowerCase() : null,
     emailVerified: Boolean(u.email_verified),
+    // Telefonnummeret brukes til Vipps-knappen når selgeren har godtatt et bud. Lagres som sifre, f.eks. 4740105742.
+    phone: u.phone_number ? String(u.phone_number).replace(/\D/g, "") || null : null,
   };
 }

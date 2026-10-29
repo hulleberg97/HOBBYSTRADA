@@ -38,7 +38,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
     }
     patch.status = status;
     if (status === "sold")
-      Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null, fan_slot: null, sold_at: new Date().toISOString() });
+      Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null, fan_slot: null, sold_at: new Date().toISOString(), reserved_at: null });
+    if (status === "hidden") patch.reserved_at = null;
     if (status === "active") patch.sold_at = null;
   }
   if (price !== undefined) {

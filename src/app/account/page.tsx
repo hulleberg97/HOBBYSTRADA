@@ -30,6 +30,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   if (!user) redirect("/auth/login?next=/account");
   const db = adminClient();
   const verification = await getVerification(user.id);
+  const phone = verification?.phone ?? null;
   // Løft som er betalt i Vipps, men ikke aktivert ennå, aktiveres her
   if (db) await settlePending(db, user.id).catch(() => 0);
   const boosted = db ? await recentBoosts(db, user.id).catch(() => []) : [];
@@ -192,6 +193,15 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                   <>
                     <dt className="text-slate-500">Vipps</dt>
                     <dd className="font-medium text-slate-900">{verification ? "Bekreftet" : "Ikke bekreftet"}</dd>
+                    <dt className="text-slate-500">Telefon</dt>
+                    <dd className="font-medium text-slate-900">
+                      {phone ? `+${phone.slice(0, 2)} ${phone.slice(2)}` : "Ikke hentet"}
+                      <span className="ml-2 text-xs font-normal text-slate-500">
+                        {phone
+                          ? "Fra Vipps. Vises bare for en kjøper etter at du har godtatt et bud, så kjøperen kan betale deg i Vipps."
+                          : "Logg inn med Vipps på nytt, så henter vi nummeret. Kjøpere bruker det til å betale deg i Vipps når du har godtatt et bud."}
+                      </span>
+                    </dd>
                   </>
                 )}
               </dl>

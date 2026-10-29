@@ -10,7 +10,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Vilkår for bruk"
-      updated="28. oktober 2026"
+      updated="29. oktober 2026"
       sections={[
         {
           title: "Om tjenesten",
@@ -56,6 +56,12 @@ export default function TermsPage() {
               </p>
               <p className="mt-3">
                 Merket «Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps.
+              </p>
+              <p className="mt-3">
+                <strong>Bud.</strong> Et bud i chatten er et tilbud fra kjøperen til selgeren. Godtar selgeren budet, er det inngått en avtale mellom dem,
+                og annonsen merkes «Reservert». Kjøperen får da en lenke som åpner Vipps med selgeren valgt. Betalingen skjer direkte mellom kjøper og
+                selger. HOBBYSTRADA er ikke part i avtalen eller betalingen, og holder ikke penger på vegne av noen. Blir avtalen ikke fulgt opp, kan den
+                andre parten rapportere det (se «Rapportere annonser og brukere»).
               </p>
             </>
           ),

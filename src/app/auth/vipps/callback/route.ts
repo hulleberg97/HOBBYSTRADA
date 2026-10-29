@@ -9,7 +9,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 async function saveProfile(db: SupabaseClient, userId: string, v: VippsUser) {
   const { error } = await db
     .from("profiles")
-    .upsert({ id: userId, vipps_sub: v.sub, verified_name: v.name, verified_at: new Date().toISOString() });
+    .upsert({ id: userId, vipps_sub: v.sub, verified_name: v.name, verified_at: new Date().toISOString(), ...(v.phone ? { phone: v.phone } : {}) });
   if (error) throw new Error(`Kunne ikke lagre profil: ${error.message}`);
   const firstName = v.name.split(" ")[0];
   await db.from("listings").update({ seller_verified: true, ...(firstName ? { seller_name: firstName } : {}) }).eq("owner_id", userId);

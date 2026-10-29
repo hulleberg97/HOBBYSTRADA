@@ -27,7 +27,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Personvern"
-      updated="28. oktober 2026"
+      updated="29. oktober 2026"
       sections={[
         {
           title: "1. Hvem som er ansvarlig",
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
               <p>Fra Vipps, når du logger inn:</p>
               <List
                 items={[
-                  "Navn, e-post og en fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn. Vi henter ikke adressen eller telefonnummeret ditt. Poststedet oppgir du selv når du legger ut en annonse.",
+                  "Navn, e-post, telefonnummer og en fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn. Telefonnummeret vises bare for en kjøper etter at du har godtatt et bud, så kjøperen kan betale deg direkte i Vipps. Vi henter ikke adressen din. Poststedet oppgir du selv når du legger ut en annonse.",
                 ]}
               />
               <p className="mt-3">Fornavnet fra Vipps vises på annonsene dine, og hele navnet vises for dem du chatter med. Navnet kan ikke endres på nettsiden.</p>
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
               <Purpose
                 title="Konto og innlogging"
                 what="Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps». Når du lager konto, bekrefter du at du er minst 18 år."
-                data="Navn, e-post, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
+                data="Navn, e-post, telefonnummer, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
                 kept="Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 7)."
               />
@@ -101,8 +101,8 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Meldinger mellom brukere"
-                what="Formidle meldinger mellom kjøper og selger, og gi deg beskjed på e-post når noen skriver til deg. Den andre parten ser navnet ditt fra Vipps, ikke e-postadressen."
-                data="Meldinger, bilder i chatten, navn og e-post (bare til varslingen)."
+                what="Formidle meldinger og bud mellom kjøper og selger, og gi deg beskjed på e-post når noen skriver til deg eller svarer på et bud. Den andre parten ser navnet ditt fra Vipps, ikke e-postadressen. Godtar du som selger et bud, får kjøperen en Vipps-lenke med telefonnummeret ditt, så betalingen kan skje direkte til deg. Betalingen går ikke gjennom HOBBYSTRADA."
+                data="Meldinger, bud og svar på bud, bilder i chatten, navn, e-post (bare til varslingen) og selgerens telefonnummer (bare til kjøperen etter godtatt bud)."
                 basis="Avtale med deg (art. 6 nr. 1 b). Når vi beholder en samtale etter at du har slettet kontoen, er grunnlaget berettiget interesse (art. 6 nr. 1 f): den andre parten har behov for å beholde samtalen, for eksempel som dokumentasjon på hva dere avtalte."
                 kept="12 måneder etter siste melding i samtalen. Bilder slettes sammen med samtalen. Sletter du kontoen, blir meldingene og bildene du har sendt stående hos den du har skrevet med, merket «Slettet bruker» i stedet for navnet ditt, til samtalen slettes."
               />

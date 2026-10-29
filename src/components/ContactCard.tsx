@@ -94,6 +94,12 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               Solgt
             </span>
           )}
+          {l.status === "active" && l.reserved && (
+            <span title="Selgeren har godtatt et bud. Du kan fortsatt sende melding." className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-inset ring-amber-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true"></span>
+              Reservert
+            </span>
+          )}
         </div>
         {/* Solgte kort vises uten selger og sted (prisarkivet) */}
         {l.status !== "sold" && (

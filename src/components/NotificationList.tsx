@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BellIcon, CheckCircle2Icon, ClockIcon, SearchIcon, XCircleIcon, ZapIcon } from "lucide-react";
+import { BellIcon, CheckCircle2Icon, ClockIcon, SearchIcon, TagIcon, XCircleIcon, ZapIcon } from "lucide-react";
 import { timeAgo } from "@/lib/format";
 import type { Notification, NotificationKind } from "@/lib/notifications";
 
@@ -9,6 +9,7 @@ const ICON: Record<NotificationKind, { Icon: typeof BellIcon; tone: string }> = 
   boost: { Icon: ZapIcon, tone: "bg-accent/15 text-[#8a6a24]" },
   boost_expiring: { Icon: ClockIcon, tone: "bg-accent/15 text-[#8a6a24]" },
   saved_search: { Icon: SearchIcon, tone: "bg-sky-50 text-sky-700" },
+  offer: { Icon: TagIcon, tone: "bg-accent/15 text-[#8a6a24]" },
 };
 
 /** Listen på Varsler-siden. Uleste har blå prikk og lys bakgrunn. */

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon, ImageIcon, SendIcon, TagIcon, XIcon } from "lucide-react";
+import { ArrowLeftIcon, CheckIcon, ImageIcon, SendIcon, TagIcon, XIcon } from "lucide-react";
 import { formatPrice, initials } from "@/lib/format";
 import type { ChatMessage, Conversation } from "@/lib/chat";
 import { listen } from "@/lib/realtime";
@@ -40,9 +40,13 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   const [error, setError] = useState("");
   const [image, setImage] = useState<{ file: File; url: string } | null>(null);
   const [zoom, setZoom] = useState<string | null>(null);
+  const [deciding, setDeciding] = useState<string | null>(null);
+  const [accepted, setAccepted] = useState<number | null>(c.acceptedOffer ?? null);
+  const [payLink, setPayLink] = useState<string | null>(c.payLink ?? null);
   const picker = useRef<HTMLInputElement>(null);
   const end = useRef<HTMLDivElement>(null);
   const last = messages.at(-1)?.createdAt;
+  const lastOpenOffer = [...messages].reverse().find((m) => m.offer && !m.offerStatus)?.id;
 
   const poll = useCallback(async () => {
     if (document.visibilityState !== "visible") return;
@@ -82,6 +86,38 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     end.current?.scrollIntoView({ block: "end" });
     window.dispatchEvent(new Event("hs:unread"));
   }, [messages.length]);
+
+  // Selgeren svarer på et bud. Svaret legges inn som melding i samtalen.
+  const decide = async (messageId: string, accept: boolean) => {
+    if (deciding) return;
+    if (accept && !confirm("Godta budet? Det er en avtale mellom deg og kjøperen. Annonsen merkes «Reservert» til du merker den som solgt.")) return;
+    setDeciding(messageId);
+    setError("");
+    const res = await fetch(`/api/chat/${c.id}/bud`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messageId, accept }) }).catch(() => null);
+    const data = res ? await res.json().catch(() => ({})) : {};
+    setDeciding(null);
+    if (!res?.ok) {
+      setError(data.error ?? "Kunne ikke svare på budet.");
+      return;
+    }
+    setMessages((prev) => prev.map((m) => (m.id === messageId ? { ...m, offerStatus: data.status } : m)));
+    if (accept) setAccepted(data.amount);
+    latest.current();
+  };
+
+  // Kjøperen: når budet blir godtatt, hentes Vipps-lenken fra serveren
+  useEffect(() => {
+    if (c.role !== "buyer" || payLink) return;
+    const hasAccepted = messages.some((m) => m.offerStatus === "accepted");
+    if (!hasAccepted) return;
+    fetch(`/api/chat/${c.id}/samtale`, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d?.acceptedOffer) setAccepted(d.acceptedOffer);
+        if (d?.payLink) setPayLink(d.payLink);
+      })
+      .catch(() => {});
+  }, [messages, c.id, c.role, payLink]);
 
   const pick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -165,6 +201,8 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
                     <p className="mb-1 inline-flex items-center gap-1.5 rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
                       <TagIcon className="h-3 w-3" aria-hidden="true" />
                       Bud: {formatPrice(m.offer)}
+                      {m.offerStatus === "accepted" && <span className="ml-1 rounded-full bg-emerald-600 px-1.5 text-[10px] text-white">Godtatt</span>}
+                      {m.offerStatus === "declined" && <span className="ml-1 rounded-full bg-slate-600 px-1.5 text-[10px] text-white">Avslått</span>}
                     </p>
                   )}
                   {m.image && (
@@ -183,10 +221,58 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
                 <span className="mt-0.5 px-1 text-[11px] text-slate-400" suppressHydrationWarning>
                   {time(m.createdAt)}
                 </span>
+                {/* Selgeren svarer på budet. Bare det siste ubesvarte budet kan besvares. */}
+                {c.role === "seller" && m.offer && !m.mine && !m.offerStatus && !accepted && m.id === lastOpenOffer && (
+                  <div className="mt-1 flex gap-2">
+                    <button
+                      type="button"
+                      disabled={deciding !== null}
+                      onClick={() => decide(m.id, true)}
+                      className="inline-flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50"
+                    >
+                      <CheckIcon className="h-4 w-4" aria-hidden="true" />
+                      Godta budet
+                    </button>
+                    <button
+                      type="button"
+                      disabled={deciding !== null}
+                      onClick={() => decide(m.id, false)}
+                      className="inline-flex h-9 items-center rounded-full border border-slate-300 px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+                    >
+                      Avslå
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           );
         })}
+        {accepted && c.role === "buyer" && (
+          <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
+            <p className="text-sm font-semibold text-emerald-900">Budet ditt på {formatPrice(accepted)} er godtatt</p>
+            <p className="mt-1 text-xs leading-relaxed text-emerald-800">
+              Bud er bindende. Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke part i handelen.
+            </p>
+            {payLink ? (
+              <a
+                href={payLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#ff5b24] px-6 text-sm font-semibold text-white transition hover:bg-[#e94f1b]"
+              >
+                Betal {formatPrice(accepted)} med Vipps
+              </a>
+            ) : (
+              <p className="mt-2 text-xs text-emerald-800">Selgeren har ikke registrert Vipps-nummer ennå. Avtal betalingen i chatten.</p>
+            )}
+            <p className="mt-2 text-[11px] text-emerald-700">Vipps åpnes med selgeren valgt. Sjekk at navnet i Vipps er {c.otherName}, og skriv inn beløpet.</p>
+          </div>
+        )}
+        {accepted && c.role === "seller" && (
+          <p className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-3 text-center text-xs leading-relaxed text-emerald-800 ring-1 ring-emerald-200">
+            Du har godtatt budet på {formatPrice(accepted)}. Annonsen er merket «Reservert». Merk den som solgt under Min side når betalingen er mottatt.
+          </p>
+        )}
         <div ref={end} />
       </div>
 
