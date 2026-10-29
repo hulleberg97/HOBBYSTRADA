@@ -9,7 +9,7 @@ const MIN_CARDS = 8;
  * Kortene i raden på forsiden, i rekkefølgen de vises frem.
  * 1. Kort admin har festet står på sin faste plass (1 = først).
  * 2. Toppannonser er alltid med hele perioden, uansett hvor mange de er.
- * 3. Fremhevet og Topp av listen (i markedsrekkefølge) fyller opp til MAX_CARDS.
+ * 3. Fremhevet fyller opp til MAX_CARDS.
  * 4. Nyeste gratisannonser fyller bare opp til MIN_CARDS.
  */
 export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[], fill: Listing[]) {

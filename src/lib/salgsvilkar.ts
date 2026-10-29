@@ -5,7 +5,7 @@ import { COMPANY } from "./company";
  * Salgsvilkårene for annonseløft som data, så nettsiden og PDF-vedlegget i kvitteringen alltid har samme tekst.
  * Lenker skrives [tekst](/sti), uthevet tekst **slik**. Et avsnitt er en streng, en punktliste er en liste av strenger.
  */
-export const SALGSVILKAR_UPDATED = "28. oktober 2026";
+export const SALGSVILKAR_UPDATED = "29. oktober 2026";
 
 export type SalesSection = { title: string; blocks: (string | string[])[] };
 
@@ -21,9 +21,9 @@ export const SALGSVILKAR: SalesSection[] = [
     blocks: [
       "Annonseløft gir annonsen bedre synlighet i en bestemt periode. Perioden starter når løftet aktiveres. Løftet er et engangskjøp og fornyes ikke automatisk. Annonser med løft er merket «Annonseløft».",
       [
-        `**${BOOSTS.top.name}, ${BOOSTS.top.days} dager, ${BOOSTS.top.price} kr:** Annonsen vises foran vanlige annonser i markedet og i søkeresultatene. Den kan også vises i kortraden på forsiden når det er ledig plass etter toppannonser og fremhevede annonser.`,
-        `**${BOOSTS.featured.name}, ${BOOSTS.featured.days} dager, ${BOOSTS.featured.price} kr:** Annonsen får gullmerke og gullramme og vises foran annonser med Topp av listen og vanlige annonser. Den kan også vises i kortraden på forsiden når det er ledig plass etter toppannonser.`,
-        `**${BOOSTS.frontpage.name}, ${BOOSTS.frontpage.days} dager, ${BOOSTS.frontpage.price} kr:** Annonsen får gullmerke og gullramme, vises først i markedet og i søkeresultatene, og har fast plass i kortraden på forsiden hele perioden.`,
+        `**${BOOSTS.top.name}, ${BOOSTS.top.days} dager, ${BOOSTS.top.price} kr:** Annonsen vises foran vanlige annonser i markedet og i søkeresultatene.`,
+        `**${BOOSTS.featured.name}, ${BOOSTS.featured.days} dager, ${BOOSTS.featured.price} kr:** Annonsen får gullmerke og gullramme og vises foran annonser med Topp av listen og vanlige annonser. Den kan også vises på forsiden når det er ledig plass etter toppannonser.`,
+        `**${BOOSTS.frontpage.name}, ${BOOSTS.frontpage.days} dager, ${BOOSTS.frontpage.price} kr:** Annonsen får gullmerke og gullramme, vises først i markedet og i søkeresultatene, og har fast plass på forsiden hele perioden.`,
       ],
       "Sorterer kjøperen selv etter pris eller navn, sorteres alle annonser likt, uten hensyn til løft.",
       "Alle priser er i norske kroner og uten merverdiavgift, fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Du må være 18 år for å kjøpe annonseløft.",

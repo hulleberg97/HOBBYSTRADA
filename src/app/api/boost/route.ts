@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     const live = listing.frontpage_until && new Date(listing.frontpage_until).getTime() > Date.now();
     const slots = await frontpageAvailability(db);
     if (!live && slots.taken >= FRONTPAGE_SLOTS) {
-      return NextResponse.json({ error: `Toppannonse er utsolgt. Alle ${FRONTPAGE_SLOTS} plassene i kortraden er tatt, ledig fra ${slots.nextFreeText}.` }, { status: 409 });
+      return NextResponse.json({ error: `Toppannonse er utsolgt. Alle ${FRONTPAGE_SLOTS} plassene på forsiden er tatt, ledig fra ${slots.nextFreeText}.` }, { status: 409 });
     }
   }
 

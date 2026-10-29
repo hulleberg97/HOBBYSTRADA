@@ -51,7 +51,7 @@ const SECTIONS = [
     items: [
       [
         "Hva er annonseløft?",
-        "Annonseløft gir annonsen mer synlighet. Du kan velge Topp av listen (3 dager), Fremhevet (7 dager) eller Toppannonse (30 dager). Toppannonser har fast plass i kortraden på forsiden hele perioden. Priser finner du på siden for annonseløft.",
+        "Annonseløft gir annonsen mer synlighet. Du kan velge Topp av listen (3 dager), Fremhevet (7 dager) eller Toppannonse (30 dager). Toppannonser har fast plass på forsiden hele perioden. Priser finner du på siden for annonseløft.",
       ],
       ["Hvordan kjøper jeg annonseløft?", "Velg pakke på siden for annonseløft og betal i kassen her på siden."],
     ],

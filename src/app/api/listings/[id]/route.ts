@@ -55,9 +55,9 @@ export async function PATCH(req: Request, { params }: Ctx) {
     patch.location = location.trim().slice(0, 60);
   }
   if (fanSlot !== undefined) {
-    if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort til kortraden." }, { status: 403 });
+    if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort på forsiden." }, { status: 403 });
     if (fanSlot !== null && (r.listing as { owner_listing?: boolean | null }).owner_listing)
-      return NextResponse.json({ error: "Annonser fra innehaveren av HOBBYSTRADA festes ikke i kortraden." }, { status: 400 });
+      return NextResponse.json({ error: "Annonser fra innehaveren av HOBBYSTRADA festes ikke på forsiden." }, { status: 400 });
     if (fanSlot !== null && ![1, 2, 3, 4, 5].includes(fanSlot)) return NextResponse.json({ error: "Ugyldig plass." }, { status: 400 });
     // Plassen kan bare ha ett kort: frigjør den først.
     if (fanSlot !== null) await r.db.from("listings").update({ fan_slot: null }).eq("fan_slot", fanSlot).neq("id", r.listing.id);

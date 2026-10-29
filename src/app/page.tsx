@@ -31,10 +31,10 @@ export default async function Home() {
     .slice(0, 4);
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
   const c = categoryCounts(all);
-  // Kortraden: festede kort, alle toppannonser, så Fremhevet og Topp av listen, og til slutt de nyeste – helst med ekte bilde
+  // Forsiden: festede kort, alle toppannonser, så Fremhevet, og til slutt de nyeste – helst med ekte bilde
   const fanPinned = all.filter((l) => l.fanSlot);
   const fanPaid = all.filter((l) => l.frontpage);
-  const fanBoosted = all.filter((l) => !l.frontpage && (l.featured || l.bumpedAt));
+  const fanBoosted = all.filter((l) => !l.frontpage && l.featured);
   const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))];
   const fanList = fanCards(fanPinned, fanPaid, fanBoosted, fanFill);
   return (

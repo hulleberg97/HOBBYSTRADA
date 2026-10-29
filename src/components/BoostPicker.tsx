@@ -192,7 +192,7 @@ export function BoostPicker({ frontpage }: { frontpage: FrontpageAvailability })
       </div>
       {frontpage.soldOut && (
         <p className="mx-auto mt-3 max-w-2xl text-xs text-muted-foreground">
-          Alle {frontpage.slots} plassene for toppannonser i kortraden er tatt. Neste plass blir ledig {frontpage.nextFreeText}.
+          Alle {frontpage.slots} plassene for toppannonser på forsiden er tatt. Neste plass blir ledig {frontpage.nextFreeText}.
         </p>
       )}
 
