@@ -529,7 +529,7 @@ html[data-vis="magasin"] .mag { overflow: hidden; background:
 .mag-tittel { font-family: var(--t-sora); font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; color: #0b1426;
   filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.9)) drop-shadow(0 4px 6px rgb(11 20 38 / 0.18)) drop-shadow(0 16px 30px rgb(11 20 38 / 0.22)); }
 .mag-stort { filter: drop-shadow(0 40px 60px rgb(11 20 38 / 0.35)); }
-/* Magasin: hele toppen (tekst, stort kort og kortraden) tilpasser seg skjermhøyden, så ingenting havner under kanten */
+/* Magasin: hele toppen (tekst, stort kort og annonseraden) tilpasser seg skjermhøyden, så ingenting havner under kanten */
 html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 /* Høyden på scenen til høyre (--scene) styrer også størrelsen på kortene der */
 .mag { --scene: clamp(170px, 100svh - 580px, 300px); }
@@ -540,7 +540,7 @@ html[data-vis="magasin"] .mag { min-height: calc(100svh - 72px); }
 @media (min-width: 1024px) and (min-height: 760px) { .mag { --scene: clamp(240px, 100svh - 520px, 560px); } }
 @media (min-width: 1024px) and (min-height: 900px) { .mag { --scene: clamp(240px, 100svh - 600px, 560px); } }
 .mag ul li .fan-slab { box-shadow: 0 10px 24px -12px rgb(11 20 38 / 0.5) !important; }
-/* Kortraden: kortene tegnes i full størrelse og krympes til 62 %, så teksten på dem ser riktig ut */
+/* Annonseraden på forsiden: kortene tegnes i full størrelse og krympes til 62 %, så teksten på dem ser riktig ut */
 .mag ul li { width: 160px; height: 256px; } .mag ul li > a { width: 200px; transform: scale(0.8); transform-origin: top left; }
 .mag-rull-ramme { padding-bottom: 72px; mask-image: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent); }
 /* PC: kortene i raden vokser med skjermhøyden. Lave laptopskjermer får mindre overskrift og scene, så raden får plass. */
@@ -613,7 +613,7 @@ html[data-stort="vifte"] .mag-vifte .hero-fan { height: 100%; max-width: none; -
 html[data-stort="tre"] .mag-tre { display: block; }
 html[data-stort="tre"] .mag-tre > a { filter: drop-shadow(0 30px 40px rgb(11 20 38 / 0.3)); }
 html[data-stort="tre"] .mag-scene > .fan-pill { display: none; }
-/* TEST ?stort=rad: PC har bare overskrift og en stor kortrad, telefon beholder de tre kortene over */
+/* TEST ?stort=rad: PC har bare overskrift og en stor annonserad, telefon beholder de tre kortene over */
 @media (min-width: 1024px) {
   :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-scene { display: none; }
   :is(html[data-stort="rad"], html[data-stort="ren"]) .mag { justify-content: center; gap: 0.5rem; }
@@ -650,7 +650,7 @@ html[data-skrift="serif"] .mt-h .text-\[\#a8822f\], html[data-skrift="serif"] .m
 html[data-skrift="fraunces"] .mt-h { font-family: var(--f-fraunces); font-weight: 700; letter-spacing: -0.03em; text-transform: none; font-size: clamp(2.2rem, 7.6vw, 3.7rem); line-height: 0.96; }
 html[data-skrift="fraunces"] .mt-h .text-\[\#a8822f\], html[data-skrift="fraunces"] .mt-h .mt-strek { font-style: italic; }
 
-/* Kortraden står helt nederst, så speilingen under kortene ender akkurat ved skjermkanten */
+/* Annonseraden står helt nederst, så speilingen under kortene ender akkurat ved skjermkanten */
 html[data-vis="magasin"] .mag { justify-content: flex-start; }
 html[data-vis="magasin"] .mag-rull-ramme { margin-top: auto; }
 html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 50px; }
@@ -658,7 +658,7 @@ html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 50px; }
 @media (min-width: 1024px) and (max-height: 759px) { html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 86px; } }
 @media (min-width: 1024px) and (max-height: 759px) { :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li { width: 190px; height: 304px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag ul li > a { transform: scale(0.95); } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-rull-ramme { padding-bottom: 72px; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-topp { padding-top: 0.4rem; } :is(html[data-stort="rad"], html[data-stort="ren"]) .mag-knapper { margin-top: 1.1rem; } }
 
-/* TEST ?stort=ren: som «rad» på PC, og på telefon bare overskrift og en stor kortrad */
+/* TEST ?stort=ren: som «rad» på PC, og på telefon bare overskrift og en stor annonserad */
 @media (max-width: 1023px) {
   html[data-stort="ren"] .mag-scene, html[data-stort="ren"] .mag-tre { display: none; }
   html[data-stort="ren"] .mag-topp { justify-items: center; text-align: center; padding-top: 1.5rem; }
@@ -677,7 +677,7 @@ html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 50px; }
   html[data-stort="ren"] .mag-rull-ramme { padding-bottom: 82px; }
   html[data-stort="ren"][data-tittel2="g"] .mt-h { font-size: 1.75rem; }
 }
-/* PC: kortraden vokser med skjermhøyden, så høye skjermer ser ut som en laptop (samme proporsjoner, ikke mer luft) */
+/* PC: annonseraden vokser med skjermhøyden, så høye skjermer ser ut som en laptop (samme proporsjoner, ikke mer luft) */
 @media (min-width: 1024px) and (min-height: 800px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 220px; height: 352px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.1); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 107px; } html[data-vis="magasin"] .mag { --scene: clamp(220px, 100svh - 600px, 560px); } }
 @media (min-width: 1024px) and (min-height: 880px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 244px; height: 390px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.22); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 117px; } html[data-vis="magasin"] .mag { --scene: clamp(240px, 100svh - 640px, 560px); } }
 @media (min-width: 1024px) and (min-height: 1000px) { html[data-vis="magasin"][data-stort] .mag ul li, html[data-vis="magasin"]:not([data-stort]) .mag ul li { width: 290px; height: 464px; } html[data-vis="magasin"][data-stort] .mag ul li > a, html[data-vis="magasin"]:not([data-stort]) .mag ul li > a { transform: scale(1.45); } html[data-vis="magasin"] .mag-rull-ramme { padding-bottom: 138px; } html[data-vis="magasin"] .mag { --scene: clamp(240px, 100svh - 760px, 560px); } }
@@ -688,7 +688,7 @@ html[data-vis="magasin"] .mag-rull-ramme { max-width: none; }
 @media (min-width: 1024px) and (max-height: 759px) { html[data-stort="ingen"] .mag-topp { padding-top: 0.4rem; } }
 /* Overskriften ligger ikke klint mot toppen: ledig plass deles likt over og under den */
 html[data-vis="magasin"] .mag-topp { margin-top: auto; }
-/* Telefon: kortraden vokser med skjermhøyden, som på PC */
+/* Telefon: annonseraden vokser med skjermhøyden, som på PC */
 @media (max-width: 1023px) and (min-height: 900px) {
   html[data-stort="ren"] .mag ul li { width: 263px; height: 420px; } html[data-stort="ren"] .mag ul li > a { transform: scale(1.75); }
   html[data-stort="ren"] .mag-rull-ramme { padding-bottom: 126px; }
@@ -709,7 +709,7 @@ html[data-knapp="en"] .mag-knapper .knapp-selg { height: 2.25rem; padding-inline
 html[data-knapp="en"] .mag-knapper .knapp-pluss { display: inline; }
 html[data-knapp="en"] .mag-knapper { align-items: center; gap: 0.75rem; }
 
-/* TEST ?pill=midt|topp|hver: prislapp under kortraden */
+/* TEST ?pill=midt|topp|hver: prislapp under annonseraden */
 html[data-pill="midt"] .pill-midt { display: flex; }
 html[data-pill="hver"] .pill-hver { display: flex; }
 html[data-pill="hver"] .mag ul li .fan-slab { -webkit-box-reflect: none; }

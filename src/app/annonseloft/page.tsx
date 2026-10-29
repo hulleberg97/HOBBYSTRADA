@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Annonseløft" };
 export default async function BoostPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper
   await searchParams;
-  // Toppannonse selges bare når det er en ledig plass i kortraden
+  // Toppannonse selges bare når det er en ledig plass på forsiden
   const db = adminClient();
   const frontpage = db ? await frontpageAvailability(db) : { soldOut: false, nextFreeText: "", slots: FRONTPAGE_SLOTS };
   return (

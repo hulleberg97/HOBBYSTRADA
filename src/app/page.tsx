@@ -39,7 +39,7 @@ export default async function Home() {
   const fanList = fanCards(fanPinned, fanPaid, fanBoosted, fanFill);
   return (
     <div className="bg-background">
-      {/* Forsiden: overskrift øverst og kortraden nederst */}
+      {/* Forsiden: overskrift øverst og annonseraden nederst */}
       {fanList[0] && (
         <section className="vis-magasin mag flex flex-col justify-between bg-background">
           <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
@@ -62,7 +62,7 @@ export default async function Home() {
               </div>
             </div>
           </div>
-          {/* Kortraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
+          {/* Forsideraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
           <div className="mag-rull-ramme relative mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
             <ul className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>

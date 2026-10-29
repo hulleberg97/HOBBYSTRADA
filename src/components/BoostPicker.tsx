@@ -14,7 +14,7 @@ const PLANS: { key: BoostKey; Icon: typeof SparklesIcon }[] = [
   { key: "frontpage", Icon: CrownIcon },
 ];
 
-/** Ledige plasser for toppannonser i kortraden, regnet ut på serveren. */
+/** Ledige plasser for toppannonser på forsiden, regnet ut på serveren. */
 export type FrontpageAvailability = { soldOut: boolean; nextFreeText: string; slots: number };
 
 type Mine = { slug: string; title: string; price: number; image: string | null; boost: string | null };

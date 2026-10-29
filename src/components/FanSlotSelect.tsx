@@ -12,7 +12,7 @@ const SLOTS = [
   ["5", "5"],
 ];
 
-/** Admin: fest annonsen til en fast plass i kortvifta på forsiden. */
+/** Admin: fest annonsen til en fast plass på forsiden. */
 export function FanSlotSelect({ id, slot }: { id: string; slot: number | null }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -28,7 +28,7 @@ export function FanSlotSelect({ id, slot }: { id: string; slot: number | null })
   };
   return (
     <label className="inline-flex items-center gap-2 text-xs font-semibold text-slate-700">
-      Vifta
+      Forsiden
       <select
         value={slot ?? ""}
         onChange={change}

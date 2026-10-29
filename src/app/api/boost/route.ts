@@ -47,7 +47,7 @@ export async function POST(req: Request) {
   }
   if (listing.owner_listing) return NextResponse.json({ error: "Annonser fra innehaveren av HOBBYSTRADA får ikke annonseløft." }, { status: 403 });
 
-  // Ikke flere aktive toppannonser enn det er faste plasser i kortraden
+  // Ikke flere aktive toppannonser enn det er faste plasser på forsiden
   if (plan === "frontpage") {
     const live = listing.frontpage_until && new Date(listing.frontpage_until).getTime() > Date.now();
     const slots = await frontpageAvailability(db);
