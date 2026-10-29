@@ -38,6 +38,24 @@ const sporing = (nr: string) => `https://sporing.posten.no/sporing/${encodeURICo
 /** Nettadresser og sendingsnumre (9–20 sifre, eller formatet LA123456789NO) i meldinger blir lenker. */
 const LINK_RE = /(https?:\/\/[^\s<]+[^\s<.,)])|\b(\d{9,20}|[A-Z]{2}\d{9}[A-Z]{2})\b/g;
 
+/** Ett steg i handelen: nummer eller hake, tittel, og innholdet når steget ikke er gjort. */
+function Step({ n, done, title, doneTitle, children }: { n: number; done: boolean; title: string; doneTitle: string; children: React.ReactNode }) {
+  return (
+    <li className="flex gap-3">
+      <span
+        className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${done ? "bg-emerald-600 text-white" : "bg-white text-emerald-900 ring-1 ring-emerald-300"}`}
+        aria-hidden="true"
+      >
+        {done ? <CheckIcon className="h-3.5 w-3.5" /> : n}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className={`text-sm font-semibold ${done ? "text-emerald-700" : "text-emerald-900"}`}>{done ? doneTitle : title}</p>
+        {!done && <div className="mt-1.5">{children}</div>}
+      </div>
+    </li>
+  );
+}
+
 function Body({ text }: { text: string }) {
   const parts: React.ReactNode[] = [];
   let last = 0;
@@ -237,6 +255,14 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     }
   };
 
+  // Stegene i handelen leses ut av meldingene, så ingenting nytt lagres
+  const fromBuyer = (m: ChatMessage) => (c.role === "buyer" ? m.mine : !m.mine);
+  const fromSeller = (m: ChatMessage) => !fromBuyer(m);
+  const paid = messages.some((m) => fromBuyer(m) && m.body?.startsWith("Jeg har betalt"));
+  const addressSent = messages.some((m) => fromBuyer(m) && m.body?.startsWith("Send pakken til:"));
+  const tracking = [...messages].reverse().find((m) => fromSeller(m) && /Sendingsnummer: (\S+)/.test(m.body ?? ""))?.body?.match(/Sendingsnummer: (\S+)/)?.[1] ?? null;
+  const allDone = paid && addressSent && Boolean(tracking);
+
   const field = "h-11 rounded-xl border border-slate-300 bg-white px-3 text-[15px] text-slate-900 outline-none placeholder:text-slate-400 focus:border-primary";
 
   return (
@@ -319,106 +345,137 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
             </div>
           );
         })}
-        {accepted && c.role === "buyer" && (
-          <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
-            <p className="text-sm font-semibold text-emerald-900">Budet ditt på {formatPrice(accepted)} er godtatt</p>
-            <p className="mt-1 text-xs leading-relaxed text-emerald-800">
-              Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke part i handelen.
-            </p>
-            {payLink ? (
-              <a
-                href={payLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#ff5b24] px-6 text-sm font-semibold text-white transition hover:bg-[#e94f1b]"
-              >
-                Betal {formatPrice(accepted)} med Vipps
-              </a>
-            ) : (
-              <p className="mt-2 text-xs text-emerald-800">Selgeren har ikke registrert Vipps-nummer ennå. Avtal betalingen i chatten.</p>
-            )}
-            <p className="mt-2 text-[11px] text-emerald-700">Vipps åpnes med selgeren valgt. Sjekk at navnet i Vipps er {c.otherName}, og skriv inn beløpet.</p>
-            <div className="mt-4 border-t border-emerald-200 pt-3">
-              <p className="text-xs font-semibold text-emerald-900">Frakt</p>
-              {panel === "adresse" ? (
-                <form onSubmit={sendAdresse} className="mt-2 space-y-2 text-left">
-                  <input value={adresse.navn} onChange={(e) => setAdresse({ ...adresse, navn: e.target.value })} placeholder="Navn" autoComplete="name" className={`${field} w-full`} required />
-                  <input value={adresse.gate} onChange={(e) => setAdresse({ ...adresse, gate: e.target.value })} placeholder="Gateadresse" autoComplete="street-address" className={`${field} w-full`} required />
-                  <div className="flex gap-2">
-                    <input value={adresse.postnr} onChange={(e) => setAdresse({ ...adresse, postnr: e.target.value.replace(/\D/g, "").slice(0, 4) })} placeholder="Postnr." inputMode="numeric" autoComplete="postal-code" className={`${field} w-28 shrink-0`} required />
-                    <input value={adresse.sted} onChange={(e) => setAdresse({ ...adresse, sted: e.target.value })} placeholder="Poststed" autoComplete="address-level2" className={`${field} min-w-0 flex-1`} required />
-                  </div>
-                  <div className="flex gap-2 pt-1">
-                    <button type="submit" disabled={sending} className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50">
-                      Send adressen
-                    </button>
-                    <button type="button" onClick={() => setPanel(null)} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
-                      Avbryt
-                    </button>
-                  </div>
-                  <p className="text-[11px] leading-relaxed text-emerald-700">Adressen sendes som en melding til selgeren, og bare dere to ser den.</p>
-                </form>
-              ) : (
-                <>
-                  <p className="mt-1 text-xs leading-relaxed text-emerald-800">Send adressen din, så selgeren vet hvor pakken skal.</p>
-                  <button
-                    type="button"
-                    onClick={() => setPanel("adresse")}
-                    className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
-                  >
-                    <MapPinIcon className="h-4 w-4" aria-hidden="true" />
-                    Send adressen min
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-        {accepted && c.role === "seller" && (
-          <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
-            <p className="text-sm font-semibold text-emerald-900">Du har godtatt budet på {formatPrice(accepted)}</p>
-            <p className="mt-1 text-xs leading-relaxed text-emerald-800">
-              Kjøperen betaler deg direkte med Vipps. Merk annonsen som solgt under Min side når betalingen er mottatt.
-            </p>
-            <div className="mt-4 border-t border-emerald-200 pt-3">
-              <p className="text-xs font-semibold text-emerald-900">Frakt</p>
-              {panel === "sporing" ? (
-                <form onSubmit={sendSporing} className="mt-2 space-y-2 text-left">
-                  <input value={sporingNr} onChange={(e) => setSporingNr(e.target.value)} placeholder="Sendingsnummer fra Posten" autoComplete="off" className={`${field} w-full`} required />
-                  <div className="flex gap-2 pt-1">
-                    <button type="submit" disabled={sending} className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50">
-                      Send til kjøperen
-                    </button>
-                    <button type="button" onClick={() => setPanel(null)} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
-                      Avbryt
-                    </button>
-                  </div>
-                  <p className="text-[11px] leading-relaxed text-emerald-700">Nummeret blir en sporingslenke i chatten, så kjøperen kan følge pakken.</p>
-                </form>
-              ) : (
-                <>
-                  <p className="mt-1 text-xs leading-relaxed text-emerald-800">Be kjøperen sende adressen, kjøp frakt hos Posten, og legg inn sendingsnummeret her.</p>
-                  <div className="mt-2 flex flex-wrap justify-center gap-2">
-                    <a
-                      href={POSTEN_SEND}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
-                    >
-                      <PackageIcon className="h-4 w-4" aria-hidden="true" />
-                      Send pakke med Posten
+        {accepted && (
+          <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 ring-1 ring-emerald-200">
+            {allDone ? (
+              <div className="text-center">
+                <p className="text-sm font-semibold text-emerald-900">
+                  {c.role === "buyer" ? "Betalt, adresse sendt og pakken er sendt" : "Pakken er sendt"}
+                </p>
+                <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs font-semibold text-emerald-900">
+                  {tracking && (
+                    <a href={sporing(tracking)} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                      Spor pakken
                     </a>
-                    <button
-                      type="button"
-                      onClick={() => setPanel("sporing")}
-                      className="inline-flex h-10 items-center justify-center rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
-                    >
-                      Legg inn sendingsnummer
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
+                  )}
+                  {c.role === "seller" && (
+                    <Link href="/account" className="underline underline-offset-2">
+                      Merk annonsen som solgt
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <>
+                <p className="text-center text-sm font-semibold text-emerald-900">
+                  {c.role === "buyer" ? `Budet ditt på ${formatPrice(accepted)} er godtatt` : `Du har godtatt budet på ${formatPrice(accepted)}`}
+                </p>
+                <p className="mt-0.5 text-center text-[11px] text-emerald-700">Dere gjør opp direkte. HOBBYSTRADA er ikke part i handelen.</p>
+                <ol className="mt-3 space-y-3">
+                  {/* Steg 1: betaling */}
+                  <Step n={1} done={paid} title={c.role === "buyer" ? "Betal med Vipps" : "Betaling"} doneTitle={c.role === "buyer" ? "Du har betalt" : "Kjøperen sier betalingen er sendt. Sjekk i Vipps."}>
+                    {c.role === "buyer" ? (
+                      payLink ? (
+                        <>
+                          <a
+                            href={payLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex h-10 items-center justify-center rounded-full bg-[#ff5b24] px-5 text-sm font-semibold text-white transition hover:bg-[#e94f1b]"
+                          >
+                            Betal {formatPrice(accepted)} med Vipps
+                          </a>
+                          <p className="mt-1.5 text-[11px] leading-relaxed text-emerald-700">Sjekk at navnet i Vipps er {c.otherName}, og skriv inn beløpet.</p>
+                          <button type="button" disabled={sending} onClick={() => sendFixed(`Jeg har betalt ${formatPrice(accepted)} med Vipps.`)} className="mt-1 text-xs font-semibold text-emerald-900 underline underline-offset-2 disabled:opacity-50">
+                            Jeg har betalt
+                          </button>
+                        </>
+                      ) : (
+                        <p className="text-xs text-emerald-800">Selgeren har ikke registrert Vipps-nummer ennå. Avtal betalingen i chatten.</p>
+                      )
+                    ) : (
+                      <p className="text-xs text-emerald-800">Kjøperen betaler deg direkte med Vipps.</p>
+                    )}
+                  </Step>
+                  {/* Steg 2: adresse */}
+                  <Step n={2} done={addressSent} title={c.role === "buyer" ? "Send adressen" : "Adresse"} doneTitle={c.role === "buyer" ? "Adressen er sendt" : "Adressen er mottatt"}>
+                    {c.role === "buyer" ? (
+                      panel === "adresse" ? (
+                        <form onSubmit={sendAdresse} className="space-y-2">
+                          <input value={adresse.navn} onChange={(e) => setAdresse({ ...adresse, navn: e.target.value })} placeholder="Navn" autoComplete="name" className={`${field} w-full`} required />
+                          <input value={adresse.gate} onChange={(e) => setAdresse({ ...adresse, gate: e.target.value })} placeholder="Gateadresse" autoComplete="street-address" className={`${field} w-full`} required />
+                          <div className="flex gap-2">
+                            <input value={adresse.postnr} onChange={(e) => setAdresse({ ...adresse, postnr: e.target.value.replace(/\D/g, "").slice(0, 4) })} placeholder="Postnr." inputMode="numeric" autoComplete="postal-code" className={`${field} w-28 shrink-0`} required />
+                            <input value={adresse.sted} onChange={(e) => setAdresse({ ...adresse, sted: e.target.value })} placeholder="Poststed" autoComplete="address-level2" className={`${field} min-w-0 flex-1`} required />
+                          </div>
+                          <div className="flex gap-2 pt-1">
+                            <button type="submit" disabled={sending} className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50">
+                              Send adressen
+                            </button>
+                            <button type="button" onClick={() => setPanel(null)} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                              Avbryt
+                            </button>
+                          </div>
+                        </form>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setPanel("adresse")}
+                          className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
+                        >
+                          <MapPinIcon className="h-4 w-4" aria-hidden="true" />
+                          Send adressen min
+                        </button>
+                      )
+                    ) : (
+                      <p className="text-xs text-emerald-800">Kjøperen sender adressen her i chatten.</p>
+                    )}
+                  </Step>
+                  {/* Steg 3: pakken */}
+                  <Step n={3} done={Boolean(tracking)} title={c.role === "buyer" ? "Pakken sendes" : "Send pakken"} doneTitle="Pakken er sendt">
+                    {tracking ? (
+                      <a href={sporing(tracking)} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-emerald-900 underline underline-offset-2">
+                        Spor pakken
+                      </a>
+                    ) : c.role === "buyer" ? (
+                      <p className="text-xs text-emerald-800">Selgeren legger inn sendingsnummeret her, så du kan spore pakken.</p>
+                    ) : panel === "sporing" ? (
+                      <form onSubmit={sendSporing} className="space-y-2">
+                        <input value={sporingNr} onChange={(e) => setSporingNr(e.target.value)} placeholder="Sendingsnummer fra Posten" autoComplete="off" className={`${field} w-full`} required />
+                        <div className="flex gap-2 pt-1">
+                          <button type="submit" disabled={sending} className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50">
+                            Send til kjøperen
+                          </button>
+                          <button type="button" onClick={() => setPanel(null)} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                            Avbryt
+                          </button>
+                        </div>
+                      </form>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        <a
+                          href={POSTEN_SEND}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-emerald-300 bg-white px-4 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
+                        >
+                          <PackageIcon className="h-4 w-4" aria-hidden="true" />
+                          Send med Posten
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => setPanel("sporing")}
+                          className="inline-flex h-10 items-center justify-center rounded-full border border-emerald-300 bg-white px-4 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
+                        >
+                          Legg inn sendingsnummer
+                        </button>
+                      </div>
+                    )}
+                  </Step>
+                </ol>
+                {c.role === "seller" && <p className="mt-3 text-center text-[11px] text-emerald-700">Merk annonsen som solgt under Min side når betalingen er mottatt.</p>}
+              </>
+            )}
           </div>
         )}
         <div ref={end} />
