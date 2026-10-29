@@ -58,8 +58,8 @@ export default function TermsPage() {
                 Merket «Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps.
               </p>
               <p className="mt-3">
-                <strong>Bud.</strong> Et bud i chatten er et tilbud fra kjøperen til selgeren. Godtar selgeren budet, er det inngått en avtale mellom dem,
-                og annonsen merkes «Reservert». Kjøperen får da en lenke som åpner Vipps med selgeren valgt. Betalingen skjer direkte mellom kjøper og
+                <strong>Bud.</strong> Et bud i chatten er et tilbud fra kjøperen til selgeren. Godtar selgeren budet, er det inngått en avtale mellom dem.
+                Kjøperen får da en lenke som åpner Vipps med selgeren valgt. Betalingen skjer direkte mellom kjøper og
                 selger. HOBBYSTRADA er ikke part i avtalen eller betalingen, og holder ikke penger på vegne av noen. Blir avtalen ikke fulgt opp, kan den
                 andre parten rapportere det (se «Rapportere annonser og brukere»).
               </p>

@@ -90,7 +90,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   // Selgeren svarer på et bud. Svaret legges inn som melding i samtalen.
   const decide = async (messageId: string, accept: boolean) => {
     if (deciding) return;
-    if (accept && !confirm("Godta budet? Det er en avtale mellom deg og kjøperen. Annonsen merkes «Reservert» til du merker den som solgt.")) return;
+    if (accept && !confirm("Godta budet? Det er en avtale mellom deg og kjøperen.")) return;
     setDeciding(messageId);
     setError("");
     const res = await fetch(`/api/chat/${c.id}/bud`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messageId, accept }) }).catch(() => null);
@@ -270,7 +270,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
         )}
         {accepted && c.role === "seller" && (
           <p className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-3 text-center text-xs leading-relaxed text-emerald-800 ring-1 ring-emerald-200">
-            Du har godtatt budet på {formatPrice(accepted)}. Annonsen er merket «Reservert». Merk den som solgt under Min side når betalingen er mottatt.
+            Du har godtatt budet på {formatPrice(accepted)}. Merk annonsen som solgt under Min side når betalingen er mottatt.
           </p>
         )}
         <div ref={end} />

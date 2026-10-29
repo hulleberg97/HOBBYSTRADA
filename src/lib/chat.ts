@@ -264,7 +264,7 @@ export async function addMessage(id: string, userId: string, body: string, offer
 }
 
 /**
- * Selgeren godtar eller avslår et bud. Godtatt bud lagres på samtalen og reserverer annonsen.
+ * Selgeren godtar eller avslår et bud. Godtatt bud lagres på samtalen.
  * Kjøperen får beskjed på e-post og som varsel. Avtalen er mellom kjøper og selger; HOBBYSTRADA er ikke part.
  */
 export async function decideOffer(conversationId: string, messageId: string, userId: string, accept: boolean) {
@@ -286,7 +286,6 @@ export async function decideOffer(conversationId: string, messageId: string, use
     .from("conversations")
     .update({ last_message: text, last_sender_id: userId, last_message_at: now, seller_read_at: now, ...(accept ? { accepted_offer: amount, accepted_at: now } : {}) })
     .eq("id", conversationId);
-  if (accept) await db.from("listings").update({ reserved_at: now }).eq("slug", row.listing_slug);
   if (row.buyer_id) {
     await addNotification(db, row.buyer_id, {
       kind: "offer",

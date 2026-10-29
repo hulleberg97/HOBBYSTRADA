@@ -53,11 +53,6 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             )}
             {/* Kjøperne ser bare aktive annonser, så bare «Solgt» trenger et merke */}
             {listing.status === "sold" && <span className="rounded-full bg-slate-700 px-2.5 py-1 text-[11px] font-semibold text-white">Solgt</span>}
-            {listing.status === "active" && listing.reserved && (
-              <span title="Selgeren har godtatt et bud" className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-800 ring-1 ring-slate-300">
-                Reservert
-              </span>
-            )}
           </div>
           {market && (
             <span className="absolute bottom-2.5 right-2.5 z-10 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200 backdrop-blur sm:bottom-3 sm:right-3">
