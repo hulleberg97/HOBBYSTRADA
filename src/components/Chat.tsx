@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon, CheckIcon, ImageIcon, SendIcon, TagIcon, XIcon } from "lucide-react";
+import { ArrowLeftIcon, CheckIcon, ImageIcon, MapPinIcon, PackageIcon, SendIcon, TagIcon, XIcon } from "lucide-react";
 import { formatPrice, initials } from "@/lib/format";
 import type { ChatMessage, Conversation } from "@/lib/chat";
 import { listen } from "@/lib/realtime";
@@ -32,6 +32,31 @@ const day = (iso: string) => {
 };
 const time = (iso: string) => new Date(iso).toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit" });
 
+/** Postens side for å sende pakke som privatperson. */
+const POSTEN_SEND = "https://www.posten.no/sende";
+const sporing = (nr: string) => `https://sporing.posten.no/sporing/${encodeURIComponent(nr)}`;
+/** Nettadresser og sendingsnumre (9–20 sifre, eller formatet LA123456789NO) i meldinger blir lenker. */
+const LINK_RE = /(https?:\/\/[^\s<]+[^\s<.,)])|\b(\d{9,20}|[A-Z]{2}\d{9}[A-Z]{2})\b/g;
+
+function Body({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(LINK_RE)) {
+    const i = m.index ?? 0;
+    if (i > last) parts.push(text.slice(last, i));
+    const href = m[1] ?? sporing(m[2]);
+    const label = m[1] ? m[1] : `${m[2]} (spor pakken)`;
+    parts.push(
+      <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="underline decoration-current/50 underline-offset-2 hover:decoration-current">
+        {label}
+      </a>,
+    );
+    last = i + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return <p className="whitespace-pre-line break-words">{parts}</p>;
+}
+
 export function Chat({ conversation: c, initial }: { conversation: Conversation; initial: ChatMessage[] }) {
   const [messages, setMessages] = useState(initial);
   const [text, setText] = useState("");
@@ -41,6 +66,10 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   const [image, setImage] = useState<{ file: File; url: string } | null>(null);
   const [zoom, setZoom] = useState<string | null>(null);
   const [deciding, setDeciding] = useState<string | null>(null);
+  // Frakt: kjøperen fyller inn adressen, selgeren legger inn sendingsnummeret. Begge sendes som vanlige meldinger.
+  const [panel, setPanel] = useState<"adresse" | "sporing" | null>(null);
+  const [adresse, setAdresse] = useState({ navn: "", gate: "", postnr: "", sted: "" });
+  const [sporingNr, setSporingNr] = useState("");
   const [accepted, setAccepted] = useState<number | null>(c.acceptedOffer ?? null);
   const [payLink, setPayLink] = useState<string | null>(c.payLink ?? null);
   const picker = useRef<HTMLInputElement>(null);
@@ -175,6 +204,41 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
     clearImage();
   };
 
+  // Sender en ferdig melding (adresse eller sendingsnummer) uten å gå via skrivefeltet
+  const sendFixed = async (body: string) => {
+    if (sending) return false;
+    setSending(true);
+    setError("");
+    const res = await fetch(`/api/chat/${c.id}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ message: body }) }).catch(() => null);
+    const data = res ? await res.json().catch(() => ({})) : {};
+    setSending(false);
+    if (!res?.ok) {
+      setError(data.error ?? "Meldingen ble ikke sendt. Prøv igjen.");
+      return false;
+    }
+    setMessages((prev) => [...prev, data.message]);
+    return true;
+  };
+
+  const sendAdresse = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const a = { navn: adresse.navn.trim(), gate: adresse.gate.trim(), postnr: adresse.postnr.trim(), sted: adresse.sted.trim() };
+    if (!a.navn || !a.gate || !a.postnr || !a.sted) return;
+    if (await sendFixed(`Send pakken til:\n${a.navn}\n${a.gate}\n${a.postnr} ${a.sted}`)) setPanel(null);
+  };
+
+  const sendSporing = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const nr = sporingNr.replace(/\s+/g, "").toUpperCase();
+    if (!nr) return;
+    if (await sendFixed(`Pakken er sendt. Sendingsnummer: ${nr}`)) {
+      setPanel(null);
+      setSporingNr("");
+    }
+  };
+
+  const field = "h-11 rounded-xl border border-slate-300 bg-white px-3 text-[15px] text-slate-900 outline-none placeholder:text-slate-400 focus:border-primary";
+
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-72px)] max-w-[880px] flex-col bg-white">
       <div className="sticky top-[72px] z-10 flex items-center gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:px-6">
@@ -224,7 +288,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
                       <img src={m.image} alt="Bilde i meldingen" className="max-h-72 w-auto max-w-full object-cover" loading="lazy" />
                     </button>
                   )}
-                  {m.body && <p className="whitespace-pre-line break-words">{m.body}</p>}
+                  {m.body && <Body text={m.body} />}
                 </div>
                 <span className="mt-0.5 px-1 text-[11px] text-slate-400" suppressHydrationWarning>
                   {time(m.createdAt)}
@@ -274,12 +338,88 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
               <p className="mt-2 text-xs text-emerald-800">Selgeren har ikke registrert Vipps-nummer ennå. Avtal betalingen i chatten.</p>
             )}
             <p className="mt-2 text-[11px] text-emerald-700">Vipps åpnes med selgeren valgt. Sjekk at navnet i Vipps er {c.otherName}, og skriv inn beløpet.</p>
+            <div className="mt-4 border-t border-emerald-200 pt-3">
+              <p className="text-xs font-semibold text-emerald-900">Frakt</p>
+              {panel === "adresse" ? (
+                <form onSubmit={sendAdresse} className="mt-2 space-y-2 text-left">
+                  <input value={adresse.navn} onChange={(e) => setAdresse({ ...adresse, navn: e.target.value })} placeholder="Navn" autoComplete="name" className={`${field} w-full`} required />
+                  <input value={adresse.gate} onChange={(e) => setAdresse({ ...adresse, gate: e.target.value })} placeholder="Gateadresse" autoComplete="street-address" className={`${field} w-full`} required />
+                  <div className="flex gap-2">
+                    <input value={adresse.postnr} onChange={(e) => setAdresse({ ...adresse, postnr: e.target.value.replace(/\D/g, "").slice(0, 4) })} placeholder="Postnr." inputMode="numeric" autoComplete="postal-code" className={`${field} w-28 shrink-0`} required />
+                    <input value={adresse.sted} onChange={(e) => setAdresse({ ...adresse, sted: e.target.value })} placeholder="Poststed" autoComplete="address-level2" className={`${field} min-w-0 flex-1`} required />
+                  </div>
+                  <div className="flex gap-2 pt-1">
+                    <button type="submit" disabled={sending} className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50">
+                      Send adressen
+                    </button>
+                    <button type="button" onClick={() => setPanel(null)} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                      Avbryt
+                    </button>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-emerald-700">Adressen sendes som en melding til selgeren, og bare dere to ser den.</p>
+                </form>
+              ) : (
+                <>
+                  <p className="mt-1 text-xs leading-relaxed text-emerald-800">Send adressen din, så selgeren vet hvor pakken skal.</p>
+                  <button
+                    type="button"
+                    onClick={() => setPanel("adresse")}
+                    className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
+                  >
+                    <MapPinIcon className="h-4 w-4" aria-hidden="true" />
+                    Send adressen min
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         )}
         {accepted && c.role === "seller" && (
-          <p className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-3 text-center text-xs leading-relaxed text-emerald-800 ring-1 ring-emerald-200">
-            Du har godtatt budet på {formatPrice(accepted)}. Merk annonsen som solgt under Min side når betalingen er mottatt.
-          </p>
+          <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
+            <p className="text-sm font-semibold text-emerald-900">Du har godtatt budet på {formatPrice(accepted)}</p>
+            <p className="mt-1 text-xs leading-relaxed text-emerald-800">
+              Kjøperen betaler deg direkte med Vipps. Merk annonsen som solgt under Min side når betalingen er mottatt.
+            </p>
+            <div className="mt-4 border-t border-emerald-200 pt-3">
+              <p className="text-xs font-semibold text-emerald-900">Frakt</p>
+              {panel === "sporing" ? (
+                <form onSubmit={sendSporing} className="mt-2 space-y-2 text-left">
+                  <input value={sporingNr} onChange={(e) => setSporingNr(e.target.value)} placeholder="Sendingsnummer fra Posten" autoComplete="off" className={`${field} w-full`} required />
+                  <div className="flex gap-2 pt-1">
+                    <button type="submit" disabled={sending} className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white transition hover:bg-primary/90 disabled:opacity-50">
+                      Send til kjøperen
+                    </button>
+                    <button type="button" onClick={() => setPanel(null)} className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                      Avbryt
+                    </button>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-emerald-700">Nummeret blir en sporingslenke i chatten, så kjøperen kan følge pakken.</p>
+                </form>
+              ) : (
+                <>
+                  <p className="mt-1 text-xs leading-relaxed text-emerald-800">Be kjøperen sende adressen, kjøp frakt hos Posten, og legg inn sendingsnummeret her.</p>
+                  <div className="mt-2 flex flex-wrap justify-center gap-2">
+                    <a
+                      href={POSTEN_SEND}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
+                    >
+                      <PackageIcon className="h-4 w-4" aria-hidden="true" />
+                      Send pakke med Posten
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setPanel("sporing")}
+                      className="inline-flex h-10 items-center justify-center rounded-full border border-emerald-300 bg-white px-5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-100"
+                    >
+                      Legg inn sendingsnummer
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         )}
         <div ref={end} />
       </div>
