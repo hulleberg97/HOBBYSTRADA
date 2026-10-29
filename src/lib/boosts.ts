@@ -6,21 +6,21 @@ export const BOOSTS = {
 
 export type BoostKey = keyof typeof BOOSTS;
 
-/** Faste plasser for toppannonser på forsiden. Flere aktive toppannonser enn dette selges ikke. */
+/** Hvor mange toppannonser som kan være aktive samtidig på forsiden. Flere aktive toppannonser enn dette selges ikke. */
 export const FRONTPAGE_SLOTS = 5;
 
 /** Hva hver pakke gir, med samme ordlyd på /annonseloft, forsiden og i salgsvilkårene. */
 export const BOOST_PERKS: Record<BoostKey, string[]> = {
   top: ["Foran vanlige annonser i markedet"],
-  featured: ["Gullmerke og gullramme", "Foran Topp av listen", "Kan vises på forsiden"],
-  frontpage: ["Alt i Fremhevet", "Først i markedet", "Fast plass på forsiden i 30 dager"],
+  featured: ["Gullmerke og gullramme", "Foran Topp av listen", "Vises på forsiden i 7 dager"],
+  frontpage: ["Alt i Fremhevet", "Først i markedet", "Først på forsiden i 30 dager"],
 };
 
 /** Hva løftet gjør, slik det står i bekreftelsen til kunden. Samme løfter som på annonseløft-siden. */
 export const BOOST_EFFECT: Record<BoostKey, string> = {
   top: "Annonsen ligger nå over alle vanlige annonser i markedet.",
-  featured: "Annonsen har nå gullmerke og gullramme, og vises foran annonser med Topp av listen og vanlige annonser.",
-  frontpage: "Annonsen har nå fast plass på forsiden, og ligger først i markedet.",
+  featured: "Annonsen har nå gullmerke og gullramme, vises på forsiden, og ligger foran annonser med Topp av listen og vanlige annonser.",
+  frontpage: "Annonsen vises nå først på forsiden, og ligger først i markedet.",
 };
 
 /** Dato i norsk tid, f.eks. «25. oktober». */

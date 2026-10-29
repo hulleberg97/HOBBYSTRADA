@@ -1,7 +1,5 @@
 import type { Listing } from "./types";
 
-/** Raden fylles med Fremhevet og Topp av listen opp til dette antallet. Toppannonser og festede kort kommer alltid med. */
-const MAX_CARDS = 10;
 /** Gratisannonser fyller bare opp til dette antallet, så raden ikke står tom. */
 const MIN_CARDS = 8;
 
@@ -9,7 +7,7 @@ const MIN_CARDS = 8;
  * Kortene i raden på forsiden, i rekkefølgen de vises frem.
  * 1. Kort admin har festet står på sin faste plass (1 = først).
  * 2. Toppannonser er alltid med hele perioden, uansett hvor mange de er.
- * 3. Fremhevet fyller opp til MAX_CARDS.
+ * 3. Fremhevede annonser er alltid med hele perioden, etter toppannonsene.
  * 4. Nyeste gratisannonser fyller bare opp til MIN_CARDS.
  */
 export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[], fill: Listing[]) {
@@ -24,7 +22,7 @@ export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[],
     }
   };
   take(paid, Infinity);
-  take(boosted, MAX_CARDS);
+  take(boosted, Infinity);
   take(fill, MIN_CARDS);
   const size = Math.max(pinned.length + rest.length, ...pinned.map((l) => l.fanSlot ?? 0));
   const ranked: (Listing | undefined)[] = Array(size).fill(undefined);

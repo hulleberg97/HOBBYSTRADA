@@ -169,7 +169,7 @@ export default function TermsPage() {
             <p id="sortering">
               Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
               merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
-              likt, uavhengig av løft. Forsiden viser toppannonser først, deretter fremhevede annonser, og til slutt de nyeste annonsene når det er plass. Er det få annonser, kan vi selv feste annonser fra andre brukere på forsiden. Festede annonser er merket «Valgt av HOBBYSTRADA», ikke «Annonseløft»,
+              likt, uavhengig av løft. Forsiden viser toppannonser først, deretter fremhevede annonser, og til slutt de nyeste annonsene når det er plass. Annonsene på forsiden glir sakte bortover, så alle kortene passerer midten etter tur. Er det få annonser, kan vi selv feste annonser fra andre brukere på forsiden. Festede annonser er merket «Valgt av HOBBYSTRADA», ikke «Annonseløft»,
               og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
             </p>
           ),
