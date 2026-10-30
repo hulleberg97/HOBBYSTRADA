@@ -15,12 +15,12 @@ const subscribe = (tick: () => void) => {
 };
 // Nå, avrundet til hele minutter, så alle tidene på siden oppdateres samtidig
 const naa = () => Math.floor(Date.now() / MINUTT) * MINUTT;
-// På serveren finnes ingen klokke å stole på i mellomlagret HTML, så den bruker gjengivelsestidspunktet
-const paaServer = () => 0;
+// På serveren (og under hydrering) brukes gjengivelsestidspunktet; etterpå tar minuttklokken over
+const paaServer = () => Date.now();
 
 export function TidSiden({ iso, variant = "full", lowercase = false }: { iso: string; variant?: "full" | "utenFor" | "kort"; lowercase?: boolean }) {
   const now = useSyncExternalStore(subscribe, naa, paaServer);
-  let t = timeAgo(iso, now || Date.now());
+  let t = timeAgo(iso, now);
   if (variant !== "full") t = t.replace(/^For /, "");
   if (variant === "kort") t = t.replace(/ siden$/, "");
   if (lowercase) t = t.toLowerCase();
