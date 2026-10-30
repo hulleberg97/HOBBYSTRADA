@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ClockIcon, CrownIcon } from "lucide-react";
+import { ClockIcon, CrownIcon, EyeIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
@@ -89,6 +89,13 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
                 </span>
               )}
             </span>
+            )}
+            {/* Visninger, så kjøpere ser hva som er populært */}
+            {!listing.isExample && !listing.soldAt && (listing.views ?? 0) > 0 && (
+              <span className="inline-flex items-center gap-1" title={`${listing.views} visninger`}>
+                <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                {listing.views}
+              </span>
             )}
           </div>
         </div>
