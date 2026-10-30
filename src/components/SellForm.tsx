@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRightIcon, CameraIcon, CheckIcon, ImagePlusIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CameraIcon, CheckIcon, ImagePlusIcon, XIcon, CropIcon } from "lucide-react";
 import { formatPrice } from "@/lib/format";
 import { CLUBS, LEAGUES } from "@/lib/clubs";
 import { CONDITIONS, conditionLabel } from "@/lib/conditions";
 import { btnPrimary, btnSecondary } from "./ui";
 import { resizeImage } from "@/lib/resize";
+import { BildeBeskjaering } from "@/components/BildeBeskjaering";
 
 const label = "mb-1.5 block font-mono-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground";
 const field =
@@ -17,7 +18,8 @@ const TYPES = ["Autograf", "Patch / relic", "Rookie", "Nummerert", "Base", "Anne
 const GRADERS = ["Ugradert (raw)", "PSA", "BGS", "SGC", "CGC", "Annet"];
 const MAX_MB = 10;
 
-type Photo = { file: File; url: string };
+/** original: bildet slik det ble valgt, så det kan beskjæres på nytt. */
+type Photo = { file: File; url: string; original: File };
 
 function Step({ n, title }: { n: string; title: string }) {
   return (
@@ -34,6 +36,7 @@ function PhotoSlot({
   photo,
   onPick,
   onClear,
+  onCrop,
   required,
 }: {
   title: string;
@@ -41,6 +44,7 @@ function PhotoSlot({
   photo: Photo | null;
   onPick: (f: File) => void;
   onClear: () => void;
+  onCrop: () => void;
   required?: boolean;
 }) {
   const input = useRef<HTMLInputElement>(null);
@@ -62,6 +66,14 @@ function PhotoSlot({
               className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow"
             >
               <XIcon className="h-4 w-4" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={onCrop}
+              className="absolute bottom-2 left-2 inline-flex h-8 items-center gap-1.5 rounded-full bg-white/90 px-3 text-xs font-semibold text-slate-800 shadow"
+            >
+              <CropIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              Beskjær
             </button>
           </>
         ) : (
@@ -117,6 +129,8 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
   const extraInput = useRef<HTMLInputElement>(null);
+  // Bilder som venter på beskjæring, i rekkefølge. Nærbilder kan være flere på en gang.
+  const [cropQueue, setCropQueue] = useState<{ file: File; target: "front" | "back" | "extra"; replace?: number }[]>([]);
   const [step, setStep] = useState(0);
   const steps = useRef<(HTMLFieldSetElement | null)[]>([]);
   const top = useRef<HTMLDivElement>(null);
@@ -154,7 +168,25 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
       return null;
     }
     setError("");
-    return { file: f, url: URL.createObjectURL(f) };
+    return { file: f, url: URL.createObjectURL(f), original: f };
+  };
+
+  /** Legger et valgt bilde i køen for beskjæring. Selve bildet settes når beskjæringen er ferdig. */
+  const queue = (f: File, target: "front" | "back" | "extra", replace?: number) => {
+    const ok = photo(f);
+    if (!ok) return;
+    URL.revokeObjectURL(ok.url);
+    setCropQueue((q) => [...q, { file: f, target, replace }]);
+  };
+  const cropDone = (cropped: File | null) => {
+    const job = cropQueue[0];
+    if (!job) return;
+    const p: Photo = { file: cropped ?? job.file, url: URL.createObjectURL(cropped ?? job.file), original: job.file };
+    if (job.target === "front") setFront(p);
+    else if (job.target === "back") setBack(p);
+    else if (job.replace !== undefined) setExtra((x) => x.map((e, i) => (i === job.replace ? p : e)));
+    else setExtra((x) => [...x, p].slice(0, 4));
+    setCropQueue((q) => q.slice(1));
   };
 
   const count = [front, back].filter(Boolean).length + extra.length;
@@ -223,6 +255,16 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
 
   return (
     <form className="grid scroll-mt-28 gap-8 lg:grid-cols-[1fr_340px] lg:items-start" onSubmit={submit}>
+      {cropQueue[0] && (
+        <BildeBeskjaering
+          key={cropQueue[0].file.name + cropQueue[0].file.lastModified + cropQueue.length}
+          file={cropQueue[0].file}
+          title={cropQueue[0].target === "front" ? "Beskjær forsiden" : cropQueue[0].target === "back" ? "Beskjær baksiden" : "Beskjær nærbildet"}
+          onDone={(f) => cropDone(f)}
+          onSkip={() => cropDone(null)}
+          onCancel={() => setCropQueue((q) => q.slice(1))}
+        />
+      )}
       <div ref={top} className="scroll-mt-28 space-y-6">
         <ol className="grid grid-cols-4 gap-2" aria-label="Steg">
           {["Bilder", "Om kortet", "Tilstand og pris", "Send inn"].map((label, i) => (
@@ -261,10 +303,18 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                   hint="Hele kortet, rett ovenfra"
                   required
                   photo={front}
-                  onPick={(f) => setFront(photo(f))}
+                  onPick={(f) => queue(f, "front")}
                   onClear={() => setFront(null)}
+                  onCrop={() => front && queue(front.original, "front")}
                 />
-                <PhotoSlot title="Bakside" hint="Viser nummer og tilstand" photo={back} onPick={(f) => setBack(photo(f))} onClear={() => setBack(null)} />
+                <PhotoSlot
+                  title="Bakside"
+                  hint="Viser nummer og tilstand"
+                  photo={back}
+                  onPick={(f) => queue(f, "back")}
+                  onClear={() => setBack(null)}
+                  onCrop={() => back && queue(back.original, "back")}
+                />
               </div>
               <div className="mt-5">
                 <p className={label}>Nærbilder (valgfritt, maks 4)</p>
@@ -280,6 +330,14 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                         className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-slate-800"
                       >
                         <XIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Beskjær bildet"
+                        onClick={() => queue(p.original, "extra", i)}
+                        className="absolute bottom-1 left-1 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-slate-800"
+                      >
+                        <CropIcon className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>
                     </div>
                   ))}
@@ -302,8 +360,7 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                     tabIndex={-1}
                     aria-label="Velg nærbilder"
                     onChange={(e) => {
-                      const picked = [...(e.target.files ?? [])].map(photo).filter(Boolean) as Photo[];
-                      setExtra([...extra, ...picked].slice(0, 4));
+                      for (const f of [...(e.target.files ?? [])].slice(0, 4 - extra.length)) queue(f, "extra");
                       e.target.value = "";
                     }}
                   />
