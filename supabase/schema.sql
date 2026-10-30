@@ -271,8 +271,7 @@ grant all on public.chat_messages to service_role;
 -- Kjør én gang i Supabase: SQL Editor → New query → lim inn → Run.
 
 -- Plass i vifta: 1 = midten, 2 = venstre, 3 = høyre, 4 = ytterst venstre, 5 = ytterst høyre
-alter table public.listings add column if not exists fan_slot smallint check (fan_slot between 1 and 5);
-create unique index if not exists listings_fan_slot on public.listings (fan_slot) where fan_slot is not null;
+alter table public.listings add column if not exists fan_slot smallint;
 grant select (fan_slot) on public.listings to anon, authenticated;
 -- HOBBYSTRADA – oppdatering 7: grenser mot spam, og sanntid i chatten.
 -- Kjør én gang i Supabase: SQL Editor → New query → lim inn → Run.
