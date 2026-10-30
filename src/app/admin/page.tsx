@@ -21,8 +21,6 @@ import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
 import { ForsideMeny, type ForsideKort } from "@/components/ForsideMeny";
 import { frontpageRow, rowLabel } from "@/lib/frontpage-row";
-import { FORSIDE_FYLL, getSetting } from "@/lib/settings";
-import { DEFAULT_FILL } from "@/lib/fan";
 
 export const metadata: Metadata = { title: "Administrasjon", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -49,8 +47,7 @@ export default async function AdminPage() {
   ]);
 
   const sales = await listInvoices(db, since90());
-  // Forsiden: raden slik den vises nå, og alle aktive annonser som kan festes
-  const fill = await getSetting<number>(FORSIDE_FYLL, DEFAULT_FILL);
+  // Forsiden: raden slik den vises nå, og alle aktive annonser som kan velges
   const aktive = (all ?? []).filter((r) => r.status === "active").map(fromRow);
   const kort = (l: (typeof aktive)[number]): ForsideKort => ({
     id: l.id!,
@@ -61,7 +58,7 @@ export default async function AdminPage() {
     label: rowLabel(l),
     ownerListing: Boolean(l.ownerListing),
   });
-  const forsideRad = frontpageRow(aktive, fill).map(kort);
+  const forsideRad = frontpageRow(aktive).map(kort);
   const forsideKort = aktive.map(kort);
   // Før lansering: andre kontoer enn admin, så testkontoer kan slettes fra admin
   const { data: users } = await db.auth.admin.listUsers({ page: 1, perPage: 1000 });
@@ -102,9 +99,9 @@ export default async function AdminPage() {
       <div className="mx-auto max-w-[1320px] space-y-14 px-4 pb-24 pt-10 sm:px-6 lg:px-8">
         <section>
           <h2 className={h2}>Forsiden</h2>
-          <p className="mt-1 text-sm text-slate-600">Velg hvilke kort som vises i raden på forsiden. Endringer vises med en gang.</p>
+          <p className="mt-1 text-sm text-slate-600">Velg hvilke kort som vises på forsiden. Toppannonser og fremhevede annonser vises alltid først. Endringer vises med en gang.</p>
           <div className="mt-4">
-            <ForsideMeny row={forsideRad} listings={forsideKort} fill={fill} />
+            <ForsideMeny row={forsideRad} listings={forsideKort} />
           </div>
         </section>
         <section>

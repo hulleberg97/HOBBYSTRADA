@@ -19,7 +19,7 @@ export type ForsideKort = {
  * Admin: velg hvilke kort som vises på forsiden. Viser raden slik den er nå, lar admin velge hvor mange
  * gratisannonser som fyller opp, og slå av og på hvert kort. Valgte kort vises først, i rekkefølgen de ble valgt.
  */
-export function ForsideMeny({ row, listings, fill }: { row: ForsideKort[]; listings: ForsideKort[]; fill: number }) {
+export function ForsideMeny({ row, listings }: { row: ForsideKort[]; listings: ForsideKort[] }) {
   const router = useRouter();
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -38,25 +38,20 @@ export function ForsideMeny({ row, listings, fill }: { row: ForsideKort[]; listi
     router.refresh();
   };
 
-  const setFill = (n: number) => call("fill", "/api/admin/forside", { fill: n });
   const setOn = (id: string, on: boolean) => call(id, `/api/listings/${id}`, { fanSlot: on ? true : null });
 
   const q = search.trim().toLowerCase();
   const shown = q ? listings.filter((l) => l.title.toLowerCase().includes(q)) : listings;
-  const select = "h-9 rounded-full border border-slate-300 bg-white px-3 text-xs font-semibold disabled:opacity-50";
 
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Slik er raden nå ({row.length} kort)</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Slik er forsiden nå</p>
         {row.length ? (
           <ol className="mt-2 flex gap-3 overflow-x-auto pb-2">
-            {row.map((l, i) => (
+            {row.map((l) => (
               <li key={l.id} className="w-[88px] shrink-0">
-                <div className="relative">
-                  <ListingThumb image={l.image} title={l.title} />
-                  <span className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-[10px] font-bold text-white">{i + 1}</span>
-                </div>
+                <ListingThumb image={l.image} title={l.title} />
                 <p className="mt-1 truncate text-[11px] font-semibold text-slate-900" title={l.title}>
                   {l.title}
                 </p>
@@ -65,25 +60,13 @@ export function ForsideMeny({ row, listings, fill }: { row: ForsideKort[]; listi
             ))}
           </ol>
         ) : (
-          <p className="mt-2 text-sm text-slate-600">Ingen kort på forsiden nå. Slå på kort under, eller la gratisannonser fylle opp.</p>
+          <p className="mt-2 text-sm text-slate-600">Ingen kort på forsiden nå. Slå på kort under.</p>
         )}
       </div>
 
-      <label className="flex flex-wrap items-center gap-3 text-sm">
-        <span className="font-semibold text-slate-900">Fyll opp med nyeste annonser uten løft</span>
-        <select value={fill} disabled={busy === "fill"} onChange={(e) => setFill(Number(e.target.value))} className={select}>
-          {[0, 2, 4, 6, 8, 10, 12].map((n) => (
-            <option key={n} value={n}>
-              {n === 0 ? "Ingen (bare festede og betalte)" : `Opp til ${n} kort`}
-            </option>
-          ))}
-        </select>
-        <span className="text-xs text-slate-500">Valgte kort, toppannonser og fremhevede vises alltid.</span>
-      </label>
-
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Velg kort til forsiden ({listings.length} aktive)</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Velg kort til forsiden</p>
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -97,7 +80,7 @@ export function ForsideMeny({ row, listings, fill }: { row: ForsideKort[]; listi
               <ListingThumb image={l.image} title={l.title} size="sm" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-slate-900">{l.title}</p>
-                <p className="text-xs text-slate-500">{l.fanSlot ? "Valgt til forsiden" : l.label === "Nyeste uten løft" ? "Ikke valgt" : l.label}</p>
+                <p className="text-xs text-slate-500">{l.fanSlot ? "Valgt til forsiden" : l.label.startsWith("Nyeste") ? "Ikke valgt" : l.label}</p>
               </div>
               <button
                 type="button"

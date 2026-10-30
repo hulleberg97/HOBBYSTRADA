@@ -17,9 +17,7 @@ import { Slab } from "@/components/HeroFan";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
-import { DEFAULT_FILL } from "@/lib/fan";
 import { frontpageRow } from "@/lib/frontpage-row";
-import { FORSIDE_FYLL, getSetting } from "@/lib/settings";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
 
@@ -33,8 +31,8 @@ export default async function Home() {
     .slice(0, 4);
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
   const c = categoryCounts(all);
-  // Forsiden: festede kort, alle toppannonser, så Fremhevet, og til slutt de nyeste. Admin styrer hvor mange gratisannonser som fyller.
-  const fanList = frontpageRow(all, await getSetting<number>(FORSIDE_FYLL, DEFAULT_FILL));
+  // Forsiden: toppannonser, så Fremhevet, så kort admin har valgt. Nyeste bare som reserve.
+  const fanList = frontpageRow(all);
   return (
     <div className="bg-background">
       {/* Forsiden: overskrift øverst og annonseraden nederst */}

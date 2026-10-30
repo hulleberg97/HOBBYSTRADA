@@ -1,29 +1,29 @@
 import type { Listing } from "./types";
 
-/** Gratisannonser fyller bare opp til dette antallet, så raden ikke står tom. Admin kan endre tallet. */
-export const DEFAULT_FILL = 8;
+/** Når ingen kort er valgt eller løftet, fylles raden med så mange av de nyeste annonsene, så forsiden ikke står tom. */
+export const FALLBACK_FILL = 8;
 
 /**
  * Kortene i raden på forsiden, i rekkefølgen de vises frem.
- * 1. Kort admin har valgt til forsiden kommer først, i rekkefølgen de ble valgt (fanSlot).
- * 2. Toppannonser er alltid med hele perioden, uansett hvor mange de er.
- * 3. Fremhevede annonser er alltid med hele perioden, etter toppannonsene.
- * 4. Nyeste gratisannonser fyller bare opp til fillMax (standard DEFAULT_FILL).
+ * 1. Toppannonser (betalt «Først på forsiden»).
+ * 2. Fremhevede annonser.
+ * 3. Kort admin har valgt til forsiden, i rekkefølgen de ble valgt (fanSlot).
+ * 4. Er raden tom etter det, de nyeste annonsene opp til FALLBACK_FILL.
  */
-export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[], fill: Listing[], fillMax = DEFAULT_FILL) {
-  const first = [...pinned].sort((a, b) => (a.fanSlot ?? 0) - (b.fanSlot ?? 0));
-  const placed = new Set(first.map((l) => l.slug));
-  const rest: Listing[] = [];
+export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[], fill: Listing[]) {
+  const chosen = [...pinned].sort((a, b) => (a.fanSlot ?? 0) - (b.fanSlot ?? 0));
+  const placed = new Set<string>();
+  const out: Listing[] = [];
   const take = (list: Listing[], cap: number) => {
     for (const l of list) {
-      if (placed.has(l.slug)) continue;
-      if (pinned.length + rest.length >= cap) return;
+      if (placed.has(l.slug) || out.length >= cap) continue;
       placed.add(l.slug);
-      rest.push(l);
+      out.push(l);
     }
   };
   take(paid, Infinity);
   take(boosted, Infinity);
-  take(fill, fillMax);
-  return [...first, ...rest];
+  take(chosen, Infinity);
+  if (!out.length) take(fill, FALLBACK_FILL);
+  return out;
 }
