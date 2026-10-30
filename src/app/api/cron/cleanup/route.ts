@@ -8,13 +8,14 @@ import { brandedEmail, isPlaceholderEmail, sendEmail } from "@/lib/email";
 /**
  * Daglig opprydding (Vercel Cron, kl. 03:17 UTC). Sletter data vi ikke lenger trenger:
  * - meldinger, samtaler og henvendelser eldre enn 12 måneder
- * - avviste annonser (med bilder) eldre enn 30 dager, solgte annonser eldre enn 12 måneder
+ * - avviste annonser (med bilder) eldre enn 35 dager (klagefristen er 30 dager), solgte annonser eldre enn 12 måneder
  * - rapporter som er ferdigbehandlet for over 12 måneder siden
  * - bilder som ikke lenger hører til en samtale eller annonse
  * - sperrelisten: utestengte Vipps-ID-er eldre enn 2 år
  * - inaktive kontoer: e-postvarsel etter 23 måneder uten innlogging, sletting etter 24
  */
 const months = (n: number) => new Date(Date.now() - n * 30 * 864e5).toISOString();
+const days = (n: number) => new Date(Date.now() - n * 864e5).toISOString();
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
@@ -40,14 +41,14 @@ export async function GET(req: Request) {
   await del("contact_messages", db.from("contact_messages").delete({ count: "exact" }).lt("created_at", months(12)));
   await del("reports", db.from("reports").delete({ count: "exact" }).eq("handled", true).lt("created_at", months(12)));
 
-  // Avviste annonser slettes etter 30 dager, men ikke mens en klage er under behandling (complaint_at satt, complaint_resolved_at tom)
+  // Avviste annonser slettes etter 35 dager (klagefristen er 30 dager), men ikke mens en klage er under behandling (complaint_at satt, complaint_resolved_at tom)
   const klageFilter = "complaint_at.is.null,complaint_resolved_at.not.is.null";
-  const { data: rejected } = await db.from("listings").select("slug").eq("status", "rejected").lt("updated_at", months(1)).or(klageFilter);
+  const { data: rejected } = await db.from("listings").select("slug").eq("status", "rejected").lt("updated_at", days(35)).or(klageFilter);
   for (const l of rejected ?? []) {
     const { data: files } = await db.storage.from("listing-images").list(l.slug);
     if (files?.length) await db.storage.from("listing-images").remove(files.map((f) => `${l.slug}/${f.name}`));
   }
-  await del("rejected_listings", db.from("listings").delete({ count: "exact" }).eq("status", "rejected").lt("updated_at", months(1)).or(klageFilter));
+  await del("rejected_listings", db.from("listings").delete({ count: "exact" }).eq("status", "rejected").lt("updated_at", days(35)).or(klageFilter));
   // Solgte annonser vises i prisarkivet i 12 måneder, deretter slettes de (bildene ryddes av removeOrphans under)
   await del("sold_listings", db.from("listings").delete({ count: "exact" }).eq("status", "sold").lt("updated_at", months(12)));
 
