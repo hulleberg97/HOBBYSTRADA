@@ -60,7 +60,7 @@ Annonseinnhold, bilder, fornavn og sted.
 Grunnlag
 Avtale med deg (art. 6 nr. 1 b).
 Lagringstid
-Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager.
+Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager. Klager du på avvisningen, slettes annonsen først når klagen er avgjort.
 
 Prisarkivet «Solgte kort»
 

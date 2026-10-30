@@ -36,9 +36,9 @@ Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang 
 
 ## Angrerett
 
-Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 21). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over (angrerettloven §§ 19 og 22 bokstav c).
+Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 21). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over (angrerettloven §§ 19 og 22 bokstav c). Varer perioden lenger enn 14 dager, som for Toppannonse, går angreretten ut når angrefristen er ute.
 
-Angrer du før perioden er over, betaler du for den delen av perioden som er brukt, regnet i dager (angrerettloven § 26). Resten får du tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi har fått beskjed (angrerettloven § 24). Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende angreskjemaet, eller med en e-post til post@hobbystrada.no. Du får bekreftelse på e-post med en gang vi har mottatt meldingen.
+Angrer du innen fristen og før perioden er over, betaler du for den delen av perioden som er brukt fram til vi mottar meldingen, regnet i hele timer (angrerettloven § 26). Resten får du tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi har fått beskjed (angrerettloven § 24). Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende angreskjemaet, eller med en e-post til post@hobbystrada.no. Du får bekreftelse på e-post med en gang vi har mottatt meldingen.
 
 ## Hvis løftet ikke virker
 
@@ -46,7 +46,7 @@ Blir løftet ikke levert som avtalt, gi beskjed til post@hobbystrada.no. Vi rett
 
 ## Klager
 
-Er du ikke fornøyd, send oss en melding via kontaktskjemaet med emnet «Annonseløft og betaling», eller på e-post til post@hobbystrada.no. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du klage til Forbrukerrådet.
+Er du ikke fornøyd, send oss en melding via kontaktskjemaet med emnet «Annonseløft og betaling», eller på e-post til post@hobbystrada.no. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du be om mekling hos Forbrukertilsynet (forbrukertilsynet.no). Gjelder tvisten angreretten, kan den deretter bringes inn for Forbrukerklageutvalget. Du kan også bringe saken inn for de alminnelige domstolene.
 
 ## Personopplysninger
 
