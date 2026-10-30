@@ -119,7 +119,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                 <span suppressHydrationWarning>Lagt ut {timeAgo(l.createdAt).toLowerCase()}</span>
               </span>
             </div>
-            {/* Kort fra HOBBYSTRADA har merket «Fra HOBBYSTRADA» på bildet, og vilkårene («Kort fra HOBBYSTRADA») forklarer rettighetene */}
+            {/* Innehaverens egne annonser viser ingen selgererklæring */}
             {l.ownerListing ? null : (
               <p className="mt-1.5 text-xs text-slate-600">
                 <strong className="font-semibold text-slate-800">Privat selger.</strong> Forbrukerkjøpsloven og angrerett gjelder ikke.{" "}
