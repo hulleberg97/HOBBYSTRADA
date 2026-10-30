@@ -88,7 +88,12 @@ function offsetOf(i: number, shift: number, n: number) {
 
 /** Kortet i plastholder med HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter. */
 /** «eager»: kortene som synes når siden åpnes lastes først, resten etterpå. */
-export function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
+/** Hvordan betalt plassering merkes på kortet i raden. «pill» er dagens merke; de andre er mer diskrete. */
+export type SlabMark = "pill" | "strip" | "corner" | "header";
+
+export function Slab({ l, eager = false, mark = "pill" }: { l: Listing; eager?: boolean; mark?: SlabMark }) {
+  const boosted = Boolean(l.frontpage || l.featured);
+  const markTitle = l.frontpage ? "Toppannonse" : "Fremhevet";
   return (
     <div
       data-top={l.frontpage ? "true" : undefined}
@@ -118,13 +123,40 @@ export function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
           <CardArt listing={l} square />
         )}
       </div>
-      {/* Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
-      {(l.frontpage || l.featured) && (
+      {/* Betalt plassering merkes tydelig (markedsføringsloven § 8). Teksten «Annonseløft» er alltid med; bare formen varierer. */}
+      {boosted && mark === "pill" && (
         <span
-          title={l.frontpage ? "Toppannonse" : "Fremhevet"}
+          title={markTitle}
           className="absolute -top-2 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-accent px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-accent-foreground shadow-lg ring-1 ring-white/80 sm:text-[9px]"
         >
           {l.frontpage && <CrownIcon className="h-2.5 w-2.5" aria-hidden="true" />}
+          Annonseløft
+        </span>
+      )}
+      {boosted && mark === "strip" && (
+        <span
+          title={markTitle}
+          className="absolute inset-x-[5%] top-0 inline-flex items-center justify-center gap-1 rounded-b-[5px] bg-accent/95 py-[2px] text-[7px] font-bold uppercase tracking-[0.18em] text-accent-foreground sm:text-[8px]"
+        >
+          {l.frontpage && <CrownIcon className="h-2 w-2" aria-hidden="true" />}
+          Annonseløft
+        </span>
+      )}
+      {boosted && mark === "corner" && (
+        <span
+          title={markTitle}
+          className="absolute right-[5%] top-[5%] z-10 inline-flex items-center gap-1 rounded-bl-[6px] rounded-tr-[5px] bg-accent px-1.5 py-[2px] text-[7px] font-bold uppercase tracking-wider text-accent-foreground sm:text-[8px]"
+        >
+          {l.frontpage && <CrownIcon className="h-2 w-2" aria-hidden="true" />}
+          Annonseløft
+        </span>
+      )}
+      {boosted && mark === "header" && (
+        <span
+          title={markTitle}
+          className="absolute bottom-[3%] left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-white/90 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.16em] text-[#8a6a1e] ring-1 ring-accent/60 sm:text-[8px]"
+        >
+          {l.frontpage && <CrownIcon className="h-2 w-2" aria-hidden="true" />}
           Annonseløft
         </span>
       )}
