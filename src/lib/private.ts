@@ -16,3 +16,6 @@ export async function guestToken(password: string) {
   const hash = await crypto.subtle.digest("SHA-256", data);
   return Array.from(new Uint8Array(hash), (b) => b.toString(16).padStart(2, "0")).join("").slice(0, 32);
 }
+
+/** Skjult for søkemotorer: alltid i lukket modus, og ellers når SKJUL_FOR_SOKEMOTORER=1 (f.eks. gjennomgang før lansering uten passord). */
+export const hiddenFromSearch = () => Boolean(process.env.SITE_PASSWORD || process.env.SKJUL_FOR_SOKEMOTORER === "1");

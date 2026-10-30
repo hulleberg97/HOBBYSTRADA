@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieConsent } from "@/components/CookieConsent";
+import { hiddenFromSearch } from "@/lib/private";
 
 // Brødtekst og overskrifter (Schibsted), den store overskriften på forsiden (Fraunces) og tittelen i magasinvisningen (Sora)
 const schibsted = Schibsted_Grotesk({ variable: "--nf-schibsted", subsets: ["latin"] });
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
   title: { default: "Fotballkort – kjøp og selg direkte | HOBBYSTRADA", template: "%s | HOBBYSTRADA" },
   description: "Kjøp og selg fotballkort direkte i Norge. Autografkort, relic, patch og nummererte kort fra Topps Chrome, Museum Collection og Inception.",
   openGraph: { locale: "nb_NO", siteName: "HOBBYSTRADA", type: "website" },
+  // Før lansering: ingen indeksering, også når passordet er tatt bort for gjennomgang
+  ...(hiddenFromSearch() ? { robots: { index: false, follow: false } } : {}),
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
