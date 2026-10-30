@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageHeader } from "./ui";
 import { slugify } from "@/lib/format";
+import { COMPANY } from "@/lib/company";
 
 /** id: fast anker (f.eks. /vilkar#slik-sorteres-annonsene). Uten id lages den av tittelen. */
 export type LegalSection = { title: string; body: React.ReactNode; id?: string };
@@ -20,11 +21,11 @@ export function LegalPage({ title, updated, sections }: { title: string; updated
           <section>
             <h2 className="mb-3 font-heading text-h4 font-semibold text-foreground">Kontakt</h2>
             <p>
-              Spørsmål kan sendes via{" "}
+              Du kan kontakte oss via{" "}
               <Link href="/kontakt" className="text-foreground underline underline-offset-2">
                 kontaktskjemaet
-              </Link>
-              .
+              </Link>{" "}
+              eller på <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
             </p>
           </section>
         </div>

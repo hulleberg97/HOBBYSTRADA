@@ -5,256 +5,287 @@ import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = { title: "Vilkår", alternates: { canonical: "/vilkar" } };
 
-/** Brukervilkår. Gjennomgått juridisk oktober 2026. Avsnittet «Slik sorteres annonsene» lenkes til fra markedet (markedsføringsloven § 8). */
+/**
+ * Brukervilkår. Teksten er Låvlis reviderte utkast av 30. oktober 2026, lagt inn ordrett.
+ * Avsnittet «Slik sorteres annonsene» lenkes til fra markedet (markedsføringsloven § 8).
+ */
 export default function TermsPage() {
+  const email = <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>;
   return (
     <LegalPage
-      title="Vilkår for bruk"
+      title="Brukervilkår for HOBBYSTRADA"
       updated="30. oktober 2026"
       sections={[
         {
-          title: "Om tjenesten",
+          title: "1. Om tjenesten",
           body: (
             <>
-              <p>
-                HOBBYSTRADA drives av {COMPANY.name}, et enkeltpersonforetak registrert i Enhetsregisteret med org.nr. {COMPANY.orgnr}, {COMPANY.street},{" "}
-                {COMPANY.postal}, e-post <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>, telefon {COMPANY.phone}. Foretaket er ikke registrert i Merverdiavgiftsregisteret.
+              <p>Disse vilkårene gjelder når du bruker HOBBYSTRADA på hobbystrada.no. Les dem før du lager konto, legger ut annonser eller kjøper annonseløft.</p>
+              <p className="mt-3">
+                HOBBYSTRADA er en annonseplass der private samlere kjøper og selger fotballkort av hverandre. Tjenesteyter er {COMPANY.name}, et
+                enkeltpersonforetak registrert i Enhetsregisteret, org.nr. {COMPANY.orgnr}, {COMPANY.street}, {COMPANY.postal}. E-post: {email}. Telefon:{" "}
+                {COMPANY.phone}. Foretaket er ikke registrert i Merverdiavgiftsregisteret.
               </p>
               <p className="mt-3">
-                HOBBYSTRADA er en annonseplass der samlere kjøper og selger fotballkort av hverandre. Vi formidler bare kontakt mellom kjøper og selger.
-                Avtalen om kjøp inngås direkte mellom kjøper og selger. HOBBYSTRADA er ikke part i avtalen, opptrer ikke på vegne av selgeren og er ikke
-                ansvarlig for selgerens forpliktelser.
+                HOBBYSTRADA formidler bare kontakt mellom kjøper og selger. Avtalen om kjøp inngås direkte mellom kjøper og selger. HOBBYSTRADA er ikke part i
+                handelen, opptrer ikke på vegne av selgeren og er ikke ansvarlig for selgerens forpliktelser. Vi tar ingen provisjon og holder ingen penger.
               </p>
               <p className="mt-3">
-                Ved å opprette konto godtar du disse vilkårene. Hvordan vi behandler personopplysninger, står i{" "}
-                <Link href="/personvern">personvernerklæringen</Link>.
+                Hvordan vi behandler personopplysninger, står i <Link href="/personvern">personvernerklæringen</Link>.
               </p>
             </>
           ),
         },
         {
-          title: "Konto",
+          title: "2. Konto",
           body: (
             <>
               <p>
-                Du må ha en konto for å legge ut annonser, sende meldinger og kjøpe annonseløft. Du logger inn med Vipps. Navnet fra Vipps kan ikke endres
-                på nettsiden. Fornavnet ditt vises på annonsene, og hele navnet vises for dem du chatter med, så kjøper og selger vet hvem de handler med.
+                Du må ha konto for å legge ut annonser, sende meldinger og kjøpe annonseløft. Du logger inn med Vipps. Navnet fra Vipps kan ikke endres på
+                nettsiden. Fornavnet ditt vises på annonsene. Hele navnet ditt vises for dem du chatter med.
               </p>
               <p className="mt-3">
-                Du må være minst 18 år for å ha konto. Når du lager konto, bekrefter du at du er minst 18 år. Gir du uriktige opplysninger om alder,
-                kan kontoen stenges.
+                Når du lager konto, krysser du av for at du er minst 18 år, at du godtar disse vilkårene og at du har lest personvernerklæringen. Gir du
+                uriktige opplysninger om alder, kan kontoen stenges.
               </p>
               <p className="mt-3">
-                HOBBYSTRADA er for private samlere. Selger du kort som ledd i næringsvirksomhet, kan du ikke bruke tjenesten.
+                Tjenesten er for private samlere. Selger du kort som ledd i næringsvirksomhet, kan du ikke bruke tjenesten. Du må bekrefte at du selger privat
+                hver gang du legger ut en annonse.
               </p>
-              <p className="mt-3">
-                Du skal ikke la andre bruke kontoen din. Du er ansvarlig for det som gjøres fra kontoen din, med mindre du ikke kunne forhindre det.
-              </p>
-              <p className="mt-3">
-                Meldinger skal handle om handel med kort. Trakassering, spam og forsøk på svindel er forbudt og kan føre til at annonser fjernes og kontoen
-                stenges (se «Fjerning av annonser og utestengelse»).
-              </p>
-              <p className="mt-3">
-                Merket «Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps.
-              </p>
-              <p className="mt-3">
-                <strong>Bud.</strong> Et bud i chatten er et uforpliktende prisforslag fra kjøperen til selgeren. Godtar selgeren budet, får kjøperen en
-                lenke som åpner Vipps med selgeren valgt. Verken kjøper eller selger er bundet før kjøperen har betalt. Betalingen skjer direkte mellom
-                kjøper og selger. HOBBYSTRADA er ikke part i avtalen eller betalingen, og holder ikke penger på vegne av noen. Blir avtalen ikke fulgt opp
-                etter at kjøperen har betalt, kan kjøperen rapportere det (se «Rapportere annonser og brukere»).
-              </p>
+              <p className="mt-3">Ikke la andre bruke kontoen din. Du er ansvarlig for det som gjøres fra kontoen din, med mindre du ikke kunne forhindre det.</p>
+              <p className="mt-3">Meldingene skal handle om handel med kort. Trakassering, spam og forsøk på svindel er forbudt.</p>
+              <p className="mt-3">«Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps.</p>
             </>
           ),
         },
         {
-          title: "Regler for annonser",
+          title: "3. Bud og betaling",
+          id: "bud-og-betaling",
           body: (
             <>
+              <p>Et bud i chatten er et uforpliktende prisforslag. Godtar selgeren budet, får kjøperen en lenke som åpner Vipps med selgeren valgt.</p>
+              <p className="mt-3">Kjøper og selger er først bundet av handelen når kjøperen har betalt. Når kjøperen har betalt, kan selgeren ikke selge kortet til andre.</p>
+              <p className="mt-3">
+                Betalingen skjer direkte mellom kjøper og selger i Vipps, som en privat betaling. HOBBYSTRADA er ikke part i handelen eller betalingen og holder
+                ikke penger på vegne av noen. Vipps’ kjøpsbeskyttelse gjelder ikke betalinger mellom privatpersoner.
+              </p>
+              <p className="mt-3">Blir handelen ikke fulgt opp, kan den andre parten rapportere det.</p>
+            </>
+          ),
+        },
+        {
+          title: "4. Regler for annonser",
+          id: "regler-for-annonser",
+          body: (
+            <>
+              <p>Annonsene dine må følge disse reglene:</p>
               <List
                 items={[
-                  "Du må eie kortet du selger, eller ha rett til å selge det, og kortet må være tilgjengelig.",
-                  "Bilder og beskrivelse skal vise kortet slik det faktisk er, med skader og tilstand. Bruk egne bilder, eller bilder du har rett til å bruke.",
-                  "Forfalskninger, kopier (reprints) uten tydelig merking og stjålne kort er forbudt.",
-                  "Lotterier, trekninger, «breaks» og lignende, der kjøperen betaler for en sjanse til å få bestemte kort, er forbudt.",
+                  "Du må eie kortet eller ha rett til å selge det, og kortet må være tilgjengelig.",
+                  "Bilder og beskrivelse skal vise kortet slik det faktisk er.",
+                  "Bruk egne bilder eller bilder du har rett til å bruke.",
+                  "Forfalskninger, reprints uten tydelig merking og stjålne kort er forbudt.",
+                  "Lotterier, trekninger, «breaks» o.l. er forbudt.",
                   "Annonsen skal gjelde fotballkort.",
-                  "Én annonse per kort. Ikke legg ut samme kort flere ganger. Du kan selge flere kort samlet i én annonse (lot). Da må beskrivelsen si hvor mange kort som er med og hva slags kort det er, og de mest verdifulle kortene skal vises på bilde.",
-                  "Merk annonsen som solgt, eller slett den, når kortet er solgt. Solgte annonser vises i prisarkivet «Solgte kort» i 12 måneder og slettes deretter.",
+                  "Du kan bare ha én annonse per kort. Lot er tillatt, men du må beskrive antall og type og vise bilde av de mest verdifulle kortene.",
+                  "Merk annonsen som solgt eller slett den når kortet er solgt.",
+                  "Solgte annonser vises i prisarkivet «Solgte kort» i 12 måneder og slettes deretter.",
                 ]}
               />
               <p className="mt-3">
-                Vi går gjennom annonser før de vises. Da sjekker vi at annonsen følger disse reglene. Vi sjekker ikke at kortet er ekte, i oppgitt tilstand
-                eller tilgjengelig.
-              </p>
-              <p className="mt-3">
-                Du beholder rettighetene til bildene og teksten du legger ut. Du gir HOBBYSTRADA rett til å vise og lagre dem, og til å tilpasse dem teknisk,
-                for eksempel endre størrelsen, så lenge det trengs for å drive tjenesten.
+                Vi kan gå gjennom annonser før eller etter at de publiseres. Da sjekker vi om annonsen følger disse reglene. Vi sjekker ikke at kortet er ekte,
+                i oppgitt tilstand eller tilgjengelig.
               </p>
             </>
           ),
         },
         {
-          title: "Rapportere annonser og brukere",
+          title: "5. Rettigheter til innhold",
           body: (
             <p>
-              Mener du at en annonse eller en bruker bryter vilkårene eller loven, kan du rapportere det med knappen «Rapporter» på annonsen eller på e-post
-              til {COMPANY.email}. Vi behandler rapporter så snart vi kan. Selgeren får ikke vite hvem som har rapportert.
+              Du beholder rettighetene til bilder og tekst du legger ut. Du gir HOBBYSTRADA rett til å vise, lagre og teknisk tilpasse dem så lenge det trengs
+              for å drive tjenesten.
             </p>
           ),
         },
         {
-          title: "Fjerning av annonser og utestengelse",
+          title: "6. Rapportere annonser og brukere",
           body: (
-            <>
-              <p>Vi kan avvise eller fjerne annonser og stenge kontoer som bryter vilkårene eller loven.</p>
-              <List
-                items={[
-                  "Ved alvorlige brudd kan vi stenge kontoen straks, uten forvarsel. Alvorlige brudd er for eksempel svindel eller forsøk på svindel, trakassering, eller salg av forfalskninger eller stjålne kort.",
-                  "Ved mindre alvorlige brudd fjerner vi normalt annonsen og gir deg en advarsel først.",
-                ]}
-              />
-              <p className="mt-3">
-                Når vi avviser eller fjerner en annonse eller stenger en konto, får du beskjed på e-post om hva vi har gjort, hvilket vilkår det gjelder, og
-                hvorfor. Avgjørelsen tas av et menneske.
-              </p>
-              <p className="mt-3">
-                Når kontoen stenges, skjules annonsene dine, og du kan ikke logge inn. Kontoen og annonsene slettes 30 dager etter utestengelsen. Klager du
-                innen fristen, slettes de først når klagen er avgjort. Du kan ikke lage ny konto før det har gått to år.
-              </p>
-              <p className="mt-3">
-                Mener du at avgjørelsen er feil, kan du klage til {COMPANY.email} innen 30 dager. Vi svarer innen én måned. Får du medhold, legger vi ut
-                annonsen igjen eller åpner kontoen igjen.
-              </p>
-              <p className="mt-3">
-                Fjernes en annonse med aktivt annonseløft fordi den bryter vilkårene, får du ikke refundert løftet ved alvorlige eller gjentatte brudd. Ellers
-                refunderer vi den delen av perioden som ikke er brukt. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den
-                delen av perioden som ikke er brukt. Fjernet vi annonsen ved en feil, refunderer vi løftet eller gir deg et nytt.
-              </p>
-            </>
+            <p>
+              Du kan rapportere annonser og brukere med knappen «Rapporter» eller på e-post til {email}. Vi behandler rapporter så snart vi kan. Selgeren får
+              ikke vite hvem som har rapportert, med mindre loven pålegger oss å oppgi det.
+            </p>
           ),
         },
         {
-          title: "Annonseløft",
+          title: "7. Fjerning av annonser og utestengelse",
+          id: "fjerning-av-annonser-og-utestengelse",
           body: (
             <>
               <p>
-                <strong>Hva du kjøper.</strong> Annonseløft er en betalt tjeneste som HOBBYSTRADA selger. Et løft gir annonsen bedre synlighet i en bestemt
-                periode, og annonsen merkes «Annonseløft». Hva hver pakke inneholder og koster, står i <Link href="/salgsvilkar">salgsvilkårene</Link>.
+                Vi kan avvise eller fjerne annonser og stenge kontoer når vi har grunn til å tro at de bryter vilkårene eller loven. Vi kan bruke automatiske
+                verktøy for å oppdage spam og misbruk, men avgjørelser om å avvise eller fjerne annonser og stenge kontoer tas ikke bare automatisk.
               </p>
               <p className="mt-3">
-                <strong>Betaling.</strong> Du betaler med Vipps. Vilkårene til Vipps gjelder selve betalingen. Avtalen om annonseløft inngås med HOBBYSTRADA og
-                følger disse vilkårene og <Link href="/salgsvilkar">salgsvilkårene</Link>. Du får bekreftelse på e-post, og kvitteringen ligger under Min side.
+                Ved alvorlige brudd, som svindel eller forsøk på det, trakassering, forfalskninger og stjålne kort, kan kontoen stenges med en gang, uten
+                forvarsel. Ved mindre alvorlige brudd fjerner vi normalt annonsen og gir deg en advarsel først.
+              </p>
+              <p className="mt-3">Du får beskjed på e-post om hva vi har gjort, hvilket vilkår det gjelder og hvorfor.</p>
+              <p className="mt-3">
+                Ved stenging skjules annonsene dine, og du kan ikke logge inn. Konto og annonser slettes 30 dager etter utestengelsen. Klager du innen fristen,
+                slettes de først når klagen er avgjort. Ny konto kan du først opprette etter to år.
               </p>
               <p className="mt-3">
-                <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven, regnet fra avtalen inngås. Når du bestiller, ber du om at
-                løftet starter med en gang betalingen er gjennomført. Da bekrefter du samtidig at angreretten går tapt når løftet er levert fullt ut, altså
-                når perioden er over. Varer perioden lenger enn 14 dager, som for Toppannonse, går angreretten ut når fristen på 14 dager er ute. Angrer du
-                innen fristen og før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer med knappen
-                «Angre avtalen» på kvitteringen under Min side, ved å sende <Link href="/angreskjema">angreskjemaet</Link>, eller med en e-post til{" "}
-                {COMPANY.email}.
+                Du kan klage til {email} innen 30 dager. Vi behandler klagen så snart vi kan. Får du medhold, legger vi ut annonsen igjen eller åpner kontoen
+                igjen.
               </p>
-              <p className="mt-3">
-                <strong>Hvis løftet ikke virker.</strong> Blir løftet ikke levert som avtalt, gi beskjed til {COMPANY.email}. Vi retter feilen eller
-                forlenger løftet. Lykkes ikke det, får du et forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven
-                gjelder uansett.
-              </p>
-              <p className="mt-3">
-                <strong>Hvis du avslutter annonsen selv.</strong> Sletter du annonsen eller merker den som solgt mens løftet er aktivt, får du ikke refundert
-                resten av perioden. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den delen av perioden som ikke er brukt.
-              </p>
+              <p className="mt-3">Refusjon av annonseløft ved fjerning:</p>
+              <List
+                items={[
+                  "Ved alvorlige eller gjentatte brudd refunderes ikke løftet.",
+                  "Ellers refunderes den ubrukte delen av perioden.",
+                  "Angreretten innen 14 dager gjelder uansett. Da refunderes ubrukt del.",
+                  "Fjerner vi annonsen ved en feil, refunderer vi løftet eller gir deg et nytt.",
+                ]}
+              />
             </>
           ),
         },
         {
-          title: "Slik sorteres annonsene",
-          id: "slik-sorteres-annonsene",
+          title: "8. Annonseløft",
+          id: "annonseloft",
           body: (
-            <p id="sortering">
-              Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
-              merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
-              likt, uavhengig av løft. Raden øverst på forsiden viser toppannonser først, deretter fremhevede annonser, og deretter annonser vi selv har valgt. Finnes ingen av disse, fylles raden med de nyeste annonsene. Annonsene i raden glir sakte bortover, så alle kortene passerer midten etter tur. Under raden viser forsiden utvalgte kort (annonser med Fremhevet eller Toppannonse) og de nyeste annonsene. Annonser vi selv velger er ikke merket «Annonseløft», og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen. Eksempelannonser er merket «Eksempelannonse» og vises etter ekte annonser.
-            </p>
+            <>
+              <p>
+                Annonseløft er en betalt tjeneste fra HOBBYSTRADA. Det gir bedre synlighet i en periode og er merket «Annonseløft». Pakker og priser finner du
+                i <Link href="/salgsvilkar">salgsvilkårene</Link>.
+              </p>
+              <p className="mt-3">
+                Du betaler med Vipps, og Vipps’ vilkår gjelder for betalingen. Avtalen om annonseløft inngås med HOBBYSTRADA og følger disse vilkårene og
+                salgsvilkårene. Du får bekreftelse på e-post og kvittering under Min side.
+              </p>
+              <p className="mt-3">
+                Du har 14 dagers angrerett etter angrerettloven. Når du bestiller, ber du om at løftet starter straks. Du bekrefter at angreretten går tapt når
+                løftet er levert fullt ut. Angrer du før perioden er over, betaler du for den brukte delen og får resten tilbake.
+              </p>
+              <p className="mt-3">
+                Du angrer via «Angre avtalen» på kvitteringen under Min side, via <Link href="/angreskjema">angreskjemaet</Link> eller på e-post.
+              </p>
+              <p className="mt-3">
+                Virker ikke løftet, gi oss beskjed. Vi retter feilen eller forlenger løftet. Hvis ikke, får du et forholdsmessig prisavslag eller pengene
+                tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett.
+              </p>
+              <p className="mt-3">Avslutter du annonsen selv mens løftet er aktivt, refunderes ikke resten. Unntaket er angrerett innen 14 dager.</p>
+            </>
           ),
         },
         {
-          title: "Ansvar mellom kjøper og selger",
+          title: "9. Slik sorteres annonsene",
+          id: "slik-sorteres-annonsene",
+          body: (
+            <>
+              <p id="sortering">
+                Annonser med aktivt annonseløft vises først i markedet og i søkeresultatene. Rekkefølgen er Toppannonse, Fremhevet og Topp av listen. Disse er
+                merket «Annonseløft». Deretter kommer andre annonser, nyeste først.
+              </p>
+              <p className="mt-3">Velger du selv å sortere, for eksempel etter pris eller navn, sorteres alle annonser likt, uavhengig av løft.</p>
+              <p className="mt-3">
+                Forsiden viser annonser med Toppannonse og Fremhevet. I tillegg viser vi annonser vi selv har valgt ut, og de nyeste annonsene. Annonser vi
+                selv velger, er ikke betalt for og er ikke merket «Annonseløft».
+              </p>
+              <p className="mt-3">Prisarkivet «Solgte kort» sorteres etter salgsdato.</p>
+              <p className="mt-3">Utenom annonseløft påvirker betaling ikke rekkefølgen.</p>
+            </>
+          ),
+        },
+        {
+          title: "10. Ansvar mellom kjøper og selger",
           id: "ansvar-mellom-kjoper-og-selger",
           body: (
             <>
-              <p>
-                Avtalen om kjøp er mellom kjøper og selger. De er selv ansvarlige for avtalen, betalingen, frakten og at kortet er som beskrevet. HOBBYSTRADA
-                er ikke part i handelen og er derfor blant annet ikke ansvarlig for:
+              <p>Avtalen er mellom kjøper og selger. De er selv ansvarlige for avtalen, betalingen, frakten og at kortet er som beskrevet.</p>
+              <p className="mt-3">
+                HOBBYSTRADA er ikke ansvarlig for blant annet at kortet er ekte, i oppgitt tilstand eller at det blir levert. HOBBYSTRADA er heller ikke
+                ansvarlig for betaling som ikke kommer frem, tap ved svindel, skade, tap eller forsinkelse i frakt, eller uenighet om pris, retur eller
+                reklamasjon.
               </p>
+              <p className="mt-3">
+                Selgerne er privatpersoner. Forbrukerkjøpsloven og angrerettloven gjelder ikke ved kjøp fra privatperson. Handelen reguleres av kjøpsloven, og
+                partene kan avtale andre vilkår.
+              </p>
+              <p className="mt-3">Svindelråd:</p>
               <List
                 items={[
-                  "at kortet er ekte, i oppgitt tilstand eller blir levert",
-                  "betaling som ikke kommer frem, eller tap ved svindel",
-                  "skade, tap eller forsinkelse i frakt",
-                  "uenighet om pris, retur eller reklamasjon",
+                  "Avtal pris, betaling og levering skriftlig i chatten.",
+                  "Be om flere bilder av kortet.",
+                  "Vær forsiktig med forskuddsbetaling til ukjente.",
                 ]}
               />
               <p className="mt-3">
-                Selgerne på HOBBYSTRADA er privatpersoner. Kjøper du fra en privatperson, gjelder ikke forbrukerrettighetene, for eksempel etter
-                forbrukerkjøpsloven og angrerettloven. Handelen reguleres da av kjøpsloven, og kjøper og selger kan avtale andre vilkår. Uenighet løses i første omgang mellom kjøper og selger. Gjelder uenigheten kjøp av et kort, kan dere også klage til
-                Forbrukertilsynet, som kan mekle og sende saken videre til Forbrukerklageutvalget. HOBBYSTRADA er ikke part i slike saker.
-              </p>
-              <p className="mt-3">
-                <strong>Beskytt deg mot svindel:</strong> Avtal pris, betaling og levering skriftlig i chatten. Be om flere bilder av kortet hvis du er
-                usikker. Vær forsiktig med å betale på forskudd til noen du ikke kjenner.
-              </p>
-              <p className="mt-3">
-                Mistenker du svindel, rapporter annonsen eller brukeren og kontakt politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene, og
-                gir opplysninger til politiet når loven krever det.
+                Ved mistanke om svindel bør du rapportere og kontakte politiet. Vi fjerner annonser, stenger kontoer og gir opplysninger til politiet når loven
+                krever det.
               </p>
             </>
           ),
         },
         {
-          title: "Ansvar for tjenesten",
+          title: "11. Ansvar for tjenesten",
+          id: "ansvar",
           body: (
             <>
               <p>
                 Vi gjør vårt beste for at nettsiden er tilgjengelig og sikker, men vi kan ikke love at den alltid virker uten feil eller avbrudd. Brukerne er
                 ansvarlige for innholdet i annonser og meldinger. Vi fjerner ulovlig innhold uten ugrunnet opphold når vi blir klar over det.
               </p>
+              <p className="mt-3">Vi er ikke ansvarlige for indirekte tap, som tapt fortjeneste eller tapt handel.</p>
+              <p className="mt-3">Vårt samlede ansvar er begrenset til det du har betalt for annonseløft de siste 12 månedene, men minst 1 000 kr.</p>
               <p className="mt-3">
-                <strong>Den gratis annonseplassen.</strong> Det er gratis å legge ut annonser, sende meldinger og bruke resten av nettsiden. For denne delen
-                av tjenesten er vi ikke ansvarlige for indirekte tap, som tapt fortjeneste eller tapt handel, og vårt samlede ansvar overfor deg er begrenset
-                til 1 000 kr. Begrensningene gjelder ikke hvis vi har opptrådt forsettlig eller grovt uaktsomt, og de begrenser ikke rettighetene du har etter
-                personvernreglene eller annen ufravikelig lov.
-              </p>
-              <p className="mt-3">
-                <strong>Annonseløft.</strong> Begrensningene i avsnittet over gjelder ikke for annonseløft. For annonseløft gjelder digitalytelsesloven og
-                angrerettloven. Har løftet en mangel, kan du blant annet kreve retting, prisavslag, heving og erstatning etter digitalytelsesloven § 19. Se
-                også «Hvis løftet ikke virker».
+                Begrensningene gjelder ikke ved forsett eller grov uaktsomhet. De begrenser heller ikke rettigheter etter ufravikelig lov, blant annet
+                digitalytelsesloven, angrerettloven og personvernreglene.
               </p>
             </>
           ),
         },
         {
-          title: "Sletting av konto",
+          title: "12. Endring, stans og nedleggelse av tjenesten",
+          body: (
+            <>
+              <p>Vi kan endre, legge til eller fjerne funksjoner. Vi kan stanse tjenesten midlertidig, for eksempel ved vedlikehold, feil eller sikkerhetshendelser.</p>
+              <p className="mt-3">
+                Vi kan legge ned tjenesten. Da varsler vi på e-post og på nettsiden minst 30 dager før, med mindre det ikke er mulig. Legges tjenesten ned mens
+                et annonseløft er aktivt, får du tilbake den delen av perioden som ikke er brukt.
+              </p>
+              <p className="mt-3">Rettighetene dine hvis et kjøpt løft ikke leveres som avtalt, står under «Annonseløft».</p>
+            </>
+          ),
+        },
+        {
+          title: "13. Sletting av konto",
           body: (
             <p>
-              Du kan slette kontoen din når som helst på Min side. Har du ikke logget inn på 24 måneder, sletter vi kontoen. Du får varsel på e-post 30 dager
-              før. Hva som slettes, og hva vi må beholde, står i <Link href="/personvern">personvernerklæringen</Link>.
+              Du kan slette kontoen din når som helst på Min side. Har du ikke logget inn på 24 måneder, sletter vi kontoen. Vi varsler deg på e-post 30 dager
+              før. Hva som slettes og hva som beholdes, står i <Link href="/personvern">personvernerklæringen</Link>.
             </p>
           ),
         },
         {
-          title: "Endringer i vilkårene",
+          title: "14. Endringer i vilkårene",
           body: (
-            <p>
-              Vi kan endre vilkårene. Vesentlige endringer varsler vi på e-post og på nettsiden minst 30 dager før de gjelder. Bruker du tjenesten etter det,
-              gjelder de nye vilkårene. Godtar du dem ikke, kan du slette kontoen. Endringer gjelder ikke annonseløft du allerede har kjøpt.
-            </p>
+            <>
+              <p>
+                Vi varsler vesentlige endringer på e-post og på nettsiden minst 30 dager før de gjelder. Bruker du tjenesten etter det, gjelder de nye
+                vilkårene. Godtar du dem ikke, kan du slette kontoen.
+              </p>
+              <p className="mt-3">Endringene gjelder ikke annonseløft du allerede har kjøpt.</p>
+            </>
           ),
         },
         {
-          title: "Lovvalg og klage",
+          title: "15. Lovvalg og klage",
           body: (
             <p>
-              Vilkårene reguleres av norsk rett. Har du en klage på HOBBYSTRADA eller et annonseløft, kontakt {COMPANY.email}. Kommer vi ikke til enighet, kan
-              du som forbruker be om mekling hos Forbrukertilsynet (forbrukertilsynet.no). Fører ikke meklingen fram, kan saken i noen tilfeller, for
-              eksempel ved tvist om angreretten, bringes inn for Forbrukerklageutvalget. Tvister kan også bringes inn for de alminnelige domstolene.
+              Norsk rett gjelder. Har du en klage, send den til {email}. Kommer vi ikke til enighet, kan du som forbruker få hjelp av Forbrukerrådet
+              (forbrukerradet.no). Tvister kan også bringes inn for de alminnelige domstolene.
             </p>
           ),
         },
