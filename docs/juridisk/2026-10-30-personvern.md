@@ -2,221 +2,213 @@
 
 JURIDISK
 
-# Personvern
+# Personvernerklæring for hobbystrada.no
 
 Sist oppdatert: 30. oktober 2026
 
-## 1. Hvem som er ansvarlig
+## 1. Hvem er ansvarlig
 
-HOBBYSTRADA ULLEBERG (org.nr. 938 698 929), Stalsbergs gate 4, 3612 Kongsberg, er behandlingsansvarlig. Har du spørsmål om personvern eller vil bruke rettighetene dine, skriv til post@hobbystrada.no eller bruk kontaktskjemaet. Vi har ikke personvernombud.
+HOBBYSTRADA ULLEBERG, org.nr. 938 698 929, Stalsbergs gate 4, 3612 Kongsberg, er ansvarlig for behandlingen av personopplysningene dine på hobbystrada.no. Du kan kontakte oss på post@hobbystrada.no eller via kontaktskjemaet. Vi har ikke personvernombud.
+
+Vi har ingen reklame, analyse, sporing eller nyhetsbrev. E-post sendes bare om hendelser du selv har utløst.
 
 ## 2. Hvilke opplysninger vi behandler, og hvor de kommer fra
 
-Fra Vipps, når du logger inn:
+2.1 Fra Vipps ved innlogging
 
-- Navn, e-post, telefonnummer og en fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn. Telefonnummeret brukes bare i Vipps-lenken kjøperen får etter at du har godtatt et bud, så kjøperen kan betale deg direkte i Vipps. Vi henter ikke adressen din. Poststedet oppgir du selv når du legger ut en annonse.
+- navn
+- e-post
+- telefonnummer
+- en fast Vipps-ID
 
-Fornavnet fra Vipps vises på annonsene dine, og hele navnet vises for dem du chatter med. Navnet kan ikke endres på nettsiden.
+Telefonnummeret brukes bare i Vipps-lenken kjøperen får etter at selgeren har godtatt et bud. Vi henter ikke adressen. Poststed oppgir du selv i annonsen. Fornavnet vises på annonsene, og hele navnet vises for dem du chatter med. Navnet kan ikke endres på nettsiden.
 
-Fra deg:
+2.2 Fra deg
 
-- Annonser: kortdata, pris, tilstand, beskrivelse, bilder og sted.
-- Meldinger: det du skriver og bildene du sender i chatten med andre brukere, inkludert postadressen du sender til selgeren og sendingsnummeret selgeren sender deg.
-- Lagrede søk: søkene du vil ha varsel om.
-- Henvendelser: navn, e-post og meldingen når du kontakter oss eller rapporterer en annonse.
-- Annonseløft: hvilken pakke du kjøper, for hvilken annonse. Selve betalingen skjer i Vipps, og vi ser aldri bank- eller kortopplysningene dine.
+- annonser: kortdata, pris, tilstand, beskrivelse, bilder og sted
+- meldinger: tekst og bilder i chatten, inkludert postadressen du sender til selgeren og sendingsnummeret selgeren sender deg
+- lagrede søk
+- henvendelser: navn, e-post og melding ved kontakt eller rapport
+- annonseløft: pakke og annonse. Betalingen skjer i Vipps, og vi ser aldri bank- eller kortopplysninger.
 
-Fra andre brukere:
+2.3 Fra andre brukere
 
-- Rapporter: hvis en annen bruker rapporterer en annonse du har lagt ut, behandler vi rapporten og det den sier om deg og annonsen.
+- rapporter om annonser du har lagt ut
 
-Automatisk, når du bruker nettsiden:
+2.4 Automatisk
 
-- Informasjonskapsler som holder deg innlogget (se punkt 9).
-- IP-adresse når du sender kontaktskjema eller rapporterer en annonse, for å stoppe spam.
-- Tekniske logger hos driftsleverandørene våre, Supabase og Vercel (IP-adresse, tidspunkt og hva som ble åpnet eller hentet), for å holde nettsiden trygg og i drift.
+- informasjonskapsler som holder deg innlogget
+- IP-adresse når du sender kontaktskjema eller rapport, for å stoppe spam
+- tekniske logger hos driftsleverandørene Supabase og Vercel: IP-adresse, tidspunkt, og hva som ble åpnet eller hentet
 
-## 3. Hva vi bruker opplysningene til, og grunnlaget
+## 3. Hva vi bruker opplysningene til, grunnlag og lagringstid
 
-Vi bruker bare opplysningene til formålene under. Grunnlaget er hentet fra personvernforordningen artikkel 6.
+Grunnlaget er hentet fra personvernforordningen artikkel 6.
 
-Konto og innlogging
+3.1 Konto og innlogging
 
-Gi deg en konto, logge deg inn med Vipps og vise merket «Verifisert med Vipps». Når du lager konto, bekrefter du at du er minst 18 år.
+Opplysninger: navn, e-post, telefonnummer, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år.
 
-Opplysninger
-Navn, e-post, telefonnummer, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år.
-Grunnlag
-Avtale med deg (art. 6 nr. 1 b).
-Lagringstid
-Til du sletter kontoen. Da slettes også koblingen til Vipps og bekreftelsen av alder. Har du ikke logget inn på 23 måneder, får du en e-post om at kontoen slettes om 30 dager. Logger du inn før det, beholder du kontoen. Ellers slettes den etter 24 måneder uten innlogging, på samme måte som når du sletter den selv (se punkt 7).
+Grunnlag: avtale (art. 6 nr. 1 b).
 
-Annonser
+Lagringstid: til kontoen slettes. Inaktive kontoer: e-post sendes etter 23 måneder uten innlogging, og kontoen slettes etter 24 måneder hvis du ikke logger inn.
 
-Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din.
+3.2 Annonser
 
-Opplysninger
-Annonseinnhold, bilder, fornavn og sted.
-Grunnlag
-Avtale med deg (art. 6 nr. 1 b).
-Lagringstid
-Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 35 dager. Klager du på avvisningen, slettes annonsen først når klagen er avgjort.
+Opplysninger: annonseinnhold, bilder, fornavn og sted. Andre ser fornavn, sted og innhold, aldri e-post.
 
-Prisarkivet «Solgte kort»
+Annonser kan bli gjennomgått før eller etter at de publiseres.
 
-Vise hvilken pris solgte kort var lagt ut for, så samlere kan vurdere priser. Solgte annonser vises i arkivet med kort, pris, salgsdato og bilder, uten navnet og stedet ditt.
+Grunnlag: avtale.
 
-Opplysninger
-Kortdata, pris, salgsdato og bilder.
-Grunnlag
-Berettiget interesse (art. 6 nr. 1 f): å gi samlere et prisbilde. Du kan protestere, så fjerner vi annonsen fra arkivet.
-Lagringstid
-12 måneder etter salget, deretter slettes annonsen automatisk. Sletter du annonsen eller kontoen, forsvinner den fra arkivet med en gang.
+Lagringstid: til du sletter annonsen eller kontoen. Avviste annonser slettes etter 35 dager.
 
-Meldinger mellom brukere
+3.3 Prisarkivet «Solgte kort»
 
-Formidle meldinger og bud mellom kjøper og selger, og gi deg beskjed på e-post når noen skriver til deg eller svarer på et bud. Den andre parten ser navnet ditt fra Vipps, ikke e-postadressen. Godtar du som selger et bud, får kjøperen en Vipps-lenke med telefonnummeret ditt, så betalingen kan skje direkte til deg. Betalingen går ikke gjennom HOBBYSTRADA.
+Opplysninger: kortdata, pris, salgsdato og bilder, uten navn og sted.
 
-Opplysninger
-Meldinger, bud og svar på bud, bilder i chatten, navn, e-post (bare til varslingen) og selgerens telefonnummer (bare til kjøperen etter godtatt bud).
-Grunnlag
-Avtale med deg (art. 6 nr. 1 b). Når vi beholder en samtale etter at du har slettet kontoen, er grunnlaget berettiget interesse (art. 6 nr. 1 f): den andre parten har behov for å beholde samtalen, for eksempel som dokumentasjon på hva dere avtalte.
-Lagringstid
-12 måneder etter siste melding i samtalen. Bilder slettes sammen med samtalen. Sletter du kontoen, blir meldingene og bildene du har sendt stående hos den du har skrevet med, merket «Slettet bruker» i stedet for navnet ditt, til samtalen slettes.
+Grunnlag: berettiget interesse (art. 6 nr. 1 f), for å gi samlere et prisbilde. Du kan protestere, og da fjerner vi annonsen fra arkivet.
 
-Gjennomgang av meldinger ved rapport eller mistanke om svindel
+Lagringstid: 12 måneder etter salget. Opplysningene forsvinner straks hvis du sletter annonsen eller kontoen.
 
-Undersøke rapporter om annonser og mistanke om svindel. Vi leser ikke meldingene deres i andre tilfeller.
+3.4 Meldinger mellom brukere
 
-Opplysninger
-Meldinger og bilder i samtaler som gjelder den rapporterte annonsen eller den mistenkte svindelen.
-Grunnlag
-Berettiget interesse (art. 6 nr. 1 f): å beskytte brukerne mot svindel og holde markedet trygt.
-Lagringstid
-Vi lager ikke egne kopier. Meldingene slettes etter de vanlige reglene for meldinger.
+Opplysninger og formål: vi formidler meldinger og bud, og sender e-postvarsel når noen skriver eller svarer på bud. Motparten ser navnet fra Vipps, ikke e-posten din.
 
-Annonseløft og betaling
+Godtar selgeren et bud, får kjøperen en Vipps-lenke med selgerens telefonnummer. Betalingen går ikke gjennom HOBBYSTRADA.
 
-Ta betalt for annonseløft gjennom Vipps og aktivere løftet.
+Grunnlag: avtale. Når samtalen beholdes etter at du har slettet kontoen: berettiget interesse, fordi motparten har behov for dokumentasjon på hva dere avtalte.
 
-Opplysninger
-Pakke, beløp, tidspunkt, annonsens tittel, navnet ditt, e-postadressen din og tidspunktene du krysset av for at løftet skal starte straks og at angreretten går tapt.
-Grunnlag
-Avtale med deg (art. 6 nr. 1 b) og bokføringsloven (art. 6 nr. 1 c).
-Lagringstid
-5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Kvitteringen er et salgsdokument som loven krever at oppbevares uendret, så navnet og e-postadressen på den beholdes også etter at du har slettet kontoen.
+Lagringstid: 12 måneder etter siste melding. Bilder slettes med samtalen. Sletter du kontoen, blir meldingene stående hos motparten merket «Slettet bruker» til samtalen slettes.
 
-Lagrede søk
+3.5 Gjennomgang av meldinger
 
-Gi deg beskjed på e-post og under Varsler når et nytt kort passer et søk du har lagret.
+Vi leser meldinger bare når en annonse eller bruker er rapportert, ved mistanke om svindel eller misbruk, når du selv ber oss hjelpe deg med en bestemt samtale, eller når loven krever det.
 
-Opplysninger
-Søket og e-postadressen din.
-Grunnlag
-Avtale med deg (art. 6 nr. 1 b). Du kan slette søket når som helst på Min side.
-Lagringstid
-Til du sletter søket eller kontoen.
+Grunnlag: berettiget interesse, for å beskytte brukerne mot svindel og holde markedet trygt. Når du ber om hjelp: avtale. Når loven krever det: rettslig forpliktelse (art. 6 nr. 1 c).
 
-Varsler på nettsiden
+Lagringstid: vi lager ikke egne kopier. Vanlige regler for meldinger gjelder.
 
-Gi deg beskjed under Varsler når annonsen din blir godkjent eller avvist, når et løft er aktivert eller snart går ut, når selgeren har svart på et bud, og når nye kort passer søkene dine.
+3.6 Annonseløft og betaling
 
-Opplysninger
-Hva som skjedde, annonsens tittel og tidspunkt.
-Grunnlag
-Avtale med deg (art. 6 nr. 1 b).
-Lagringstid
-90 dager, eller til du sletter kontoen.
+Opplysninger: pakke, beløp, tidspunkt, annonsens tittel, navn, e-post og tidspunktene du krysset av for at løftet skal starte straks og at angreretten går tapt.
 
-Henvendelser og rapporter
+Grunnlag: avtale og bokføringsloven (art. 6 nr. 1 c).
 
-Svare deg når du kontakter oss, og behandle rapporter om annonser. Selgeren får ikke vite hvem som har rapportert annonsen, med mindre loven pålegger oss å oppgi det.
+Lagringstid: 5 år etter utløpet av regnskapsåret, som bokføringsloven krever. Dette gjelder også om annonsen eller kontoen slettes. Kvitteringen er et salgsdokument som skal oppbevares uendret, så navn og e-post på den beholdes.
 
-Opplysninger
-Navn, e-post og innholdet i henvendelsen eller rapporten. For rapporter også hvilken annonse det gjelder, og det rapporten sier om selgeren.
-Grunnlag
-Berettiget interesse (art. 6 nr. 1 f): å kunne svare deg og holde markedet trygt.
-Lagringstid
-Henvendelser: 12 måneder. Rapporter: 12 måneder etter at de er behandlet.
+3.7 Lagrede søk
 
-Utestengelse
+Opplysninger: søket og e-postadressen.
 
-Stenge ute brukere som bryter brukervilkårene, og hindre at de lager ny konto. Når en bruker stenges ute, sperres kontoen og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen. Klager du innen fristen, slettes de først når klagen er avgjort. Slettingen skjer på samme måte som når du sletter kontoen selv. Avgjørelsen tas av et menneske. Du får beskjed på e-post med begrunnelse, og kan klage til post@hobbystrada.no innen 30 dager.
+Grunnlag: avtale.
 
-Opplysninger
-Vipps-ID, konto-ID, tidspunktet for utestengelsen, hvilket vilkår som er brutt, og hvilke annonser som ble skjult (til kontoen er slettet).
-Grunnlag
-Berettiget interesse (art. 6 nr. 1 f): å håndheve vilkårene og beskytte brukerne og markedet.
-Lagringstid
-Vipps-ID-en står på en sperreliste i to år fra utestengelsen og slettes deretter.
+Lagringstid: til du sletter søket eller kontoen.
 
-Sikkerhet, svindel og spam
+3.8 Varsler på nettsiden
 
-Stoppe svindel, spam og misbruk av nettsiden.
+Opplysninger: hva som skjedde, annonsens tittel og tidspunkt.
 
-Opplysninger
-IP-adresse og tekniske logger.
-Grunnlag
-Berettiget interesse (art. 6 nr. 1 f): å beskytte brukerne og nettsiden.
-Lagringstid
-IP-adresse ved kontaktskjema og rapporter: ett døgn. Tekniske logger hos Supabase og Vercel: inntil 7 dager.
+Grunnlag: avtale.
 
-Der grunnlaget er berettiget interesse, har vi vurdert at interessen vår ikke veier tyngre enn personvernet ditt. Du kan be om å få se vurderingen.
+Lagringstid: 90 dager, eller til kontoen slettes.
+
+3.9 Henvendelser og rapporter
+
+Opplysninger: navn, e-post og innhold. For rapporter også hvilken annonse det gjelder, og hva rapporten sier om selgeren.
+
+Selgeren får ikke vite hvem som har rapportert, med mindre loven pålegger oss å oppgi det.
+
+Grunnlag: berettiget interesse, for å svare deg og holde markedet trygt.
+
+Lagringstid: henvendelser 12 måneder. Rapporter 12 måneder etter at de er behandlet.
+
+3.10 Utestengelse
+
+Opplysninger: Vipps-ID, konto-ID, tidspunkt, hvilket vilkår som er brutt, og hvilke annonser som ble skjult.
+
+Kontoen sperres og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen, eller når klagen er avgjort hvis du har klaget innen fristen.
+
+Avgjørelsen tas ikke bare automatisk. Du får begrunnelse på e-post og kan klage til post@hobbystrada.no innen 30 dager.
+
+Grunnlag: berettiget interesse, for å håndheve vilkårene og beskytte brukerne og markedet.
+
+Lagringstid: Vipps-ID står på sperreliste i to år.
+
+3.11 Sikkerhet, svindel og spam
+
+Opplysninger: IP-adresse og tekniske logger.
+
+Grunnlag: berettiget interesse.
+
+Lagringstid: IP-adresse ved kontaktskjema og rapporter inntil ett døgn. Tekniske logger hos Supabase og Vercel inntil 7 dager.
+
+Der grunnlaget er berettiget interesse, har vi vurdert at interessen vår ikke veier tyngre enn personvernet ditt.
 
 ## 4. Hvem vi deler opplysningene med
 
-Vi selger aldri personopplysninger. Disse får opplysninger, og bare det de trenger:
+Vi selger aldri personopplysninger. Opplysningene deles med:
 
-- Andre brukere: fornavnet ditt, stedet og annonsene dine. I chatten ser den andre parten hele navnet ditt og det du skriver og sender.
-- Vipps MobilePay AS (org.nr. 918 713 867): innlogging og betaling. Vipps er selv ansvarlig for opplysningene de behandler om deg.
-- Supabase: database og lagring av bilder (databehandler).
-- Vercel: drift av nettsiden (databehandler).
-- Domene AS (org.nr. 880 478 982), en norsk leverandør: sending av e-post fra post@hobbystrada.no (databehandler).
-- Myndigheter, hvis loven krever det, for eksempel ved etterforskning av svindel.
+- andre brukere: fornavn, sted og annonser. I chatten deles hele navnet og det du skriver og sender.
+- Vipps MobilePay AS (org.nr. 918 713 867), for innlogging og betaling. Vipps er selvstendig behandlingsansvarlig for sine opplysninger.
+- Supabase, for database og bildelagring (databehandler).
+- Vercel, for drift av nettsiden (databehandler).
+- Domene AS (org.nr. 880 478 982), norsk leverandør, for sending av e-post fra post@hobbystrada.no (databehandler).
+- myndigheter, når loven krever det, for eksempel ved etterforskning av svindel.
+
+Supabase, Vercel og Domene AS har databehandleravtaler med oss og behandler opplysningene bare på våre vegne.
 
 ## 5. Overføring ut av EU/EØS
 
-Opplysningene dine lagres og behandles hovedsakelig i EU. Databasen og bildene ligger i Stockholm (Supabase), og nettsiden driftes fra Frankfurt (Vercel). E-post sendes via en norsk leverandør.
+Opplysningene lagres og behandles hovedsakelig i EU. Database og bilder ligger i Stockholm (Supabase), og nettsiden driftes fra Frankfurt (Vercel). E-post går via en norsk leverandør.
 
-Supabase og Vercel er amerikanske selskaper og kan få tilgang til opplysninger fra USA, for eksempel ved feilsøking og brukerstøtte. Vercels nettverk er globalt, så noe trafikk og logging kan skje utenfor EU. Slike overføringer har dette grunnlaget:
+Supabase og Vercel er amerikanske selskaper og kan få tilgang fra USA, for eksempel ved feilsøking og brukerstøtte. Vercels nettverk er globalt, så noe trafikk og logging kan skje utenfor EU.
+
+Grunnlaget for overføringen er følgende:
 
 - Vercel er sertifisert under EU–US Data Privacy Framework, som EU-kommisjonen har godkjent som et tilstrekkelig beskyttelsesnivå. Sertifiseringen er offentlig på dataprivacyframework.gov.
-- Supabase bruker EUs standardpersonvernbestemmelser (kommisjonsbeslutning 2021/914) i databehandleravtalen med oss. Avtalen finner du på supabase.com/legal/dpa, eller du kan få en kopi ved å skrive til oss.
+- Supabase bruker EUs standardpersonvernbestemmelser (kommisjonsbeslutning 2021/914) i databehandleravtalen. Avtalen finner du på supabase.com/legal/dpa, eller du kan få en kopi ved å skrive til oss.
 
 ## 6. Må du gi oss opplysningene?
 
-Du kan se på annonsene uten å logge inn. For å legge ut kort, chatte eller kjøpe annonseløft må du logge inn med Vipps, fordi vi trenger å vite hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene av nettsiden. Du må være minst 18 år for å ha konto, se brukervilkårene.
+Du kan se annonser uten å logge inn. For å legge ut kort, chatte eller kjøpe annonseløft må du logge inn med Vipps. Vi må vite hvem du er for å holde markedet trygt. Uten innlogging kan du ikke bruke disse delene.
+
+Du må være minst 18 år. Se vilkårene.
 
 ## 7. Dine rettigheter
 
-- Innsyn: du kan få vite hvilke opplysninger vi har om deg, og få en kopi.
-- Retting: du kan be oss rette opplysninger som er feil.
-- Sletting: du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger og bilder du har sendt i chatten, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes (se punkt 3). Betalinger beholder vi uendret så lenge bokføringsloven krever (se punkt 3). Er du stengt ute, beholder vi Vipps-ID-en på sperrelisten i to år.
-- Begrensning: du kan be oss begrense bruken av opplysningene, for eksempel mens vi sjekker om de er riktige, eller mens vi vurderer en protest.
-- Dataportabilitet: du kan få opplysningene du har gitt oss, i et maskinlesbart format.
-- Protestere: der grunnlaget er berettiget interesse, kan du protestere mot behandlingen.
-- Klage: du kan klage til Datatilsynet (datatilsynet.no).
+Du har rett til:
 
-Skriv til post@hobbystrada.no for å bruke rettighetene dine. Vi svarer uten ugrunnet opphold og senest innen én måned. Er henvendelsen omfattende, kan vi forlenge fristen med inntil to måneder. Da får du beskjed innen én måned, med begrunnelse. Vi kan be deg bekrefte hvem du er, for eksempel ved å logge inn.
+- innsyn og kopi av opplysningene om deg
+- retting av uriktige opplysninger
+- sletting. Du kan slette kontoen selv på Min side. Da slettes kontoen, annonsene, varslene, de lagrede søkene og koblingen til Vipps. Meldinger blir stående hos motparten som «Slettet bruker» til samtalen slettes. Betalinger beholdes uendret så lenge bokføringsloven krever det. Ved utestengelse beholdes Vipps-ID på sperreliste i to år.
+- begrensning av behandlingen
+- dataportabilitet
+- protest der grunnlaget er berettiget interesse
+- klage til Datatilsynet (datatilsynet.no)
+
+Skriv til post@hobbystrada.no for å bruke rettighetene dine. Vi svarer uten ugrunnet opphold og senest innen én måned. Ved omfattende henvendelser kan fristen forlenges med inntil to måneder. Da får du beskjed innen én måned, med begrunnelse. Vi kan be deg bekrefte hvem du er, for eksempel ved å logge inn.
 
 ## 8. Automatiserte avgjørelser
 
-Vi tar ingen avgjørelser om deg automatisk, og vi lager ikke profiler av deg. Annonser godkjennes og brukere stenges ute bare etter vurdering av et menneske.
+Vi tar ikke avgjørelser som har rettslig virkning for deg, eller som på tilsvarende måte påvirker deg i betydelig grad, bare automatisk. Vi lager ikke profiler av deg.
+
+Vi kan bruke automatiske verktøy for å oppdage spam og misbruk. Avgjørelser om å avvise annonser eller stenge kontoer tas likevel ikke bare automatisk.
 
 ## 9. Informasjonskapsler og lagring i nettleseren
 
-Vi bruker bare det som er nødvendig for at nettsiden skal virke, eller som du selv ber om. Vi bruker ikke informasjonskapsler til reklame, analyse eller sporing.
+Vi bruker bare det som trengs for at nettsiden skal virke, eller det du selv ber om. Vi bruker ingen informasjonskapsler for reklame, analyse eller sporing.
 
-- Innlogging (sb-…-auth-token): holder deg innlogget. Fornyes ved hvert besøk, slettes når du logger ut, og senest 90 dager etter siste besøk.
-- Vipps-innlogging (vipps_oidc): en kortvarig kapsel som sikrer innloggingen. Slettes når du er logget inn, og senest etter 10 minutter.
-- Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss. De ligger der til du fjerner dem eller tømmer nettleseren.
+- Innlogging: holder deg innlogget. Slettes når du logger ut, og senest 90 dager etter siste besøk.
+- Vipps-innlogging: en kortvarig informasjonskapsel som sikrer innloggingen. Slettes når du er logget inn, og senest etter 10 minutter.
+- Favoritter, lukkede varsler og hvilke annonser du har åpnet (så en annonse teller én visning per person): lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.
 
-Siden vi ikke bruker informasjonskapsler som krever samtykke, har vi ikke noe samtykkeverktøy. Knappen «Om informasjonskapsler» nederst på siden viser bare denne informasjonen.
+Vi bruker ikke informasjonskapsler som krever samtykke, og har derfor ikke noe samtykkeverktøy. Knappen «Om informasjonskapsler» nederst på siden viser denne informasjonen.
 
 ## 10. Sikkerhet
 
-All trafikk er kryptert. Bare driftsansvarlig hos HOBBYSTRADA har tilgang til opplysningene. Meldinger leses bare ved rapport om en annonse eller mistanke om svindel (se punkt 3). Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via lenker som slutter å virke etter ett døgn. Leverandørene våre har databehandleravtaler med oss og behandler bare opplysningene på våre vegne.
+All trafikk er kryptert. Bare de som trenger det for å drifte tjenesten, har tilgang til opplysningene. Meldinger leses bare i tilfellene som er beskrevet over. Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via tidsbegrensede lenker.
 
 ## Kontakt
 
-Spørsmål kan sendes via kontaktskjemaet.
+Du kan kontakte oss via kontaktskjemaet eller på post@hobbystrada.no.

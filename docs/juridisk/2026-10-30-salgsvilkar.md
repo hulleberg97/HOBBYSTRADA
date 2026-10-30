@@ -54,4 +54,4 @@ Vi behandler bare opplysningene som trengs for å gjennomføre kjøpet. Se perso
 
 ## Kontakt
 
-Spørsmål kan sendes via kontaktskjemaet.
+Du kan kontakte oss via kontaktskjemaet eller på post@hobbystrada.no.
