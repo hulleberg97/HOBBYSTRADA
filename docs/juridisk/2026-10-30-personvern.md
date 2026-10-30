@@ -197,7 +197,7 @@ Vi bruker bare det som trengs for at nettsiden skal virke, eller det du selv ber
 
 - Innlogging: holder deg innlogget. Slettes når du logger ut, og senest 90 dager etter siste besøk.
 - Vipps-innlogging: en kortvarig informasjonskapsel som sikrer innloggingen. Slettes når du er logget inn, og senest etter 10 minutter.
-- Favoritter, lukkede varsler og hvilke annonser du har åpnet (så en annonse teller én visning per person): lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.
+- Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.
 
 Vi bruker ikke informasjonskapsler som krever samtykke, og har derfor ikke noe samtykkeverktøy. Knappen «Om informasjonskapsler» nederst på siden viser denne informasjonen.
 
