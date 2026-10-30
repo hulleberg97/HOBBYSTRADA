@@ -1,15 +1,15 @@
 # Instagram-melding til breakere og samlerprofiler
 
-Sendes som DM etter lansering, når det ligger ekte annonser på siden. Tilpass navnet i første linje. Ikke be om omtale, be om tilbakemelding.
+Sendes som DM etter lansering, når det ligger ekte annonser på siden. Uformell versjon til folk du har snakket med før.
 
 ---
 
-Hei!
+Hei igjen!
 
-Jeg heter Halvor, samler selv og følger breakene deres. Jeg har laget hobbystrada.no, en norsk markedsplass bare for fotballkort, der private samlere kjøper og selger av hverandre.
+Nå har jeg endelig fått ferdig den siden jeg har holdt på med: hobbystrada.no, en norsk markedsplass bare for fotballkort, der private samlere kjøper og selger av hverandre.
 
-Tenkte på dere fordi kortene folk trekker hos dere, er akkurat det som byttes og selges videre etterpå. Siden er gratis å bruke, tar ingen provisjon, og alle logger inn med Vipps.
+Tenkte dere kunne være interessert, siden kortene folk trekker hos dere er akkurat det som byttes videre etterpå. Gratis å bruke, ingen provisjon, og alle logger inn med Vipps.
 
-Har dere lyst til å ta en titt og si hva dere synes? Ris og ros er like velkomment. Jeg prøver å lage noe som er nyttig for hele miljøet, og tilbakemelding fra dere betyr mye.
+Kan dere ta en titt og si hva dere synes? Gjerne brutalt ærlig, jeg vil heller høre det nå enn senere.
 
-Hilsen Halvor
+Halvor
