@@ -1,4 +1,5 @@
 import type { Listing } from "./types";
+import { examplesLast } from "./filters";
 
 /** Når ingen kort er valgt eller løftet, fylles raden med så mange av de nyeste annonsene, så forsiden ikke står tom. */
 export const FALLBACK_FILL = 8;
@@ -9,6 +10,7 @@ export const FALLBACK_FILL = 8;
  * 2. Fremhevede annonser.
  * 3. Kort admin har valgt til forsiden, i rekkefølgen de ble valgt (fanSlot).
  * 4. Er raden tom etter det, de nyeste annonsene opp til FALLBACK_FILL.
+ * Eksempelannonser vises alltid etter alle ekte annonser i raden.
  */
 export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[], fill: Listing[]) {
   const chosen = [...pinned].sort((a, b) => (a.fanSlot ?? 0) - (b.fanSlot ?? 0));
@@ -24,6 +26,6 @@ export function fanCards(pinned: Listing[], paid: Listing[], boosted: Listing[],
   take(paid, Infinity);
   take(boosted, Infinity);
   take(chosen, Infinity);
-  if (!out.length) take(fill, FALLBACK_FILL);
-  return out;
+  if (!out.length) take(examplesLast(fill), FALLBACK_FILL);
+  return examplesLast(out);
 }

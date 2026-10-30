@@ -152,11 +152,16 @@ export function applyFilters(list: Listing[], f: Filters, skip?: keyof Filters) 
   );
 }
 
+/** Eksempelannonser vises alltid etter alle ekte annonser, uansett sortering. Rekkefølgen innenfor hver gruppe beholdes. */
+export function examplesLast(list: Listing[]) {
+  return [...list.filter((l) => !l.isExample), ...list.filter((l) => l.isExample)];
+}
+
 export function sortListings(list: Listing[], sort: string) {
-  if (sort === "price-low") return [...list].sort((a, b) => a.price - b.price);
-  if (sort === "price-high") return [...list].sort((a, b) => b.price - a.price);
-  if (sort === "name") return [...list].sort((a, b) => a.title.localeCompare(b.title, "nb"));
-  return list;
+  if (sort === "price-low") return examplesLast([...list].sort((a, b) => a.price - b.price));
+  if (sort === "price-high") return examplesLast([...list].sort((a, b) => b.price - a.price));
+  if (sort === "name") return examplesLast([...list].sort((a, b) => a.title.localeCompare(b.title, "nb")));
+  return examplesLast(list);
 }
 
 /** Verdier med antall treff, gitt de andre filtrene. Sortert etter flest treff. */

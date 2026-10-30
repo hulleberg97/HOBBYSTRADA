@@ -100,10 +100,10 @@ async function withColumns<T>(run: (cols: string) => PromiseLike<{ data: T; erro
 
 const seedListings = (seed as Listing[]).map((l) => ({ ...l, images: l.image ? [l.image] : [] }));
 
-/** Markedsrekkefølge: Toppannonse, så Fremhevet, så Topp av listen, så resten. Nyeste først innen hver gruppe. */
+/** Markedsrekkefølge: Toppannonse, så Fremhevet, så Topp av listen, så resten. Nyeste først innen hver gruppe. Eksempelannonser alltid sist. */
 export function marketOrder(list: Listing[]) {
   const tier = (l: Listing) => (l.frontpage ? 3 : l.featured ? 2 : l.bumpedAt ? 1 : 0);
-  return [...list].sort((a, b) => tier(b) - tier(a) || b.createdAt.localeCompare(a.createdAt));
+  return examplesLast([...list].sort((a, b) => tier(b) - tier(a) || b.createdAt.localeCompare(a.createdAt)));
 }
 
 export async function getListings(): Promise<Listing[]> {
@@ -151,12 +151,13 @@ export async function getSoldListings(): Promise<Listing[]> {
   return (data as unknown as Row[]).map(fromRow).filter((l) => !l.isExample).map((l) => ({ ...l, seller: "", location: "", sellerVerified: false }));
 }
 
+/** Nyeste først, med eksempelannonser etter de ekte. */
 export function newest(list: Listing[]) {
-  return [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return examplesLast([...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
 }
 
 export { matches } from "./filters";
-import { matches } from "./filters";
+import { examplesLast, matches } from "./filters";
 
 export type Category = { key: string; label: string; href: string; count: (l: Listing[]) => number };
 
