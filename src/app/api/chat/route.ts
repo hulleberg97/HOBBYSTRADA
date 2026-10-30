@@ -25,6 +25,7 @@ export async function POST(req: Request) {
 
   const listing = await getListing(typeof body?.listing === "string" ? body.listing.slice(0, 200) : "");
   if (!listing || listing.status !== "active") return NextResponse.json({ error: "Annonsen finnes ikke lenger." }, { status: 404 });
+  if (listing.isExample) return NextResponse.json({ error: "Dette er en eksempelannonse. Kortet er ikke til salgs." }, { status: 403 });
   const sellerId = listing.ownerId ?? (await adminUserId());
   if (!sellerId) return NextResponse.json({ error: "Meldinger er ikke slått på ennå." }, { status: 503 });
   if (sellerId === user.id) return NextResponse.json({ error: "Dette er din egen annonse." }, { status: 400 });

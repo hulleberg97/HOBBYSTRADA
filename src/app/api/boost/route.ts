@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   if (listing.owner_id !== user.id && !isAdmin(user)) {
     return NextResponse.json({ error: "Du kan bare løfte dine egne annonser." }, { status: 403 });
   }
-  if (listing.owner_listing) return NextResponse.json({ error: "Annonser fra HOBBYSTRADA selv kan ikke løftes." }, { status: 403 });
+  if (listing.owner_listing) return NextResponse.json({ error: "Eksempelannonser kan ikke få annonseløft." }, { status: 403 });
   // Bare aktive annonser kan løftes. Skjulte, solgte og ikke godkjente annonser vises ikke, så et løft ville vært bortkastet.
   if (listing.status && listing.status !== "active") return NextResponse.json({ error: "Annonsen må være aktiv for å kunne løftes." }, { status: 400 });
 

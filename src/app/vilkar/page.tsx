@@ -169,7 +169,7 @@ export default function TermsPage() {
             <p id="sortering">
               Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
               merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
-              likt, uavhengig av løft. Raden øverst på forsiden viser toppannonser først, deretter fremhevede annonser, og deretter annonser vi selv har valgt. Finnes ingen av disse, fylles raden med de nyeste annonsene. Annonsene i raden glir sakte bortover, så alle kortene passerer midten etter tur. Under raden viser forsiden utvalgte kort (annonser med Fremhevet eller Toppannonse) og de nyeste annonsene. Annonser vi selv velger er ikke merket «Annonseløft», og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
+              likt, uavhengig av løft. Raden øverst på forsiden viser toppannonser først, deretter fremhevede annonser, og deretter annonser vi selv har valgt. Finnes ingen av disse, fylles raden med de nyeste annonsene. Annonsene i raden glir sakte bortover, så alle kortene passerer midten etter tur. Under raden viser forsiden utvalgte kort (annonser med Fremhevet eller Toppannonse) og de nyeste annonsene. Annonser vi selv velger er ikke merket «Annonseløft», og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen. Eksempelannonser kan vises i markedet og på forsiden. De er alltid merket «Eksempelannonse» og påvirker ikke plasseringen til andre annonser.
             </p>
           ),
         },
@@ -194,6 +194,11 @@ export default function TermsPage() {
                 Selgerne på HOBBYSTRADA er privatpersoner. Kjøper du fra en privatperson, gjelder ikke forbrukerrettighetene, for eksempel etter
                 forbrukerkjøpsloven og angrerettloven. Handelen reguleres da av kjøpsloven, og kjøper og selger kan avtale andre vilkår. Uenighet løses mellom
                 kjøper og selger.
+              </p>
+              <p className="mt-3" id="eksempelannonser">
+                <strong>Eksempelannonser.</strong> Noen annonser er lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. De er merket «Eksempelannonse» og
+                er ikke til salgs. Det går ikke an å sende melding, gi bud eller betale for dem. Eksempelannonser får ikke annonseløft og tas ikke med i
+                prisarkivet «Solgte kort».
               </p>
               <p className="mt-3">
                 <strong>Beskytt deg mot svindel:</strong> Avtal pris, betaling og levering skriftlig i chatten. Be om flere bilder av kortet hvis du er

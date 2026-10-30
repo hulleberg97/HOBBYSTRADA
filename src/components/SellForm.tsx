@@ -629,7 +629,7 @@ export function SellForm({ user, owner = false }: { user: { name: string; email:
           {owner ? null : (
             <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
               <input type="checkbox" name="privat" required autoComplete="off" className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
-              <span>Jeg selger som privatperson, ikke som ledd i næringsvirksomhet.</span>
+              <span>Jeg selger som privatperson og ikke som ledd i næringsvirksomhet.</span>
             </label>
           )}
           <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">

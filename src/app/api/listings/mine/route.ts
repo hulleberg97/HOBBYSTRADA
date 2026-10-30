@@ -9,8 +9,10 @@ export async function GET() {
   if (!db || !user) return NextResponse.json({ listings: [] }, { status: user ? 503 : 401 });
   let q = db
     .from("listings")
-    .select("slug, title, price, images, bumped_until, featured_until, frontpage_until")
+    .select("slug, title, price, images, bumped_until, featured_until, frontpage_until, owner_listing")
     .eq("status", "active")
+    // Eksempelannonser kan ikke løftes, og vises ikke i kassen
+    .eq("owner_listing", false)
     .order("created_at", { ascending: false })
     .limit(100);
   if (!isAdmin(user)) q = q.eq("owner_id", user.id);

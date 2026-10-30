@@ -120,7 +120,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               </span>
             </div>
             {/* Innehaverens egne annonser viser ingen selgererklæring */}
-            {l.ownerListing ? null : (
+            {l.isExample ? null : (
               <p className="mt-1.5 text-xs text-slate-600">
                 <strong className="font-semibold text-slate-800">Privat selger.</strong> Forbrukerkjøpsloven og angrerett gjelder ikke.{" "}
                 <Link href="/vilkar#ansvar-mellom-kjoper-og-selger" className="underline underline-offset-2 hover:text-slate-900">
@@ -131,7 +131,17 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </div>
         </div>
         )}
-        {l.status === "active" && (
+        {l.status === "active" && l.isExample && (
+          <div className="mt-5">
+            <p
+              aria-disabled="true"
+              className="flex h-12 items-center justify-center gap-2 rounded-full bg-slate-100 px-5 text-sm font-semibold text-slate-500 ring-1 ring-inset ring-slate-200"
+            >
+              Ikke til salgs – eksempelannonse
+            </p>
+          </div>
+        )}
+        {l.status === "active" && !l.isExample && (
           <div className="mt-5">
             <div className="grid gap-2.5">
               {own ? (
@@ -246,7 +256,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
           </Link>
         </div>
       </div>
-      {l.status === "active" && !own && (
+      {l.status === "active" && !own && !l.isExample && (
         <div
           data-open={barOpen ? "true" : undefined}
           aria-hidden={!barOpen}

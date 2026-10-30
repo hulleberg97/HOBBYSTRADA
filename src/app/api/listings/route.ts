@@ -124,7 +124,7 @@ export async function POST(req: Request) {
     ...row,
     seller_verified: Boolean(verified),
     // Annonser fra innehaveren merkes, og kan verken løftes eller festes
-    owner_listing: isAdmin(user),
+    owner_listing: isAdmin(user), // administratorens annonser er eksempelannonser
     private_seller_at: new Date().toISOString(),
   };
   // Kolonner som kommer med senere SQL-filer (004_vipps.sql, 016_innehaver.sql): mangler en, lagres annonsen uten den.

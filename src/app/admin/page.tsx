@@ -56,7 +56,7 @@ export default async function AdminPage() {
     image: l.image,
     fanSlot: l.fanSlot ?? null,
     label: rowLabel(l),
-    ownerListing: Boolean(l.ownerListing),
+    isExample: Boolean(l.isExample),
   });
   const forsideRad = frontpageRow(aktive).map(kort);
   const forsideKort = aktive.map(kort);
@@ -71,6 +71,11 @@ export default async function AdminPage() {
       created: new Date(u.created_at).toLocaleDateString("nb-NO"),
       listings: (all ?? []).filter((l) => l.owner_id === u.id).length,
     }));
+  // Samtaler og bud som finnes på eksempelannonser. Vises til gjennomsyn; de slettes ikke, og kan ikke føre til salg.
+  const exampleSlugs = (all ?? []).filter((r) => r.owner_listing).map((r) => r.slug as string);
+  const { data: exampleChats } = exampleSlugs.length
+    ? await db.from("conversations").select("id, listing_slug, listing_title, buyer_name, accepted_offer, last_message_at").in("listing_slug", exampleSlugs).order("last_message_at", { ascending: false })
+    : { data: [] };
   const { data: blocked } = await db.from("blocked_users").select("vipps_sub, rule, blocked_at, user_id, delete_after").not("user_id", "is", null).order("blocked_at", { ascending: false });
   const blockedNames = new Map<string, string>();
   for (const b of blocked ?? []) {
@@ -327,6 +332,27 @@ export default async function AdminPage() {
         </section>
 
         <section>
+          <h2 className={h2}>Samtaler om eksempelannonser ({exampleChats?.length ?? 0})</h2>
+          <p className="mt-1 text-sm text-slate-600">Eksempelannonser er ikke til salgs. Disse samtalene kan ikke føre til salg, og listes bare til gjennomsyn.</p>
+          {!exampleChats?.length ? (
+            <p className={empty}>Ingen samtaler om eksempelannonser.</p>
+          ) : (
+            <ul className="mt-4 divide-y divide-slate-200 rounded-2xl ring-1 ring-slate-200">
+              {exampleChats.map((c) => (
+                <li key={c.id} className="flex flex-wrap items-center gap-3 px-4 py-3 text-sm">
+                  <span className="min-w-0 flex-1 truncate font-medium text-slate-900">{c.listing_title}</span>
+                  <span className="text-slate-600">{c.buyer_name}</span>
+                  {c.accepted_offer != null && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-900">Godtatt bud: {formatPrice(Number(c.accepted_offer))}</span>}
+                  <span className="text-xs text-slate-500">{date(c.last_message_at)}</span>
+                  <Link href={`/meldinger/${c.id}`} className="text-xs underline underline-offset-2">
+                    Åpne
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+        <section>
           <h2 className={h2}>Alle annonser ({all?.length ?? 0})</h2>
           <ul className="mt-4 space-y-3">
             {(all ?? []).map((r) => {
@@ -338,7 +364,7 @@ export default async function AdminPage() {
                     actions={[
                       ...(l.status === "active"
                         ? [
-                            { label: "Merk som solgt", status: "sold" },
+                            ...(l.isExample ? [] : [{ label: "Merk som solgt", status: "sold" }]),
                             { label: "Skjul", status: "hidden" },
                           ]
                         : [{ label: "Aktiver", status: "active" }]),

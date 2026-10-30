@@ -139,7 +139,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                       actions={[
                         ...(l.status === "active"
                           ? [
-                              { label: "Merk som solgt", status: "sold", tone: "primary" as const },
+                              ...(l.isExample ? [] : [{ label: "Merk som solgt", status: "sold", tone: "primary" as const }]),
                               { label: "Skjul", status: "hidden" },
                             ]
                           : []),

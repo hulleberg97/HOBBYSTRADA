@@ -151,6 +151,14 @@ export function Slab({ l, eager = false, mark = "header" }: { l: Listing; eager?
           Annonseløft
         </span>
       )}
+      {l.isExample && (
+        <span
+          title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs."
+          className="absolute bottom-[3%] left-1/2 inline-flex -translate-x-1/2 items-center whitespace-nowrap rounded-full bg-[#0b1426] px-2.5 py-[3px] text-[8px] font-bold uppercase tracking-[0.14em] text-white ring-1 ring-white/70 sm:text-[9px]"
+        >
+          Eksempelannonse
+        </span>
+      )}
       {boosted && mark === "header" && (
         <span
           title={markTitle}

@@ -28,18 +28,21 @@ async function load(id: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = await load((await params).id);
-  return s ? { title: `${s.name} – kort til salgs` } : { title: "Fant ikke selgeren" };
+  return s ? { title: s.listings.every((l) => l.isExample) ? `${s.name} – eksempelannonser` : `${s.name} – kort til salgs` } : { title: "Fant ikke selgeren" };
 }
 
 export default async function SellerPage({ params }: Props) {
   const s = await load((await params).id);
   if (!s) notFound();
   const active = s.listings.filter((l) => l.status === "active");
-  const sold = s.listings.filter((l) => l.status === "sold");
+  // Eksempelannonser fra HOBBYSTRADA er ikke til salgs, og vises aldri som solgt
+  const examples = active.filter((l) => l.isExample);
+  const onlyExamples = examples.length > 0 && examples.length === active.length;
+  const sold = s.listings.filter((l) => l.status === "sold" && !l.isExample);
   const places = [...new Set(s.listings.map((l) => l.location).filter(Boolean))];
   const facts: [LucideIcon, string][] = [
     [CalendarIcon, `Medlem siden ${new Date(s.since).toLocaleDateString("nb-NO", { month: "long", year: "numeric" })}`],
-    [TagIcon, `${active.length} til salgs`],
+    [TagIcon, onlyExamples ? `${examples.length} eksempelannonser` : `${active.length - examples.length} til salgs`],
   ];
   // «0 solgt» vises ikke – det virker bare negativt
   if (sold.length) facts.push([PackageCheckIcon, `${sold.length} solgt`]);
@@ -70,8 +73,13 @@ export default async function SellerPage({ params }: Props) {
         </div>
       </section>
       <div className="mx-auto max-w-[1320px] space-y-14 px-4 pb-24 pt-10 sm:px-6 lg:px-8">
+        {examples.length > 0 && (
+          <p className="rounded-2xl bg-slate-900 px-5 py-4 text-sm text-white">Annonsene her er eksempelannonser fra HOBBYSTRADA. De er ikke til salgs.</p>
+        )}
         <section>
-          <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">Til salgs ({active.length})</h2>
+          <h2 className="font-heading text-xl font-bold tracking-tight text-slate-950">
+            {onlyExamples ? `Eksempelannonser (${examples.length})` : `Til salgs (${active.length - examples.length})`}
+          </h2>
           {active.length ? (
             <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
               {active.map((l) => (

@@ -117,6 +117,11 @@ export default async function ListingPage({ params }: Props) {
                   badges={
                     <>
                       <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
+                        {l.isExample && (
+                          <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white shadow-sm">
+                            Eksempelannonse
+                          </span>
+                        )}
                         {(l.featured || l.bumpedAt) && (
                           <span title={l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "Topp av listen"} className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">
                             Annonseløft
@@ -136,6 +141,11 @@ export default async function ListingPage({ params }: Props) {
               ) : (
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
                   <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
+                    {l.isExample && (
+                      <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white shadow-sm">
+                    Eksempelannonse
+                      </span>
+                    )}
                     {(l.featured || l.bumpedAt) && (
                       <span title={l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "Topp av listen"} className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">
                         Annonseløft
@@ -179,6 +189,15 @@ export default async function ListingPage({ params }: Props) {
             <div className="mt-6">
               <div>
                 <ContactCard listing={l} />
+                {l.isExample ? (
+                  <div className="mt-4 rounded-3xl bg-slate-900 p-5 text-white ring-1 ring-inset ring-slate-900">
+                    <p className="text-sm font-semibold">Dette er en eksempelannonse</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-white/80">
+                      Annonsen viser hvordan HOBBYSTRADA fungerer. Kortet tilhører HOBBYSTRADA og er ikke til salgs. Du kan ikke sende melding, gi bud eller
+                      betale for kortet.
+                    </p>
+                  </div>
+                ) : (
                 <div className="mt-4 rounded-3xl bg-white p-5 ring-1 ring-inset ring-slate-300/70">
                   <p className="flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <ShieldCheckIcon className="h-4 w-4 text-primary" aria-hidden="true" />
@@ -203,7 +222,8 @@ export default async function ListingPage({ params }: Props) {
                     ))}
                   </ul>
                 </div>
-                {!l.featured && !l.ownerListing && l.status === "active" && <OwnerBoost slug={l.slug} ownerId={l.ownerId} />}
+                )}
+                {!l.featured && !l.isExample && l.status === "active" && <OwnerBoost slug={l.slug} ownerId={l.ownerId} />}
               </div>
             </div>
             {l.description && (

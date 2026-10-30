@@ -36,7 +36,7 @@ type Row = {
 };
 
 export function fromRow(r: Row): Listing {
-  // Annonser fra innehaveren får ikke annonseløft, og viser aldri merkene «Annonseløft» eller «Toppannonse»
+  // Eksempelannonser (kolonnen owner_listing) får ikke annonseløft, og viser aldri merkene «Annonseløft» eller «Toppannonse»
   const owner = Boolean(r.owner_listing);
   return {
     id: r.id,
@@ -63,7 +63,7 @@ export function fromRow(r: Row): Listing {
     seller: r.seller_name,
     sellerVerified: Boolean(r.seller_verified),
     fanSlot: r.fan_slot ?? null,
-    ownerListing: owner,
+    isExample: owner,
     location: r.location,
     createdAt: r.created_at,
     soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
@@ -137,6 +137,7 @@ export async function getSellerListings(sellerId: string): Promise<Listing[]> {
 }
 
 /** Solgte kort, nyeste salg først. Brukes i prisarkivet. */
+/** Solgte kort til prisarkivet. Eksempelannonser tas aldri med. */
 export async function getSoldListings(): Promise<Listing[]> {
   const db = publicClient();
   if (!db) return [];
@@ -145,7 +146,7 @@ export async function getSoldListings(): Promise<Listing[]> {
   );
   if (error) return [];
   // Arkivet viser kort, pris, dato og bilder, ikke hvem som solgte eller hvor (personvern)
-  return (data as unknown as Row[]).map(fromRow).map((l) => ({ ...l, seller: "", location: "", sellerVerified: false }));
+  return (data as unknown as Row[]).map(fromRow).filter((l) => !l.isExample).map((l) => ({ ...l, seller: "", location: "", sellerVerified: false }));
 }
 
 export function newest(list: Listing[]) {
@@ -157,7 +158,9 @@ import { matches } from "./filters";
 
 export type Category = { key: string; label: string; href: string; count: (l: Listing[]) => number };
 
-export function categoryCounts(list: Listing[]) {
+/** Tall som vises for brukere. Eksempelannonser telles ikke. */
+export function categoryCounts(all: Listing[]) {
+  const list = all.filter((l) => !l.isExample);
   return {
     autograf: list.filter((l) => matches(l, "autograf")).length,
     relic: list.filter((l) => matches(l, "relic")).length,

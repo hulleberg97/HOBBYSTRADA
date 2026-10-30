@@ -36,6 +36,7 @@ const SECTIONS = [
         "Selgeren har kjøpt annonseløft. Fremhevede annonser har gullmerke og vises foran vanlige annonser og annonser med Topp av listen. Toppannonser vises aller først.",
       ],
       ["Hva betyr «Illustrasjon»?", "Illustrasjon vises bare på annonser uten bilde. Alle nye annonser må ha bilde av forsiden, og du kan alltid be selgeren om flere bilder i chatten."],
+      ["Hva betyr «Eksempelannonse»?", "Annonsen er lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Kortet er ikke til salgs."],
     ],
   },
   {

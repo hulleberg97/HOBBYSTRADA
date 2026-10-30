@@ -128,6 +128,14 @@ export async function unreadCount(userId: string) {
   return (await listConversations(userId)).filter((c) => c.unread).length;
 }
 
+/** Eksempelannonser (owner_listing) er ikke til salgs: ingen meldinger, bud eller betaling. */
+async function isExampleListing(slug: string) {
+  const db = adminClient();
+  if (!db) return false;
+  const { data } = await db.from("listings").select("owner_listing").eq("slug", slug).maybeSingle();
+  return Boolean(data?.owner_listing);
+}
+
 async function getRow(id: string, userId: string) {
   const db = adminClient();
   if (!db || !/^[0-9a-f-]{36}$/.test(id)) return null;
@@ -161,7 +169,7 @@ export async function getConversation(id: string, userId: string, after?: string
     .eq("id", id);
   const conversation = toConversation(row, userId);
   // Kjøperen får Vipps-lenken til selgeren når et bud er godtatt
-  if (role === "buyer" && conversation.acceptedOffer && row.seller_id) {
+  if (role === "buyer" && conversation.acceptedOffer && row.seller_id && !(await isExampleListing(row.listing_slug))) {
     const { data: p } = await db.from("profiles").select("phone").eq("id", row.seller_id).maybeSingle();
     conversation.payLink = p?.phone ? vippsPayLink(p.phone) : null;
     conversation.sellerPhoneMissing = !p?.phone;
@@ -185,6 +193,7 @@ export async function openConversation(input: {
 }) {
   const db = adminClient();
   if (!db) return null;
+  if (await isExampleListing(input.listing.slug)) return null;
   const { data: existing } = await db.from("conversations").select("id").eq("listing_slug", input.listing.slug).eq("buyer_id", input.buyer.id).maybeSingle();
   if (existing) return existing.id as string;
   const { data, error } = await db
@@ -212,6 +221,7 @@ export async function addMessage(id: string, userId: string, body: string, offer
   const db = adminClient();
   const row = await getRow(id, userId);
   if (!db || !row) return null;
+  if (await isExampleListing(row.listing_slug)) return null;
   const imagePath = image ? await uploadChatImage(id, image) : null;
   if (image && !imagePath) return null;
   const { data, error } = await db
@@ -280,6 +290,7 @@ export async function decideOffer(conversationId: string, messageId: string, use
   const row = await getRow(conversationId, userId);
   if (!db || !row) return { error: "Fant ikke samtalen." };
   if (row.seller_id !== userId) return { error: "Bare selgeren kan svare på bud." };
+  if (await isExampleListing(row.listing_slug)) return { error: "Dette er en eksempelannonse. Kortet er ikke til salgs." };
   const { data: m } = await db.from("chat_messages").select("id, sender_id, offer, offer_status").eq("id", messageId).eq("conversation_id", conversationId).maybeSingle();
   if (!m || !m.offer || m.sender_id !== row.buyer_id) return { error: "Fant ikke budet." };
   if (m.offer_status) return { error: "Budet er allerede besvart." };

@@ -37,6 +37,12 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             )}
           </div>
           <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
+            {/* Eksempelannonser er ikke til salgs og merkes tydelig */}
+            {listing.isExample && (
+              <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="inline-flex items-center rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-semibold text-white">
+                Eksempelannonse
+              </span>
+            )}
             {/* Betalt plassering merkes tydelig (markedsføringsloven § 8). Kort admin har valgt til forsiden har ikke eget merke. */}
             {(listing.featured || listing.bumpedAt) && (
               <span

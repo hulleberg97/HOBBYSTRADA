@@ -12,7 +12,7 @@ export type ForsideKort = {
   fanSlot: number | null;
   /** Hva som gir kortet plassen: Toppannonse, Fremhevet, Festet eller Nyeste. */
   label: string;
-  ownerListing: boolean;
+  isExample: boolean;
 };
 
 /**

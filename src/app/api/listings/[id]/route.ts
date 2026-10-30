@@ -36,6 +36,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
     if (!r.admin && ["pending", "rejected"].includes(r.listing.status) && status === "active") {
       return NextResponse.json({ error: "Annonsen venter på godkjenning." }, { status: 403 });
     }
+    if (status === "sold" && (r.listing as { owner_listing?: boolean | null }).owner_listing)
+      return NextResponse.json({ error: "Eksempelannonser er ikke til salgs og kan ikke merkes som solgt." }, { status: 403 });
     patch.status = status;
     if (status === "sold")
       Object.assign(patch, { bumped_until: null, featured_until: null, frontpage_until: null, fan_slot: null, sold_at: new Date().toISOString() });

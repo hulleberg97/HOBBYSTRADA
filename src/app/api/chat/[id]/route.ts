@@ -46,6 +46,7 @@ export async function POST(req: Request, { params }: Ctx) {
   const offer = body?.offer ? Number(String(body.offer).replace(/\D/g, "")) : null;
   if (offer !== null && !(offer > 0)) return NextResponse.json({ error: "Skriv inn budet i hele kroner." }, { status: 400 });
   const sent = await addMessage((await params).id, user.id, message, offer, file);
+  if (!sent) return NextResponse.json({ error: "Meldingen kan ikke sendes. Er dette en eksempelannonse, er kortet ikke til salgs." }, { status: 403 });
   if (!sent) return NextResponse.json({ error: "Meldingen ble ikke sendt. Prøv igjen." }, { status: 500 });
   return NextResponse.json({ message: sent });
 }

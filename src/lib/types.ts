@@ -32,6 +32,6 @@ export type Listing = {
   ownerId?: string | null;
   /** Valgt til forsiden av admin. Tallet gir rekkefølgen blant de valgte (lavest først). Ikke merket på kortet. */
   fanSlot?: number | null;
-  /** Annonse fra innehaveren av HOBBYSTRADA. Merkes, og kan verken løftes eller festes. */
-  ownerListing?: boolean;
+  /** Eksempelannonse fra HOBBYSTRADA (kolonnen owner_listing). Viser hvordan siden fungerer, er ikke til salgs, kan ikke løftes, kontaktes eller merkes solgt. */
+  isExample?: boolean;
 };

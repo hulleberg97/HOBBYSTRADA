@@ -226,7 +226,12 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
             {f.q ? `Treff for «${f.q}»` : count ? "Filtrerte annonser" : "Alle annonser"}
           </h2>
           <span className="text-sm text-slate-500" aria-live="polite">
-            {result.length} treff
+            {(() => {
+              // Eksempelannonser telles for seg, så tallet for annonser til salgs stemmer
+              const ex = result.filter((l) => l.isExample).length;
+              const real = result.length - ex;
+              return ex ? `${real} ${real === 1 ? "annonse" : "annonser"} + ${ex} ${ex === 1 ? "eksempel" : "eksempler"}` : `${result.length} treff`;
+            })()}
           </span>
           <Link href="/solgt" className="tap ml-auto text-sm font-medium text-slate-600 underline-offset-4 hover:text-primary hover:underline">
             Se prisene på solgte kort
