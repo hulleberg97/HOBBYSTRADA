@@ -126,7 +126,8 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
       </div>
       <div className="filter-bar z-20 mt-6 border-b border-slate-200 bg-background/95 backdrop-blur md:sticky md:top-[72px]">
         <div className="markt-rad1 mx-auto flex max-w-[1320px] flex-row items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <nav aria-label="Kategorier" className="min-w-0 flex-1">
+          {/* På mobil skal filterknappen aldri klemmes; sorteringen og lenken får resten og bryter om nødvendig */}
+          <nav aria-label="Kategorier" className="shrink-0 md:min-w-0 md:flex-1">
             <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <li className="hidden md:block">
                 <button
@@ -152,7 +153,7 @@ export function MarketView({ listings, search }: { listings: Listing[]; search: 
               </li>
             </ul>
           </nav>
-          <div className="flex flex-wrap items-center gap-2 md:justify-end md:gap-3">
+          <div className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-2 md:flex-none md:gap-3">
             <div className="relative hidden shrink-0 md:block">
               <label htmlFor="products-price" className="sr-only">
                 Pris
