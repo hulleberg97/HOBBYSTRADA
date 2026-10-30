@@ -36,8 +36,8 @@ export function CookieConsent() {
     >
       <p className="font-heading text-lg font-bold tracking-[-0.02em] text-primary">Informasjonskapsler</p>
       <p className="mt-1.5 leading-relaxed">
-        Vi bruker bare informasjonskapsler som trengs for at siden skal virke, som innlogging. Vi bruker ikke sporing, analyse eller annonser, og har derfor ingen innstillinger å velge.{" "}
-        <Link href="/informasjonskapsler" className="font-medium text-primary underline underline-offset-2">
+        Vi bruker bare informasjonskapsler og lagring i nettleseren som trengs for at siden skal virke, som innlogging, eller som du selv ber om, som favoritter. Vi bruker ikke sporing, analyse eller annonser, og har derfor ingen innstillinger å velge.{" "}
+        <Link href="/personvern#informasjonskapsler" className="font-medium text-primary underline underline-offset-2">
           Les mer
         </Link>
       </p>

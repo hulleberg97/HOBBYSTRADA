@@ -112,8 +112,7 @@ export default function TermsPage() {
           title: "6. Rapportere annonser og brukere",
           body: (
             <p>
-              Du kan rapportere annonser og brukere med knappen «Rapporter» eller på e-post til {email}. Vi behandler rapporter så snart vi kan. Selgeren får
-              ikke vite hvem som har rapportert, med mindre loven pålegger oss å oppgi det.
+              Du kan rapportere annonser og brukere med knappen «Rapporter» eller på e-post til {email}. Vi behandler rapporter så snart vi kan.
             </p>
           ),
         },
@@ -122,22 +121,18 @@ export default function TermsPage() {
           id: "fjerning-av-annonser-og-utestengelse",
           body: (
             <>
-              <p>
-                Vi kan avvise eller fjerne annonser og stenge kontoer når vi har grunn til å tro at de bryter vilkårene eller loven. Vi kan bruke automatiske
-                verktøy for å oppdage spam og misbruk, men avgjørelser om å avvise eller fjerne annonser og stenge kontoer tas ikke bare automatisk.
-              </p>
+              <p>Vi kan avvise eller fjerne annonser og stenge kontoer når vi har grunn til å tro at de bryter vilkårene eller loven.</p>
               <p className="mt-3">
                 Ved alvorlige brudd, som svindel eller forsøk på det, trakassering, forfalskninger og stjålne kort, kan kontoen stenges med en gang, uten
                 forvarsel. Ved mindre alvorlige brudd fjerner vi normalt annonsen og gir deg en advarsel først.
               </p>
-              <p className="mt-3">Du får beskjed på e-post om hva vi har gjort, hvilket vilkår det gjelder og hvorfor.</p>
+              <p className="mt-3">Du får beskjed om avgjørelsen og begrunnelsen for den.</p>
               <p className="mt-3">
                 Ved stenging skjules annonsene dine, og du kan ikke logge inn. Konto og annonser slettes 30 dager etter utestengelsen. Klager du innen fristen,
                 slettes de først når klagen er avgjort. Ny konto kan du først opprette etter to år.
               </p>
               <p className="mt-3">
-                Du kan klage til {email} innen 30 dager. Vi behandler klagen så snart vi kan. Får du medhold, legger vi ut annonsen igjen eller åpner kontoen
-                igjen.
+                Mener du at avgjørelsen er feil, kan du klage til {email} innen 30 dager. Får du medhold, legger vi ut annonsen igjen eller åpner kontoen igjen.
               </p>
               <p className="mt-3">Refusjon av annonseløft ved fjerning:</p>
               <List
@@ -169,7 +164,8 @@ export default function TermsPage() {
                 løftet er levert fullt ut. Angrer du før perioden er over, betaler du for den brukte delen og får resten tilbake.
               </p>
               <p className="mt-3">
-                Du angrer via «Angre avtalen» på kvitteringen under Min side, via <Link href="/angreskjema">angreskjemaet</Link> eller på e-post.
+                Du angrer via «Angre avtalen» på kvitteringen under Min side, via <Link href="/angreskjema">angreskjemaet</Link> eller på e-post. Les mer i{" "}
+                <Link href="/salgsvilkar#angrerett">salgsvilkårene under «Angrerett»</Link>.
               </p>
               <p className="mt-3">
                 Virker ikke løftet, gi oss beskjed. Vi retter feilen eller forlenger løftet. Hvis ikke, får du et forholdsmessig prisavslag eller pengene
@@ -252,8 +248,8 @@ export default function TermsPage() {
             <>
               <p>Vi kan endre, legge til eller fjerne funksjoner. Vi kan stanse tjenesten midlertidig, for eksempel ved vedlikehold, feil eller sikkerhetshendelser.</p>
               <p className="mt-3">
-                Vi kan legge ned tjenesten. Da varsler vi på e-post og på nettsiden minst 30 dager før, med mindre det ikke er mulig. Legges tjenesten ned mens
-                et annonseløft er aktivt, får du tilbake den delen av perioden som ikke er brukt.
+                Vi kan legge ned tjenesten. Da varsler vi i rimelig tid før. Legges tjenesten ned mens et annonseløft er aktivt, får du tilbake den delen av
+                perioden som ikke er brukt.
               </p>
               <p className="mt-3">Rettighetene dine hvis et kjøpt løft ikke leveres som avtalt, står under «Annonseløft».</p>
             </>
@@ -263,8 +259,8 @@ export default function TermsPage() {
           title: "13. Sletting av konto",
           body: (
             <p>
-              Du kan slette kontoen din når som helst på Min side. Har du ikke logget inn på 24 måneder, sletter vi kontoen. Vi varsler deg på e-post 30 dager
-              før. Hva som slettes og hva som beholdes, står i <Link href="/personvern">personvernerklæringen</Link>.
+              Du kan slette kontoen din når som helst på Min side. Har du ikke logget inn på 24 måneder, sletter vi kontoen. Hva som slettes og hva som
+              beholdes, står i <Link href="/personvern">personvernerklæringen</Link>.
             </p>
           ),
         },
@@ -284,8 +280,9 @@ export default function TermsPage() {
           title: "15. Lovvalg og klage",
           body: (
             <p>
-              Norsk rett gjelder. Har du en klage, send den til {email}. Kommer vi ikke til enighet, kan du som forbruker få hjelp av Forbrukerrådet
-              (forbrukerradet.no). Tvister kan også bringes inn for de alminnelige domstolene.
+              Norsk rett gjelder. Har du en klage, send den til {email}. Kommer vi ikke til enighet, kan du som forbruker klage til Forbrukertilsynet
+              (forbrukertilsynet.no), som kan mekle i saken. Fører ikke meklingen fram, kan saken bringes inn for Forbrukerklageutvalget. Tvister kan også
+              bringes inn for de alminnelige domstolene.
             </p>
           ),
         },

@@ -205,7 +205,13 @@ export function BoostPicker({ frontpage, demo }: { frontpage: FrontpageAvailabil
         </p>
         <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" autoComplete="off" checked={Boolean(consent)} onChange={(e) => setConsent(e.target.checked ? new Date().toISOString() : null)} className={check} />
-          <span>Jeg ber om at annonseløftet starter med en gang betalingen er gjennomført, før angrefristen på 14 dager er ute.</span>
+          <span>
+            Jeg godtar{" "}
+            <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
+              salgsvilkårene
+            </Link>{" "}
+            og ber om at annonseløftet starter med en gang betalingen er gjennomført, før angrefristen på 14 dager er ute.
+          </span>
         </label>
         <label className="mt-2 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" autoComplete="off" checked={Boolean(consentLoss)} onChange={(e) => setConsentLoss(e.target.checked ? new Date().toISOString() : null)} className={check} />
@@ -225,20 +231,17 @@ export function BoostPicker({ frontpage, demo }: { frontpage: FrontpageAvailabil
           <div>
             <dt className="inline font-semibold text-slate-900">Du bestiller: </dt>
             <dd className="inline">
-              {chosen ? `${chosen.name} i ${chosen.days} dager` : "velg pakke over"}
-              {listing.trim() ? ` for annonsen «${chosenListing?.title ?? listing}»` : ", og velg annonse øverst"}
-            </dd>
-          </div>
-          <div>
-            <dt className="inline font-semibold text-slate-900">Pris: </dt>
-            <dd className="inline">
-              {chosen ? `${chosen.price} kr. ` : "– kr. "}Prisen er uten merverdiavgift fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i
-              tillegg.
+              {chosen ? chosen.name : "velg pakke over"}
+              {listing.trim() ? ` for «${chosenListing?.title ?? listing}».` : ", og velg annonse øverst."}
             </dd>
           </div>
           <div>
             <dt className="inline font-semibold text-slate-900">Varighet: </dt>
-            <dd className="inline">Engangskjøp som ikke fornyes automatisk.</dd>
+            <dd className="inline">{chosen ? `${chosen.days} dager` : "– dager"} fra betalingen er gjennomført. Fornyes ikke automatisk.</dd>
+          </div>
+          <div>
+            <dt className="inline font-semibold text-slate-900">Totalpris: </dt>
+            <dd className="inline">{chosen ? `${chosen.price} kr.` : "– kr."}</dd>
           </div>
         </dl>
         <button

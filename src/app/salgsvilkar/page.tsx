@@ -32,6 +32,7 @@ export default function SalesTermsPage() {
       updated={SALGSVILKAR_UPDATED}
       sections={SALGSVILKAR.map((s) => ({
         title: s.title,
+        id: s.id,
         body: (
           <>
             {s.blocks.map((b, i) =>

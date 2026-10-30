@@ -128,7 +128,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   const decide = async (messageId: string, accept: boolean) => {
     if (deciding) return;
     const amount = messages.find((m) => m.id === messageId)?.offer ?? 0;
-    if (accept && !confirm(`Godta budet? Kjøperen får en Vipps-knapp for å betale ${formatPrice(amount)}. Dere er ikke bundet før kjøperen har betalt.`)) return;
+    if (accept && !confirm(`Godta budet? Kjøperen får en lenke for å betale ${formatPrice(amount)} i Vipps. Dere er ikke bundet før kjøperen har betalt.`)) return;
     setDeciding(messageId);
     setError("");
     const res = await fetch(`/api/chat/${c.id}/bud`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messageId, accept }) }).catch(() => null);
@@ -324,22 +324,23 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
           <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
             <p className="text-sm font-semibold text-emerald-900">Budet ditt på {formatPrice(accepted)} er godtatt</p>
             <p className="mt-1 text-xs leading-relaxed text-emerald-800">
-              Spør selgeren om kortet fortsatt er ledig før du betaler. Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke
-              part i handelen.
+              Avtalt pris: {formatPrice(accepted)}. Spør selgeren om kortet fortsatt er ledig før du betaler. Lenken åpner Vipps med selgeren valgt – skriv inn
+              beløpet selv. Dette er en privat betaling direkte til selgeren. Vipps’ kjøpsbeskyttelse gjelder ikke, og HOBBYSTRADA er ikke part i handelen.
+              Avtal frakt her i chatten.
             </p>
             {payLink ? (
               <a
                 href={payLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#ff5b24] px-6 text-sm font-semibold text-white transition hover:bg-[#e94f1b]"
+                className="mt-3 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition hover:bg-black"
               >
-                Betal {formatPrice(accepted)} med Vipps
+                Åpne Vipps og betal selgeren
               </a>
             ) : (
               <p className="mt-2 text-xs text-emerald-800">Selgeren har ikke registrert Vipps-nummer ennå. Avtal betalingen i chatten.</p>
             )}
-            <p className="mt-2 text-[11px] text-emerald-700">Vipps åpnes med selgeren valgt. Sjekk at navnet i Vipps er {c.otherName}, og skriv inn beløpet.</p>
+            <p className="mt-2 text-[11px] text-emerald-700">Sjekk at navnet i Vipps er {c.otherName}.</p>
             <div className="mt-4 border-t border-emerald-200 pt-3">
               <p className="text-xs font-semibold text-emerald-900">Frakt</p>
               {panel === "adresse" ? (

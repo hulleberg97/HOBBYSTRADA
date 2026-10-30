@@ -6,9 +6,8 @@ import { COMPANY } from "@/lib/company";
 export const metadata: Metadata = { title: "Personvern", alternates: { canonical: "/personvern" } };
 
 /**
- * Personvernerklæring. Teksten er Låvlis reviderte utkast av 30. oktober 2026, lagt inn ordrett, med to rettelser som
- * følger av hvordan nettsiden faktisk virker: avviste annonser slettes etter 35 dager (ikke 30), og nettleseren husker
- * hvilke annonser du har åpnet (visningsteller). Begge er meldt til Låvli.
+ * Personvernerklæring. Teksten er Låvlis reviderte utkast (andre versjon, 30. oktober 2026), lagt inn ordrett, med én tilføyelse
+ * som følger av hvordan nettsiden virker: nettleseren husker hvilke annonser du har åpnet (visningsteller). Meldt til Låvli.
  */
 function Purpose({ title, lines }: { title: string; lines: string[] }) {
   return (
@@ -38,7 +37,6 @@ export default function PrivacyPage() {
                 {COMPANY.name}, org.nr. {COMPANY.orgnr}, {COMPANY.street}, {COMPANY.postal}, er ansvarlig for behandlingen av personopplysningene dine på
                 hobbystrada.no. Du kan kontakte oss på {email} eller via <Link href="/kontakt">kontaktskjemaet</Link>. Vi har ikke personvernombud.
               </p>
-              <p className="mt-3">Vi har ingen reklame, analyse, sporing eller nyhetsbrev. E-post sendes bare om hendelser du selv har utløst.</p>
             </>
           ),
         },
@@ -85,7 +83,7 @@ export default function PrivacyPage() {
                 lines={[
                   "Opplysninger: navn, e-post, telefonnummer, Vipps-ID og tidspunktet du bekreftet at du er minst 18 år.",
                   "Grunnlag: avtale (art. 6 nr. 1 b).",
-                  "Lagringstid: til kontoen slettes. Inaktive kontoer: e-post sendes etter 23 måneder uten innlogging, og kontoen slettes etter 24 måneder hvis du ikke logger inn.",
+                  "Lagringstid: til kontoen slettes. Kontoer uten innlogging i 24 måneder slettes.",
                 ]}
               />
               <Purpose
@@ -119,7 +117,7 @@ export default function PrivacyPage() {
                 lines={[
                   "Vi leser meldinger bare når en annonse eller bruker er rapportert, ved mistanke om svindel eller misbruk, når du selv ber oss hjelpe deg med en bestemt samtale, eller når loven krever det.",
                   "Grunnlag: berettiget interesse, for å beskytte brukerne mot svindel og holde markedet trygt. Når du ber om hjelp: avtale. Når loven krever det: rettslig forpliktelse (art. 6 nr. 1 c).",
-                  "Lagringstid: vi lager ikke egne kopier. Vanlige regler for meldinger gjelder.",
+                  "Lagringstid: som for meldinger mellom brukere.",
                 ]}
               />
               <Purpose
@@ -149,7 +147,7 @@ export default function PrivacyPage() {
                 lines={[
                   "Opplysninger: Vipps-ID, konto-ID, tidspunkt, hvilket vilkår som er brutt, og hvilke annonser som ble skjult.",
                   "Kontoen sperres og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen, eller når klagen er avgjort hvis du har klaget innen fristen.",
-                  `Avgjørelsen tas ikke bare automatisk. Du får begrunnelse på e-post og kan klage til ${COMPANY.email} innen 30 dager.`,
+                  `Avgjørelsen tas ikke bare automatisk. Du får begrunnelse og kan klage til ${COMPANY.email} innen 30 dager.`,
                   "Grunnlag: berettiget interesse, for å håndheve vilkårene og beskytte brukerne og markedet.",
                   "Lagringstid: Vipps-ID står på sperreliste i to år.",
                 ]}
@@ -170,7 +168,7 @@ export default function PrivacyPage() {
           title: "4. Hvem vi deler opplysningene med",
           body: (
             <>
-              <p>Vi selger aldri personopplysninger. Opplysningene deles med:</p>
+              <p>Opplysningene deles med:</p>
               <List
                 items={[
                   "andre brukere: fornavn, sted og annonser. I chatten deles hele navnet og det du skriver og sender.",
@@ -249,14 +247,7 @@ export default function PrivacyPage() {
           title: "8. Automatiserte avgjørelser",
           body: (
             <>
-              <p>
-                Vi tar ikke avgjørelser som har rettslig virkning for deg, eller som på tilsvarende måte påvirker deg i betydelig grad, bare automatisk. Vi
-                lager ikke profiler av deg.
-              </p>
-              <p className="mt-3">
-                Vi kan bruke automatiske verktøy for å oppdage spam og misbruk. Avgjørelser om å avvise annonser eller stenge kontoer tas likevel ikke bare
-                automatisk.
-              </p>
+              <p>Vi tar ikke avgjørelser som har rettslig virkning for deg, eller som på tilsvarende måte påvirker deg i betydelig grad, bare automatisk.</p>
             </>
           ),
         },
@@ -281,15 +272,6 @@ export default function PrivacyPage() {
                 siden viser denne informasjonen.
               </p>
             </>
-          ),
-        },
-        {
-          title: "10. Sikkerhet",
-          body: (
-            <p>
-              All trafikk er kryptert. Bare de som trenger det for å drifte tjenesten, har tilgang til opplysningene. Meldinger leses bare i tilfellene som er
-              beskrevet over. Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via tidsbegrensede lenker.
-            </p>
           ),
         },
       ]}

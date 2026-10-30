@@ -83,7 +83,7 @@ export function Footer() {
                 ["/vilkar", "Vilkår"],
                 ["/salgsvilkar", "Salgsvilkår"],
                 ["/personvern", "Personvern"],
-                ["/refusjon", "Refusjon"],
+                ["/salgsvilkar#angrerett", "Angrerett"],
               ] as const
             ).map(([href, label]) => (
               <Link key={href} href={href} className="relative transition before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] hover:text-white">

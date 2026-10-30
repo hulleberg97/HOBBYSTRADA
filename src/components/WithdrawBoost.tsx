@@ -35,7 +35,7 @@ export function WithdrawBoost({ orderId, days, amount, paidAt }: { orderId: stri
         <>
           <p className="font-semibold text-slate-900">Angrerett</p>
           <p className="mt-1 text-slate-600">
-            Du kan angre til og med {angreDatoTekst(frist)}. Angrer du før det, får du tilbake den delen av perioden som ikke er brukt.
+            Du kan angre til og med {angreDatoTekst(frist)}.
           </p>
           <button
             type="button"

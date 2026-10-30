@@ -7,68 +7,86 @@ import { COMPANY } from "./company";
  */
 export const SALGSVILKAR_UPDATED = "30. oktober 2026";
 
-export type SalesSection = { title: string; blocks: (string | string[])[] };
+export type SalesSection = { title: string; blocks: (string | string[])[]; id?: string };
 
+/** Teksten er Låvlis reviderte utkast av 30. oktober 2026. Refusjonssiden er slått sammen med avsnittet «Angrerett». */
 export const SALGSVILKAR: SalesSection[] = [
   {
-    title: "Selger",
+    title: "1. Hvem du kjøper av",
     blocks: [
-      `${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}. E-post: ${COMPANY.email}. Telefon: ${COMPANY.phone}. Vilkårene gjelder kjøp av annonseløft på HOBBYSTRADA. Kort i markedet kjøpes direkte fra andre brukere, og den handelen er HOBBYSTRADA ikke part i.`,
+      `Selger er ${COMPANY.name}, enkeltpersonforetak, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}. Du når oss på e-post ${COMPANY.email} eller telefon ${COMPANY.phone}. Foretaket er ikke registrert i Merverdiavgiftsregisteret.`,
+      "Disse vilkårene gjelder kjøp av annonseløft. Kort i markedet kjøper du direkte fra andre brukere. Den handelen er HOBBYSTRADA ikke part i. Se [vilkårene](/vilkar).",
     ],
   },
   {
-    title: "Hva du kjøper",
+    title: "2. Hva du kjøper",
     blocks: [
-      "Annonseløft gir annonsen bedre synlighet i en bestemt periode. Perioden starter når løftet aktiveres. Løftet er et engangskjøp og fornyes ikke automatisk. Annonser med løft er merket «Annonseløft».",
+      "Annonseløft er en digital tjeneste som gir annonsen bedre synlighet i en bestemt periode. Perioden starter når løftet aktiveres. Det er et engangskjøp, og det fornyes ikke automatisk. Annonser med løft er merket «Annonseløft».",
+      "Du kan velge mellom disse pakkene:",
       [
         `**${BOOSTS.top.name}, ${BOOSTS.top.days} dager, ${BOOSTS.top.price} kr:** Annonsen vises foran vanlige annonser i markedet og i søkeresultatene.`,
-        `**${BOOSTS.featured.name}, ${BOOSTS.featured.days} dager, ${BOOSTS.featured.price} kr:** Annonsen får gullmerke og gullramme og vises foran annonser med Topp av listen og vanlige annonser. Annonsen vises også på forsiden hele perioden, etter toppannonsene.`,
-        `**${BOOSTS.frontpage.name}, ${BOOSTS.frontpage.days} dager, ${BOOSTS.frontpage.price} kr:** Annonsen får gullmerke og gullramme, vises først i markedet og i søkeresultatene, og vises først på forsiden hele perioden. Annonsene på forsiden glir sakte bortover, så alle kortene passerer midten etter tur.`,
+        `**${BOOSTS.featured.name}, ${BOOSTS.featured.days} dager, ${BOOSTS.featured.price} kr:** Annonsen får gullmerke og gullramme. Den vises foran annonser med Topp av listen og vanlige annonser, og vises på forsiden i perioden etter toppannonsene.`,
+        `**${BOOSTS.frontpage.name}, ${BOOSTS.frontpage.days} dager, ${BOOSTS.frontpage.price} kr:** Annonsen får gullmerke og gullramme. Den vises først i markedet og i søkeresultatene, og først på forsiden i perioden.`,
       ],
-      "Sorterer kjøperen selv etter pris eller navn, sorteres alle annonser likt, uten hensyn til løft.",
-      "Alle priser er i norske kroner og uten merverdiavgift, fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Du må være 18 år for å kjøpe annonseløft.",
+      "Sorterer du selv etter pris eller navn, sorteres alle annonser likt, uten hensyn til løft.",
+      "Prisene er totalpriser i norske kroner. Foretaket er ikke merverdiavgiftsregistrert, så det kommer ingen merverdiavgift eller andre gebyrer i tillegg.",
+      "Du må være minst 18 år for å kjøpe annonseløft.",
+      "Vi er etter loven forpliktet til å levere et annonseløft som er i samsvar med avtalen.",
     ],
   },
   {
-    title: "Betaling",
+    title: "3. Slik bestiller du",
     blocks: [
-      "Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps. Kvitteringen finner du under Min side, og du kan skrive den ut eller lagre den som PDF.",
+      "Velg annonse og pakke på siden [Annonseløft](/annonseloft). Før du betaler, ser du pakke, pris og varighet. Du kan gå tilbake og endre valget.",
+      "Du må gjøre dette før du betaler:",
+      ["Krysse av for at du godtar salgsvilkårene.", "Be om oppstart med en gang.", "Krysse av for at du forstår når angreretten går tapt."],
+      "Du bestiller ved å trykke på knappen «Bestill og betal med Vipps», der beløpet for valgt pakke vises. Deretter godkjenner du betalingen i Vipps.",
+      "Avtalen inngås på norsk. Bestillingen og kvitteringen lagres hos oss og er tilgjengelig under Min side.",
     ],
   },
   {
-    title: "Slik bestiller du",
+    title: "4. Betaling",
+    blocks: ["Du betaler med Vipps. Beløpet trekkes når betalingen er godkjent i Vipps. Vipps’ vilkår gjelder selve betalingen."],
+  },
+  {
+    title: "5. Levering",
     blocks: [
-      "Velg annonse og pakke på siden [Annonseløft](/annonseloft), kryss av for oppstart, og betal i Vipps. Før du betaler, ser du valgt pakke og pris, og kan gå tilbake og endre valget. Avtalen inngås på norsk. Bestillingen og kvitteringen lagres hos oss og er tilgjengelig under Min side.",
+      "Løftet aktiveres på annonsen med en gang betalingen er gjennomført. Det varer i perioden du har valgt. Du får bekreftelse på e-post og kvittering under Min side.",
+      "Sletter du annonsen eller merker den som solgt før perioden er over, stopper løftet. Resten av perioden refunderes ikke, med mindre du bruker angreretten innen 14 dager.",
     ],
   },
   {
-    title: "Levering",
+    title: "6. Angrerett",
+    id: "angrerett",
     blocks: [
-      "Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang betalingen er gjennomført, og varer i perioden du har valgt. Du får bekreftelse på e-post. Sletter du annonsen eller merker den som solgt før perioden er over, stopper løftet, og resten av perioden refunderes ikke. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den delen av perioden som ikke er brukt.",
+      "Du har 14 dagers angrerett fra avtalen inngås.",
+      "Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført. Du bekrefter også at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over.",
+      "Angreretten går altså tapt når perioden er over eller når angrefristen på 14 dager er ute, det som kommer først.",
+      "Angrer du før perioden er over og innen angrefristen, betaler du for den delen av perioden som er brukt, regnet i hele timer. Resten får du tilbake.",
+      `Slik ber du om refusjon: Trykk «Angre avtalen» på kvitteringen under Min side. Du kan også sende [angreskjemaet](/angreskjema) eller en e-post til ${COMPANY.email}. Det er nok med en tydelig melding om at du angrer. Når vi mottar meldingen elektronisk, får du bekreftelse på e-post med en gang. Pengene betales tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi fikk meldingen.`,
     ],
   },
   {
-    title: "Angrerett",
+    title: "7. Hvis løftet ikke blir levert eller ikke virker",
     blocks: [
-      "Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 21). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over (angrerettloven §§ 19 og 22 bokstav c). Varer perioden lenger enn 14 dager, som for Toppannonse, går angreretten ut når angrefristen er ute.",
-      `Angrer du innen fristen og før perioden er over, betaler du for den delen av perioden som er brukt fram til vi mottar meldingen, regnet i hele timer (angrerettloven § 26). Resten får du tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi har fått beskjed (angrerettloven § 24). Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende [angreskjemaet](/angreskjema), eller med en e-post til ${COMPANY.email}. Du får bekreftelse på e-post med en gang vi har mottatt meldingen.`,
+      `Gi beskjed til ${COMPANY.email}.`,
+      "Ble løftet ikke aktivert, eller gikk noe galt med betalingen, får du hele beløpet tilbake.",
+      "Har løftet en feil, kan vi rette den eller forlenge løftet. Lykkes ikke det, kan du kreve forholdsmessig prisavslag eller heve avtalen og få pengene tilbake.",
+      "Du har uansett rettighetene dine etter digitalytelsesloven.",
+      "Fjernes en annonse med aktivt løft fordi den bryter vilkårene, gjelder reglene om refusjon i [vilkårene](/vilkar#fjerning-av-annonser-og-utestengelse).",
     ],
   },
   {
-    title: "Hvis løftet ikke virker",
+    title: "8. Klager",
     blocks: [
-      `Blir løftet ikke levert som avtalt, gi beskjed til ${COMPANY.email}. Vi retter feilen eller forlenger løftet. Lykkes ikke det, får du et forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett. Se også [Refusjon av annonseløft](/refusjon).`,
+      `Er du ikke fornøyd, kan du kontakte oss via [kontaktskjemaet](/kontakt) med emnet «Annonseløft og betaling». Du kan også skrive til ${COMPANY.email}.`,
+      "Kommer vi ikke til enighet, kan du som forbruker klage til Forbrukertilsynet (forbrukertilsynet.no). Forbrukertilsynet kan mekle i saken. Fører ikke meklingen fram, kan saken bringes inn for Forbrukerklageutvalget.",
+      "Tvister kan også bringes inn for de alminnelige domstolene. Norsk rett gjelder.",
     ],
   },
   {
-    title: "Klager",
-    blocks: [
-      `Er du ikke fornøyd, send oss en melding via [kontaktskjemaet](/kontakt) med emnet «Annonseløft og betaling», eller på e-post til ${COMPANY.email}. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du be om mekling hos Forbrukertilsynet (forbrukertilsynet.no). Gjelder tvisten angreretten, kan den deretter bringes inn for Forbrukerklageutvalget. Du kan også bringe saken inn for de alminnelige domstolene.`,
-    ],
-  },
-  {
-    title: "Personopplysninger",
-    blocks: ["Vi behandler bare opplysningene som trengs for å gjennomføre kjøpet. Se [personvernerklæringen](/personvern)."],
+    title: "9. Personopplysninger",
+    blocks: ["Se [personvernerklæringen](/personvern)."],
   },
 ];
 
@@ -80,19 +98,18 @@ export function plainText(text: string, site = "https://www.hobbystrada.no") {
 /** Angreskjemaet (angrerettloven § 8, standardskjemaet i forskriften), samme innhold som /angreskjema. */
 export function angreskjemaBlocks(): (string | string[])[] {
   return [
-    `Til ${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}, e-post ${COMPANY.email}, telefon ${COMPANY.phone}.`,
-    "Jeg melder med dette at jeg ønsker å gå fra min avtale om kjøp av følgende tjeneste:",
+    "Fyll ut og send dette skjemaet hvis du vil gå fra avtalen om annonseløft. Du kan også trykke «Angre avtalen» på kvitteringen under Min side, eller sende en e-post. En tydelig melding om at du angrer, er nok.",
+    `Til: ${COMPANY.name}, org.nr. ${COMPANY.orgnr}, ${COMPANY.street}, ${COMPANY.postal}, e-post ${COMPANY.email}`,
+    "Jeg underretter herved om at jeg ønsker å gå fra min avtale om kjøp av følgende tjeneste:",
     [
       "Tjeneste: Annonseløft (pakke og annonse): ______________________________",
-      "Kvitteringsnummer: Salgsdokument nr. __________ (står på kvitteringen under Min side)",
       "Bestilt den: __________",
-      "Navn: ______________________________",
-      "Adresse: ______________________________",
-      "E-post (valgfritt): ______________________________",
+      "Forbrukerens navn: ______________________________",
+      "Forbrukerens adresse: ______________________________",
+      "Kvitteringsnummer (valgfritt, står på kvitteringen under Min side): __________",
+      "Forbrukerens underskrift (kun hvis skjemaet sendes på papir): ______________________________",
       "Dato: __________",
-      "Underskrift: ______________________________ (bare hvis skjemaet sendes på papir)",
     ],
-    `Fyll ut og send til ${COMPANY.email}, eller skriv ut og send i posten. Du kan også trykke «Angre avtalen» på kvitteringen under Min side, eller sende en vanlig e-post. Enhver tydelig melding om at du angrer, er nok.`,
-    "Angrefristen er 14 dager fra avtalen ble inngått. Har du bedt om at løftet starter med en gang, betaler du for den delen av perioden som er brukt når vi mottar meldingen, og får resten tilbake til samme betalingsmåte innen 14 dager. Er perioden over, er løftet levert fullt ut, og angreretten har gått tapt.",
+    "Hva som skjer når du angrer, står i salgsvilkårene under «Angrerett» (https://www.hobbystrada.no/salgsvilkar#angrerett).",
   ];
 }
