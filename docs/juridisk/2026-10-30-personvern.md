@@ -10,8 +10,6 @@ Sist oppdatert: 30. oktober 2026
 
 HOBBYSTRADA ULLEBERG, org.nr. 938 698 929, Stalsbergs gate 4, 3612 Kongsberg, er ansvarlig for behandlingen av personopplysningene dine på hobbystrada.no. Du kan kontakte oss på post@hobbystrada.no eller via kontaktskjemaet. Vi har ikke personvernombud.
 
-Vi har ingen reklame, analyse, sporing eller nyhetsbrev. E-post sendes bare om hendelser du selv har utløst.
-
 ## 2. Hvilke opplysninger vi behandler, og hvor de kommer fra
 
 2.1 Fra Vipps ved innlogging
@@ -51,7 +49,7 @@ Opplysninger: navn, e-post, telefonnummer, Vipps-ID og tidspunktet du bekreftet 
 
 Grunnlag: avtale (art. 6 nr. 1 b).
 
-Lagringstid: til kontoen slettes. Inaktive kontoer: e-post sendes etter 23 måneder uten innlogging, og kontoen slettes etter 24 måneder hvis du ikke logger inn.
+Lagringstid: til kontoen slettes. Kontoer uten innlogging i 24 måneder slettes.
 
 3.2 Annonser
 
@@ -87,7 +85,7 @@ Vi leser meldinger bare når en annonse eller bruker er rapportert, ved mistanke
 
 Grunnlag: berettiget interesse, for å beskytte brukerne mot svindel og holde markedet trygt. Når du ber om hjelp: avtale. Når loven krever det: rettslig forpliktelse (art. 6 nr. 1 c).
 
-Lagringstid: vi lager ikke egne kopier. Vanlige regler for meldinger gjelder.
+Lagringstid: som for meldinger mellom brukere.
 
 3.6 Annonseløft og betaling
 
@@ -129,7 +127,7 @@ Opplysninger: Vipps-ID, konto-ID, tidspunkt, hvilket vilkår som er brutt, og hv
 
 Kontoen sperres og annonsene skjules. Kontoen og annonsene slettes 30 dager etter utestengelsen, eller når klagen er avgjort hvis du har klaget innen fristen.
 
-Avgjørelsen tas ikke bare automatisk. Du får begrunnelse på e-post og kan klage til post@hobbystrada.no innen 30 dager.
+Avgjørelsen tas ikke bare automatisk. Du får begrunnelse og kan klage til post@hobbystrada.no innen 30 dager.
 
 Grunnlag: berettiget interesse, for å håndheve vilkårene og beskytte brukerne og markedet.
 
@@ -147,7 +145,7 @@ Der grunnlaget er berettiget interesse, har vi vurdert at interessen vår ikke v
 
 ## 4. Hvem vi deler opplysningene med
 
-Vi selger aldri personopplysninger. Opplysningene deles med:
+Opplysningene deles med:
 
 - andre brukere: fornavn, sted og annonser. I chatten deles hele navnet og det du skriver og sender.
 - Vipps MobilePay AS (org.nr. 918 713 867), for innlogging og betaling. Vipps er selvstendig behandlingsansvarlig for sine opplysninger.
@@ -191,9 +189,7 @@ Skriv til post@hobbystrada.no for å bruke rettighetene dine. Vi svarer uten ugr
 
 ## 8. Automatiserte avgjørelser
 
-Vi tar ikke avgjørelser som har rettslig virkning for deg, eller som på tilsvarende måte påvirker deg i betydelig grad, bare automatisk. Vi lager ikke profiler av deg.
-
-Vi kan bruke automatiske verktøy for å oppdage spam og misbruk. Avgjørelser om å avvise annonser eller stenge kontoer tas likevel ikke bare automatisk.
+Vi tar ikke avgjørelser som har rettslig virkning for deg, eller som på tilsvarende måte påvirker deg i betydelig grad, bare automatisk.
 
 ## 9. Informasjonskapsler og lagring i nettleseren
 
@@ -204,10 +200,6 @@ Vi bruker bare det som trengs for at nettsiden skal virke, eller det du selv ber
 - Favoritter, lukkede varsler og hvilke annonser du har åpnet (så en annonse teller én visning per person): lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.
 
 Vi bruker ikke informasjonskapsler som krever samtykke, og har derfor ikke noe samtykkeverktøy. Knappen «Om informasjonskapsler» nederst på siden viser denne informasjonen.
-
-## 10. Sikkerhet
-
-All trafikk er kryptert. Bare de som trenger det for å drifte tjenesten, har tilgang til opplysningene. Meldinger leses bare i tilfellene som er beskrevet over. Bilder i chatten ligger i privat lagring og vises bare for de to i samtalen, via tidsbegrensede lenker.
 
 ## Kontakt
 

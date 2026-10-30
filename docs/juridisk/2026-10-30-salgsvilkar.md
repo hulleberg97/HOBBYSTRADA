@@ -6,51 +6,89 @@ JURIDISK
 
 Sist oppdatert: 30. oktober 2026
 
-## Selger
+## 1. Hvem du kjøper av
 
-HOBBYSTRADA ULLEBERG, org.nr. 938 698 929, Stalsbergs gate 4, 3612 Kongsberg. E-post: post@hobbystrada.no. Telefon: 40 10 57 42. Vilkårene gjelder kjøp av annonseløft på HOBBYSTRADA. Kort i markedet kjøpes direkte fra andre brukere, og den handelen er HOBBYSTRADA ikke part i.
+Selger er HOBBYSTRADA ULLEBERG, enkeltpersonforetak, org.nr. 938 698 929, Stalsbergs gate 4, 3612 Kongsberg. Du når oss på e-post post@hobbystrada.no eller telefon 40 10 57 42. Foretaket er ikke registrert i Merverdiavgiftsregisteret.
 
-## Hva du kjøper
+Disse vilkårene gjelder kjøp av annonseløft. Kort i markedet kjøper du direkte fra andre brukere. Den handelen er HOBBYSTRADA ikke part i. Se vilkårene.
 
-Annonseløft gir annonsen bedre synlighet i en bestemt periode. Perioden starter når løftet aktiveres. Løftet er et engangskjøp og fornyes ikke automatisk. Annonser med løft er merket «Annonseløft».
+## 2. Hva du kjøper
+
+Annonseløft er en digital tjeneste som gir annonsen bedre synlighet i en bestemt periode. Perioden starter når løftet aktiveres. Det er et engangskjøp, og det fornyes ikke automatisk. Annonser med løft er merket «Annonseløft».
+
+Du kan velge mellom disse pakkene:
 
 - Topp av listen, 3 dager, 39 kr: Annonsen vises foran vanlige annonser i markedet og i søkeresultatene.
-- Fremhevet, 7 dager, 79 kr: Annonsen får gullmerke og gullramme og vises foran annonser med Topp av listen og vanlige annonser. Annonsen vises også på forsiden hele perioden, etter toppannonsene.
-- Toppannonse, 30 dager, 199 kr: Annonsen får gullmerke og gullramme, vises først i markedet og i søkeresultatene, og vises først på forsiden hele perioden. Annonsene på forsiden glir sakte bortover, så alle kortene passerer midten etter tur.
+- Fremhevet, 7 dager, 79 kr: Annonsen får gullmerke og gullramme. Den vises foran annonser med Topp av listen og vanlige annonser, og vises på forsiden i perioden etter toppannonsene.
+- Toppannonse, 30 dager, 199 kr: Annonsen får gullmerke og gullramme. Den vises først i markedet og i søkeresultatene, og først på forsiden i perioden.
 
-Sorterer kjøperen selv etter pris eller navn, sorteres alle annonser likt, uten hensyn til løft.
+Sorterer du selv etter pris eller navn, sorteres alle annonser likt, uten hensyn til løft.
 
-Alle priser er i norske kroner og uten merverdiavgift, fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Du må være 18 år for å kjøpe annonseløft.
+Prisene er totalpriser i norske kroner. Foretaket er ikke merverdiavgiftsregistrert, så det kommer ingen merverdiavgift eller andre gebyrer i tillegg.
 
-## Betaling
+Du må være minst 18 år for å kjøpe annonseløft.
 
-Du betaler med Vipps i kassen på siden for annonseløft. Beløpet trekkes når betalingen er godkjent i Vipps. Kvitteringen finner du under Min side, og du kan skrive den ut eller lagre den som PDF.
+Vi er etter loven forpliktet til å levere et annonseløft som er i samsvar med avtalen.
 
-## Slik bestiller du
+## 3. Slik bestiller du
 
-Velg annonse og pakke på siden Annonseløft, kryss av for oppstart, og betal i Vipps. Før du betaler, ser du valgt pakke og pris, og kan gå tilbake og endre valget. Avtalen inngås på norsk. Bestillingen og kvitteringen lagres hos oss og er tilgjengelig under Min side.
+Velg annonse og pakke på siden Annonseløft. Før du betaler, ser du pakke, pris og varighet. Du kan gå tilbake og endre valget.
 
-## Levering
+Du må gjøre dette før du betaler:
 
-Annonseløft er en digital tjeneste. Løftet aktiveres på annonsen med en gang betalingen er gjennomført, og varer i perioden du har valgt. Du får bekreftelse på e-post. Sletter du annonsen eller merker den som solgt før perioden er over, stopper løftet, og resten av perioden refunderes ikke. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den delen av perioden som ikke er brukt.
+- Krysse av for at du godtar salgsvilkårene.
+- Be om oppstart med en gang.
+- Krysse av for at du forstår når angreretten går tapt.
 
-## Angrerett
+Du bestiller ved å trykke på knappen «Bestill og betal med Vipps», der beløpet for valgt pakke vises. Deretter godkjenner du betalingen i Vipps.
 
-Du har 14 dagers angrerett fra avtalen inngås (angrerettloven § 21). Annonseløft er en tjeneste. Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført, og bekrefter at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over (angrerettloven §§ 19 og 22 bokstav c). Varer perioden lenger enn 14 dager, som for Toppannonse, går angreretten ut når angrefristen er ute.
+Avtalen inngås på norsk. Bestillingen og kvitteringen lagres hos oss og er tilgjengelig under Min side.
 
-Angrer du innen fristen og før perioden er over, betaler du for den delen av perioden som er brukt fram til vi mottar meldingen, regnet i hele timer (angrerettloven § 26). Resten får du tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi har fått beskjed (angrerettloven § 24). Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende angreskjemaet, eller med en e-post til post@hobbystrada.no. Du får bekreftelse på e-post med en gang vi har mottatt meldingen.
+## 4. Betaling
 
-## Hvis løftet ikke virker
+Du betaler med Vipps. Beløpet trekkes når betalingen er godkjent i Vipps. Vipps’ vilkår gjelder selve betalingen.
 
-Blir løftet ikke levert som avtalt, gi beskjed til post@hobbystrada.no. Vi retter feilen eller forlenger løftet. Lykkes ikke det, får du et forholdsmessig prisavslag eller pengene tilbake. Rettighetene dine etter digitalytelsesloven gjelder uansett. Se også Refusjon av annonseløft.
+## 5. Levering
 
-## Klager
+Løftet aktiveres på annonsen med en gang betalingen er gjennomført. Det varer i perioden du har valgt. Du får bekreftelse på e-post og kvittering under Min side.
 
-Er du ikke fornøyd, send oss en melding via kontaktskjemaet med emnet «Annonseløft og betaling», eller på e-post til post@hobbystrada.no. Vi svarer så snart vi kan. Kommer vi ikke til enighet, kan du be om mekling hos Forbrukertilsynet (forbrukertilsynet.no). Gjelder tvisten angreretten, kan den deretter bringes inn for Forbrukerklageutvalget. Du kan også bringe saken inn for de alminnelige domstolene.
+Sletter du annonsen eller merker den som solgt før perioden er over, stopper løftet. Resten av perioden refunderes ikke, med mindre du bruker angreretten innen 14 dager.
 
-## Personopplysninger
+## 6. Angrerett
 
-Vi behandler bare opplysningene som trengs for å gjennomføre kjøpet. Se personvernerklæringen.
+Du har 14 dagers angrerett fra avtalen inngås.
+
+Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført. Du bekrefter også at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over.
+
+Angreretten går altså tapt når perioden er over eller når angrefristen på 14 dager er ute, det som kommer først.
+
+Angrer du før perioden er over og innen angrefristen, betaler du for den delen av perioden som er brukt, regnet i hele timer. Resten får du tilbake.
+
+Slik ber du om refusjon: Trykk «Angre avtalen» på kvitteringen under Min side. Du kan også sende angreskjemaet eller en e-post til post@hobbystrada.no. Det er nok med en tydelig melding om at du angrer. Når vi mottar meldingen elektronisk, får du bekreftelse på e-post med en gang. Pengene betales tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi fikk meldingen.
+
+## 7. Hvis løftet ikke blir levert eller ikke virker
+
+Gi beskjed til post@hobbystrada.no.
+
+Ble løftet ikke aktivert, eller gikk noe galt med betalingen, får du hele beløpet tilbake.
+
+Har løftet en feil, kan vi rette den eller forlenge løftet. Lykkes ikke det, kan du kreve forholdsmessig prisavslag eller heve avtalen og få pengene tilbake.
+
+Du har uansett rettighetene dine etter digitalytelsesloven.
+
+Fjernes en annonse med aktivt løft fordi den bryter vilkårene, gjelder reglene om refusjon i vilkårene.
+
+## 8. Klager
+
+Er du ikke fornøyd, kan du kontakte oss via kontaktskjemaet med emnet «Annonseløft og betaling». Du kan også skrive til post@hobbystrada.no.
+
+Kommer vi ikke til enighet, kan du som forbruker klage til Forbrukertilsynet (forbrukertilsynet.no). Forbrukertilsynet kan mekle i saken. Fører ikke meklingen fram, kan saken bringes inn for Forbrukerklageutvalget.
+
+Tvister kan også bringes inn for de alminnelige domstolene. Norsk rett gjelder.
+
+## 9. Personopplysninger
+
+Se personvernerklæringen.
 
 ## Kontakt
 
