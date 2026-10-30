@@ -119,15 +119,8 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                 <span suppressHydrationWarning>Lagt ut {timeAgo(l.createdAt).toLowerCase()}</span>
               </span>
             </div>
-            {l.ownerListing ? (
-              <p className="mt-1.5 text-xs text-slate-600">
-                <strong className="font-semibold text-slate-800">Selges av HOBBYSTRADA ULLEBERG</strong> (org.nr. 938 698 929), et foretak. Forbrukerkjøpsloven og 14
-                dagers angrerett gjelder.{" "}
-                <Link href="/vilkar#kort-fra-hobbystrada" className="underline underline-offset-2 hover:text-slate-900">
-                  Les mer
-                </Link>
-              </p>
-            ) : (
+            {/* Kort fra HOBBYSTRADA har merket «Fra HOBBYSTRADA» på bildet, og vilkårene («Kort fra HOBBYSTRADA») forklarer rettighetene */}
+            {l.ownerListing ? null : (
               <p className="mt-1.5 text-xs text-slate-600">
                 <strong className="font-semibold text-slate-800">Privat selger.</strong> Forbrukerkjøpsloven og angrerett gjelder ikke.{" "}
                 <Link href="/vilkar#ansvar-mellom-kjoper-og-selger" className="underline underline-offset-2 hover:text-slate-900">
