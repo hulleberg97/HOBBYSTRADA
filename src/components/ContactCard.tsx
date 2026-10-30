@@ -107,17 +107,19 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               <Link href={`/selger/${l.ownerId ?? "hobbystrada"}`} className="truncate text-sm font-semibold text-slate-900 hover:underline">
                 {l.seller}
               </Link>
-              {l.sellerVerified && <VerifiedBadge />}
+              {l.sellerVerified && !l.isExample && <VerifiedBadge />}
             </span>
             <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1">
                 <MapPinIcon className="h-3.5 w-3.5" aria-hidden="true" />
                 {l.location ?? "Sted ikke oppgitt"}
               </span>
-              <span className="inline-flex items-center gap-1">
-                <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                <span suppressHydrationWarning>Lagt ut {timeAgo(l.createdAt).toLowerCase()}</span>
-              </span>
+              {!l.isExample && (
+                <span className="inline-flex items-center gap-1">
+                  <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span suppressHydrationWarning>Lagt ut {timeAgo(l.createdAt).toLowerCase()}</span>
+                </span>
+              )}
             </div>
             {/* Innehaverens egne annonser viser ingen selgererklæring */}
             {l.isExample ? null : (

@@ -90,7 +90,7 @@ export default function PrivacyPage() {
                 what="Vise annonsene dine i markedet. Før en annonse vises, går vi gjennom den manuelt. Andre ser fornavnet ditt, stedet og innholdet i annonsen, aldri e-postadressen din."
                 data="Annonseinnhold, bilder, fornavn og sted."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
-                kept="Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager."
+                kept="Til du sletter annonsen eller kontoen. Avviste annonser slettes etter 30 dager. Klager du på avvisningen, slettes annonsen først når klagen er avgjort."
               />
               <Purpose
                 title="Prisarkivet «Solgte kort»"

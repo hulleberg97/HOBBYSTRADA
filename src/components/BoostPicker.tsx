@@ -210,7 +210,8 @@ export function BoostPicker({ frontpage, demo }: { frontpage: FrontpageAvailabil
         <label className="mt-2 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" autoComplete="off" checked={Boolean(consentLoss)} onChange={(e) => setConsentLoss(e.target.checked ? new Date().toISOString() : null)} className={check} />
           <span>
-            Jeg forstår at angreretten går tapt når perioden er over, og at jeg betaler for dagene som er brukt hvis jeg angrer før det.{" "}
+            Jeg forstår at angreretten går tapt når perioden er over eller angrefristen på 14 dager er ute, det som kommer først. Angrer jeg før det,
+            betaler jeg for den delen av perioden som er brukt.{" "}
             <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
               Salgsvilkår
             </Link>{" "}

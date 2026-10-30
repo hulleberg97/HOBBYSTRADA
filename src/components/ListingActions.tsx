@@ -3,8 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-/** reasons: velg en grunn før handlingen utføres (brukes når admin avviser en annonse). */
-type Action = { label: string; status?: string; del?: boolean; tone?: "primary" | "danger"; reasons?: string[] };
+/**
+ * ask: administrator må oppgi hvilket vilkår som er brutt og en konkret begrunnelse før handlingen utføres
+ * (avvisning av ny annonse, fjerning av publisert annonse). warning/refund viser valgfrie felt for fjerning.
+ * payload: ekstra felt som sendes som de er (f.eks. klage mottatt/avgjort).
+ */
+type Ask = { rules: string[]; confirm: string; warning?: boolean; refund?: boolean };
+type Action = { label: string; status?: string; del?: boolean; tone?: "primary" | "danger"; ask?: Ask; payload?: Record<string, unknown> };
 
 export function ListingActions({ id, actions }: { id: string; actions: Action[] }) {
   const router = useRouter();
@@ -12,24 +17,34 @@ export function ListingActions({ id, actions }: { id: string; actions: Action[] 
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [error, setError] = useState("");
   const [asking, setAsking] = useState<Action | null>(null);
+  const [rule, setRule] = useState("");
   const [reason, setReason] = useState("");
+  const [warning, setWarning] = useState(false);
+  const [refund, setRefund] = useState<"ja" | "nei">("ja");
 
   const run = async (a: Action) => {
-    if (a.del && !confirmDelete) {
-      setConfirmDelete(true);
+    if (a.ask && asking !== a) {
+      setAsking(a);
+      setRule(a.ask.rules[0]);
+      setReason("");
+      setWarning(false);
       return;
     }
-    if (a.reasons && asking !== a) {
-      setAsking(a);
-      setReason(a.reasons[0]);
+    if (a.ask && !reason.trim()) {
+      setError("Skriv en konkret begrunnelse.");
+      return;
+    }
+    if (a.del && !a.ask && !confirmDelete) {
+      setConfirmDelete(true);
       return;
     }
     setBusy(true);
     setError("");
+    const extra = a.ask ? { rule, reason: reason.trim(), warning: a.ask.warning ? warning : undefined, refundBoost: a.ask.refund ? refund === "ja" : undefined } : {};
     const res = await fetch(`/api/listings/${id}`, {
       method: a.del ? "DELETE" : "PATCH",
       headers: { "content-type": "application/json" },
-      body: a.del ? undefined : JSON.stringify({ status: a.status, ...(a.reasons ? { reason } : {}) }),
+      body: a.del && !a.ask ? undefined : JSON.stringify({ ...(a.status ? { status: a.status } : {}), ...(a.payload ?? {}), ...extra }),
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
@@ -55,31 +70,49 @@ export function ListingActions({ id, actions }: { id: string; actions: Action[] 
           onClick={() => run(a)}
           className={`inline-flex h-9 items-center rounded-full px-4 text-xs font-semibold transition disabled:opacity-50 ${tone[a.tone ?? "default"]}`}
         >
-          {a.del && confirmDelete ? "Bekreft sletting" : a.label}
+          {a.del && !a.ask && confirmDelete ? "Bekreft sletting" : a.label}
         </button>
       ))}
-      {asking?.reasons && (
-        <span className="flex w-full flex-wrap items-center gap-2">
-          <label className="sr-only" htmlFor={`grunn-${id}`}>
-            Grunn
+      {asking?.ask && (
+        <div className="w-full space-y-2 rounded-2xl bg-slate-50 p-3 ring-1 ring-slate-200">
+          <label className="block text-xs font-semibold text-slate-700">
+            Vilkår som er brutt
+            <select value={rule} onChange={(e) => setRule(e.target.value)} className="mt-1 block h-9 w-full rounded-xl border border-slate-300 bg-white px-3 text-xs font-normal text-slate-800">
+              {asking.ask.rules.map((r) => (
+                <option key={r}>{r}</option>
+              ))}
+            </select>
           </label>
-          <select
-            id={`grunn-${id}`}
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            className="h-9 rounded-full border border-slate-300 bg-white px-3 text-xs text-slate-800"
-          >
-            {asking.reasons.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-          <button type="button" disabled={busy} onClick={() => run(asking)} className="inline-flex h-9 items-center rounded-full px-4 text-xs font-semibold text-destructive ring-1 ring-inset ring-destructive/30 hover:bg-destructive/5 disabled:opacity-50">
-            Bekreft avvisning
-          </button>
-          <button type="button" onClick={() => setAsking(null)} className="text-xs font-medium text-slate-500 underline">
-            Avbryt
-          </button>
-        </span>
+          <label className="block text-xs font-semibold text-slate-700">
+            Begrunnelse (obligatorisk, konkret hva som må rettes)
+            <textarea value={reason} onChange={(e) => setReason(e.target.value)} rows={2} required className="mt-1 block w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-normal text-slate-800" />
+          </label>
+          {asking.ask.warning && (
+            <label className="flex items-center gap-2 text-xs text-slate-700">
+              <input type="checkbox" checked={warning} onChange={(e) => setWarning(e.target.checked)} />
+              Dette er en advarsel (mindre alvorlig brudd). Setningen «Dette er en advarsel. Gjentatte brudd kan føre til at kontoen stenges.» tas med.
+            </label>
+          )}
+          {asking.ask.refund && (
+            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-700">
+              <span className="font-semibold">Annonsen har aktivt annonseløft:</span>
+              <label className="flex items-center gap-1.5">
+                <input type="radio" name={`refund-${id}`} checked={refund === "ja"} onChange={() => setRefund("ja")} /> Refunder ubrukt del
+              </label>
+              <label className="flex items-center gap-1.5">
+                <input type="radio" name={`refund-${id}`} checked={refund === "nei"} onChange={() => setRefund("nei")} /> Ingen refusjon (alvorlig eller gjentatt brudd)
+              </label>
+            </div>
+          )}
+          <div className="flex items-center gap-3">
+            <button type="button" disabled={busy} onClick={() => run(asking)} className="inline-flex h-9 items-center rounded-full px-4 text-xs font-semibold text-destructive ring-1 ring-inset ring-destructive/30 hover:bg-destructive/5 disabled:opacity-50">
+              {asking.ask.confirm}
+            </button>
+            <button type="button" onClick={() => setAsking(null)} className="text-xs font-medium text-slate-500 underline">
+              Avbryt
+            </button>
+          </div>
+        </div>
       )}
       {confirmDelete && (
         <button type="button" onClick={() => setConfirmDelete(false)} className="text-xs font-medium text-slate-500 underline">

@@ -84,7 +84,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           <p className="mt-6 text-xs text-slate-500">
             Beløpet er uten merverdiavgift. {COMPANY.name} er ikke registrert i Merverdiavgiftsregisteret. Betalingen er gjennomført i sin helhet, ingen
             forfall. Angrerett: du ba om at løftet skulle starte med en gang, og bekreftet at angreretten går tapt når løftet er levert fullt ut. Angrer du
-            innen 14 dager og før perioden er over, betaler du for dagene som er brukt og får resten tilbake (se salgsvilkårene).
+            innen 14 dager og før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake (se salgsvilkårene).
           </p>
           {inv.userId === user.id && <WithdrawBoost orderId={inv.id} days={inv.days} amount={inv.amount} paidAt={inv.paidAt} />}
         </article>

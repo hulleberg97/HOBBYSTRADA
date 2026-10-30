@@ -1,23 +1,25 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { angreDato, angreDatoTekst, refusjon } from "@/lib/angrerett";
 
 const now = () => Date.now();
 const subscribe = () => () => {};
 
-/** På kvitteringen: bruk angreretten. Knappen vises til angrefristen på 14 dager er ute. */
+/** På kvitteringen: bruk angreretten. Knappen vises til og med angredatoen (slutten av perioden eller 14 dager, det som kommer først). */
 export function WithdrawBoost({ orderId, days, amount, paidAt }: { orderId: string; days: number; amount: number; paidAt: string }) {
   const [state, setState] = useState<{ busy?: boolean; done?: string; error?: string }>({});
   // Klokka leses via useSyncExternalStore, så rendering er ren (react-hooks/purity)
   const clock = useSyncExternalStore(subscribe, now, () => 0);
-  const paid = new Date(paidAt).getTime();
-  const sinceDays = clock ? (clock - paid) / 864e5 : 0;
   if (!clock) return null;
-  if (sinceDays > 14) return null;
-  const used = Math.min(days, Math.ceil(sinceDays));
-  const refund = Math.round((amount * (days - used)) / days);
+  const frist = angreDato(paidAt, days);
+  if (clock > frist.getTime()) return null;
+  const { totalHours, usedHours, refund } = refusjon(amount, days, paidAt, clock);
   async function run() {
-    const q = used >= days ? "Angre avtalen? Perioden er over, så løftet er levert fullt ut. Vi svarer deg på e-post." : `Angre avtalen? Løftet stoppes nå, og du får tilbake ${refund} kr (${days - used} av ${days} dager er ubrukt).`;
+    const q =
+      usedHours >= totalHours
+        ? "Angre avtalen? Perioden er over, så løftet er levert fullt ut. Vi svarer deg på e-post."
+        : `Angre avtalen? Løftet stoppes nå, og du får tilbake ${refund} kr for den delen av perioden som ikke er brukt.`;
     if (!confirm(q)) return;
     setState({ busy: true });
     const res = await fetch("/api/boost/angre", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ orderId }) });
@@ -32,7 +34,9 @@ export function WithdrawBoost({ orderId, days, amount, paidAt }: { orderId: stri
       ) : (
         <>
           <p className="font-semibold text-slate-900">Angrerett</p>
-          <p className="mt-1 text-slate-600">Du har 14 dagers angrerett fra kjøpet. Angrer du før perioden er over, får du tilbake ubrukte dager.</p>
+          <p className="mt-1 text-slate-600">
+            Du kan angre til og med {angreDatoTekst(frist)}. Angrer du før det, får du tilbake den delen av perioden som ikke er brukt.
+          </p>
           <button
             type="button"
             disabled={state.busy}

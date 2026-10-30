@@ -116,11 +116,11 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                   <label className="mb-4 flex cursor-pointer items-start gap-3 text-sm text-slate-700">
                     <input type="checkbox" checked={adult} onChange={(e) => setAdult(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
                     <span>
-                      Jeg bekrefter at jeg er minst 18 år, og godtar{" "}
+                      Jeg bekrefter at jeg er minst 18 år og godtar{" "}
                       <Link href="/vilkar" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
                         vilkårene
-                      </Link>{" "}
-                      og{" "}
+                      </Link>
+                      . Jeg har lest{" "}
                       <Link href="/personvern" target="_blank" className="font-medium text-slate-900 underline underline-offset-2">
                         personvernerklæringen
                       </Link>
@@ -135,11 +135,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                     </span>
                   )}
                   <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
-                    Vi får navnet, e-posten og telefonnummeret ditt fra Vipps. Adressen din hentes ikke. Ved å fortsette godtar du{" "}
-                    <Link href="/vilkar" target="_blank" className="underline underline-offset-2">
-                      vilkårene
-                    </Link>
-                    .
+                    Vi får navnet, e-posten og telefonnummeret ditt fra Vipps. Adressen din hentes ikke.
                   </p>
                   {mode === "login" && (
                     <p className="mt-6 text-center text-sm text-slate-600">Ny her? Kontoen lages automatisk første gang du logger inn med Vipps.</p>

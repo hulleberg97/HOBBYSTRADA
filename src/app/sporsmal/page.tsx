@@ -21,7 +21,7 @@ const SECTIONS = [
       ],
       [
         "Hvordan gir jeg bud?",
-        "Trykk «Bud» i chatten og skriv beløpet i hele kroner. Selgeren kan godta eller avslå. Godtar selgeren, er avtalen inngått mellom dere, og du får en Vipps-knapp i chatten.",
+        "Trykk «Bud» i chatten og skriv beløpet i hele kroner. Budet er et uforpliktende prisforslag. Godtar selgeren, får du en Vipps-knapp i chatten. Dere er ikke bundet før du har betalt.",
       ],
       [
         "Hvordan betaler jeg?",
@@ -83,14 +83,14 @@ const SECTIONS = [
         "Hva er annonseløft?",
         "Annonseløft gir annonsen mer synlighet. Du kan velge Topp av listen (3 dager), Fremhevet (7 dager) eller Toppannonse (30 dager). Fremhevede annonser vises på forsiden i 7 dager, og toppannonser vises først på forsiden i 30 dager. Priser finner du på siden for annonseløft.",
       ],
-      ["Hvordan kjøper jeg annonseløft?", "Velg annonse og pakke på siden for annonseløft, kryss av for angrerett og betal med Vipps. Topp av listen koster 39 kr (3 dager), Fremhevet 79 kr (7 dager) og Toppannonse 199 kr (30 dager)."],
+      ["Hvordan kjøper jeg annonseløft?", "Velg annonse og pakke på siden for annonseløft, kryss av for at løftet starter med en gang, og betal med Vipps. Topp av listen koster 39 kr (3 dager), Fremhevet 79 kr (7 dager) og Toppannonse 199 kr (30 dager)."],
       [
         "Hvordan fungerer forsiden?",
         "Raden øverst på forsiden viser toppannonser først, deretter fremhevede annonser, deretter kort vi selv har valgt. Finnes ingen av disse, vises de nyeste annonsene. Kort vi velger selv er ikke betalt for.",
       ],
       [
         "Kan jeg angre et annonseløft?",
-        "Ja, innen 14 dager. Trykk «Angre avtalen» på kvitteringen under Min side. Du betaler for dagene som er brukt og får resten tilbake innen 14 dager.",
+        "Ja, innen 14 dager, så lenge perioden ikke er over. Trykk «Angre avtalen» på kvitteringen under Min side. Du betaler for den delen av perioden som er brukt, og får resten tilbake innen 14 dager.",
       ],
     ],
   },
@@ -104,7 +104,7 @@ const SECTIONS = [
       ],
       [
         "Hvem har ansvaret hvis noe går galt?",
-        "Kjøper og selger. HOBBYSTRADA er en annonseplass og ikke part i handelen. Vi har derfor ikke ansvar for kortet, betalingen eller frakten. Uenighet løses mellom dere, og ved svindel bør du kontakte politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene.",
+        "Kjøper og selger. HOBBYSTRADA er en annonseplass og ikke part i handelen. Vi har derfor ikke ansvar for kortet, betalingen eller frakten. Uenighet løses i første omgang mellom dere. Gjelder uenigheten kjøp av et kort, kan dere også klage til Forbrukertilsynet. Ved svindel bør du kontakte politiet. Vi fjerner annonser og stenger kontoer som bryter vilkårene.",
       ],
       ["Kan jeg sende bilder i chatten?", "Ja. Trykk på bildeknappen i chatten for å sende et bilde, for eksempel av baksiden eller et hjørne av kortet."],
       ["Jeg ser en mistenkelig annonse. Hva gjør jeg?", "Trykk «Rapporter» på annonsen, eller kontakt oss med lenken til annonsen."],

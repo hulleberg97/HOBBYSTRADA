@@ -58,10 +58,10 @@ export default function TermsPage() {
                 Merket «Verifisert med Vipps» betyr bare at brukeren har logget inn med Vipps.
               </p>
               <p className="mt-3">
-                <strong>Bud.</strong> Et bud i chatten er et tilbud fra kjøperen til selgeren. Godtar selgeren budet, er det inngått en avtale mellom dem.
-                Kjøperen får da en lenke som åpner Vipps med selgeren valgt. Betalingen skjer direkte mellom kjøper og
-                selger. HOBBYSTRADA er ikke part i avtalen eller betalingen, og holder ikke penger på vegne av noen. Blir avtalen ikke fulgt opp, kan den
-                andre parten rapportere det (se «Rapportere annonser og brukere»).
+                <strong>Bud.</strong> Et bud i chatten er et uforpliktende prisforslag fra kjøperen til selgeren. Godtar selgeren budet, får kjøperen en
+                lenke som åpner Vipps med selgeren valgt. Verken kjøper eller selger er bundet før kjøperen har betalt. Betalingen skjer direkte mellom
+                kjøper og selger. HOBBYSTRADA er ikke part i avtalen eller betalingen, og holder ikke penger på vegne av noen. Blir avtalen ikke fulgt opp
+                etter at kjøperen har betalt, kan kjøperen rapportere det (se «Rapportere annonser og brukere»).
               </p>
             </>
           ),
@@ -145,10 +145,12 @@ export default function TermsPage() {
                 følger disse vilkårene og <Link href="/salgsvilkar">salgsvilkårene</Link>. Du får bekreftelse på e-post, og kvitteringen ligger under Min side.
               </p>
               <p className="mt-3">
-                <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven. Når du bestiller, ber du om at løftet starter med en gang
-                betalingen er gjennomført. Da bekrefter du samtidig at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over. Angrer
-                du før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende{" "}
-                <Link href="/angreskjema">angreskjemaet</Link>, eller med en e-post til {COMPANY.email}.
+                <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven, regnet fra avtalen inngås. Når du bestiller, ber du om at
+                løftet starter med en gang betalingen er gjennomført. Da bekrefter du samtidig at angreretten går tapt når løftet er levert fullt ut, altså
+                når perioden er over. Varer perioden lenger enn 14 dager, som for Toppannonse, går angreretten ut når fristen på 14 dager er ute. Angrer du
+                innen fristen og før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer med knappen
+                «Angre avtalen» på kvitteringen under Min side, ved å sende <Link href="/angreskjema">angreskjemaet</Link>, eller med en e-post til{" "}
+                {COMPANY.email}.
               </p>
               <p className="mt-3">
                 <strong>Hvis løftet ikke virker.</strong> Blir løftet ikke levert som avtalt, gi beskjed til {COMPANY.email}. Vi retter feilen eller
@@ -192,8 +194,8 @@ export default function TermsPage() {
               />
               <p className="mt-3">
                 Selgerne på HOBBYSTRADA er privatpersoner. Kjøper du fra en privatperson, gjelder ikke forbrukerrettighetene, for eksempel etter
-                forbrukerkjøpsloven og angrerettloven. Handelen reguleres da av kjøpsloven, og kjøper og selger kan avtale andre vilkår. Uenighet løses mellom
-                kjøper og selger.
+                forbrukerkjøpsloven og angrerettloven. Handelen reguleres da av kjøpsloven, og kjøper og selger kan avtale andre vilkår. Uenighet løses i første omgang mellom kjøper og selger. Gjelder uenigheten kjøp av et kort, kan dere også klage til
+                Forbrukertilsynet, som kan mekle og sende saken videre til Forbrukerklageutvalget. HOBBYSTRADA er ikke part i slike saker.
               </p>
               <p className="mt-3" id="eksempelannonser">
                 <strong>Eksempelannonser.</strong> Noen annonser er lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. De er merket «Eksempelannonse» og
@@ -220,10 +222,15 @@ export default function TermsPage() {
                 ansvarlige for innholdet i annonser og meldinger. Vi fjerner ulovlig innhold uten ugrunnet opphold når vi blir klar over det.
               </p>
               <p className="mt-3">
-                Vi er ikke ansvarlige for indirekte tap, som tapt fortjeneste eller tapt handel. Vårt samlede ansvar overfor deg er begrenset til det du har
-                betalt for annonseløft de siste 12 månedene, men minst 1 000 kr. Begrensningene gjelder ikke hvis vi har opptrådt forsettlig eller grovt
-                uaktsomt. De begrenser heller ikke rettighetene du har etter ufravikelig lov, blant annet digitalytelsesloven, angrerettloven og
-                personvernreglene.
+                <strong>Den gratis annonseplassen.</strong> Det er gratis å legge ut annonser, sende meldinger og bruke resten av nettsiden. For denne delen
+                av tjenesten er vi ikke ansvarlige for indirekte tap, som tapt fortjeneste eller tapt handel, og vårt samlede ansvar overfor deg er begrenset
+                til 1 000 kr. Begrensningene gjelder ikke hvis vi har opptrådt forsettlig eller grovt uaktsomt, og de begrenser ikke rettighetene du har etter
+                personvernreglene eller annen ufravikelig lov.
+              </p>
+              <p className="mt-3">
+                <strong>Annonseløft.</strong> Begrensningene i avsnittet over gjelder ikke for annonseløft. For annonseløft gjelder digitalytelsesloven og
+                angrerettloven. Har løftet en mangel, kan du blant annet kreve retting, prisavslag, heving og erstatning etter digitalytelsesloven § 19. Se
+                også «Hvis løftet ikke virker».
               </p>
             </>
           ),
@@ -251,7 +258,8 @@ export default function TermsPage() {
           body: (
             <p>
               Vilkårene reguleres av norsk rett. Har du en klage på HOBBYSTRADA eller et annonseløft, kontakt {COMPANY.email}. Kommer vi ikke til enighet, kan
-              du som forbruker få hjelp av Forbrukerrådet (forbrukerradet.no). Tvister kan også bringes inn for de alminnelige domstolene.
+              du som forbruker be om mekling hos Forbrukertilsynet (forbrukertilsynet.no). Fører ikke meklingen fram, kan saken i noen tilfeller, for
+              eksempel ved tvist om angreretten, bringes inn for Forbrukerklageutvalget. Tvister kan også bringes inn for de alminnelige domstolene.
             </p>
           ),
         },

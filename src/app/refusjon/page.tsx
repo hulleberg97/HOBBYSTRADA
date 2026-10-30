@@ -8,7 +8,7 @@ export default function RefundPage() {
   return (
     <LegalPage
       title="Refusjon av annonseløft"
-      updated="28. oktober 2026"
+      updated="30. oktober 2026"
       sections={[
         {
           title: "Gjelder bare annonseløft",
@@ -24,8 +24,8 @@ export default function RefundPage() {
           body: (
             <p>
               Annonseløft starter med en gang betalingen er gjennomført, fordi du ber om det når du bestiller. Du har likevel 14 dagers angrerett: angrer du
-              før perioden er over, betaler du for dagene som er brukt og får resten tilbake innen 14 dager. Når perioden er over, er løftet levert fullt
-              ut, og angreretten har gått tapt. Hvis noe gikk galt med betalingen eller løftet ikke ble aktivert, refunderer vi hele beløpet. Fjernet vi
+              innen fristen og før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake innen 14 dager. Når perioden
+              er over, eller fristen på 14 dager er ute, har angreretten gått tapt. Hvis noe gikk galt med betalingen eller løftet ikke ble aktivert, refunderer vi hele beløpet. Fjernet vi
               annonsen ved en feil, refunderer vi løftet eller gir deg et nytt. Sletter du annonsen selv, eller merker den som solgt, refunderes ikke resten
               av perioden. Dette gjelder ikke hvis du bruker angreretten innen 14 dager. Da får du tilbake den delen av perioden som ikke er brukt.
             </p>

@@ -40,12 +40,14 @@ export async function GET(req: Request) {
   await del("contact_messages", db.from("contact_messages").delete({ count: "exact" }).lt("created_at", months(12)));
   await del("reports", db.from("reports").delete({ count: "exact" }).eq("handled", true).lt("created_at", months(12)));
 
-  const { data: rejected } = await db.from("listings").select("slug").eq("status", "rejected").lt("updated_at", months(1));
+  // Avviste annonser slettes etter 30 dager, men ikke mens en klage er under behandling (complaint_at satt, complaint_resolved_at tom)
+  const klageFilter = "complaint_at.is.null,complaint_resolved_at.not.is.null";
+  const { data: rejected } = await db.from("listings").select("slug").eq("status", "rejected").lt("updated_at", months(1)).or(klageFilter);
   for (const l of rejected ?? []) {
     const { data: files } = await db.storage.from("listing-images").list(l.slug);
     if (files?.length) await db.storage.from("listing-images").remove(files.map((f) => `${l.slug}/${f.name}`));
   }
-  await del("rejected_listings", db.from("listings").delete({ count: "exact" }).eq("status", "rejected").lt("updated_at", months(1)));
+  await del("rejected_listings", db.from("listings").delete({ count: "exact" }).eq("status", "rejected").lt("updated_at", months(1)).or(klageFilter));
   // Solgte annonser vises i prisarkivet i 12 måneder, deretter slettes de (bildene ryddes av removeOrphans under)
   await del("sold_listings", db.from("listings").delete({ count: "exact" }).eq("status", "sold").lt("updated_at", months(12)));
 

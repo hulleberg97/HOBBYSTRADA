@@ -127,7 +127,8 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   // Selgeren svarer på et bud. Svaret legges inn som melding i samtalen.
   const decide = async (messageId: string, accept: boolean) => {
     if (deciding) return;
-    if (accept && !confirm("Godta budet? Det er en avtale mellom deg og kjøperen.")) return;
+    const amount = messages.find((m) => m.id === messageId)?.offer ?? 0;
+    if (accept && !confirm(`Godta budet? Kjøperen får en Vipps-knapp for å betale ${formatPrice(amount)}. Dere er ikke bundet før kjøperen har betalt.`)) return;
     setDeciding(messageId);
     setError("");
     const res = await fetch(`/api/chat/${c.id}/bud`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ messageId, accept }) }).catch(() => null);
@@ -323,7 +324,8 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
           <div className="mx-auto mt-4 max-w-md rounded-2xl bg-emerald-50 px-4 py-4 text-center ring-1 ring-emerald-200">
             <p className="text-sm font-semibold text-emerald-900">Budet ditt på {formatPrice(accepted)} er godtatt</p>
             <p className="mt-1 text-xs leading-relaxed text-emerald-800">
-              Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke part i handelen.
+              Spør selgeren om kortet fortsatt er ledig før du betaler. Betal selgeren direkte med Vipps, og avtal frakt her i chatten. HOBBYSTRADA er ikke
+              part i handelen.
             </p>
             {payLink ? (
               <a
@@ -453,6 +455,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
               className="h-11 w-full rounded-xl border border-slate-200 px-3.5 pr-12 font-mono-data text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
             />
             <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 font-mono-data text-xs text-slate-500">kr</span>
+            <p className="mt-1.5 text-[11px] leading-relaxed text-slate-500">Budet er et uforpliktende prisforslag. Dere er ikke bundet før du har betalt.</p>
           </div>
         )}
         <div className="flex items-end gap-2">

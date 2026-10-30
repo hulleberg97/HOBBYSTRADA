@@ -14,8 +14,10 @@ export async function POST(req: Request) {
   const db = adminClient();
   const admin = await getUser();
   if (!db || !isAdmin(admin)) return NextResponse.json({ error: "Ingen tilgang" }, { status: 403 });
-  const { listingId, rule } = (await req.json().catch(() => ({}))) as { listingId?: string; rule?: string };
+  const { listingId, rule, reason } = (await req.json().catch(() => ({}))) as { listingId?: string; rule?: string; reason?: string };
   if (!listingId || !rule || !(BLOCK_RULES as readonly string[]).includes(rule)) return NextResponse.json({ error: "Mangler annonse eller regel." }, { status: 400 });
+  const begrunnelse = typeof reason === "string" ? reason.trim().slice(0, 600) : "";
+  if (!begrunnelse) return NextResponse.json({ error: "Skriv en konkret begrunnelse: hva brukeren har gjort, og hvilken annonse eller samtale det gjelder." }, { status: 400 });
 
   const { data: listing } = await db.from("listings").select("owner_id").eq("id", listingId).maybeSingle();
   const userId = listing?.owner_id as string | undefined;
@@ -44,12 +46,13 @@ export async function POST(req: Request) {
   const email = u.user?.email;
   if (email && !isPlaceholderEmail(email)) {
     const intro = `Kontoen din på HOBBYSTRADA er stengt fordi den bryter brukervilkårene: ${rule.toLowerCase()}. Annonsene dine er skjult, og du kan ikke logge inn. Kontoen og annonsene slettes om 30 dager, eller når en klage er avgjort. Du kan ikke lage ny konto før det har gått to år.`;
+    const quote = `Begrunnelse: ${begrunnelse}.\n\nAvgjørelsen er tatt av et menneske.`;
     const outro = `Mener du dette er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, åpner vi kontoen igjen.`;
     await sendEmail({
       to: email,
       subject: "Kontoen din er stengt",
-      text: `${intro}\n\n${outro}`,
-      html: brandedEmail({ title: "Kontoen din er stengt", intro, outro, reason: "Du får denne e-posten fordi kontoen din på HOBBYSTRADA er stengt." }),
+      text: `${intro}\n\n${quote}\n\n${outro}`,
+      html: brandedEmail({ title: "Kontoen din er stengt", intro, quote, outro, reason: "Du får denne e-posten fordi kontoen din på HOBBYSTRADA er stengt." }),
       replyTo: COMPANY.email,
     });
   }

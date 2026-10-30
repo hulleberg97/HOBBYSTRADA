@@ -100,7 +100,7 @@ export function brandedEmail({
         </td></tr></table>`
             : ""
         }
-        <p style="margin:0;font-size:14px;line-height:1.55;color:#64748b">${esc(outro)}</p>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:#64748b;white-space:pre-line">${esc(outro)}</p>
       </td></tr>
       <tr><td align="center" style="padding:22px 16px 0;font-family:${font};font-size:12px;line-height:1.6;color:#7c8594">
         <a href="${site}" style="color:#0f1d2b;font-weight:700;text-decoration:none;letter-spacing:.06em">HOBBYSTRADA</a><br>

@@ -9,14 +9,16 @@ export function BlockUser({ listingId, seller }: { listingId: string; seller: st
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [rule, setRule] = useState<string>(BLOCK_RULES[0]);
+  const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   async function run() {
+    if (!reason.trim()) return setError("Skriv en konkret begrunnelse først.");
     if (!confirm(`Stenge ute ${seller}? Kontoen sperres og annonsene skjules nå. Alt slettes om 30 dager hvis ingen klage får medhold. Vipps-ID-en sperres i to år.`)) return;
     setBusy(true);
     setError("");
-    const res = await fetch("/api/admin/block", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ listingId, rule }) });
+    const res = await fetch("/api/admin/block", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ listingId, rule, reason }) });
     setBusy(false);
     if (!res.ok) return setError((await res.json().catch(() => ({}))).error ?? "Noe gikk galt.");
     setOpen(false);
@@ -36,6 +38,14 @@ export function BlockUser({ listingId, seller }: { listingId: string; seller: st
           <option key={r}>{r}</option>
         ))}
       </select>
+      <textarea
+        value={reason}
+        onChange={(e) => setReason(e.target.value)}
+        required
+        rows={2}
+        placeholder="Begrunnelse (obligatorisk): hva brukeren har gjort, og hvilken annonse eller samtale det gjelder"
+        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs"
+      />
       <button type="button" disabled={busy} onClick={run} className="rounded-full bg-destructive px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50">
         {busy ? "Stenger…" : "Bekreft"}
       </button>

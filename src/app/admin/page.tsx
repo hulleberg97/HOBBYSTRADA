@@ -30,6 +30,18 @@ function since90(days = 90) {
   return new Date(Date.now() - days * 864e5).toISOString().slice(0, 10);
 }
 const date = (d: string) => new Date(d).toLocaleString("nb-NO", { dateStyle: "medium", timeStyle: "short" });
+/** Vilkårene en annonse kan avvises eller fjernes for. Teksten går inn i e-posten til selgeren («bryter vilkårene: …»). */
+const LISTING_RULES = [
+  "bildene viser ikke kortet tydelig",
+  "annonsen mangler eller har feil opplysninger om kortet",
+  "det er ikke et fotballkort",
+  "det er mistanke om falskt eller kopiert kort",
+  "annonsen bryter annonsereglene",
+  "kortet selges som ledd i næringsvirksomhet",
+];
+/** Har annonsen aktivt løft nå? */
+const boosted = (r: { bumped_until?: string | null; featured_until?: string | null; frontpage_until?: string | null }) =>
+  [r.bumped_until, r.featured_until, r.frontpage_until].some((d) => d && new Date(d).getTime() > Date.now());
 
 export default async function AdminPage() {
   const user = await getUser();
@@ -43,7 +55,7 @@ export default async function AdminPage() {
     db.from("boost_orders").select("*, listings(title, slug)").eq("status", "pending").order("created_at", { ascending: false }),
     db.from("messages").select("*").is("seller_id", null).order("created_at", { ascending: false }).limit(30),
     db.from("contact_messages").select("*").order("created_at", { ascending: false }).limit(30),
-    db.from("listings").select("*").in("status", ["active", "sold", "hidden"]).order("created_at", { ascending: false }),
+    db.from("listings").select("*").in("status", ["active", "sold", "hidden", "rejected"]).order("created_at", { ascending: false }),
   ]);
 
   const sales = await listInvoices(db, since90());
@@ -148,13 +160,7 @@ export default async function AdminPage() {
                           label: "Avvis",
                           status: "rejected",
                           tone: "danger",
-                          reasons: [
-                            "Bildene viser ikke kortet tydelig",
-                            "Mangler eller har feil opplysninger om kortet",
-                            "Ikke et fotballkort",
-                            "Mistanke om falskt eller kopiert kort",
-                            "Bryter annonsereglene",
-                          ],
+                          ask: { rules: LISTING_RULES, confirm: "Bekreft avvisning" },
                         },
                       ]}
                     />
@@ -195,7 +201,7 @@ export default async function AdminPage() {
                       ) : (
                         <span className="text-slate-500">Annonsen er slettet</span>
                       )}
-                      {l && l.status !== "active" && <span className="ml-2 text-xs text-slate-500">({l.status === "hidden" ? "skjult" : l.status})</span>}
+                      {l && l.status !== "active" && <span className="ml-2 text-xs text-slate-500">({l.status === "hidden" ? "skjult" : l.status === "rejected" ? "avvist" : l.status === "sold" ? "solgt" : l.status})</span>}
                     </p>
                     {r.details && <p className="mt-2 whitespace-pre-line text-slate-700">{r.details}</p>}
                     <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -365,10 +371,17 @@ export default async function AdminPage() {
                       ...(l.status === "active"
                         ? [
                             ...(l.isExample ? [] : [{ label: "Merk som solgt", status: "sold" }]),
-                            { label: "Skjul", status: "hidden" },
+                            // Andres publiserte annonser: fjerning krever vilkår og begrunnelse, og selgeren får e-post
+                            r.owner_id && r.owner_id !== user!.id
+                              ? { label: "Fjern (skjul)", status: "hidden", tone: "danger" as const, ask: { rules: LISTING_RULES, confirm: "Fjern annonsen og send e-post", warning: true, refund: boosted(r) } }
+                              : { label: "Skjul", status: "hidden" },
                           ]
                         : [{ label: "Aktiver", status: "active" }]),
-                      { label: "Slett", del: true, tone: "danger" as const },
+                      ...(l.status === "rejected" && !r.complaint_at ? [{ label: "Klage mottatt", payload: { complaint: "received" } }] : []),
+                      ...(l.status === "rejected" && r.complaint_at && !r.complaint_resolved_at ? [{ label: "Klage avgjort", payload: { complaint: "resolved" } }] : []),
+                      l.status === "active" && r.owner_id && r.owner_id !== user!.id
+                        ? { label: "Slett", del: true, tone: "danger" as const, ask: { rules: LISTING_RULES, confirm: "Slett annonsen og send e-post", warning: true, refund: boosted(r) } }
+                        : { label: "Slett", del: true, tone: "danger" as const },
                     ]}
                   />
                   {l.status === "active" && <FanSlotSelect id={l.id!} on={Boolean(l.fanSlot)} />}
