@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ClockIcon, EyeIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
-import { formatPrice, timeAgo } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
+import { TidSiden } from "./TidSiden";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge, VippsButton } from "./VerifiedBadge";
 import { useUser } from "./useUser";
@@ -116,7 +117,9 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               </span>
               <span className="inline-flex items-center gap-1">
                 <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                <span suppressHydrationWarning>Lagt ut {timeAgo(l.createdAt).toLowerCase()}</span>
+                <span>
+                  Lagt ut <TidSiden iso={l.createdAt} lowercase />
+                </span>
               </span>
               {(l.views ?? 0) > 0 && (
                 <span className="inline-flex items-center gap-1">

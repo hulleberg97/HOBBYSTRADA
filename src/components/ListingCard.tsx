@@ -4,7 +4,8 @@ import { ClockIcon, CrownIcon, EyeIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
-import { formatPrice, timeAgo } from "@/lib/format";
+import { TidSiden } from "./TidSiden";
+import { formatPrice } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
@@ -80,12 +81,18 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             {listing.sellerVerified && <VerifiedBadge compact />}
             <span className="card-time inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
-              <span suppressHydrationWarning>{listing.soldAt ? `Solgt ${timeAgo(listing.soldAt).toLowerCase()}` : timeAgo(listing.createdAt)}</span>
+              {listing.soldAt ? (
+                <span>
+                  Solgt <TidSiden iso={listing.soldAt} lowercase />
+                </span>
+              ) : (
+                <TidSiden iso={listing.createdAt} />
+              )}
               {!listing.soldAt && (
                 <span className="card-time-short hidden" suppressHydrationWarning>
                   {/* Mobil: «5 dager», ellers «5 dager siden» */}
-                  <span className="sm:hidden">{timeAgo(listing.createdAt).replace(/^For /, "").replace(/ siden$/, "")}</span>
-                  <span className="hidden sm:inline">{timeAgo(listing.createdAt).replace(/^For /, "")}</span>
+                  <span className="sm:hidden"><TidSiden iso={listing.createdAt} variant="kort" /></span>
+                  <span className="hidden sm:inline"><TidSiden iso={listing.createdAt} variant="utenFor" /></span>
                 </span>
               )}
             </span>
