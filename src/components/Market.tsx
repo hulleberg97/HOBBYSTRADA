@@ -12,7 +12,8 @@ import { SearchSuggest } from "./SearchSuggest";
 import { SaveSearchButton } from "./SaveSearchButton";
 import type { Listing } from "@/lib/types";
 
-const PAGE_SIZE = 13;
+// 24 går opp i 2, 3 og 4 i bredden, så siste rad på siden alltid er full
+const PAGE_SIZE = 24;
 const PRICES: Record<string, [number | null, number | null]> = {
   "0-500": [null, 500],
   "500-1000": [500, 1000],
