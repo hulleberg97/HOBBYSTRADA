@@ -101,7 +101,7 @@ export default async function Home() {
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Autografkort</span>
                   <span className="text-xs font-medium text-slate-600">
                     {c.autograf}
-                    <span className="hidden sm:inline"> {c.autograf === 1 ? "annonse" : "annonser"}</span>
+                    <span className="hidden sm:inline"> kort</span>
                   </span>
                 </Link>
               </li>
@@ -118,7 +118,7 @@ export default async function Home() {
                   </span>
                   <span className="text-xs font-medium text-slate-600">
                     {c.relic}
-                    <span className="hidden sm:inline"> {c.relic === 1 ? "annonse" : "annonser"}</span>
+                    <span className="hidden sm:inline"> kort</span>
                   </span>
                 </Link>
               </li>
@@ -140,7 +140,7 @@ export default async function Home() {
                   </span>
                   <span className="text-xs font-medium text-slate-600">
                     {c.numbered}
-                    <span className="hidden sm:inline"> {c.numbered === 1 ? "annonse" : "annonser"}</span>
+                    <span className="hidden sm:inline"> kort</span>
                   </span>
                 </Link>
               </li>
@@ -155,7 +155,7 @@ export default async function Home() {
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Rookies</span>
                   <span className="text-xs font-medium text-slate-600">
                     {c.rookie}
-                    <span className="hidden sm:inline"> {c.rookie === 1 ? "annonse" : "annonser"}</span>
+                    <span className="hidden sm:inline"> kort</span>
                   </span>
                 </Link>
               </li>
@@ -170,7 +170,7 @@ export default async function Home() {
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Base</span>
                   <span className="text-xs font-medium text-slate-600">
                     {c.base}
-                    <span className="hidden sm:inline"> {c.base === 1 ? "annonse" : "annonser"}</span>
+                    <span className="hidden sm:inline"> kort</span>
                   </span>
                 </Link>
               </li>
@@ -184,7 +184,7 @@ export default async function Home() {
                 <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Alle kort</span>
                 <span className="text-xs font-medium text-slate-600">
                   {c.all}
-                    <span className="hidden sm:inline"> {c.all === 1 ? "annonse" : "annonser"}</span>
+                    <span className="hidden sm:inline"> kort</span>
                 </span>
               </Link>
             </li>

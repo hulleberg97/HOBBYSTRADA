@@ -158,9 +158,8 @@ import { matches } from "./filters";
 
 export type Category = { key: string; label: string; href: string; count: (l: Listing[]) => number };
 
-/** Tall som vises for brukere. Eksempelannonser telles ikke. */
-export function categoryCounts(all: Listing[]) {
-  const list = all.filter((l) => !l.isExample);
+/** Antall kort per kategori til kategorilinjen på forsiden. Teller alle kort, også eksempelannonser, og vises som «kort», ikke «annonser til salgs». */
+export function categoryCounts(list: Listing[]) {
   return {
     autograf: list.filter((l) => matches(l, "autograf")).length,
     relic: list.filter((l) => matches(l, "relic")).length,
