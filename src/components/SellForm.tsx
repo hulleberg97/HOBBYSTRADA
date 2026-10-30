@@ -107,7 +107,8 @@ function PhotoSlot({
   );
 }
 
-export function SellForm({ user }: { user: { name: string; email: string; location?: string } | null }) {
+/** owner: innehaveren av HOBBYSTRADA legger ut. Annonsen merkes «Fra HOBBYSTRADA», og privat-avkryssingen vises ikke. */
+export function SellForm({ user, owner = false }: { user: { name: string; email: string; location?: string } | null; owner?: boolean }) {
   const [v, setV] = useState({
     player: "",
     set: "",
@@ -625,10 +626,16 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               beskjed på e-post.
             </p>
           )}
-          <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
-            <input type="checkbox" name="privat" required autoComplete="off" className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
-            <span>Jeg selger som privatperson, ikke som ledd i næringsvirksomhet.</span>
-          </label>
+          {owner ? (
+            <p className="mt-5 rounded-lg bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
+              Annonsen legges ut av HOBBYSTRADA ULLEBERG og merkes «Fra HOBBYSTRADA». Forbrukerkjøpsloven og angrerett gjelder for kjøperen.
+            </p>
+          ) : (
+            <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
+              <input type="checkbox" name="privat" required autoComplete="off" className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
+              <span>Jeg selger som privatperson, ikke som ledd i næringsvirksomhet.</span>
+            </label>
+          )}
           <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
             <input type="checkbox" name="confirm" required className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]" />
             <span>

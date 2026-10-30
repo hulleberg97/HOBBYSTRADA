@@ -45,7 +45,8 @@ export default function TermsPage() {
                 kan kontoen stenges.
               </p>
               <p className="mt-3">
-                HOBBYSTRADA er for private samlere. Selger du kort som ledd i næringsvirksomhet, kan du ikke bruke tjenesten.
+                HOBBYSTRADA er for private samlere. Selger du kort som ledd i næringsvirksomhet, kan du ikke bruke tjenesten. Unntaket er kort HOBBYSTRADA
+                ULLEBERG selv legger ut, se «Kort fra HOBBYSTRADA».
               </p>
               <p className="mt-3">
                 Du skal ikke la andre bruke kontoen din. Du er ansvarlig for det som gjøres fra kontoen din, med mindre du ikke kunne forhindre det.
@@ -191,9 +192,16 @@ export default function TermsPage() {
                 ]}
               />
               <p className="mt-3">
-                Selgerne på HOBBYSTRADA er privatpersoner. Kjøper du fra en privatperson, gjelder ikke forbrukerrettighetene, for eksempel etter
-                forbrukerkjøpsloven og angrerettloven. Handelen reguleres da av kjøpsloven, og kjøper og selger kan avtale andre vilkår. Uenighet løses mellom
-                kjøper og selger.
+                Selgerne på HOBBYSTRADA er privatpersoner, med unntak av kort merket «Fra HOBBYSTRADA». Kjøper du fra en privatperson, gjelder ikke
+                forbrukerrettighetene, for eksempel etter forbrukerkjøpsloven og angrerettloven. Handelen reguleres da av kjøpsloven, og kjøper og selger kan
+                avtale andre vilkår. Uenighet løses mellom kjøper og selger.
+              </p>
+              <p className="mt-3" id="kort-fra-hobbystrada">
+                <strong>Kort fra HOBBYSTRADA.</strong> Noen annonser er lagt ut av HOBBYSTRADA ULLEBERG selv. De er merket «Fra HOBBYSTRADA» i markedet, på
+                forsiden og på annonsesiden. Kjøper du et slikt kort, handler du med et foretak, og forbrukerkjøpsloven og angrerettloven gjelder: du har 14
+                dagers angrerett fra du mottar kortet, og kan reklamere på feil og mangler. Vil du angre, gir du beskjed i chatten eller på e-post til
+                post@hobbystrada.no innen fristen, og sender kortet tilbake i samme stand. Du får pengene tilbake innen 14 dager etter at vi har fått
+                beskjed. Slike annonser får ikke annonseløft, og ligger ikke foran andres annonser av den grunn.
               </p>
               <p className="mt-3">
                 <strong>Beskytt deg mot svindel:</strong> Avtal pris, betaling og levering skriftlig i chatten. Be om flere bilder av kortet hvis du er

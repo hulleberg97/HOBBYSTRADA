@@ -151,6 +151,14 @@ export function Slab({ l, eager = false, mark = "header" }: { l: Listing; eager?
           Annonseløft
         </span>
       )}
+      {l.ownerListing && !boosted && (
+        <span
+          title="Selges av HOBBYSTRADA ULLEBERG. Forbrukerkjøpsloven og angrerett gjelder."
+          className="absolute bottom-[3%] left-1/2 inline-flex -translate-x-1/2 items-center whitespace-nowrap rounded-full bg-white/90 px-2 py-[2px] text-[7px] font-bold uppercase tracking-[0.16em] text-[#0b1426] ring-1 ring-[#0b1426]/40 sm:text-[8px]"
+        >
+          Fra HOBBYSTRADA
+        </span>
+      )}
       {boosted && mark === "header" && (
         <span
           title={markTitle}

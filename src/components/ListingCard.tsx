@@ -38,6 +38,12 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           </div>
           <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
             {/* Betalt plassering merkes tydelig (markedsføringsloven § 8). Kort admin har valgt til forsiden har ikke eget merke. */}
+            {/* Kort HOBBYSTRADA ULLEBERG selger selv merkes, så kjøperen vet at det er et foretak som selger (forbrukerkjøpsloven gjelder). */}
+            {listing.ownerListing && (
+              <span title="Selges av HOBBYSTRADA ULLEBERG. Forbrukerkjøpsloven og angrerett gjelder." className="inline-flex items-center rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-semibold text-white">
+                Fra HOBBYSTRADA
+              </span>
+            )}
             {(listing.featured || listing.bumpedAt) && (
               <span
                 title={listing.frontpage ? "Toppannonse" : listing.featured ? "Fremhevet" : "Topp av listen"}
