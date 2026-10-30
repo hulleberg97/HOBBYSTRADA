@@ -93,7 +93,22 @@ export function Header() {
     <>
       <header ref={headerRef} className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 text-primary backdrop-blur">
         <div className="mx-auto flex h-[72px] max-w-[1320px] items-center gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
-          <Link className="flex shrink-0 items-center gap-2" href="/">
+          {/* Logoen er alltid en forsideknapp: lukker meny og søk, og ruller til toppen om du allerede er på forsiden */}
+          <Link
+            className="flex shrink-0 items-center gap-2"
+            href="/"
+            aria-label="HOBBYSTRADA – til forsiden"
+            onClick={(e) => {
+              setMenu(false);
+              setSearchOpen(false);
+              setHelp(false);
+              if (path === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                router.refresh();
+              }
+            }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/logo.svg" alt="HOBBYSTRADA" width={169} height={28} fetchPriority="high" className="h-[22px] w-auto sm:h-[28px]" />
           </Link>
