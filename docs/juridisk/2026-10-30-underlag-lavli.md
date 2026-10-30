@@ -12,7 +12,7 @@ Skjermbildene ligger i samme mappe, navngitt etter punktnummer. Tekster som er l
    - Over boksene: «Du har 14 dagers angrerett. For at løftet skal starte før fristen er ute, må du be om det og bekrefte at du vet hva det betyr.»
    - Oppsummering: «Du bestiller: Fremhevet i 7 dager for annonsen «…». Pris: 79 kr. Prisen er uten merverdiavgift fordi foretaket ikke er merverdiavgiftsregistrert. Det kommer ingen andre gebyrer i tillegg. Varighet: Engangskjøp som ikke fornyes automatisk.»
 4. `A04-knapp-sperret-uten-avkrysning.png` – uten avkrysning er betalingsknappen deaktivert (grå, kan ikke trykkes). Sendes bestillingen likevel direkte til serveren uten avkrysning, svarer den med feilen «Kryss av for begge punktene om angrerett.» og ingenting lagres.
-5. Knappetekst ordrett: «Bestill og betal 79 kr med Vipps» (beløpet følger pakken: 39, 79 eller 199 kr). Før pakke er valgt: «Bestill og betal med Vipps».
+5. `A05-betalingsknapp.png` – knappetekst ordrett: «Bestill og betal 79 kr med Vipps» (beløpet følger pakken: 39, 79 eller 199 kr). Før pakke er valgt: «Bestill og betal med Vipps».
 6. Første skjermbilde i Vipps: kan ikke tas fra testmiljøet. Halvor tar dette på telefonen. Beløpet som sendes til Vipps er pakkeprisen, mottaker er HOBBYSTRADA ULLEBERG.
 7. `A07-bekreftelse-etter-betaling.png` – siden etter gjennomført betaling (lokal, eksempel med Fremhevet). Tekst: «Fremhevet er aktivert og varer til [dato]. Annonsen har nå gullmerke og gullramme, vises på forsiden, og ligger foran annonser med Topp av listen og vanlige annonser.»
 
