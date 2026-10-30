@@ -123,8 +123,13 @@ export async function notifyRemoved(
   }
   await addNotification(db, listing.owner_id, { kind: "rejected", title: "Annonsen din er fjernet", body: `«${listing.title}» er fjernet fra markedet fordi den bryter vilkårene: ${input.rule}.`, href: "/account" });
   if (!to) return;
+  await sendEmail({ to, ...removedEmail(listing.title, input, refundLine), replyTo: COMPANY.email });
+}
+
+/** E-posten «Fjernet: [tittel]» til selgeren. Egen funksjon, så den kan vises frem uten å sendes. */
+export function removedEmail(listingTitle: string, input: { rule: string; reason: string; warning?: boolean }, refundLine = "") {
   const title = "Annonsen din er fjernet";
-  const intro = `Vi har fjernet «${listing.title}» fra markedet fordi den bryter vilkårene: ${input.rule}.`;
+  const intro = `Vi har fjernet «${listingTitle}» fra markedet fordi den bryter vilkårene: ${input.rule}.`;
   const begrunnelse = `Begrunnelse: ${input.reason}.`;
   const rest = [
     ...(input.warning ? ["Dette er en advarsel. Gjentatte brudd kan føre til at kontoen stenges."] : []),
@@ -132,11 +137,9 @@ export async function notifyRemoved(
     `Mener du at dette er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, legger vi ut annonsen igjen.`,
     "Avgjørelsen er tatt av et menneske.",
   ];
-  await sendEmail({
-    to,
-    subject: `Fjernet: ${listing.title}`,
+  return {
+    subject: `Fjernet: ${listingTitle}`,
     text: `${title}\n\n${intro}\n\n${begrunnelse}\n\n${rest.join("\n\n")}`,
     html: brandedEmail({ title, intro, quote: begrunnelse, outro: rest.join("\n\n"), reason: "Du får denne e-posten fordi en annonse du har lagt ut på HOBBYSTRADA, er fjernet." }),
-    replyTo: COMPANY.email,
-  });
+  };
 }
