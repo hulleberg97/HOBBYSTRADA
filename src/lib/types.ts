@@ -34,4 +34,6 @@ export type Listing = {
   fanSlot?: number | null;
   /** Eksempelannonse fra HOBBYSTRADA (kolonnen owner_listing). Viser hvordan siden fungerer, er ikke til salgs, kan ikke løftes, kontaktes eller merkes solgt. */
   isExample?: boolean;
+  /** Antall ganger annonsesiden er åpnet av andre enn selgeren. */
+  views?: number;
 };

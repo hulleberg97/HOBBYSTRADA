@@ -14,6 +14,7 @@ import { CardArt } from "@/components/CardArt";
 import { Gallery } from "@/components/Gallery";
 import { OwnerBoost } from "@/components/OwnerBoost";
 import { ContactCard } from "@/components/ContactCard";
+import { TellVisning } from "@/components/TellVisning";
 import { ListingCard } from "@/components/ListingCard";
 import { getListing, getListings, getSoldListings } from "@/lib/listings";
 import { formatPrice } from "@/lib/format";
@@ -189,6 +190,7 @@ export default async function ListingPage({ params }: Props) {
             <div className="mt-6">
               <div>
                 <ContactCard listing={l} />
+                {l.status === "active" && <TellVisning slug={l.slug} />}
                 {l.isExample ? (
                   <div className="mt-4 rounded-3xl bg-slate-900 p-5 text-white ring-1 ring-inset ring-slate-900">
                     <p className="text-sm font-semibold">Dette er en eksempelannonse</p>

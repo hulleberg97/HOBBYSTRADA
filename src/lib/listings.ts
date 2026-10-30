@@ -26,6 +26,7 @@ type Row = {
   seller_verified?: boolean;
   fan_slot?: number | null;
   owner_listing?: boolean | null;
+  views?: number | null;
   location: string | null;
   created_at: string;
   updated_at?: string;
@@ -64,6 +65,7 @@ export function fromRow(r: Row): Listing {
     sellerVerified: Boolean(r.seller_verified),
     fanSlot: r.fan_slot ?? null,
     isExample: owner,
+    views: r.views ?? 0,
     location: r.location,
     createdAt: r.created_at,
     soldAt: r.status === "sold" ? (r.updated_at ?? r.created_at) : null,
@@ -76,7 +78,7 @@ export function fromRow(r: Row): Listing {
 const BASE_COLUMNS =
   "id, slug, title, player, set_name, season, card_number, numbered, producer, types, tag, club, league, grading, condition, description, price, featured_until, bumped_until, frontpage_until, images, seller_name, location, owner_id, status, created_at, updated_at, fan_slot";
 /** Kolonner som kommer med senere SQL-filer (004_vipps.sql, 016_innehaver.sql). Mangler de, hentes annonsene uten. */
-const OPTIONAL = ["seller_verified", "owner_listing"];
+const OPTIONAL = ["seller_verified", "owner_listing", "views"];
 export const publicColumns = (optional: string[] = OPTIONAL) => [BASE_COLUMNS, ...optional].join(", ");
 export const PUBLIC_COLUMNS = BASE_COLUMNS;
 

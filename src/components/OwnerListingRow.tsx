@@ -43,7 +43,10 @@ export function OwnerListingRow({ listing: l, extra, children }: { listing: List
             l.title
           )}
         </p>
-        <p className="mt-0.5 text-sm font-semibold text-slate-950">{formatPrice(l.price)}</p>
+        <p className="mt-0.5 text-sm font-semibold text-slate-950">
+          {formatPrice(l.price)}
+          {l.status !== "pending" && <span className="ml-2 font-normal text-slate-500">· {l.views ?? 0} {l.views === 1 ? "visning" : "visninger"}</span>}
+        </p>
         {extra}
       </div>
       {children}

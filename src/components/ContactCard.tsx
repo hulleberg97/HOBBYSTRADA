@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ClockIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
+import { ClockIcon, EyeIcon, FlagIcon, MapPinIcon, MessageSquareIcon, Share2Icon } from "lucide-react";
 import { formatPrice, timeAgo } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge, VippsButton } from "./VerifiedBadge";
@@ -118,6 +118,12 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
                 <span className="inline-flex items-center gap-1">
                   <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
                   <span suppressHydrationWarning>Lagt ut {timeAgo(l.createdAt).toLowerCase()}</span>
+                </span>
+              )}
+              {(l.views ?? 0) > 0 && (
+                <span className="inline-flex items-center gap-1">
+                  <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {l.views} {l.views === 1 ? "visning" : "visninger"}
                 </span>
               )}
             </div>
