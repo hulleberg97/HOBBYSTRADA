@@ -1,6 +1,6 @@
 # HOBBYSTRADA – underlag til juridisk gjennomgang (30. oktober 2026)
 
-Skjermbildene ligger i samme mappe, navngitt etter punktnummer. Tekster som er limt inn under, er hentet ordrett fra koden slik den er live. Skjermbilder merket «lokal» er tatt fra en kopi av nettsiden med eksempeldata, fordi disse skjermene krever innlogging med Vipps; utseende og tekster er de samme som live.
+Skjermbildene står ved hvert punkt, navngitt etter punktnummer. Tekster som er limt inn under, er hentet ordrett fra koden slik den er live. Skjermbilder merket «lokal» er tatt fra en kopi av nettsiden med eksempeldata, fordi disse skjermene krever innlogging med Vipps; utseende og tekster er de samme som live.
 
 ## A. Kjøp av annonseløft (kassen)
 
