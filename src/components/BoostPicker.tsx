@@ -19,7 +19,8 @@ export type FrontpageAvailability = { soldOut: boolean; nextFreeText: string; sl
 
 type Mine = { slug: string; title: string; price: number; image: string | null; boost: string | null };
 
-export function BoostPicker({ frontpage }: { frontpage: FrontpageAvailability }) {
+/** demo: ferdige annonser til visning uten innlogging (brukes bare til dokumentasjon). */
+export function BoostPicker({ frontpage, demo }: { frontpage: FrontpageAvailability; demo?: Mine[] }) {
   const params = useSearchParams();
   const [listing, setListing] = useState(params.get("annonse") ?? "");
   const [plan, setPlan] = useState<BoostKey | null>(null);
@@ -41,7 +42,7 @@ export function BoostPicker({ frontpage }: { frontpage: FrontpageAvailability })
       .catch(() => setMine([]));
   }, [user]);
   // Ikke innlogget: null (vis «logg inn»). Innlogget: det som er hentet (undefined mens det lastes).
-  const mine = user === null ? null : hentet;
+  const mine = demo ?? (user === null ? null : hentet);
 
   const chosen = plan ? BOOSTS[plan] : null;
   const chosenListing = mine?.find((l) => l.slug === listing) ?? null;
