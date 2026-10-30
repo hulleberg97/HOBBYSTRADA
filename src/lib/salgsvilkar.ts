@@ -62,7 +62,7 @@ export const SALGSVILKAR: SalesSection[] = [
       "Du har 14 dagers angrerett fra avtalen inngås.",
       "Når du bestiller, ber du uttrykkelig om at løftet starter med en gang betalingen er gjennomført. Du bekrefter også at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over.",
       "Angreretten går altså tapt når perioden er over eller når angrefristen på 14 dager er ute, det som kommer først.",
-      "Angrer du før perioden er over og innen angrefristen, betaler du for den delen av perioden som er brukt, regnet i hele timer. Resten får du tilbake.",
+      "Angrer du før perioden er over og innen angrefristen, betaler du for den delen av perioden som er brukt, regnet i hele timer. En time som bare er delvis brukt, regnes ikke med. Resten får du tilbake.",
       `Slik ber du om refusjon: Trykk «Angre avtalen» på kvitteringen under Min side. Du kan også sende [angreskjemaet](/angreskjema) eller en e-post til ${COMPANY.email}. Det er nok med en tydelig melding om at du angrer. Når vi mottar meldingen elektronisk, får du bekreftelse på e-post med en gang. Pengene betales tilbake til samme betalingsmåte, uten gebyr, senest 14 dager etter at vi fikk meldingen.`,
     ],
   },

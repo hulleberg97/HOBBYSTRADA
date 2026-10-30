@@ -18,7 +18,7 @@ export default function CookiePage() {
                 items={[
                   "Innlogging (sb-…-auth-token): holder deg innlogget. Fornyes ved hvert besøk, slettes når du logger ut, og senest 90 dager etter siste besøk.",
                   "Vipps-innlogging (vipps_oidc): sikrer innloggingen og slettes etter 10 minutter.",
-                  "Favoritter, lukkede varsler og hvilke annonser du har åpnet (så en annonse teller én visning per person): lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.",
+                  "Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.",
                 ]}
               />
             </>

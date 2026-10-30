@@ -6,8 +6,7 @@ import { COMPANY } from "@/lib/company";
 export const metadata: Metadata = { title: "Personvern", alternates: { canonical: "/personvern" } };
 
 /**
- * Personvernerklæring. Teksten er Låvlis reviderte utkast (andre versjon, 30. oktober 2026), lagt inn ordrett, med én tilføyelse
- * som følger av hvordan nettsiden virker: nettleseren husker hvilke annonser du har åpnet (visningsteller). Meldt til Låvli.
+ * Personvernerklæring. Teksten er Låvlis reviderte utkast (andre versjon, 30. oktober 2026), lagt inn ordrett.
  */
 function Purpose({ title, lines }: { title: string; lines: string[] }) {
   return (
@@ -264,7 +263,7 @@ export default function PrivacyPage() {
                 items={[
                   "Innlogging: holder deg innlogget. Slettes når du logger ut, og senest 90 dager etter siste besøk.",
                   "Vipps-innlogging: en kortvarig informasjonskapsel som sikrer innloggingen. Slettes når du er logget inn, og senest etter 10 minutter.",
-                  "Favoritter, lukkede varsler og hvilke annonser du har åpnet (så en annonse teller én visning per person): lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.",
+                  "Favoritter og lukkede varsler: lagres bare i nettleseren din, ikke hos oss, til du fjerner dem eller tømmer nettleseren.",
                 ]}
               />
               <p className="mt-3">

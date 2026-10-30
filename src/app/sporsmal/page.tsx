@@ -56,7 +56,7 @@ const SECTIONS = [
       ["Hva koster annonseløft?", "Topp av listen 39 kr (3 dager), Fremhevet 79 kr (7 dager) og Toppannonse 199 kr (30 dager). Prisene er totalpriser, og løftet fornyes ikke automatisk."],
       [
         "Kan jeg angre et annonseløft?",
-        "Ja, innen 14 dager. Trykk «Angre avtalen» på kvitteringen under Min side, send angreskjemaet eller send en e-post. Du betaler for den delen av perioden som er brukt, og får resten tilbake innen 14 dager. Les mer i salgsvilkårene under «Angrerett».",
+        "Ja, innen 14 dager. Trykk «Angre avtalen» på kvitteringen under Min side, send angreskjemaet eller send en e-post. Du betaler for tiden som er brukt, regnet i hele timer, og får resten tilbake innen 14 dager. Les mer i salgsvilkårene under «Angrerett».",
       ],
     ],
   },
