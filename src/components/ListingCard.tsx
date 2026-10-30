@@ -63,7 +63,8 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           )}
         </div>
         <div className="flex flex-1 flex-col px-0.5 pt-3">
-          <p className={`card-title line-clamp-2 text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
+          {/* Tittelen tar alltid plass til to linjer, så prisen står på samme høyde på alle kortene */}
+          <p className={`card-title line-clamp-2 min-h-[2.75em] text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
             {listing.title}
           </p>
           {market ? (
