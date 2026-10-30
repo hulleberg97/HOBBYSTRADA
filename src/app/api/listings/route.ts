@@ -53,8 +53,7 @@ export async function POST(req: Request) {
   if (!player || !set || !price || price < 1 || !username || !location || !email || !name || !f.get("confirm")) {
     return NextResponse.json({ error: "Fyll inn alle feltene som er merket med *." }, { status: 400 });
   }
-  // Innehaveren selger som foretak og krysser ikke av for privatperson
-  if (!isAdmin(user) && !f.get("privat")) return NextResponse.json({ error: "Bekreft at du selger som privatperson." }, { status: 400 });
+  if (!f.get("privat")) return NextResponse.json({ error: "Bekreft at du selger som privatperson." }, { status: 400 });
 
   const files = [f.get("front"), f.get("back"), ...f.getAll("extra")].filter((x): x is File => x instanceof File && x.size > 0).slice(0, 6);
   if (!(f.get("front") instanceof File)) return NextResponse.json({ error: "Legg til et bilde av forsiden." }, { status: 400 });

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/ui";
 import { SellForm } from "@/components/SellForm";
-import { getUser, getVerification, isAdmin } from "@/lib/auth";
+import { getUser, getVerification } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VippsButton } from "@/components/VerifiedBadge";
 
@@ -49,7 +49,7 @@ export default async function SellPage() {
             </p>
           </div>
         ) : (
-          <SellForm user={user ? { name: user.name, email: user.email, location: user.location } : null} owner={isAdmin(user)} />
+          <SellForm user={user ? { name: user.name, email: user.email, location: user.location } : null} />
         )}
       </section>
     </>
