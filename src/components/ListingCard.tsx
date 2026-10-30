@@ -16,9 +16,9 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
       <FavoriteButton slug={listing.slug} title={listing.title} />
       <Link className="flex h-full flex-col" href={`/annonse/${listing.slug}`}>
         <div
-          className={`card-frame relative aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-inset group-data-[featured=true]:ring-2 group-data-[featured=true]:ring-accent ${market ? "bg-slate-100 ring-slate-200" : "bg-slate-200/80 ring-slate-300"}`}
+          className={`card-frame relative aspect-[5/7] overflow-hidden rounded-2xl ring-1 ring-inset group-data-[featured=true]:ring-2 group-data-[featured=true]:ring-accent ${market ? "bg-slate-100 ring-slate-200" : "bg-slate-200/80 ring-slate-300"}`}
         >
-          <div className="absolute inset-0 px-[14%] pb-[8%] pt-[18%] transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:px-[12%] sm:pt-[14%]">
+          <div className="absolute inset-0 px-[9%] pb-[10%] pt-[16%] transition-transform duration-500 ease-out group-hover:scale-[1.04]">
             {listing.image ? (
               <Image
                 alt={listing.title}
