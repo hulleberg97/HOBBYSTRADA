@@ -107,7 +107,7 @@ export function ContactCard({ listing: l }: { listing: Listing }) {
               <Link href={`/selger/${l.ownerId ?? "hobbystrada"}`} className="truncate text-sm font-semibold text-slate-900 hover:underline">
                 {l.seller}
               </Link>
-              {l.sellerVerified && !l.isExample && <VerifiedBadge />}
+              {l.sellerVerified && <VerifiedBadge />}
             </span>
             <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1">

@@ -75,8 +75,8 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           )}
           <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
-            {/* Eksempelannonser: ikke Vipps-merke og ikke tidsangivelse (de er ikke til salgs) */}
-            {listing.sellerVerified && !listing.isExample && <VerifiedBadge compact />}
+            {/* Eksempelannonser: ingen tidsangivelse (de er ikke til salgs), men Vipps-merket og visninger vises */}
+            {listing.sellerVerified && <VerifiedBadge compact />}
             {!listing.isExample && (
             <span className="card-time inline-flex items-center gap-1">
               <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -91,7 +91,7 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             </span>
             )}
             {/* Visninger, så kjøpere ser hva som er populært */}
-            {!listing.isExample && !listing.soldAt && (listing.views ?? 0) > 0 && (
+            {!listing.soldAt && (listing.views ?? 0) > 0 && (
               <span className="inline-flex items-center gap-1" title={`${listing.views} visninger`}>
                 <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
                 {listing.views}
