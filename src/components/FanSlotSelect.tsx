@@ -3,14 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const SLOTS = [
-  ["", "Ikke festet"],
-  ["1", "1 · Vises først"],
-  ["2", "2"],
-  ["3", "3"],
-  ["4", "4"],
-  ["5", "5"],
-];
+const SLOTS = [["", "Ikke festet"], ["1", "1 · Vises først"], ...Array.from({ length: 9 }, (_, i) => [String(i + 2), String(i + 2)])];
 
 /** Admin: fest annonsen til en fast plass på forsiden. */
 export function FanSlotSelect({ id, slot }: { id: string; slot: number | null }) {

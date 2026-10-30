@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { FAN_SLOTS } from "@/lib/frontpage-row";
 import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
@@ -56,9 +57,8 @@ export async function PATCH(req: Request, { params }: Ctx) {
   }
   if (fanSlot !== undefined) {
     if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort på forsiden." }, { status: 403 });
-    if (fanSlot !== null && (r.listing as { owner_listing?: boolean | null }).owner_listing)
-      return NextResponse.json({ error: "Annonser fra innehaveren av HOBBYSTRADA festes ikke på forsiden." }, { status: 400 });
-    if (fanSlot !== null && ![1, 2, 3, 4, 5].includes(fanSlot)) return NextResponse.json({ error: "Ugyldig plass." }, { status: 400 });
+    // Innehaverens egne annonser kan festes, men får ikke merket «Valgt av HOBBYSTRADA» (se ListingCard)
+    if (fanSlot !== null && !(Number.isInteger(fanSlot) && fanSlot >= 1 && fanSlot <= FAN_SLOTS)) return NextResponse.json({ error: "Ugyldig plass." }, { status: 400 });
     // Plassen kan bare ha ett kort: frigjør den først.
     if (fanSlot !== null) await r.db.from("listings").update({ fan_slot: null }).eq("fan_slot", fanSlot).neq("id", r.listing.id);
     patch.fan_slot = fanSlot;

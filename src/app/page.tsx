@@ -17,7 +17,9 @@ import { Slab } from "@/components/HeroFan";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
-import { fanCards } from "@/lib/fan";
+import { DEFAULT_FILL } from "@/lib/fan";
+import { frontpageRow } from "@/lib/frontpage-row";
+import { FORSIDE_FYLL, getSetting } from "@/lib/settings";
 import { ListingGrid } from "@/components/ListingCard";
 import { categoryCounts, getListings, newest } from "@/lib/listings";
 
@@ -31,12 +33,8 @@ export default async function Home() {
     .slice(0, 4);
   const latest = newest(all.filter((l) => !l.featured)).slice(0, 8);
   const c = categoryCounts(all);
-  // Forsiden: festede kort, alle toppannonser, så Fremhevet, og til slutt de nyeste – helst med ekte bilde
-  const fanPinned = all.filter((l) => l.fanSlot);
-  const fanPaid = all.filter((l) => l.frontpage);
-  const fanBoosted = all.filter((l) => !l.frontpage && l.featured);
-  const fanFill = [...newest(all.filter((l) => l.image)), ...newest(all.filter((l) => !l.image))];
-  const fanList = fanCards(fanPinned, fanPaid, fanBoosted, fanFill);
+  // Forsiden: festede kort, alle toppannonser, så Fremhevet, og til slutt de nyeste. Admin styrer hvor mange gratisannonser som fyller.
+  const fanList = frontpageRow(all, await getSetting<number>(FORSIDE_FYLL, DEFAULT_FILL));
   return (
     <div className="bg-background">
       {/* Forsiden: overskrift øverst og annonseraden nederst */}

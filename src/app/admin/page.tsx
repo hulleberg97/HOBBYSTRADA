@@ -19,6 +19,10 @@ import { sitePassword } from "@/lib/private";
 import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
+import { ForsideMeny, type ForsideKort } from "@/components/ForsideMeny";
+import { FAN_SLOTS, frontpageRow, rowLabel } from "@/lib/frontpage-row";
+import { FORSIDE_FYLL, getSetting } from "@/lib/settings";
+import { DEFAULT_FILL } from "@/lib/fan";
 
 export const metadata: Metadata = { title: "Administrasjon", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -45,6 +49,20 @@ export default async function AdminPage() {
   ]);
 
   const sales = await listInvoices(db, since90());
+  // Forsiden: raden slik den vises nå, og alle aktive annonser som kan festes
+  const fill = await getSetting<number>(FORSIDE_FYLL, DEFAULT_FILL);
+  const aktive = (all ?? []).filter((r) => r.status === "active").map(fromRow);
+  const kort = (l: (typeof aktive)[number]): ForsideKort => ({
+    id: l.id!,
+    slug: l.slug,
+    title: l.title,
+    image: l.image,
+    fanSlot: l.fanSlot ?? null,
+    label: rowLabel(l),
+    ownerListing: Boolean(l.ownerListing),
+  });
+  const forsideRad = frontpageRow(aktive, fill).map(kort);
+  const forsideKort = aktive.map(kort);
   // Før lansering: andre kontoer enn admin, så testkontoer kan slettes fra admin
   const { data: users } = await db.auth.admin.listUsers({ page: 1, perPage: 1000 });
   const kontoer = (users?.users ?? [])
@@ -82,6 +100,13 @@ export default async function AdminPage() {
         </div>
       </section>
       <div className="mx-auto max-w-[1320px] space-y-14 px-4 pb-24 pt-10 sm:px-6 lg:px-8">
+        <section>
+          <h2 className={h2}>Forsiden</h2>
+          <p className="mt-1 text-sm text-slate-600">Velg hvilke kort som vises i raden på forsiden. Endringer vises med en gang.</p>
+          <div className="mt-4">
+            <ForsideMeny row={forsideRad} listings={forsideKort} fill={fill} slots={FAN_SLOTS} />
+          </div>
+        </section>
         <section>
           <h2 className={h2}>Venter på godkjenning ({pending?.length ?? 0})</h2>
           {!pending?.length ? (
@@ -323,7 +348,7 @@ export default async function AdminPage() {
                       { label: "Slett", del: true, tone: "danger" as const },
                     ]}
                   />
-                  {l.status === "active" && !l.ownerListing && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
+                  {l.status === "active" && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
                   {l.status === "active" && (
                     <a href={`/api/admin/ig/${l.slug}`} className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50">
                       Instagram-bilde

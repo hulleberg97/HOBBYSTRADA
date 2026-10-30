@@ -38,7 +38,7 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           </div>
           <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
             {/* Festede kort er valgt av oss, ikke betalt. Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
-            {listing.fanSlot ? (
+            {listing.fanSlot && !listing.ownerListing ? (
               <span title="Festet på forsiden av HOBBYSTRADA. Selgeren har ikke betalt for plasseringen." className="inline-flex items-center rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-semibold text-white">
                 Valgt av HOBBYSTRADA
               </span>
