@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRightIcon, CameraIcon, CheckIcon, ImagePlusIcon, XIcon, CropIcon } from "lucide-react";
 import { formatPrice } from "@/lib/format";
-import { CLUBS, LEAGUES } from "@/lib/clubs";
+import { CLUBS, LEAGUES, clubOptions } from "@/lib/clubs";
 import { CONDITIONS, conditionLabel } from "@/lib/conditions";
 import { btnPrimary, btnSecondary } from "./ui";
 import { resizeImage } from "@/lib/resize";
@@ -427,31 +427,6 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
               />
             </div>
             <div>
-              <label htmlFor="s-club" className={label}>
-                Klubb / landslag
-              </label>
-              <input
-                id="s-club"
-                name="club"
-                list="s-clubs"
-                maxLength={60}
-                placeholder="F.eks. Manchester City"
-                autoComplete="off"
-                className={field}
-                value={v.club}
-                onChange={(e) => {
-                  const club = e.target.value;
-                  // Kjent klubb: fyll inn ligaen automatisk
-                  setV({ ...v, club, league: CLUBS[club] ?? v.league });
-                }}
-              />
-              <datalist id="s-clubs">
-                {Object.keys(CLUBS).map((c) => (
-                  <option key={c} value={c} />
-                ))}
-              </datalist>
-            </div>
-            <div>
               <label htmlFor="s-league" className={label}>
                 Liga
               </label>
@@ -461,6 +436,32 @@ export function SellForm({ user }: { user: { name: string; email: string; locati
                   <option key={l}>{l}</option>
                 ))}
               </select>
+            </div>
+            <div>
+              <label htmlFor="s-club" className={label}>
+                Klubb / landslag
+              </label>
+              <input
+                id="s-club"
+                name="club"
+                list="s-clubs"
+                maxLength={60}
+                placeholder={v.league && v.league !== "Annen liga" ? `Velg lag i ${v.league}` : "F.eks. Manchester City"}
+                autoComplete="off"
+                className={field}
+                value={v.club}
+                onChange={(e) => {
+                  const club = e.target.value;
+                  // Kjent klubb: fyll inn ligaen automatisk
+                  setV({ ...v, club, league: CLUBS[club] ?? v.league });
+                }}
+              />
+              {/* Forslagene er lagene i valgt liga. Uten liga foreslås alle lag. */}
+              <datalist id="s-clubs">
+                {clubOptions(v.league).map((c) => (
+                  <option key={c} value={c} />
+                ))}
+              </datalist>
             </div>
             <div>
               <label htmlFor="s-season" className={label}>

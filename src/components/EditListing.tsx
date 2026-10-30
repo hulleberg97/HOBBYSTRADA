@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { ImagePlusIcon, PencilIcon, StarIcon, XIcon } from "lucide-react";
 import { resizeImage } from "@/lib/resize";
-import { CLUBS, LEAGUES } from "@/lib/clubs";
+import { CLUBS, LEAGUES, clubOptions } from "@/lib/clubs";
 import { CONDITIONS, conditionLabel } from "@/lib/conditions";
 
 const field =
@@ -159,7 +159,7 @@ export function EditListing({ id, price, location, condition, description, image
           }}
         />
         <datalist id={`clubs-${id}`}>
-          {Object.keys(CLUBS).map((c) => (
+          {clubOptions("").map((c) => (
             <option key={c} value={c} />
           ))}
         </datalist>
