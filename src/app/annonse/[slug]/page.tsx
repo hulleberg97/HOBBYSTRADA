@@ -185,7 +185,9 @@ export default async function ListingPage({ params }: Props) {
                     Handle trygt
                   </p>
                   <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-                    Du avtaler betaling og frakt direkte med selgeren. HOBBYSTRADA er ikke part i handelen, så ta noen enkle forholdsregler:
+                    {l.ownerListing
+                      ? "Her handler du med HOBBYSTRADA ULLEBERG, et foretak. Forbrukerkjøpsloven og 14 dagers angrerett gjelder. Betaling og frakt avtales i chatten. Noen enkle forholdsregler gjelder uansett:"
+                      : "Du avtaler betaling og frakt direkte med selgeren. HOBBYSTRADA er ikke part i handelen, så ta noen enkle forholdsregler:"}
                   </p>
                   <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                     {(
