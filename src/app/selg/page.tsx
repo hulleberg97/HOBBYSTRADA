@@ -6,7 +6,7 @@ import { getUser, getVerification } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VippsButton } from "@/components/VerifiedBadge";
 
-export const metadata: Metadata = { title: "Legg ut kort" };
+export const metadata: Metadata = { title: "Legg ut kort", alternates: { canonical: "/selg" } };
 export const dynamic = "force-dynamic";
 
 export default async function SellPage() {
@@ -45,7 +45,7 @@ export default async function SellPage() {
               <VippsButton href={user ? "/auth/vipps?next=/selg" : "/auth/login?next=/selg"} label={user ? "Bekreft med Vipps" : "Fortsett med Vipps"} />
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
-              Vi får navnet og e-posten din fra Vipps. Adressen og telefonnummeret ditt hentes ikke.
+              Vi får navnet, e-posten og telefonnummeret ditt fra Vipps. Adressen din hentes ikke. Telefonnummeret brukes bare i Vipps-knappen kjøperen får når du har godtatt et bud.
             </p>
           </div>
         ) : (

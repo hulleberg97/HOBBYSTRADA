@@ -7,12 +7,13 @@ import { AutoRefresh } from "@/components/AutoRefresh";
 import { BoostSuccess } from "@/components/BoostSuccess";
 import { activeBoost, type BoostKey } from "@/lib/boosts";
 import { fromRow } from "@/lib/listings";
+import { getUser, isAdmin } from "@/lib/auth";
 
 export const metadata: Metadata = { title: "Betaling", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
 const COPY: Record<SettleResult, { title: string; text: string; Icon: typeof CheckIcon; tone: string }> = {
-  paid: { title: "Betalingen er gjennomført", text: "Løftet er aktivert, og annonsen din vises nå først i markedet.", Icon: CheckIcon, tone: "bg-emerald-600" },
+  paid: { title: "Betalingen er gjennomført", text: "Løftet er aktivert. Du finner annonsen under Min side.", Icon: CheckIcon, tone: "bg-emerald-600" },
   waiting: {
     title: "Venter på Vipps",
     text: "Vi har ikke fått bekreftelse fra Vipps ennå. Siden oppdaterer seg selv straks betalingen er registrert.",
@@ -27,7 +28,11 @@ export default async function PaymentPage({ searchParams }: { searchParams: Prom
   const id = (await searchParams).ordre ?? "";
   const db = adminClient();
   let result: SettleResult = "unknown";
-  if (db && /^[0-9a-f-]{36}$/.test(id)) {
+  // Bare den som bestilte (eller admin) kan se og avslutte bestillingen
+  const user = await getUser();
+  const { data: owner } = db && /^[0-9a-f-]{36}$/.test(id) ? await db.from("boost_orders").select("user_id").eq("id", id).maybeSingle() : { data: null };
+  const allowed = Boolean(owner && user && (owner.user_id === user.id || isAdmin(user)));
+  if (db && allowed) {
     try {
       result = await settleBoost(db, id);
     } catch (e) {

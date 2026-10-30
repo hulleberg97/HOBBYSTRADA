@@ -6,7 +6,7 @@ import { ChevronRightIcon } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { COMPANY } from "@/lib/company";
 
-export const metadata: Metadata = { title: "Kontakt" };
+export const metadata: Metadata = { title: "Kontakt", alternates: { canonical: "/kontakt" } };
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper

@@ -16,7 +16,7 @@ function smtp() {
   return transport;
 }
 
-/** Sender e-post via SMTP, eller via Resend når RESEND_API_KEY er satt. Returnerer false hvis e-post ikke er satt opp. */
+/** Sender e-post via SMTP (Domene AS). Returnerer false hvis e-post ikke er satt opp eller sendingen feilet. */
 export async function sendEmail({ to, subject, text, html, replyTo, attachments }: Mail) {
   if (isPlaceholderEmail(to)) return false;
   const mailer = smtp();
@@ -29,23 +29,8 @@ export async function sendEmail({ to, subject, text, html, replyTo, attachments 
       return false;
     }
   }
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return false;
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
-    body: JSON.stringify({
-      from: from(),
-      to,
-      subject,
-      text,
-      html,
-      reply_to: replyTo,
-      attachments: attachments?.map((a) => ({ filename: a.filename, content: a.content.toString("base64") })),
-    }),
-  });
-  if (!res.ok) console.error("E-post feilet", res.status, await res.text());
-  return res.ok;
+  // Ingen reserveløsning via andre leverandører: personvernerklæringen nevner bare Domene AS
+  return false;
 }
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);

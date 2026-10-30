@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHeader, SellCta, btnPrimary, btnSecondary } from "@/components/ui";
 import { BadgeCheckIcon, HandshakeIcon, ShieldCheckIcon, ZapIcon } from "lucide-react";
 
-export const metadata: Metadata = { title: "Om HOBBYSTRADA" };
+export const metadata: Metadata = { title: "Om HOBBYSTRADA", alternates: { canonical: "/om-oss" } };
 
 export default function AboutPage() {
   return (
@@ -67,6 +67,9 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
+        <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-slate-600">
+          HOBBYSTRADA drives av HOBBYSTRADA ULLEBERG, org.nr. 938 698 929, Kongsberg. Fullstendige opplysninger står i <Link href="/vilkar">vilkårene</Link>.
+        </p>
       </section>
       <section>
         <div className="mx-auto grid max-w-[1320px] gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">

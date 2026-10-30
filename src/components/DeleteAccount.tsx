@@ -26,7 +26,7 @@ export function DeleteAccount() {
   return (
     <div className="rounded-3xl bg-white p-5 ring-1 ring-slate-200">
       <h3 className="font-semibold text-slate-950">Slett konto</h3>
-      <p className="mt-1 text-sm text-slate-600">Kontoen, annonsene dine, bildene, varslene og meldingene til deg slettes for godt.</p>
+      <p className="mt-1 text-sm text-slate-600">Kontoen, annonsene, bildene, varslene og de lagrede søkene dine slettes for godt. Meldinger du har sendt, blir stående hos den du har skrevet med, merket «Slettet bruker», til samtalen slettes etter 12 måneder. Kvitteringer for annonseløft beholdes så lenge bokføringsloven krever.</p>
       {step === "idle" ? (
         <button
           type="button"

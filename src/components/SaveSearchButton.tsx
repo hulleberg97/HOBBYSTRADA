@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "./useUser";
 import { useState } from "react";
 import { BellIcon, CheckIcon } from "lucide-react";
 
@@ -12,9 +13,15 @@ export function SaveSearchButton() {
   const [state, setState] = useState<"idle" | "busy" | "saved" | "error">("idle");
   const [error, setError] = useState("");
   const query = params.toString();
+  const user = useUser();
   const [savedQuery, setSavedQuery] = useState("");
 
   const save = async () => {
+    // Uinnlogget sendes rett til innlogging, uten et mislykket kall først
+    if (user === null) {
+      router.push(`/auth/login?next=${encodeURIComponent(`${path}?${query}`)}`);
+      return;
+    }
     setState("busy");
     const res = await fetch("/api/saved-searches", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ query }) });
     if (res.status === 401) {

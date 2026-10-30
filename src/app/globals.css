@@ -714,3 +714,6 @@ html[data-pill="midt"] .pill-midt { display: flex; }
 html[data-pill="hver"] .pill-hver { display: flex; }
 html[data-pill="hver"] .mag ul li .fan-slab { -webkit-box-reflect: none; }
 html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !important; }
+
+/* Tydelig fokusramme for tastaturbrukere, uten å påvirke museklikk */
+:focus-visible { outline: 2px solid #0b1426; outline-offset: 2px; border-radius: 4px; }

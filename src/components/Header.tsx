@@ -25,7 +25,7 @@ const HELP = [
   ["/annonseloft", "Annonseløft", "Selg raskere med synlighet"],
   ["/solgt", "Solgte kort", "Se prisene på solgte kort"],
   ["/sporsmal", "Spørsmål og svar", "Svar på det folk lurer på"],
-  ["/om-oss", "Om oss", "Hvem står bak HOBBYSTRADA"],
+  ["/om-oss", "Om oss", "Om markedet og hvem som driver det"],
   ["/kontakt", "Kontakt", "Send oss en melding"],
 ];
 

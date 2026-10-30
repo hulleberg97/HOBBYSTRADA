@@ -7,7 +7,7 @@ import { FRONTPAGE_SLOTS } from "@/lib/boosts";
 import { frontpageAvailability } from "@/lib/frontpage";
 import { adminClient } from "@/lib/supabase-admin";
 
-export const metadata: Metadata = { title: "Annonseløft" };
+export const metadata: Metadata = { title: "Annonseløft", alternates: { canonical: "/annonseloft" } };
 
 export default async function BoostPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper

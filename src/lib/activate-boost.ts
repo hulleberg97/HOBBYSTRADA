@@ -18,7 +18,9 @@ export async function activateBoost(db: SupabaseClient, orderId: string) {
   const until = new Date(Date.now() + days * 864e5).toISOString();
   const { data: l } = order.listing_id ? await db.from("listings").select("slug, title").eq("id", order.listing_id).maybeSingle() : { data: null };
 
-  const { data: paid } = await db.from("boost_orders").update({ status: "paid", paid_at: paidAt }).eq("id", order.id).select("invoice_no").maybeSingle();
+  // Betinget oppdatering: betalingssiden, Min side og cron kan kalle dette samtidig, men bare én får merke bestillingen betalt
+  const { data: paid } = await db.from("boost_orders").update({ status: "paid", paid_at: paidAt }).eq("id", order.id).neq("status", "paid").select("invoice_no").maybeSingle();
+  if (!paid) return;
 
   const { data: u } = order.user_id ? await db.auth.admin.getUserById(order.user_id) : { data: { user: null } };
   if (u.user?.email && !isPlaceholderEmail(u.user.email)) {

@@ -7,6 +7,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Markedet",
   description: "Fotballkort fra samlere. Kjøp direkte fra selgeren.",
+  alternates: { canonical: "/marked" },
 };
 
 export default async function ProductsPage() {

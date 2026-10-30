@@ -17,7 +17,19 @@ const OLD_PATHS: [string, string][] = [
   ["/cart", "/marked"],
 ];
 
+/** Sikkerhetsheadere på alle svar. Ingen rammer fra andre nettsteder, ingen gjetting av innholdstype, begrenset henvisning. */
+const SECURITY_HEADERS = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+  { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+];
+
 const nextConfig: NextConfig = {
+  async headers() {
+    return [{ source: "/(.*)", headers: SECURITY_HEADERS }];
+  },
   async redirects() {
     return [
       ...OLD_PATHS.map(([source, destination]) => ({ source, destination, permanent: true })),

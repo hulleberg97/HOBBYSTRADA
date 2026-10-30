@@ -3,14 +3,14 @@ import Link from "next/link";
 import { LegalPage, List } from "@/components/LegalPage";
 import { COMPANY } from "@/lib/company";
 
-export const metadata: Metadata = { title: "Vilkår" };
+export const metadata: Metadata = { title: "Vilkår", alternates: { canonical: "/vilkar" } };
 
 /** Brukervilkår. Gjennomgått juridisk oktober 2026. Avsnittet «Slik sorteres annonsene» lenkes til fra markedet (markedsføringsloven § 8). */
 export default function TermsPage() {
   return (
     <LegalPage
       title="Vilkår for bruk"
-      updated="29. oktober 2026"
+      updated="30. oktober 2026"
       sections={[
         {
           title: "Om tjenesten",
@@ -145,7 +145,7 @@ export default function TermsPage() {
                 følger disse vilkårene og <Link href="/salgsvilkar">salgsvilkårene</Link>. Du får bekreftelse på e-post, og kvitteringen ligger under Min side.
               </p>
               <p className="mt-3">
-                <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven. Når du bestiller, kan du be om at løftet starter med en gang
+                <strong>Angrerett.</strong> Du har 14 dagers angrerett etter angrerettloven. Når du bestiller, ber du om at løftet starter med en gang
                 betalingen er gjennomført. Da bekrefter du samtidig at angreretten går tapt når løftet er levert fullt ut, altså når perioden er over. Angrer
                 du før perioden er over, betaler du for den delen av perioden som er brukt, og får resten tilbake. Du angrer med knappen «Angre avtalen» på kvitteringen under Min side, ved å sende{" "}
                 <Link href="/angreskjema">angreskjemaet</Link>, eller med en e-post til {COMPANY.email}.
@@ -169,7 +169,7 @@ export default function TermsPage() {
             <p id="sortering">
               Annonser med aktivt annonseløft vises øverst i markedet og i søkeresultatene, i rekkefølgen Toppannonse, Fremhevet og Topp av listen, og er
               merket «Annonseløft». Deretter kommer de andre annonsene, nyeste først. Velger du selv å sortere etter pris eller navn, sorteres alle annonser
-              likt, uavhengig av løft. Forsiden viser toppannonser først, deretter fremhevede annonser, og deretter annonser vi selv har valgt. Finnes ingen av disse, vises de nyeste annonsene. Annonsene på forsiden glir sakte bortover, så alle kortene passerer midten etter tur. Annonser vi selv velger er ikke merket «Annonseløft», og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
+              likt, uavhengig av løft. Raden øverst på forsiden viser toppannonser først, deretter fremhevede annonser, og deretter annonser vi selv har valgt. Finnes ingen av disse, fylles raden med de nyeste annonsene. Annonsene i raden glir sakte bortover, så alle kortene passerer midten etter tur. Under raden viser forsiden utvalgte kort (annonser med Fremhevet eller Toppannonse) og de nyeste annonsene. Annonser vi selv velger er ikke merket «Annonseløft», og selgeren betaler ikke for plasseringen. Prisarkivet «Solgte kort» sorteres etter salgsdato. Bortsett fra annonseløft påvirker betaling ikke rekkefølgen.
             </p>
           ),
         },

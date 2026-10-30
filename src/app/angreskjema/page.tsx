@@ -4,7 +4,7 @@ import { COMPANY } from "@/lib/company";
 import { PageHeader } from "@/components/ui";
 import { PrintButton } from "@/components/PrintButton";
 
-export const metadata: Metadata = { title: "Angreskjema" };
+export const metadata: Metadata = { title: "Angreskjema", alternates: { canonical: "/angreskjema" } };
 
 /** Standard angreskjema (angrerettloven § 8 og forskriftens vedlegg). Kan sendes som e-post eller skrives ut. */
 export default function Page() {
@@ -31,7 +31,7 @@ export default function Page() {
             </div>
             <div className={row}>
               <dt className="text-slate-500">Kvitteringsnummer</dt>
-              <dd>Salgsdokument nr.: __________ (hvis du har det, står på kvitteringen under Min side)</dd>
+              <dd>Salgsdokument nr.: __________ (står på kvitteringen under Min side)</dd>
             </div>
             <div className={row}>
               <dt className="text-slate-500">Bestilt den</dt>

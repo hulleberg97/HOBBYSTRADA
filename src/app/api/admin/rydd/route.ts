@@ -54,7 +54,14 @@ export async function POST(req: Request) {
     }
     if (old?.length) await db.from("listings").delete().neq("status", "active");
     deleted["annonser (ikke aktive)"] = old?.length ?? 0;
-    for (const t of ["boost_orders", "chat_messages", "conversations", "messages", "notifications", "saved_searches", "reports", "contact_messages", "blocked_users", "rate_events"]) {
+    // Betalte bestillinger er salgsdokumenter og skal oppbevares i fem år (bokføringsloven), så bare ubetalte slettes
+    {
+      const { count } = await db.from("boost_orders").select("*", { count: "exact", head: true }).neq("status", "paid");
+      const { error } = await db.from("boost_orders").delete().neq("status", "paid");
+      if (error) throw new Error(`boost_orders: ${error.message}`);
+      deleted["boost_orders (ubetalte)"] = count ?? 0;
+    }
+    for (const t of ["chat_messages", "conversations", "notifications", "saved_searches", "reports", "contact_messages", "blocked_users", "rate_events"]) {
       deleted[t] = await wipe(db, t).catch((e: Error) => {
         // Tabeller som ikke finnes i denne databasen hoppes over
         if (/does not exist|schema cache/.test(e.message)) return 0;

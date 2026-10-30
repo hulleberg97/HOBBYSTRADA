@@ -6,7 +6,7 @@ import { ArrowRightIcon } from "lucide-react";
 import type { Listing } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
 
-/** TEST ?pill=midt: prislappen følger kortet som til enhver tid står nærmest midten av den glidende raden. */
+/** Prislappen følger kortet som til enhver tid står nærmest midten av den glidende raden. */
 export function RowPill({ cards }: { cards: Listing[] }) {
   const [slug, setSlug] = useState(cards[0]?.slug ?? "");
   useEffect(() => {

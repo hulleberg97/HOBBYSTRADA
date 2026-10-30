@@ -27,7 +27,7 @@ function Mark({ className, cards, bar }: { className?: string; cards: string; ba
 
 let cardW = 200; // kortets bredde i px, målt når siden lastes
 let halfW = 300; // halve bredden av vifta i px
-/** TEST ?vis=hand|pakke: «hand» = kortene holdes som i en hånd, «pakke» = kortene glir ut av en pakke ved lasting. */
+/** Visning: «hand» = kortene holdes som i en hånd, «pakke» = kortene glir ut av en pakke ved lasting. */
 type Vis = "vifte" | "hand" | "pakke";
 let vis: Vis = "vifte";
 
@@ -98,8 +98,8 @@ export function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
       <div className="flex items-center gap-[6%] rounded-[6px] bg-[linear-gradient(180deg,#1a2d52,#0c1730)] px-[6%] py-[5%] ring-1 ring-inset ring-[#cfa653]/70">
         <Mark className="h-[20px] w-auto shrink-0 sm:h-[26px]" cards="#f7f3ea" bar="#cfa653" />
         <div className="min-w-0">
-          <p className="truncate text-[9px] font-extrabold uppercase leading-tight text-[#f7f3ea] sm:text-[10px]">{l.player}</p>
-          <p className="truncate text-[8px] font-semibold leading-tight text-[#e2c27a] sm:text-[9px]">{l.set}</p>
+          <p className="truncate text-[9px] font-extrabold uppercase leading-tight text-[#f7f3ea] sm:text-[11px]">{l.player}</p>
+          <p className="truncate text-[8px] font-semibold leading-tight text-[#e2c27a] sm:text-[10px]">{l.set}</p>
         </div>
       </div>
       <div className="fan-window mt-[5%] aspect-[5/7] overflow-hidden rounded-[4px] bg-[#0d2238] ring-1 ring-black/10">
@@ -118,9 +118,14 @@ export function Slab({ l, eager = false }: { l: Listing; eager?: boolean }) {
           <CardArt listing={l} square />
         )}
       </div>
-      {l.frontpage && (
-        <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-2 ring-white/80">
-          <CrownIcon className="h-3.5 w-3.5" aria-label="Toppannonse" />
+      {/* Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
+      {(l.frontpage || l.featured) && (
+        <span
+          title={l.frontpage ? "Toppannonse" : "Fremhevet"}
+          className="absolute -top-2 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-accent px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-accent-foreground shadow-lg ring-1 ring-white/80 sm:text-[9px]"
+        >
+          {l.frontpage && <CrownIcon className="h-2.5 w-2.5" aria-hidden="true" />}
+          Annonseløft
         </span>
       )}
     </div>

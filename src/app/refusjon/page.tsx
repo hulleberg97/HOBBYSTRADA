@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Refusjon av annonseløft" };
+export const metadata: Metadata = { title: "Refusjon av annonseløft", alternates: { canonical: "/refusjon" } };
 
 export default function RefundPage() {
   return (

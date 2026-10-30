@@ -15,7 +15,7 @@ export function OwnerBoost({ slug, ownerId }: { slug: string; ownerId?: string |
     >
       <span>
         <span className="block text-sm font-semibold text-slate-900">Vil du selge raskere?</span>
-        <span className="block text-xs text-slate-600">Løft annonsen din til toppen av markedet med gullmerke.</span>
+        <span className="block text-xs text-slate-600">Løft annonsen til toppen av markedet, eller gi den gullmerke og plass på forsiden.</span>
       </span>
       <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-3.5 py-2 text-xs font-semibold text-accent-foreground">
         Løft annonsen

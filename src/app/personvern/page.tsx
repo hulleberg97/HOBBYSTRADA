@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LegalPage, List } from "@/components/LegalPage";
 import { COMPANY } from "@/lib/company";
 
-export const metadata: Metadata = { title: "Personvern" };
+export const metadata: Metadata = { title: "Personvern", alternates: { canonical: "/personvern" } };
 
 /** Ett formål: hva vi gjør, hvilke opplysninger, grunnlaget og hvor lenge. Oppsett etter Datatilsynets krav (art. 13). */
 function Purpose({ title, what, data, basis, kept }: { title: string; what: string; data: string; basis: string; kept: string }) {
@@ -27,7 +27,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Personvern"
-      updated="29. oktober 2026"
+      updated="30. oktober 2026"
       sections={[
         {
           title: "1. Hvem som er ansvarlig",
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
               <p>Fra Vipps, når du logger inn:</p>
               <List
                 items={[
-                  "Navn, e-post, telefonnummer og en fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn. Telefonnummeret vises bare for en kjøper etter at du har godtatt et bud, så kjøperen kan betale deg direkte i Vipps. Vi henter ikke adressen din. Poststedet oppgir du selv når du legger ut en annonse.",
+                  "Navn, e-post, telefonnummer og en fast ID fra Vipps, så vi kjenner deg igjen neste gang du logger inn. Telefonnummeret brukes bare i Vipps-lenken kjøperen får etter at du har godtatt et bud, så kjøperen kan betale deg direkte i Vipps. Vi henter ikke adressen din. Poststedet oppgir du selv når du legger ut en annonse.",
                 ]}
               />
               <p className="mt-3">Fornavnet fra Vipps vises på annonsene dine, og hele navnet vises for dem du chatter med. Navnet kan ikke endres på nettsiden.</p>
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
               <List
                 items={[
                   "Annonser: kortdata, pris, tilstand, beskrivelse, bilder og sted.",
-                  "Meldinger: det du skriver og bildene du sender i chatten med andre brukere.",
+                  "Meldinger: det du skriver og bildene du sender i chatten med andre brukere, inkludert postadressen du sender til selgeren og sendingsnummeret selgeren sender deg.",
                   "Lagrede søk: søkene du vil ha varsel om.",
                   "Henvendelser: navn, e-post og meldingen når du kontakter oss eller rapporterer en annonse.",
                   "Annonseløft: hvilken pakke du kjøper, for hvilken annonse. Selve betalingen skjer i Vipps, og vi ser aldri bank- eller kortopplysningene dine.",
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
               <Purpose
                 title="Annonseløft og betaling"
                 what="Ta betalt for annonseløft gjennom Vipps og aktivere løftet."
-                data="Pakke, beløp, tidspunkt, annonsens tittel, navnet ditt og e-postadressen din."
+                data="Pakke, beløp, tidspunkt, annonsens tittel, navnet ditt, e-postadressen din og tidspunktene du krysset av for at løftet skal starte straks og at angreretten går tapt."
                 basis="Avtale med deg (art. 6 nr. 1 b) og bokføringsloven (art. 6 nr. 1 c)."
                 kept="5 år etter utløpet av regnskapsåret, som bokføringsloven krever, også om annonsen eller kontoen slettes. Kvitteringen er et salgsdokument som loven krever at oppbevares uendret, så navnet og e-postadressen på den beholdes også etter at du har slettet kontoen."
               />
@@ -129,7 +129,7 @@ export default function PrivacyPage() {
               />
               <Purpose
                 title="Varsler på nettsiden"
-                what="Gi deg beskjed under Varsler når annonsen din blir godkjent eller avvist, når et løft er aktivert eller snart går ut, og når nye kort passer søkene dine."
+                what="Gi deg beskjed under Varsler når annonsen din blir godkjent eller avvist, når et løft er aktivert eller snart går ut, når selgeren har svart på et bud, og når nye kort passer søkene dine."
                 data="Hva som skjedde, annonsens tittel og tidspunkt."
                 basis="Avtale med deg (art. 6 nr. 1 b)."
                 kept="90 dager, eller til du sletter kontoen."

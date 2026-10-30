@@ -18,8 +18,13 @@ export function CookieConsent() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const show = () => setOpen(true);
+    const key = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener(EVENT, show);
-    return () => window.removeEventListener(EVENT, show);
+    window.addEventListener("keydown", key);
+    return () => {
+      window.removeEventListener(EVENT, show);
+      window.removeEventListener("keydown", key);
+    };
   }, []);
   if (!open) return null;
   const close = () => setOpen(false);

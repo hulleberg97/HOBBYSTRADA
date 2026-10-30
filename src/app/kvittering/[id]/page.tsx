@@ -41,6 +41,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               <p>{COMPANY.street}</p>
               <p>{COMPANY.postal}</p>
               <p>{COMPANY.email}</p>
+              <p>Telefon: {COMPANY.phone}</p>
             </div>
           </header>
           <dl className="mt-6 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">

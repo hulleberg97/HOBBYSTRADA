@@ -28,7 +28,7 @@ export async function GET(req: Request) {
     result[name] = error ? `feil: ${error.message}` : (count ?? 0);
   };
 
-  await del("messages", db.from("messages").delete({ count: "exact" }).lt("created_at", months(12)));
+  await del("conversations", db.from("conversations").delete({ count: "exact" }).lt("created_at", months(12)));
   await del("conversations", db.from("conversations").delete({ count: "exact" }).lt("last_message_at", months(12)));
   await del(
     "rate_events",

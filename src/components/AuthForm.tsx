@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { safePath } from "@/lib/safe-path";
 import { useState } from "react";
 import { browserClient } from "@/lib/supabase";
 import { VippsButton } from "./VerifiedBadge";
@@ -24,7 +25,7 @@ const COPY: Record<Mode, { title: string; lead: string; submit: string }> = {
 export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean }) {
   const router = useRouter();
   const params = useSearchParams();
-  const next = params.get("next") ?? "/account";
+  const next = safePath(params.get("next"));
   const vippsError = {
     vipps: "Innloggingen med Vipps ble avbrutt eller feilet. Prøv igjen.",
     "vipps-koblet": "Denne Vipps-kontoen er allerede koblet til en annen bruker.",
@@ -134,7 +135,7 @@ export function AuthForm({ mode, vipps = false }: { mode: Mode; vipps?: boolean 
                     </span>
                   )}
                   <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
-                    Vi får navnet, e-posten og poststedet ditt fra Vipps. Ved å fortsette godtar du{" "}
+                    Vi får navnet, e-posten og telefonnummeret ditt fra Vipps. Adressen din hentes ikke. Ved å fortsette godtar du{" "}
                     <Link href="/vilkar" target="_blank" className="underline underline-offset-2">
                       vilkårene
                     </Link>

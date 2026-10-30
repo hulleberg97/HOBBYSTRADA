@@ -44,7 +44,9 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
   const [busy, setBusy] = useState(false);
   const drag = useRef<{ handle: Handle; start: { x: number; y: number }; rect: Rect; id: number } | null>(null);
   const skip = useRef(onSkip);
-  skip.current = onSkip;
+  useEffect(() => {
+    skip.current = onSkip;
+  }, [onSkip]);
 
   // Laster bildet med riktig retning (EXIF) og lager et mindre arbeidsbilde. Rotering tegnes inn i arbeidsbildet.
   useEffect(() => {
@@ -122,9 +124,8 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
     },
     [shown.w, shown.h, aspect],
   );
-  useEffect(() => {
-    if (shown.w && !rect) setRect(initial(locked));
-  }, [shown.w, rect, initial, locked]);
+  // Til brukeren drar i rammen, er den startrammen for bildet
+  const frame = rect ?? (shown.w ? initial(locked) : null);
 
   const clampRect = (r: Rect): Rect => {
     const w = Math.min(Math.max(MIN, r.w), shown.w);
@@ -185,12 +186,13 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
     return { x, y, w, h };
   };
 
-  const onPointerDown = (handle: Handle) => (e: React.PointerEvent) => {
-    if (!rect || drag.current) return;
+  // Leses bare når brukeren trykker, aldri under tegning
+  const startDrag = (handle: Handle, e: React.PointerEvent) => {
+    if (!frame || drag.current) return;
     e.preventDefault();
     e.stopPropagation();
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    drag.current = { handle, start: { x: e.clientX, y: e.clientY }, rect, id: e.pointerId };
+    drag.current = { handle, start: { x: e.clientX, y: e.clientY }, rect: frame, id: e.pointerId };
   };
   const onPointerMove = (e: React.PointerEvent) => {
     const d = drag.current;
@@ -209,6 +211,7 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
 
   const finish = async () => {
     const b = img.current;
+    const rect = frame;
     if (!b || !rect || busy || !fit) return;
     setBusy(true);
     try {
@@ -256,7 +259,7 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
       </div>
 
       <div ref={area} className="relative flex flex-1 items-center justify-center overflow-hidden">
-        {src && fit > 0 && rect && (
+        {src && fit > 0 && frame && (
           <div
             data-ramme
             className="relative select-none"
@@ -273,14 +276,14 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
               className="pointer-events-none absolute inset-0"
               style={{
                 background: "rgba(2,6,23,0.65)",
-                clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${rect.x}px ${rect.y}px, ${rect.x}px ${rect.y + rect.h}px, ${rect.x + rect.w}px ${rect.y + rect.h}px, ${rect.x + rect.w}px ${rect.y}px, ${rect.x}px ${rect.y}px)`,
+                clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${frame.x}px ${frame.y}px, ${frame.x}px ${frame.y + frame.h}px, ${frame.x + frame.w}px ${frame.y + frame.h}px, ${frame.x + frame.w}px ${frame.y}px, ${frame.x}px ${frame.y}px)`,
               }}
             />
             {/* Rammen. Dra inne i den for å flytte. */}
             <div
-              onPointerDown={onPointerDown("move")}
+              onPointerDown={(e) => startDrag("move", e)}
               className="absolute z-10 cursor-move touch-none ring-2 ring-white"
-              style={{ left: rect.x, top: rect.y, width: rect.w, height: rect.h }}
+              style={{ left: frame.x, top: frame.y, width: frame.w, height: frame.h }}
             >
               <div className="pointer-events-none absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-50">
                 {Array.from({ length: 9 }).map((_, i) => (
@@ -292,28 +295,28 @@ export function BildeBeskjaering({ file, aspect = 5 / 7, title = "Beskjær bilde
             {(["nw", "ne", "sw", "se"] as const).map((h) => (
               <div
                 key={h}
-                onPointerDown={onPointerDown(h)}
+                onPointerDown={(e) => startDrag(h, e)}
                 data-handle={h}
                 className={`${handleBase} flex h-11 w-11 items-center justify-center ${h === "nw" || h === "se" ? "cursor-nwse-resize" : "cursor-nesw-resize"}`}
                 style={{
-                  left: (h.includes("w") ? rect.x : rect.x + rect.w) - 22,
-                  top: (h.includes("n") ? rect.y : rect.y + rect.h) - 22,
+                  left: (h.includes("w") ? frame.x : frame.x + frame.w) - 22,
+                  top: (h.includes("n") ? frame.y : frame.y + frame.h) - 22,
                 }}
               >
                 <span className={knob} />
               </div>
             ))}
             {/* Kanter */}
-            <div onPointerDown={onPointerDown("n")} data-handle="n" className={`${handleBase} flex h-9 cursor-ns-resize items-center justify-center`} style={{ left: rect.x + 28, top: rect.y - 18, width: Math.max(0, rect.w - 56) }}>
+            <div onPointerDown={(e) => startDrag("n", e)} data-handle="n" className={`${handleBase} flex h-9 cursor-ns-resize items-center justify-center`} style={{ left: frame.x + 28, top: frame.y - 18, width: Math.max(0, frame.w - 56) }}>
               <span className={`${bar} h-2 w-10`} />
             </div>
-            <div onPointerDown={onPointerDown("s")} data-handle="s" className={`${handleBase} flex h-9 cursor-ns-resize items-center justify-center`} style={{ left: rect.x + 28, top: rect.y + rect.h - 18, width: Math.max(0, rect.w - 56) }}>
+            <div onPointerDown={(e) => startDrag("s", e)} data-handle="s" className={`${handleBase} flex h-9 cursor-ns-resize items-center justify-center`} style={{ left: frame.x + 28, top: frame.y + frame.h - 18, width: Math.max(0, frame.w - 56) }}>
               <span className={`${bar} h-2 w-10`} />
             </div>
-            <div onPointerDown={onPointerDown("w")} data-handle="w" className={`${handleBase} flex w-9 cursor-ew-resize items-center justify-center`} style={{ left: rect.x - 18, top: rect.y + 28, height: Math.max(0, rect.h - 56) }}>
+            <div onPointerDown={(e) => startDrag("w", e)} data-handle="w" className={`${handleBase} flex w-9 cursor-ew-resize items-center justify-center`} style={{ left: frame.x - 18, top: frame.y + 28, height: Math.max(0, frame.h - 56) }}>
               <span className={`${bar} h-10 w-2`} />
             </div>
-            <div onPointerDown={onPointerDown("e")} data-handle="e" className={`${handleBase} flex w-9 cursor-ew-resize items-center justify-center`} style={{ left: rect.x + rect.w - 18, top: rect.y + 28, height: Math.max(0, rect.h - 56) }}>
+            <div onPointerDown={(e) => startDrag("e", e)} data-handle="e" className={`${handleBase} flex w-9 cursor-ew-resize items-center justify-center`} style={{ left: frame.x + frame.w - 18, top: frame.y + 28, height: Math.max(0, frame.h - 56) }}>
               <span className={`${bar} h-10 w-2`} />
             </div>
           </div>

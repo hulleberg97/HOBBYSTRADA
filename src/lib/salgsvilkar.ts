@@ -5,7 +5,7 @@ import { COMPANY } from "./company";
  * Salgsvilkårene for annonseløft som data, så nettsiden og PDF-vedlegget i kvitteringen alltid har samme tekst.
  * Lenker skrives [tekst](/sti), uthevet tekst **slik**. Et avsnitt er en streng, en punktliste er en liste av strenger.
  */
-export const SALGSVILKAR_UPDATED = "29. oktober 2026";
+export const SALGSVILKAR_UPDATED = "30. oktober 2026";
 
 export type SalesSection = { title: string; blocks: (string | string[])[] };
 

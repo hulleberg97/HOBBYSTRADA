@@ -11,7 +11,11 @@ export async function GET(req: Request) {
   const to = p.get("til") ? new Date(new Date(p.get("til")!).getTime() + 864e5).toISOString().slice(0, 10) : undefined;
   const rows = await listInvoices(db, from, to);
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
-  const cell = (v: string | number | null) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  // Celler som begynner med = + - @ kan tolkes som formler i Excel; de får en apostrof foran
+  const cell = (v: string | number | null) => {
+    const t = String(v ?? "");
+    return `"${(/^[=+\-@]/.test(t) ? `'${t}` : t).replace(/"/g, '""')}"`;
+  };
   const lines = [
     ["Nr", "Dato", "Kjøper", "E-post", "Ytelse", "Annonse", "Beløp (kr)", "Betalingsmåte", "Kvittering"].map(cell).join(";"),
     ...rows.map((r) => [r.no, invoiceDate(r.paidAt), r.buyerName, r.buyerEmail, `Annonseløft: ${r.plan} (${r.days} dager)`, r.listingTitle, r.amount.toFixed(2).replace(".", ","), "Vipps", `${site}/kvittering/${r.id}`].map(cell).join(";")),

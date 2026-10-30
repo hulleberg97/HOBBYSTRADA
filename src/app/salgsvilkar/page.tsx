@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { LegalPage } from "@/components/LegalPage";
 import { SALGSVILKAR, SALGSVILKAR_UPDATED } from "@/lib/salgsvilkar";
 
-export const metadata: Metadata = { title: "Salgsvilkår" };
+export const metadata: Metadata = { title: "Salgsvilkår", alternates: { canonical: "/salgsvilkar" } };
 
 /** Gjør [tekst](/sti) til lenker og **tekst** til uthevet tekst. */
 function rich(text: string) {

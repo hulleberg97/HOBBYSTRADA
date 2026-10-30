@@ -43,7 +43,7 @@ export async function PATCH(req: Request, { params }: Ctx) {
   }
   if (price !== undefined) {
     const p = Number(price);
-    if (!(p > 0)) return NextResponse.json({ error: "Ugyldig pris." }, { status: 400 });
+    if (!(p > 0) || p > 10_000_000) return NextResponse.json({ error: "Prisen må være mellom 1 og 10 000 000 kr." }, { status: 400 });
     patch.price = p;
   }
   if (typeof description === "string") patch.description = description.trim().slice(0, 1500);

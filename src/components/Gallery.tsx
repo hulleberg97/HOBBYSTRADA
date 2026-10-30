@@ -53,8 +53,8 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
     <>
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
         {badges}
-        <div className="px-10 pb-10 pt-16 sm:px-20 sm:pb-14 sm:pt-20">
-          <div className="mx-auto w-full max-w-[300px] sm:max-w-[340px]">
+        <div className="px-8 pb-8 pt-14 sm:px-12 sm:pb-10 sm:pt-16">
+          <div className="mx-auto w-full max-w-[320px] sm:max-w-[420px]">
             <div className="rounded-[18px] border border-white bg-gradient-to-br from-white via-slate-100 to-white p-3 shadow-2xl shadow-slate-900/30">
               <div className="aspect-[5/7] overflow-hidden rounded-[10px] bg-primary">
                 <button
@@ -70,7 +70,7 @@ export function Gallery({ images, title, badges }: { images: string[]; title: st
                     height={1120}
                     loading="eager"
                     fetchPriority="high"
-                    sizes="(max-width: 1024px) 80vw, 360px"
+                    sizes="(max-width: 1024px) 80vw, 440px"
                     className="h-full w-full object-cover"
                   />
                   <span className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow transition sm:opacity-0 sm:group-hover:opacity-100">

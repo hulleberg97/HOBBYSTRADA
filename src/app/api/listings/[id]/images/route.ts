@@ -33,8 +33,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     .map(String)
     .filter((u) => current.includes(u));
   const files = f.getAll("add").filter((x): x is File => x instanceof File && x.size > 0);
-  if (files.some((x) => !x.type.startsWith("image/") || x.size > MAX_BYTES)) {
-    return NextResponse.json({ error: "Bildene må være bilder på maks 4 MB." }, { status: 400 });
+  if (files.some((x) => !["image/jpeg", "image/png", "image/webp"].includes(x.type) || x.size > MAX_BYTES)) {
+    return NextResponse.json({ error: "Bildene må være JPG, PNG eller WebP på maks 4 MB." }, { status: 400 });
   }
   if (keep.length + files.length === 0) return NextResponse.json({ error: "Annonsen må ha minst ett bilde." }, { status: 400 });
   if (keep.length + files.length > MAX_IMAGES) return NextResponse.json({ error: `Maks ${MAX_IMAGES} bilder.` }, { status: 400 });

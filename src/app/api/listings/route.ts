@@ -19,6 +19,8 @@ const TYPE_MAP: Record<string, string> = {
   Annet: "Annet",
 };
 const MAX_BYTES = 4 * 1024 * 1024;
+/** Bare vanlige fotoformater. SVG kan inneholde skript og avvises. */
+const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const str = (f: FormData, k: string, max: number) =>
   String(f.get(k) ?? "")
@@ -47,6 +49,7 @@ export async function POST(req: Request) {
   const location = str(f, "location", 60);
   const email = user.email;
   const name = user.name;
+  if (price > 10_000_000) return NextResponse.json({ error: "Prisen kan ikke være over 10 000 000 kr." }, { status: 400 });
   if (!player || !set || !price || price < 1 || !username || !location || !email || !name || !f.get("confirm")) {
     return NextResponse.json({ error: "Fyll inn alle feltene som er merket med *." }, { status: 400 });
   }
@@ -54,8 +57,8 @@ export async function POST(req: Request) {
 
   const files = [f.get("front"), f.get("back"), ...f.getAll("extra")].filter((x): x is File => x instanceof File && x.size > 0).slice(0, 6);
   if (!(f.get("front") instanceof File)) return NextResponse.json({ error: "Legg til et bilde av forsiden." }, { status: 400 });
-  if (files.some((x) => !x.type.startsWith("image/") || x.size > MAX_BYTES)) {
-    return NextResponse.json({ error: "Bildene må være bildefiler under 4 MB." }, { status: 400 });
+  if (files.some((x) => !IMAGE_TYPES.includes(x.type) || x.size > MAX_BYTES)) {
+    return NextResponse.json({ error: "Bildene må være JPG, PNG eller WebP under 4 MB." }, { status: 400 });
   }
 
   const code = str(f, "code", 30) || null;

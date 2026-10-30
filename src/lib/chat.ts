@@ -285,8 +285,18 @@ export async function decideOffer(conversationId: string, messageId: string, use
   if (m.offer_status) return { error: "Budet er allerede besvart." };
   const now = new Date().toISOString();
   const status = accept ? "accepted" : "declined";
-  const { error } = await db.from("chat_messages").update({ offer_status: status, offer_decided_at: now }).eq("id", m.id);
+  // Betinget oppdatering: to raske klikk eller to faner kan ikke begge slippe gjennom
+  const { data: changed, error } = await db.from("chat_messages").update({ offer_status: status, offer_decided_at: now }).eq("id", m.id).is("offer_status", null).select("id");
   if (error) return { error: "Kunne ikke lagre svaret." };
+  if (!changed?.length) return { error: "Budet er allerede besvart." };
+  // Bare ett bud kan være godtatt i en samtale
+  if (accept) {
+    const { data: conv } = await db.from("conversations").select("accepted_offer").eq("id", conversationId).maybeSingle();
+    if (conv?.accepted_offer != null) {
+      await db.from("chat_messages").update({ offer_status: null, offer_decided_at: null }).eq("id", m.id);
+      return { error: "Et bud er allerede godtatt i denne samtalen." };
+    }
+  }
   const amount = Number(m.offer);
   const text = accept ? `Budet på ${kr(amount)} er godtatt.` : `Budet på ${kr(amount)} er avslått.`;
   await db.from("chat_messages").insert({ conversation_id: conversationId, sender_id: userId, body: text, offer: null });

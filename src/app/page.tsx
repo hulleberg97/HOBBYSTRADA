@@ -23,6 +23,8 @@ import { categoryCounts, getListings, newest } from "@/lib/listings";
 
 export const revalidate = 60;
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default async function Home() {
   const all = await getListings();
   const featured = all
@@ -67,7 +69,7 @@ export default async function Home() {
                     <Link href={`/annonse/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
                       <Slab l={l} eager={k === 0 && i < 6} />
                     </Link>
-                    {/* TEST ?pill=hver: liten prislapp under hvert kort, glir med raden */}
+                    {/* Liten prislapp under hvert kort, glir med raden */}
                     <Link
                       href={`/annonse/${l.slug}`}
                       tabIndex={-1}
@@ -125,7 +127,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/sok?q=%2F"
+                  href="/marked?type=Nummerert"
                 >
                   <span
                     className="flex h-5 shrink-0 items-center justify-center text-[14px] font-medium leading-none tracking-tight text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8 sm:text-[22px]"
@@ -162,7 +164,7 @@ export default async function Home() {
               <li className="shrink-0 snap-start sm:min-w-0">
                 <Link
                   className="group flex h-full items-center gap-2 whitespace-nowrap rounded-full bg-[#fff] py-2 pl-3 pr-3.5 shadow-[inset_0_0_0_1px_#e3dccb] transition hover:shadow-[inset_0_0_0_1px_#cfa653] sm:flex-col sm:gap-2.5 sm:whitespace-normal sm:rounded-2xl sm:px-2 sm:py-4 sm:text-center sm:shadow-none sm:hover:bg-slate-100 sm:hover:shadow-none"
-                  href="/sok?q=chrome"
+                  href="/marked?type=Base"
                 >
                   <BadgeCheckIcon className="h-5 w-5 shrink-0 text-primary transition group-hover:text-[hsl(var(--gold-deep))] sm:h-8 sm:w-8" strokeWidth={1.4} aria-hidden="true" />
                   <span className="text-[13px] font-semibold leading-tight text-slate-950 sm:text-sm">Base</span>
@@ -322,7 +324,7 @@ export default async function Home() {
                 <ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950">Betal og send trygt</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">Avtal betaling og frakt, vurder frakt med sporing for best mulig trygghet!</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-slate-700">Avtal betaling og frakt i chatten, og vurder frakt med sporing.</p>
             </div>
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-7">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">

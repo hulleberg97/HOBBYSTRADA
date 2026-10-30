@@ -4,7 +4,7 @@ import { PageHeader, btnPrimary } from "@/components/ui";
 import { MessageCircleIcon, ShieldCheckIcon, ShoppingBagIcon, TagIcon, ZapIcon } from "lucide-react";
 import { AccordionItem } from "@/components/Accordion";
 
-export const metadata: Metadata = { title: "Spørsmål og svar" };
+export const metadata: Metadata = { title: "Spørsmål og svar", alternates: { canonical: "/sporsmal" } };
 
 const SECTIONS = [
   {
@@ -20,10 +20,22 @@ const SECTIONS = [
         "Nei. Kort i markedet kjøpes direkte fra selgeren, og betalingen avtales mellom dere. Kassen på siden brukes bare til annonseløft.",
       ],
       [
+        "Hvordan gir jeg bud?",
+        "Trykk «Bud» i chatten og skriv beløpet i hele kroner. Selgeren kan godta eller avslå. Godtar selgeren, er avtalen inngått mellom dere, og du får en Vipps-knapp i chatten.",
+      ],
+      [
+        "Hvordan betaler jeg?",
+        "Når budet er godtatt, får du knappen «Betal med Vipps» i chatten. Den åpner Vipps med selgeren valgt. Sjekk at navnet i Vipps er det samme som selgerens navn i chatten, og skriv inn beløpet. Pengene går rett til selgeren; HOBBYSTRADA er ikke part i betalingen.",
+      ],
+      [
+        "Hvordan får jeg kortet tilsendt?",
+        "Trykk «Send adressen min» i chatten etter at budet er godtatt. Selgeren kjøper frakt hos Posten og legger inn sendingsnummeret, som blir en sporingslenke i chatten. Dere kan også avtale henting.",
+      ],
+      [
         "Hva betyr «Fremhevet»?",
         "Selgeren har kjøpt annonseløft. Fremhevede annonser har gullmerke og vises foran vanlige annonser og annonser med Topp av listen. Toppannonser vises aller først.",
       ],
-      ["Hva betyr «Illustrasjon»?", "Selgeren har ikke lastet opp bilde ennå. Be alltid om bilder av forside og bakside før du handler."],
+      ["Hva betyr «Illustrasjon»?", "Illustrasjon vises bare på annonser uten bilde. Alle nye annonser må ha bilde av forsiden, og du kan alltid be selgeren om flere bilder i chatten."],
     ],
   },
   {
@@ -43,6 +55,23 @@ const SECTIONS = [
         "Forsidebilde er påkrevd. Legg gjerne ved bakside og opptil fire nærbilder av sentrering, hjørner, kanter og overflate – det gir kjøperen trygghet.",
       ],
       ["Kan jeg selge graderte kort?", "Ja. Oppgi graderingsselskap og karakter, for eksempel PSA 10 eller BGS 9.5. Ugraderte kort kalles ofte «raw»."],
+      [
+        "Hvordan beskjærer jeg bildene?",
+        "Når du velger et bilde, kan du dra i hjørnene og kantene for å velge utsnittet, og rotere det, før det legges til. Trykk «Beskjær» på et bilde for å gjøre det på nytt.",
+      ],
+      ["Hvor mange annonser kan jeg ha?", "Så mange du vil, men én annonse per kort. Flere kort kan selges samlet i én annonse, for eksempel en bunke."],
+      [
+        "Kan jeg endre annonsen etterpå?",
+        "Ja. Under Min side kan du endre pris, sted, tilstand, klubb, liga, beskrivelse og bilder. Nye bilder må godkjennes før annonsen vises igjen.",
+      ],
+      [
+        "Hva gjør jeg når kortet er solgt?",
+        "Trykk «Merk som solgt» under Min side. Annonsen flyttes til prisarkivet «Solgte kort» i 12 måneder. Har annonsen aktivt løft, stopper løftet.",
+      ],
+      [
+        "Hvorfor må jeg bekrefte meg med Vipps?",
+        "Alle som legger ut kort eller sender meldinger, logger inn med Vipps, så kjøper og selger vet hvem de handler med. Fornavnet vises på annonsen, hele navnet i chatten.",
+      ],
     ],
   },
   {
@@ -53,7 +82,15 @@ const SECTIONS = [
         "Hva er annonseløft?",
         "Annonseløft gir annonsen mer synlighet. Du kan velge Topp av listen (3 dager), Fremhevet (7 dager) eller Toppannonse (30 dager). Fremhevede annonser vises på forsiden i 7 dager, og toppannonser vises først på forsiden i 30 dager. Priser finner du på siden for annonseløft.",
       ],
-      ["Hvordan kjøper jeg annonseløft?", "Velg pakke på siden for annonseløft og betal i kassen her på siden."],
+      ["Hvordan kjøper jeg annonseløft?", "Velg annonse og pakke på siden for annonseløft, kryss av for angrerett og betal med Vipps. Topp av listen koster 39 kr (3 dager), Fremhevet 79 kr (7 dager) og Toppannonse 199 kr (30 dager)."],
+      [
+        "Hvordan fungerer forsiden?",
+        "Raden øverst på forsiden viser toppannonser først, deretter fremhevede annonser, deretter kort vi selv har valgt. Finnes ingen av disse, vises de nyeste annonsene. Kort vi velger selv er ikke betalt for.",
+      ],
+      [
+        "Kan jeg angre et annonseløft?",
+        "Ja, innen 14 dager. Trykk «Angre avtalen» på kvitteringen under Min side. Du betaler for dagene som er brukt og får resten tilbake innen 14 dager.",
+      ],
     ],
   },
   {
@@ -70,6 +107,14 @@ const SECTIONS = [
       ],
       ["Kan jeg sende bilder i chatten?", "Ja. Trykk på bildeknappen i chatten for å sende et bilde, for eksempel av baksiden eller et hjørne av kortet."],
       ["Jeg ser en mistenkelig annonse. Hva gjør jeg?", "Trykk «Rapporter» på annonsen, eller kontakt oss med lenken til annonsen."],
+      [
+        "Hvordan får jeg beskjed om nye kort?",
+        "Filtrer i markedet og trykk «Varsle meg om nye kort», så får du e-post og et varsel når et nytt kort passer. Søkene finner du under Min side.",
+      ],
+      [
+        "Hvordan sletter jeg kontoen?",
+        "Gå til Min side, Konto, og trykk «Slett kontoen min». Konto, annonser, bilder, varsler og lagrede søk slettes. Meldinger du har sendt blir stående hos mottakeren som «Slettet bruker», og kvitteringer for annonseløft beholdes etter bokføringsloven.",
+      ],
     ],
   },
 ];

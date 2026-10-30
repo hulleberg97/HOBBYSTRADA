@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LegalPage, List } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Informasjonskapsler" };
+export const metadata: Metadata = { title: "Informasjonskapsler", alternates: { canonical: "/informasjonskapsler" } };
 
 export default function CookiePage() {
   return (

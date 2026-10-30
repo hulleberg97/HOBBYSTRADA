@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { ACCESS_COOKIE, accessToken, sitePassword } from "@/lib/private";
+import { safePath } from "@/lib/safe-path";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 /** Tar imot passordet fra /privat og gir tilgang i 90 dager. */
 export async function POST(req: Request) {
   const form = await req.formData();
-  const next = String(form.get("neste") || "/");
-  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  const safeNext = safePath(String(form.get("neste") || "/"), "/");
   const password = sitePassword();
+  // Passordet skal ikke kunne gjettes maskinelt
+  const limited = await rateLimit(`privat:${await clientIp()}`, 20, 600, "For mange forsøk. Vent ti minutter og prøv igjen.");
+  if (limited) return limited;
   if (!password) return NextResponse.redirect(new URL(safeNext, req.url), 303);
   if (String(form.get("passord") || "") !== password) {
     const back = new URL("/privat", req.url);

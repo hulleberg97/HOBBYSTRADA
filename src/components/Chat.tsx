@@ -35,8 +35,8 @@ const time = (iso: string) => new Date(iso).toLocaleTimeString("nb-NO", { hour: 
 /** Postens side for å sende pakke som privatperson. */
 const POSTEN_SEND = "https://www.posten.no/sende";
 const sporing = (nr: string) => `https://sporing.posten.no/sporing/${encodeURIComponent(nr)}`;
-/** Nettadresser og sendingsnumre (9–20 sifre, eller formatet LA123456789NO) i meldinger blir lenker. */
-const LINK_RE = /(https?:\/\/[^\s<]+[^\s<.,)])|\b(\d{9,20}|[A-Z]{2}\d{9}[A-Z]{2})\b/g;
+/** Nettadresser og sendingsnumre fra Posten (12–18 sifre, eller formatet LA123456789NO) i meldinger blir lenker. Kontonummer (11 sifre) og KID treffes ikke. */
+const LINK_RE = /(https?:\/\/[^\s<]+[^\s<.,)])|\b(\d{12,18}|[A-Z]{2}\d{9}[A-Z]{2})\b/g;
 
 function Body({ text }: { text: string }) {
   const parts: React.ReactNode[] = [];
@@ -80,7 +80,7 @@ export function Chat({ conversation: c, initial }: { conversation: Conversation;
   const poll = useCallback(async () => {
     if (document.visibilityState !== "visible") return;
     const res = await fetch(`/api/chat/${c.id}${last ? `?etter=${encodeURIComponent(last)}` : ""}`, { cache: "no-store" }).catch(() => null);
-    const data = res?.ok ? await res.json() : null;
+    const data = res?.ok ? await res.json().catch(() => null) : null;
     if (!data) return;
     const decided: { id: string; status: "accepted" | "declined" }[] = data.decided ?? [];
     setMessages((prev) => {
