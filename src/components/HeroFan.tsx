@@ -88,10 +88,10 @@ function offsetOf(i: number, shift: number, n: number) {
 
 /** Kortet i plastholder med HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter. */
 /** «eager»: kortene som synes når siden åpnes lastes først, resten etterpå. */
-/** Hvordan betalt plassering merkes på kortet i raden. «pill» er dagens merke; de andre er mer diskrete. */
+/** Hvordan betalt plassering merkes på kortet i raden. «header» (hvit liten etikett i underkant) er standard. */
 export type SlabMark = "pill" | "strip" | "corner" | "header";
 
-export function Slab({ l, eager = false, mark = "pill" }: { l: Listing; eager?: boolean; mark?: SlabMark }) {
+export function Slab({ l, eager = false, mark = "header" }: { l: Listing; eager?: boolean; mark?: SlabMark }) {
   const boosted = Boolean(l.frontpage || l.featured);
   const markTitle = l.frontpage ? "Toppannonse" : "Fremhevet";
   return (
