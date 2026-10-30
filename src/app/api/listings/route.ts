@@ -33,7 +33,7 @@ export async function POST(req: Request) {
   if (f.get("_hp")) return NextResponse.json({ ok: true });
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "Logg inn for å legge ut kort." }, { status: 401 });
-  const limited = await rateLimit(`annonse:${user.id}`, 15, 3600, "Du har lagt ut mange annonser den siste timen. Prøv igjen senere.");
+  const limited = await rateLimit(`annonse:${user.id}`, 60, 3600, "Du har lagt ut mange annonser den siste timen. Prøv igjen senere.");
   if (limited) return limited;
   const verified = await getVerification(user.id);
   if (hasVippsLogin() && !verified) {
