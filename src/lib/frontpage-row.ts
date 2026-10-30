@@ -2,11 +2,8 @@ import { fanCards } from "./fan";
 import { newest } from "./listings";
 import type { Listing } from "./types";
 
-/** Flest plasser admin kan feste kort på. */
-export const FAN_SLOTS = 10;
-
 /**
- * Raden på forsiden: festede kort på sin plass, alle toppannonser, så Fremhevet, og til slutt de nyeste
+ * Raden på forsiden: kort admin har valgt først, så alle toppannonser, så Fremhevet, og til slutt de nyeste
  * gratisannonsene opp til `fill` kort. Brukes av forsiden og av forsidemenyen i admin, så de viser det samme.
  */
 export function frontpageRow(all: Listing[], fill: number) {
@@ -21,7 +18,7 @@ export function frontpageRow(all: Listing[], fill: number) {
 
 /** Hva som gir kortet plassen i raden, til visning i admin. */
 export function rowLabel(l: Listing) {
-  if (l.fanSlot) return `Festet · plass ${l.fanSlot}`;
+  if (l.fanSlot) return "Valgt til forsiden";
   if (l.frontpage) return "Toppannonse";
   if (l.featured) return "Fremhevet";
   return "Nyeste uten løft";

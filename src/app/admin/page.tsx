@@ -20,7 +20,7 @@ import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
 import { ForsideMeny, type ForsideKort } from "@/components/ForsideMeny";
-import { FAN_SLOTS, frontpageRow, rowLabel } from "@/lib/frontpage-row";
+import { frontpageRow, rowLabel } from "@/lib/frontpage-row";
 import { FORSIDE_FYLL, getSetting } from "@/lib/settings";
 import { DEFAULT_FILL } from "@/lib/fan";
 
@@ -104,7 +104,7 @@ export default async function AdminPage() {
           <h2 className={h2}>Forsiden</h2>
           <p className="mt-1 text-sm text-slate-600">Velg hvilke kort som vises i raden på forsiden. Endringer vises med en gang.</p>
           <div className="mt-4">
-            <ForsideMeny row={forsideRad} listings={forsideKort} fill={fill} slots={FAN_SLOTS} />
+            <ForsideMeny row={forsideRad} listings={forsideKort} fill={fill} />
           </div>
         </section>
         <section>
@@ -348,7 +348,7 @@ export default async function AdminPage() {
                       { label: "Slett", del: true, tone: "danger" as const },
                     ]}
                   />
-                  {l.status === "active" && <FanSlotSelect id={l.id!} slot={l.fanSlot ?? null} />}
+                  {l.status === "active" && <FanSlotSelect id={l.id!} on={Boolean(l.fanSlot)} />}
                   {l.status === "active" && (
                     <a href={`/api/admin/ig/${l.slug}`} className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50">
                       Instagram-bilde

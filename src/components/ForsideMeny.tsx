@@ -17,9 +17,9 @@ export type ForsideKort = {
 
 /**
  * Admin: velg hvilke kort som vises på forsiden. Viser raden slik den er nå, lar admin velge hvor mange
- * gratisannonser som fyller opp, og feste enkeltkort på plass 1–10.
+ * gratisannonser som fyller opp, og slå av og på hvert kort. Valgte kort vises først, i rekkefølgen de ble valgt.
  */
-export function ForsideMeny({ row, listings, fill, slots }: { row: ForsideKort[]; listings: ForsideKort[]; fill: number; slots: number }) {
+export function ForsideMeny({ row, listings, fill }: { row: ForsideKort[]; listings: ForsideKort[]; fill: number }) {
   const router = useRouter();
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -39,7 +39,7 @@ export function ForsideMeny({ row, listings, fill, slots }: { row: ForsideKort[]
   };
 
   const setFill = (n: number) => call("fill", "/api/admin/forside", { fill: n });
-  const setSlot = (id: string, slot: number | null) => call(id, `/api/listings/${id}`, { fanSlot: slot });
+  const setOn = (id: string, on: boolean) => call(id, `/api/listings/${id}`, { fanSlot: on ? true : null });
 
   const q = search.trim().toLowerCase();
   const shown = q ? listings.filter((l) => l.title.toLowerCase().includes(q)) : listings;
@@ -65,7 +65,7 @@ export function ForsideMeny({ row, listings, fill, slots }: { row: ForsideKort[]
             ))}
           </ol>
         ) : (
-          <p className="mt-2 text-sm text-slate-600">Ingen kort på forsiden nå. Fest kort under, eller la gratisannonser fylle opp.</p>
+          <p className="mt-2 text-sm text-slate-600">Ingen kort på forsiden nå. Slå på kort under, eller la gratisannonser fylle opp.</p>
         )}
       </div>
 
@@ -78,12 +78,12 @@ export function ForsideMeny({ row, listings, fill, slots }: { row: ForsideKort[]
             </option>
           ))}
         </select>
-        <span className="text-xs text-slate-500">Festede kort, toppannonser og fremhevede vises alltid.</span>
+        <span className="text-xs text-slate-500">Valgte kort, toppannonser og fremhevede vises alltid.</span>
       </label>
 
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Fest kort på forsiden ({listings.length} aktive)</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Velg kort til forsiden ({listings.length} aktive)</p>
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -97,19 +97,19 @@ export function ForsideMeny({ row, listings, fill, slots }: { row: ForsideKort[]
               <ListingThumb image={l.image} title={l.title} size="sm" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-slate-900">{l.title}</p>
-                <p className="text-xs text-slate-500">
-                  {l.fanSlot ? `Festet på plass ${l.fanSlot}` : l.label === "Nyeste uten løft" ? "Ikke festet" : l.label}
-                  {l.ownerListing && " · din annonse, vises uten «Valgt av HOBBYSTRADA»"}
-                </p>
+                <p className="text-xs text-slate-500">{l.fanSlot ? "Valgt til forsiden" : l.label === "Nyeste uten løft" ? "Ikke valgt" : l.label}</p>
               </div>
-              <select value={l.fanSlot ?? ""} disabled={busy === l.id} onChange={(e) => setSlot(l.id, e.target.value ? Number(e.target.value) : null)} className={select}>
-                <option value="">Ikke festet</option>
-                {Array.from({ length: slots }, (_, i) => i + 1).map((n) => (
-                  <option key={n} value={n}>
-                    {n === 1 ? "Plass 1 · først" : `Plass ${n}`}
-                  </option>
-                ))}
-              </select>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={Boolean(l.fanSlot)}
+                aria-label={`På forsiden: ${l.title}`}
+                disabled={busy === l.id}
+                onClick={() => setOn(l.id, !l.fanSlot)}
+                className="relative h-7 w-12 shrink-0 rounded-full bg-slate-300 transition aria-checked:bg-emerald-600 disabled:opacity-50"
+              >
+                <span className="absolute left-0.5 top-0.5 h-6 w-6 rounded-full bg-white shadow transition [[aria-checked=true]_&]:translate-x-5" />
+              </button>
             </li>
           ))}
           {!shown.length && <li className="px-3 py-3 text-sm text-slate-500">Ingen treff.</li>}

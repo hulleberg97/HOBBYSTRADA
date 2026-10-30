@@ -30,7 +30,7 @@ export type Listing = {
   soldAt?: string | null;
   status: ListingStatus;
   ownerId?: string | null;
-  /** Fast plass på forsiden (1 = først), satt av admin. Merkes «Valgt av HOBBYSTRADA». */
+  /** Valgt til forsiden av admin. Tallet gir rekkefølgen blant de valgte (lavest først). Ikke merket på kortet. */
   fanSlot?: number | null;
   /** Annonse fra innehaveren av HOBBYSTRADA. Merkes, og kan verken løftes eller festes. */
   ownerListing?: boolean;

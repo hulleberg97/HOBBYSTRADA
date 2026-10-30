@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { FAN_SLOTS } from "@/lib/frontpage-row";
 import { getUser, isAdmin } from "@/lib/auth";
 import { adminClient } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
@@ -56,12 +55,16 @@ export async function PATCH(req: Request, { params }: Ctx) {
     patch.location = location.trim().slice(0, 60);
   }
   if (fanSlot !== undefined) {
-    if (!r.admin) return NextResponse.json({ error: "Bare admin kan feste kort på forsiden." }, { status: 403 });
-    // Innehaverens egne annonser kan festes, men får ikke merket «Valgt av HOBBYSTRADA» (se ListingCard)
-    if (fanSlot !== null && !(Number.isInteger(fanSlot) && fanSlot >= 1 && fanSlot <= FAN_SLOTS)) return NextResponse.json({ error: "Ugyldig plass." }, { status: 400 });
-    // Plassen kan bare ha ett kort: frigjør den først.
-    if (fanSlot !== null) await r.db.from("listings").update({ fan_slot: null }).eq("fan_slot", fanSlot).neq("id", r.listing.id);
-    patch.fan_slot = fanSlot;
+    if (!r.admin) return NextResponse.json({ error: "Bare admin kan velge kort til forsiden." }, { status: 403 });
+    if (fanSlot === null || fanSlot === false) {
+      patch.fan_slot = null;
+    } else if (fanSlot === true) {
+      // Nytt valgt kort legges bakerst blant de valgte: neste ledige nummer
+      const { data: top } = await r.db.from("listings").select("fan_slot").not("fan_slot", "is", null).order("fan_slot", { ascending: false }).limit(1).maybeSingle();
+      patch.fan_slot = ((top?.fan_slot as number | null) ?? 0) + 1;
+    } else {
+      return NextResponse.json({ error: "Ugyldig verdi." }, { status: 400 });
+    }
   }
   let { error } = await r.db.from("listings").update(patch).eq("id", r.listing.id);
   // Databasen er ikke oppdatert med prisarkivet ennå (supabase/002_nye_funksjoner.sql): lagre uten sold_at.
