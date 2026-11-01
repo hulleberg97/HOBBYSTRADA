@@ -24,9 +24,21 @@ Skjermbildene er tatt av eieren og testbrukeren på ekte telefoner mot den publi
 - `K3-dialog-angre-avtalen.jpg` – dialogen: «Angre avtalen? Løftet stoppes nå, og du får tilbake 39 kr for den delen av perioden som ikke er brukt.» (angret samme time som kjøpet, så 0 timer er brukt).
 - `E2-bekreftelse-angring.jpg` – e-posten «Bekreftelse: vi har mottatt angringen din», mottatt med en gang: salgsdokumentnummer, tidspunkt, «Det har vært aktivt i 0 av 72 timer. Vi betaler tilbake 39 kr til samme betalingsmåte senest 14 dager etter denne meldingen.»
 
-## Funnet og rettet under testen
+## Utestengelse (E5) og gjenåpning
 
-- Første kjøp ble ikke aktivert automatisk, fordi databasen manglet en rettighet til å dele ut salgsdokumentnummer. Rettet samme formiddag. Nå aktiveres løftet og sendes kvitteringen i samme øyeblikk Vipps bekrefter betalingen, uten at noen gjør noe manuelt. Vipps varsler nettsiden direkte.
-- Utskrift av kvitteringen tok med topplinje og bunntekst. Rettet, utskriften viser nå bare kvitteringen.
+- `E5-epost-kontoen-stengt.jpg` – e-posten «Kontoen din er stengt» slik testbrukeren mottok den: vilkår, begrunnelse og «Avgjørelsen er tatt av et menneske» i boksen, sletting etter 30 dager eller når klagen er avgjort, klageadgang innen 30 dager. Administrator måtte velge vilkår og skrive begrunnelse.
+- `E5b-innlogging-stengt-konto.jpg` – testbrukeren forsøker å logge inn og avvises: «Denne kontoen er stengt fordi den har brutt brukervilkårene. Mener du dette er feil, kan du klage via kontaktskjemaet.»
+- Utestengelsen ble deretter opphevet fra adminpanelet. Kontoen ble åpnet, annonsen lagt ut igjen, Vipps-ID-en fjernet fra sperrelisten, og testbrukeren logget inn igjen.
 
-Gjenstår i testen: e-posten «Fjernet» ved fjerning av publisert annonse, e-posten «Kontoen din er stengt» og gjenåpning, samt at testbrukerens to betalinger på 39 kr refunderes.
+## Fjernet annonse (E4), rapport og lagret søk
+
+Gjennomført av eieren og testbrukeren uten skjermbilder: fjerning av publisert annonse med vilkår og begrunnelse (e-posten «Fjernet» mottatt), «Klage mottatt» registrert på annonsen, rapport av en annonse synlig i adminpanelet, og lagret søk synlig under Min side. E-posten «Fjernet» er dokumentert tidligere i «E-poster og siste kontroller».
+
+## Funnet under testen og rettet samme dag
+
+- Første kjøp av annonseløft ble ikke aktivert, fordi databasen manglet en rettighet til å dele ut salgsdokumentnummer. Rettet. Løftet aktiveres og kvitteringen sendes nå i samme øyeblikk Vipps bekrefter betalingen (Vipps varsler nettsiden direkte), uten manuell godkjenning.
+- Utestengelse stoppet på en manglende databasekolonne. Rettet.
+- Utskrift av kvitteringen tok med topplinje og bunntekst. Rettet.
+- E-post til Hotmail-adresser kan komme noen minutter forsinket (greylisting hos Microsoft). Sendingen skjer umiddelbart fra nettsiden. DKIM-signering settes opp hos Domene AS for å bedre leveringen.
+
+Testbrukerens to betalinger på 39 kr refunderes i Vipps-portalen.
