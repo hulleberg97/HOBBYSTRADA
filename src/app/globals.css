@@ -717,3 +717,19 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 
 /* Tydelig fokusramme for tastaturbrukere, uten å påvirke museklikk */
 :focus-visible { outline: 2px solid #0b1426; outline-offset: 2px; border-radius: 4px; }
+
+/* Utskrift (kvittering og angreskjema): bare selve innholdet, ikke topplinje, bunntekst og snarveier */
+@media print {
+  body > a[href="#innhold"],
+  body header,
+  body footer,
+  body [role="dialog"] {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
