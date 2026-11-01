@@ -68,13 +68,16 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           <p className={`card-title line-clamp-2 min-h-[2.75em] text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
             {listing.title}
           </p>
-          {market ? (
-            <div className="mt-1.5 text-lg font-bold tracking-tight text-slate-950">
-              <span className="font-heading text-lg font-semibold tracking-tight">{formatPrice(listing.price)}</span>
-            </div>
-          ) : (
-            <p className="mt-1.5 text-lg font-bold tracking-tight text-slate-950">{formatPrice(listing.price)}</p>
-          )}
+          {/* Pris til venstre, visninger til høyre på samme linje, så de ikke trenger plass i raden under */}
+          <div className="mt-1.5 flex items-baseline justify-between gap-2 text-lg font-bold tracking-tight text-slate-950">
+            <span className={market ? "font-heading text-lg font-semibold tracking-tight" : undefined}>{formatPrice(listing.price)}</span>
+            {!listing.soldAt && (listing.views ?? 0) > 0 && (
+              <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-slate-500" title={`${listing.views} visninger`}>
+                <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                {listing.views}
+              </span>
+            )}
+          </div>
           <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
             {/* Eksempelannonser ser ut som vanlige annonser (tid, Vipps-merke, visninger). Bare merket «Eksempelannonse» skiller dem. */}
@@ -96,13 +99,6 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
                 </span>
               )}
             </span>
-            {/* Visninger, så kjøpere ser hva som er populært */}
-            {!listing.soldAt && (listing.views ?? 0) > 0 && (
-              <span className="inline-flex items-center gap-1" title={`${listing.views} visninger`}>
-                <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                {listing.views}
-              </span>
-            )}
           </div>
         </div>
       </Link>
