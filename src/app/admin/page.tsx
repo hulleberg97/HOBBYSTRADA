@@ -222,7 +222,7 @@ export default async function AdminPage() {
           <h2 className={h2}>Bestilte annonseløft ({orders?.length ?? 0})</h2>
           {hasVipps() && <VippsVarsling registered={Boolean(webhook)} createdAt={webhook?.createdAt ?? null} />}
           {!orders?.length ? (
-            <p className={empty}>Ingen ubetalte bestillinger.</p>
+            <p className={empty}>Ingen ubetalte bestillinger. Betalte løft aktiveres automatisk.</p>
           ) : (
             <ul className="mt-4 space-y-3">
               {orders.map((o) => (

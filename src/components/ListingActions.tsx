@@ -138,25 +138,17 @@ export function MarkPaid({ id, vipps }: { id: string; vipps: boolean }) {
     else if (result === "cancelled") setNote("Betalingen er avbrutt eller utløpt i Vipps.");
     else router.refresh();
   };
+  // Med Vipps-avtale aktiveres løft automatisk når Vipps bekrefter betalingen. Knappen spør bare Vipps på nytt.
+  // Uten Vipps-avtale (lokal testing) merkes bestillingen betalt manuelt.
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {vipps && (
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() => run(true)}
-          className="inline-flex h-9 items-center rounded-full bg-slate-100 px-4 text-xs font-semibold text-slate-800 transition hover:bg-slate-200 disabled:opacity-50"
-        >
-          Sjekk Vipps
-        </button>
-      )}
       <button
         type="button"
         disabled={busy}
-        onClick={() => run(false)}
-        className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-xs font-semibold text-white transition hover:bg-black disabled:opacity-50"
+        onClick={() => run(vipps)}
+        className="inline-flex h-9 items-center rounded-full bg-slate-100 px-4 text-xs font-semibold text-slate-800 transition hover:bg-slate-200 disabled:opacity-50"
       >
-        {busy ? "Et øyeblikk …" : "Betalt – aktiver løftet"}
+        {busy ? "Et øyeblikk …" : vipps ? "Sjekk status hos Vipps" : "Betalt – aktiver løftet"}
       </button>
       {note && <p className="w-full text-xs text-slate-500">{note}</p>}
     </div>
