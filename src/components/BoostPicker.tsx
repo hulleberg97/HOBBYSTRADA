@@ -205,13 +205,7 @@ export function BoostPicker({ frontpage, demo }: { frontpage: FrontpageAvailabil
         </p>
         <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" autoComplete="off" checked={Boolean(consent)} onChange={(e) => setConsent(e.target.checked ? new Date().toISOString() : null)} className={check} />
-          <span>
-            Jeg godtar{" "}
-            <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
-              salgsvilkårene
-            </Link>{" "}
-            og ber om at annonseløftet starter med en gang betalingen er gjennomført, før angrefristen på 14 dager er ute.
-          </span>
+          <span>Jeg ber om at annonseløftet starter med en gang betalingen er gjennomført, før angrefristen på 14 dager er ute.</span>
         </label>
         <label className="mt-2 flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
           <input type="checkbox" autoComplete="off" checked={Boolean(consentLoss)} onChange={(e) => setConsentLoss(e.target.checked ? new Date().toISOString() : null)} className={check} />
@@ -244,11 +238,18 @@ export function BoostPicker({ frontpage, demo }: { frontpage: FrontpageAvailabil
             <dd className="inline">{chosen ? `${chosen.price} kr.` : "– kr."}</dd>
           </div>
         </dl>
+        <p className="mt-4 text-xs text-muted-foreground">
+          Ved å trykke «Bestill og betal» godtar du{" "}
+          <Link href="/salgsvilkar" target="_blank" className="tap font-medium text-foreground underline underline-offset-2">
+            salgsvilkårene
+          </Link>
+          .
+        </p>
         <button
           type="button"
           disabled={!ready || busy}
           onClick={order}
-          className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {busy ? "Et øyeblikk …" : chosen ? `Bestill og betal ${chosen.price} kr med Vipps` : "Bestill og betal med Vipps"}
         </button>

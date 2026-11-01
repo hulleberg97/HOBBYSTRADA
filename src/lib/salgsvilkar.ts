@@ -39,8 +39,8 @@ export const SALGSVILKAR: SalesSection[] = [
     blocks: [
       "Velg annonse og pakke på siden [Annonseløft](/annonseloft). Før du betaler, ser du pakke, pris og varighet. Du kan gå tilbake og endre valget.",
       "Du må gjøre dette før du betaler:",
-      ["Krysse av for at du godtar salgsvilkårene.", "Be om oppstart med en gang.", "Krysse av for at du forstår når angreretten går tapt."],
-      "Du bestiller ved å trykke på knappen «Bestill og betal med Vipps», der beløpet for valgt pakke vises. Deretter godkjenner du betalingen i Vipps.",
+      ["Be om oppstart med en gang.", "Krysse av for at du forstår når angreretten går tapt."],
+      "Du bestiller ved å trykke på knappen «Bestill og betal med Vipps», der beløpet for valgt pakke vises. Ved å trykke på knappen godtar du salgsvilkårene. Deretter godkjenner du betalingen i Vipps.",
       "Avtalen inngås på norsk. Bestillingen og kvitteringen lagres hos oss og er tilgjengelig under Min side.",
     ],
   },
