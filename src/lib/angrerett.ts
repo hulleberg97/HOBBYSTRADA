@@ -19,6 +19,9 @@ export function refusjon(amount: number, days: number, paidAt: string | Date, at
 }
 
 /** «6. november 2026» */
+/** «4. november 2026 kl. 10:57»: fristen går ut på et bestemt klokkeslett, så det vises sammen med datoen. */
 export function angreDatoTekst(d: Date) {
-  return d.toLocaleDateString("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" });
+  const dato = d.toLocaleDateString("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" });
+  const kl = d.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Oslo" });
+  return `${dato} kl. ${kl}`;
 }

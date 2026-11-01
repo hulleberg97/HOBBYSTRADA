@@ -47,7 +47,7 @@ export async function POST(req: Request) {
   if (email && !isPlaceholderEmail(email)) {
     const intro = `Kontoen din på HOBBYSTRADA er stengt fordi den bryter brukervilkårene: ${rule.toLowerCase()}. Annonsene dine er skjult, og du kan ikke logge inn. Kontoen og annonsene slettes om 30 dager, eller når en klage er avgjort. Du kan ikke lage ny konto før det har gått to år.`;
     const quote = `Begrunnelse: ${begrunnelse}.\n\nAvgjørelsen er tatt av et menneske.`;
-    const outro = `Mener du dette er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, åpner vi kontoen igjen.`;
+    const outro = `Mener du dette er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, åpner vi kontoen igjen. Du kan også bringe saken inn for domstolene.`;
     await sendEmail({
       to: email,
       subject: "Kontoen din er stengt",

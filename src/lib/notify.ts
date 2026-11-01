@@ -63,7 +63,7 @@ export async function notifyReview(db: SupabaseClient, listing: { slug: string; 
   const begrunnelse = `Begrunnelse: ${reason}.`;
   const rest = [
     "Du kan legge ut kortet på nytt når opplysningene er rettet.",
-    `Mener du at avgjørelsen er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, publiserer vi annonsen.`,
+    `Mener du at avgjørelsen er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, publiserer vi annonsen. Du kan også bringe saken inn for domstolene.`,
     "Avgjørelsen er tatt av et menneske.",
   ];
   await sendEmail({
@@ -134,7 +134,7 @@ export function removedEmail(listingTitle: string, input: { rule: string; reason
   const rest = [
     ...(input.warning ? ["Dette er en advarsel. Gjentatte brudd kan føre til at kontoen stenges."] : []),
     ...(refundLine ? [refundLine] : []),
-    `Mener du at dette er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, legger vi ut annonsen igjen.`,
+    `Mener du at dette er feil, kan du klage innen 30 dager ved å svare på denne e-posten eller skrive til ${COMPANY.email}. Vi svarer innen én måned. Får du medhold, legger vi ut annonsen igjen. Du kan også bringe saken inn for domstolene.`,
     "Avgjørelsen er tatt av et menneske.",
   ];
   return {
