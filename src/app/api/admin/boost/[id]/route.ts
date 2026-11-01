@@ -13,12 +13,17 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   const db = adminClient();
   if (!db || !isAdmin(await getUser())) return NextResponse.json({ error: "Ingen tilgang." }, { status: 403 });
   const id = (await params).id;
-  if (new URL(req.url).searchParams.get("check")) {
-    const result = await settleBoost(db, id).catch(() => "waiting" as const);
+  try {
+    if (new URL(req.url).searchParams.get("check")) {
+      const result = await settleBoost(db, id);
+      revalidatePath("/", "layout");
+      return NextResponse.json({ result });
+    }
+    await activateBoost(db, id);
     revalidatePath("/", "layout");
-    return NextResponse.json({ result });
+    return NextResponse.json({ result: "paid" });
+  } catch (e) {
+    console.error("Aktivering av annonseløft", id, e);
+    return NextResponse.json({ error: (e as Error).message }, { status: 500 });
   }
-  await activateBoost(db, id);
-  revalidatePath("/", "layout");
-  return NextResponse.json({ result: "paid" });
 }

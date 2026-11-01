@@ -131,9 +131,11 @@ export function MarkPaid({ id, vipps }: { id: string; vipps: boolean }) {
   const run = async (check: boolean) => {
     setBusy(true);
     const res = await fetch(`/api/admin/boost/${id}${check ? "?check=1" : ""}`, { method: "POST" });
-    const { result } = await res.json().catch(() => ({}));
+    const { result, error } = await res.json().catch(() => ({}));
     setBusy(false);
-    if (result === "waiting") setNote("Ikke betalt i Vipps ennå.");
+    if (!res.ok) setNote(`Feil: ${error ?? `serveren svarte ${res.status}`}`);
+    else if (result === "waiting") setNote("Vipps har ikke registrert betalingen som godkjent.");
+    else if (result === "cancelled") setNote("Betalingen er avbrutt eller utløpt i Vipps.");
     else router.refresh();
   };
   return (
