@@ -13,3 +13,6 @@ create trigger boost_orders_invoice before insert or update on public.boost_orde
   for each row execute function public.assign_invoice_no();
 -- Bestillinger som allerede er betalt får nummer nå
 update public.boost_orders set status = status where status = 'paid' and invoice_no is null;
+-- Tjenesten (service_role) må få bruke sekvensen, ellers kan ingen bestilling merkes betalt
+grant usage, select, update on sequence public.boost_invoice_seq to service_role, authenticated, anon;
+alter function public.assign_invoice_no() security definer;
