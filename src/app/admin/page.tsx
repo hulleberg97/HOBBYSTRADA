@@ -18,6 +18,8 @@ import { RyddTestdata } from "@/components/RyddTestdata";
 import { sitePassword } from "@/lib/private";
 import { invoiceDate, listInvoices } from "@/lib/invoice";
 import { OwnerListingRow } from "@/components/OwnerListingRow";
+import { VippsVarsling } from "@/components/VippsVarsling";
+import { readWebhookSetting } from "@/lib/vipps-webhook";
 import { FanSlotSelect } from "@/components/FanSlotSelect";
 import { ForsideMeny, type ForsideKort } from "@/components/ForsideMeny";
 import { frontpageRow, rowLabel } from "@/lib/frontpage-row";
@@ -49,6 +51,7 @@ export default async function AdminPage() {
   if (!db || !isAdmin(user)) notFound();
   // Betalte løft aktiveres før listen hentes, så bare ekte ubetalte bestillinger vises
   await settlePending(db).catch(() => 0);
+  const webhook = await readWebhookSetting(db).catch(() => null);
 
   const [{ data: pending }, { data: orders }, { data: messages }, { data: contact }, { data: all }] = await Promise.all([
     db.from("listings").select("*").eq("status", "pending").order("created_at"),
@@ -217,6 +220,7 @@ export default async function AdminPage() {
 
         <section>
           <h2 className={h2}>Bestilte annonseløft ({orders?.length ?? 0})</h2>
+          {hasVipps() && <VippsVarsling registered={Boolean(webhook)} createdAt={webhook?.createdAt ?? null} />}
           {!orders?.length ? (
             <p className={empty}>Ingen ubetalte bestillinger.</p>
           ) : (

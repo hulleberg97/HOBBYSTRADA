@@ -98,3 +98,38 @@ export async function capturePayment(reference: string, amount: number) {
     body: { modificationAmount: { currency: "NOK", value: Math.round(amount * 100) } },
   });
 }
+
+/**
+ * Webhooks: Vipps sender en melding til nettsiden når en betaling er godkjent eller avbrutt, så løftet aktiveres
+ * med en gang, også når kunden lukker Vipps uten å komme tilbake til siden. Hemmeligheten brukes til å kontrollere
+ * at meldingen faktisk kommer fra Vipps.
+ */
+export const WEBHOOK_EVENTS = ["epayments.payment.authorized.v1", "epayments.payment.aborted.v1", "epayments.payment.expired.v1", "epayments.payment.terminated.v1"];
+
+async function webhooksCall(path: string, init: { method?: string; body?: unknown } = {}) {
+  const auth = await token();
+  const res = await fetch(`${env().base}/webhooks/v1${path}`, {
+    method: init.method ?? "GET",
+    headers: headers({ authorization: `Bearer ${auth}` }),
+    body: init.body ? JSON.stringify(init.body) : undefined,
+    cache: "no-store",
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`Vipps svarte ${res.status}: ${JSON.stringify(data)}`);
+  return data;
+}
+
+export async function listWebhooks(): Promise<{ id: string; url: string; events: string[] }[]> {
+  const data = await webhooksCall("/webhooks");
+  return (data.webhooks ?? []) as { id: string; url: string; events: string[] }[];
+}
+
+export async function registerWebhook(url: string): Promise<{ id: string; secret: string }> {
+  const data = await webhooksCall("/webhooks", { method: "POST", body: { url, events: WEBHOOK_EVENTS } });
+  return { id: data.id as string, secret: data.secret as string };
+}
+
+export async function deleteWebhook(id: string) {
+  await webhooksCall(`/webhooks/${id}`, { method: "DELETE" });
+}
+
