@@ -14,6 +14,7 @@ import {
   StarIcon,
 } from "lucide-react";
 import { Slab } from "@/components/HeroFan";
+import { MagRull } from "@/components/MagRull";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
@@ -60,9 +61,9 @@ export default async function Home() {
               </div>
             </div>
           </div>
-          {/* Forsideraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over. */}
-          <div className="mag-rull-ramme relative mx-auto w-full max-w-[1320px] overflow-hidden px-6 sm:px-8">
-            <ul className="mag-rull flex w-max pt-3" aria-label="Flere kort">
+          {/* Forsideraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over, og kan sveipes på mobil. */}
+          <div className="mag-rull-ramme relative mx-auto w-full max-w-[1320px] select-none overflow-hidden px-6 [touch-action:pan-y] sm:px-8">
+            <MagRull className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>
                 fanList.map((l, i) => (
                   <li key={`${k}-${l.slug}`} data-slug={l.slug} className="relative mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
@@ -83,7 +84,7 @@ export default async function Home() {
                   </li>
                 )),
               )}
-            </ul>
+            </MagRull>
           </div>
         </section>
       )}
