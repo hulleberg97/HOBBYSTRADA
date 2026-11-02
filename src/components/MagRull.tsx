@@ -5,7 +5,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 /**
  * Raden med kort på forsiden. Uten JavaScript glir den med CSS-animasjonen «mag-rull». Når siden er lastet, tar denne
  * over og driver glidingen selv, så raden kan sveipes med fingeren på mobil: den følger fingeren, får et lite kast når
- * den slippes, står stille en liten stund og glir så videre. Mus over raden stopper den, som før.
+ * den slippes, og glir videre med en gang fingeren er borte. Mus over raden stopper den, som før.
  */
 export function MagRull({ children, className, ...rest }: { children: ReactNode; className?: string; "aria-label"?: string }) {
   const ref = useRef<HTMLUListElement>(null);
@@ -63,8 +63,10 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
       if (!dragging || e.pointerId !== dragId) return;
       dragging = false;
       const now = performance.now();
-      fling = now - lastT > 80 ? 0 : Math.max(-2500, Math.min(2500, vel * 1000));
-      pauseUntil = now + 4000;
+      // Bare et ekte sveip gir kast og en kort pause. Ble fingeren brukt til å bla nedover (pointercancel), glir raden videre med en gang.
+      const swiped = moved && e.type === "pointerup";
+      fling = swiped && now - lastT <= 80 ? Math.max(-2500, Math.min(2500, vel * 1000)) : 0;
+      pauseUntil = swiped ? now + 1200 : 0;
     };
     // Et sveip skal ikke åpne kortet under fingeren
     const click = (e: MouseEvent) => {
