@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRightIcon,
@@ -37,7 +38,7 @@ export default async function Home() {
   // Forsiden: toppannonser, så Fremhevet, så kort admin har valgt. Nyeste bare som reserve.
   const fanList = frontpageRow(all);
   return (
-    <div className="bg-background">
+    <div className="forside bg-background">
       {/* Forsiden: overskrift øverst og annonseraden nederst */}
       {fanList[0] && (
         <section className="vis-magasin mag flex flex-col justify-between bg-background">
@@ -237,6 +238,9 @@ export default async function Home() {
           <p className="mt-1 text-sm text-slate-600 sm:text-[15px]">Kjøper og selger avtaler direkte.</p>
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-9">
+              <div className="studio-bilde -mx-2 -mt-2 mb-6 aspect-[16/9] overflow-hidden rounded-2xl sm:-mx-4 sm:-mt-4">
+                <Image src="/forside/kjoper.webp" alt="" width={1200} height={900} sizes="(max-width: 1024px) 100vw, 600px" className="h-full w-full object-cover" />
+              </div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">For kjøpere</p>
               <ol className="mt-5 space-y-6">
                 <li className="flex gap-4">
@@ -270,6 +274,9 @@ export default async function Home() {
               </Link>
             </div>
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-9">
+              <div className="studio-bilde -mx-2 -mt-2 mb-6 aspect-[16/9] overflow-hidden rounded-2xl sm:-mx-4 sm:-mt-4">
+                <Image src="/forside/selger.webp" alt="" width={1200} height={900} sizes="(max-width: 1024px) 100vw, 600px" className="h-full w-full object-cover" />
+              </div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a24]">For selgere</p>
               <ol className="mt-5 space-y-6">
                 <li className="flex gap-4">
@@ -312,7 +319,10 @@ export default async function Home() {
           <Eyebrow>Trygg handel</Eyebrow>
           <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Handle trygt</h2>
           <p className="mt-1 max-w-lg text-sm text-slate-700 sm:text-[15px]">Kjøper og selger avtaler direkte, så ta noen enkle forholdsregler.</p>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <div className="mt-6 grid gap-4 md:grid-cols-3 lg:grid-cols-[1.35fr_1fr_1fr_1fr]">
+            <div className="studio-bilde relative min-h-[220px] overflow-hidden rounded-3xl md:col-span-3 lg:col-span-1">
+              <Image src="/forside/trygg.webp" alt="" fill sizes="(max-width: 1024px) 100vw, 420px" className="object-cover" />
+            </div>
             <div className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-slate-300/70 sm:p-7">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">
                 <ScanSearchIcon className="h-5 w-5" aria-hidden="true" />
@@ -342,21 +352,27 @@ export default async function Home() {
       </section>
       <section className="seksjon-alt bg-background">
         <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <Eyebrow>Annonseløft</Eyebrow>
-              <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-[32px]">Selg raskere</h2>
-              <p className="mt-1 max-w-lg text-sm text-slate-700 sm:text-[15px]">
+          <div className="loft-banner relative grid overflow-hidden rounded-3xl bg-[#0b1426] text-white md:grid-cols-[1.1fr_1fr]">
+            <div className="relative z-10 flex flex-col justify-center gap-5 p-7 sm:p-10">
+              <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c27a]">Annonseløft</p>
+              <h2 className="mt-3 font-heading text-3xl font-bold tracking-[-0.03em] text-white sm:text-[40px]">Selg raskere</h2>
+              <p className="mt-2 max-w-md text-sm text-white/75 sm:text-[15px]">
                 Vil du selge raskere, løfter du annonsen til toppen eller gir den gullmerke.
               </p>
-            </div>
+              </div>
             <Link
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black"
+              className="inline-flex h-11 w-max items-center gap-2 rounded-full bg-[#cfa653] px-5 text-sm font-semibold text-[#0b1426] transition hover:bg-[#e2c27a]"
               href="/annonseloft"
             >
               Løft annonsen din
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
+            </div>
+            <div className="relative min-h-[240px] md:min-h-[340px]">
+              <Image src="/forside/loft.webp" alt="" fill sizes="(max-width: 768px) 100vw, 640px" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0b1426] via-transparent to-transparent md:bg-gradient-to-r md:from-[#0b1426] md:via-[#0b1426]/10" aria-hidden="true"></div>
+            </div>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {(["top", "featured", "frontpage"] as const).map((key) => (
