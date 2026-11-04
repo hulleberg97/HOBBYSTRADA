@@ -4,13 +4,12 @@ import { AccountLinks } from "./AccountLinks";
 
 const COLS = [
   {
-    title: "Markedet",
+    title: "Kjøp",
     links: [
       ["/marked", "Alle kort"],
-      ["/sok?q=autograf", "Autografkort"],
-      ["/sok?q=relic", "Patch / relic"],
+      ["/marked?type=Autograf", "Autografer"],
+      ["/marked?type=Patch", "Patch / relic"],
       ["/solgt", "Solgte kort"],
-      ["/sok", "Søk"],
     ],
   },
   {
@@ -18,16 +17,19 @@ const COLS = [
     links: [
       ["/selg", "Legg ut kort"],
       ["/annonseloft", "Annonseløft"],
+    ],
+  },
+  {
+    title: "Hjelp",
+    links: [
       ["/sporsmal", "Spørsmål og svar"],
+      ["/#trygg-handel", "Trygg handel"],
+      ["/kontakt", "Kontakt"],
     ],
   },
   {
     title: "Om oss",
-    links: [
-      ["/om-oss", "Om markedet"],
-      ["/#trygg-handel", "Trygg handel"],
-      ["/kontakt", "Kontakt"],
-    ],
+    links: [["/om-oss", "Om Hobbystrada"]],
     account: true,
   },
 ];
@@ -57,7 +59,7 @@ export function Footer() {
               </svg>
             </a>
           </div>
-          <div className="fot-kol columns-2 gap-8 sm:grid sm:grid-cols-3 [&>div]:mb-8 [&>div]:break-inside-avoid sm:[&>div]:mb-0">
+          <div className="fot-kol columns-2 gap-8 sm:grid sm:grid-cols-4 [&>div]:mb-8 [&>div]:break-inside-avoid sm:[&>div]:mb-0">
             {COLS.map((c) => (
               <div key={c.title}>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">{c.title}</p>

@@ -769,3 +769,10 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .forside .loft-banner { box-shadow: 0 30px 60px -30px rgb(11 20 38 / 0.6), inset 0 0 0 1px rgb(207 166 83 / 0.25); }
 .forside > section .rounded-full.bg-primary.text-sm.font-bold { background: linear-gradient(180deg, #1a2d52, #0b1426); box-shadow: 0 0 0 2px #fffdf9, 0 0 0 3px rgb(207 166 83 / 0.55); }
 html[data-tone="1"] .forside .loft-banner h2.font-heading { color: #fff; }
+
+/* ===== Ny forside: lav hero, så kortene synes uten å rulle ===== */
+html[data-vis="magasin"] .forside .mag { min-height: 0; justify-content: flex-start; gap: 0; }
+.forside .mag-rull-ramme { padding-bottom: 44px; }
+@media (min-width: 1024px) { .forside .mag-rull-ramme { padding-bottom: 56px; } }
+html[data-tone="1"] .forside h2.loft-tittel { color: #fff; }
+@media (max-width: 1023px) { html .forside .mag ul li { width: 120px; height: 196px; } html .forside .mag ul li > a { width: 150px; transform: scale(0.8); transform-origin: top left; } }

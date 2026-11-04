@@ -4,11 +4,21 @@ import type { Listing } from "./types";
 
 const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
 
+/** Norske spillere for kategorien «Norske spillere». Til annonseskjemaet får et eget felt for nasjonalitet. */
+const NORSKE = [
+  "Haaland", "Ødegaard", "Odegaard", "Nusa", "Sørloth", "Sorloth", "Strand Larsen", "Bobb", "Berge", "Ryerson", "Østigård", "Ostigard",
+  "Ajer", "Thorstvedt", "Wolfe", "Aursnes", "Hauge", "Elyounoussi", "Solbakken", "Bjørkan", "Nyland", "Hegerberg",
+  "Graham Hansen", "Reiten", "Maanum", "Bøe Risa", "Haavi", "Engen", "Mjelde", "Riise", "Solskjær", "Solskjaer", "Carew", "Tore André Flo",
+];
+
 export function matches(l: Listing, q: string) {
   const hay = norm([l.title, l.player, l.set, l.club, l.league, l.cardNumber, l.numbered, l.types.join(" "), l.season].filter(Boolean).join(" "));
   const terms = norm(q).split(/\s+/).filter(Boolean);
   if (q.trim() === "/") return Boolean(l.numbered);
   if (/^rc$/i.test(q.trim())) return l.types.includes("Rookie") || / RC\b/.test(l.title);
+  if (/^gradert$/i.test(q.trim())) return graderOf(l.grading) !== "raw";
+  if (/^norske spillere$/i.test(q.trim())) return NORSKE.some((n) => norm(l.player).includes(norm(n)));
+  if (/^(lot|samling|samlinger)$/i.test(q.trim())) return /\b(lot|lots|samling|bundle)\b/i.test(`${l.title} ${l.description}`);
   if (/^relic$/i.test(q.trim())) return l.types.includes("Relic") || l.types.includes("Patch");
   return terms.every((t) => hay.includes(t) || (t === "autograf" && hay.includes("autograph")));
 }

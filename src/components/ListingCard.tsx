@@ -6,7 +6,30 @@ import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { TidSiden } from "./TidSiden";
 import { formatPrice } from "@/lib/format";
+import { graderOf, runOf } from "@/lib/filters";
 import type { Listing } from "@/lib/types";
+
+/** Samlertittel i fast rekkefølge: år · sett · spiller · nummerering · gradering. Faller tilbake til selgerens tittel. */
+export function collectorTitle(l: Listing) {
+  if (!l.set && !l.season) return l.title;
+  const year = l.season?.match(/\d{4}(\/\d{2})?/)?.[0];
+  const set = l.set ? (l.set.toLowerCase().startsWith(l.producer.toLowerCase()) ? l.set : `${l.producer} ${l.set}`) : l.producer;
+  const run = runOf(l);
+  const grade = graderOf(l.grading) !== "raw" ? l.grading : null;
+  return [year, set, l.player, run ? (l.numbered ?? `/${run}`) : null, grade].filter(Boolean).join(" ");
+}
+
+/** Korte merker samlere ser etter: Auto, /99, PSA 10, RC, Patch. */
+function badges(l: Listing) {
+  const out: string[] = [];
+  if (l.types.includes("Autograf")) out.push("Auto");
+  if (l.types.includes("Patch") || l.types.includes("Relic")) out.push("Patch");
+  const run = runOf(l);
+  if (run) out.push(`/${run}`);
+  if (graderOf(l.grading) !== "raw" && l.grading) out.push(l.grading);
+  if (l.types.includes("Rookie")) out.push("RC");
+  return out;
+}
 
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
 /** «eager»: kort øverst på siden lastes med en gang i stedet for når de rulles inn. */
@@ -66,8 +89,17 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
         <div className="flex flex-1 flex-col px-0.5 pt-3">
           {/* Tittelen tar alltid plass til to linjer, så prisen står på samme høyde på alle kortene */}
           <p className={`card-title line-clamp-2 min-h-[2.75em] text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
-            {listing.title}
+            {market ? listing.title : collectorTitle(listing)}
           </p>
+          {!market && badges(listing).length > 0 && (
+            <div className="mt-1.5 flex flex-wrap gap-1">
+              {badges(listing).map((b) => (
+                <span key={b} className="rounded-[5px] bg-[#0b1426] px-1.5 py-[3px] text-[10px] font-bold uppercase leading-none tracking-wide text-[#f3dfae]">
+                  {b}
+                </span>
+              ))}
+            </div>
+          )}
           {/* Pris til venstre, visninger til høyre på samme linje, så de ikke trenger plass i raden under */}
           <div className="mt-1.5 flex items-baseline justify-between gap-2 text-lg font-bold tracking-tight text-slate-950">
             <span className={market ? "font-heading text-lg font-semibold tracking-tight" : undefined}>{formatPrice(listing.price)}</span>
@@ -79,7 +111,7 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             )}
           </div>
           <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
-            {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
+            {(listing.location || (!market && listing.seller)) && <span className="inline-flex items-center gap-1">{listing.location || listing.seller}</span>}
             {/* Eksempelannonser ser ut som vanlige annonser (tid, Vipps-merke, visninger). Bare merket «Eksempelannonse» skiller dem. */}
             {listing.sellerVerified && <VerifiedBadge compact />}
             <span className="card-time inline-flex items-center gap-1">
