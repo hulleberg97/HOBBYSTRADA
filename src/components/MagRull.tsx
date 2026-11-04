@@ -4,49 +4,106 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 /**
  * Raden med kort på forsiden. Uten JavaScript glir den med CSS-animasjonen «mag-rull». Når siden er lastet, tar denne
- * over og driver glidingen selv, så raden kan sveipes med fingeren på mobil: den følger fingeren, får et lite kast når
- * den slippes, og glir videre med en gang fingeren er borte. Mus over raden stopper den, som før.
+ * over: glidingen kjøres som en nettleser-animasjon (Web Animations), som går jevnt på skjermkortet uansett hva resten
+ * av siden holder på med. Bare mens fingeren drar i raden, og i kastet rett etterpå, flyttes den fra JavaScript.
+ * Mus over raden stopper den, som før.
  */
 export function MagRull({ children, className, ...rest }: { children: ReactNode; className?: string; "aria-label"?: string }) {
   const ref = useRef<HTMLUListElement>(null);
   useEffect(() => {
     const el = ref.current;
     const frame = el?.parentElement;
-    if (!el || !frame) return;
-    // Varigheten CSS-animasjonen har akkurat nå (ulik på mobil og PC), så farten blir den samme
+    if (!el || !frame || typeof el.animate !== "function") return;
     const style = getComputedStyle(el);
-    const dur = parseFloat(style.animationDuration) || 32;
+    const durMs = (parseFloat(style.animationDuration) || 32) * 1000; // CSS-varigheten (ulik på mobil og PC)
     let x = 0;
     try {
       x = new DOMMatrixReadOnly(style.transform).m41 || 0;
     } catch {}
     el.style.animation = "none";
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const loop = () => el.scrollWidth / 3; // raden består av tre kopier
+    let L = el.scrollWidth / 3; // raden består av tre kopier, så hver tredjedel viser det samme
+    let anim: Animation | null = null;
+    let animStart = 0; // x der den gjeldende animasjonen startet
     let dragging = false;
     let dragId = -1;
     let startX = 0;
     let lastX = 0;
     let lastT = 0;
-    let vel = 0; // px per ms, fra fingeren
-    let fling = 0; // px per s etter slipp
+    let vel = 0; // px per ms fra fingeren
     let moved = false;
-    let pauseUntil = 0;
     let hover = false;
+    let focused = false;
     let visible = true;
-    let last = performance.now();
     let raf = 0;
-    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
-    io.observe(frame);
+    let timer = 0;
 
+    const norm = (v: number) => (L > 0 ? ((v % L) - L) % L : v); // inn i (-L, 0]
+    const place = (v: number) => {
+      el.style.transform = `translate3d(${v.toFixed(2)}px, 0, 0)`;
+    };
+    /** Hvor raden står akkurat nå, enten animasjonen eller fingeren styrer. */
+    const currentX = () => {
+      if (!anim || L <= 0) return x;
+      const t = Number(anim.currentTime ?? 0);
+      return animStart - ((t % durMs) / durMs) * L;
+    };
+    const stopAuto = () => {
+      if (!anim) return;
+      x = currentX();
+      anim.cancel();
+      anim = null;
+      place(x);
+    };
+    /** Starter glidingen fra der raden står. Én runde fra x til x − L er sømløs, fordi innholdet gjentar seg hver L. */
+    const startAuto = () => {
+      if (anim || L <= 0) return;
+      animStart = norm(x);
+      el.style.transform = "";
+      anim = el.animate([{ transform: `translate3d(${animStart.toFixed(2)}px, 0, 0)` }, { transform: `translate3d(${(animStart - L).toFixed(2)}px, 0, 0)` }], {
+        duration: durMs,
+        iterations: Infinity,
+        easing: "linear",
+      });
+      if (reduce) anim.playbackRate = 0.5;
+      syncPause();
+    };
+    const syncPause = () => {
+      if (!anim) return;
+      if (hover || focused || !visible || document.hidden) anim.pause();
+      else anim.play();
+    };
+    const measure = () => {
+      const next = el.scrollWidth / 3;
+      if (Math.abs(next - L) < 1) return;
+      const wasAuto = Boolean(anim);
+      stopAuto();
+      L = next;
+      x = norm(x);
+      if (wasAuto) startAuto();
+      else place(x);
+    };
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      syncPause();
+    });
+    io.observe(frame);
+    const onVis = () => syncPause();
+    document.addEventListener("visibilitychange", onVis);
+
+    // Sveip med fingeren
     const down = (e: PointerEvent) => {
       if (e.pointerType === "mouse") return;
+      window.clearTimeout(timer);
+      cancelAnimationFrame(raf);
+      stopAuto();
       dragging = true;
       dragId = e.pointerId;
       startX = lastX = e.clientX;
       lastT = performance.now();
       vel = 0;
-      fling = 0;
       moved = false;
     };
     const drag = (e: PointerEvent) => {
@@ -57,7 +114,8 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
       lastX = e.clientX;
       lastT = now;
       if (Math.abs(e.clientX - startX) > 8) moved = true;
-      x += dx;
+      x = norm(x + dx);
+      place(x);
     };
     const release = (e: PointerEvent) => {
       if (!dragging || e.pointerId !== dragId) return;
@@ -65,8 +123,20 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
       const now = performance.now();
       // Bare et ekte sveip gir kast og en kort pause. Ble fingeren brukt til å bla nedover (pointercancel), glir raden videre med en gang.
       const swiped = moved && e.type === "pointerup";
-      fling = swiped && now - lastT <= 80 ? Math.max(-2500, Math.min(2500, vel * 1000)) : 0;
-      pauseUntil = swiped ? now + 1200 : 0;
+      let fling = swiped && now - lastT <= 80 ? Math.max(-2500, Math.min(2500, vel * 1000)) : 0;
+      if (!swiped) return startAuto();
+      let last = now;
+      const tick = (t: number) => {
+        const dt = Math.min((t - last) / 1000, 0.1);
+        last = t;
+        x = norm(x + fling * dt);
+        place(x);
+        fling *= Math.exp(-dt * 3.5);
+        if (Math.abs(fling) > 8) raf = requestAnimationFrame(tick);
+        else timer = window.setTimeout(startAuto, 1000);
+      };
+      if (fling) raf = requestAnimationFrame(tick);
+      else timer = window.setTimeout(startAuto, 1200);
     };
     // Et sveip skal ikke åpne kortet under fingeren
     const click = (e: MouseEvent) => {
@@ -76,9 +146,22 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
       moved = false;
     };
     const over = (e: PointerEvent) => {
-      if (e.pointerType === "mouse") hover = true;
+      if (e.pointerType !== "mouse") return;
+      hover = true;
+      syncPause();
     };
-    const out = () => (hover = false);
+    const out = () => {
+      hover = false;
+      syncPause();
+    };
+    const focusIn = () => {
+      focused = true;
+      syncPause();
+    };
+    const focusOut = () => {
+      focused = false;
+      syncPause();
+    };
     frame.addEventListener("pointerdown", down);
     frame.addEventListener("pointermove", drag);
     frame.addEventListener("pointerup", release);
@@ -86,32 +169,17 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
     frame.addEventListener("click", click, true);
     frame.addEventListener("pointerover", over);
     frame.addEventListener("pointerleave", out);
+    el.addEventListener("focusin", focusIn);
+    el.addEventListener("focusout", focusOut);
 
-    const tick = (now: number) => {
-      raf = requestAnimationFrame(tick);
-      const dt = Math.min((now - last) / 1000, 0.1);
-      last = now;
-      if (!visible || document.hidden) return;
-      if (!dragging) {
-        if (fling) {
-          x += fling * dt;
-          fling *= Math.exp(-dt * 3.5);
-          if (Math.abs(fling) < 8) fling = 0;
-        } else if (now > pauseUntil && !hover && !el.matches(":focus-within")) {
-          x -= (loop() / dur) * (reduce ? 0.5 : 1) * dt;
-        }
-      }
-      const L = loop();
-      if (L > 0) {
-        while (x > 0) x -= L;
-        while (x <= -L) x += L;
-      }
-      el.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0)`;
-    };
-    raf = requestAnimationFrame(tick);
+    startAuto();
     return () => {
+      window.clearTimeout(timer);
       cancelAnimationFrame(raf);
+      anim?.cancel();
+      ro.disconnect();
       io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
       frame.removeEventListener("pointerdown", down);
       frame.removeEventListener("pointermove", drag);
       frame.removeEventListener("pointerup", release);
@@ -119,6 +187,8 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
       frame.removeEventListener("click", click, true);
       frame.removeEventListener("pointerover", over);
       frame.removeEventListener("pointerleave", out);
+      el.removeEventListener("focusin", focusIn);
+      el.removeEventListener("focusout", focusOut);
       el.style.animation = "";
       el.style.transform = "";
     };
