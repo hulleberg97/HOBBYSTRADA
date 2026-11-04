@@ -3,9 +3,9 @@
 import { useEffect, useRef, type ReactNode } from "react";
 
 /**
- * Raden med kort på forsiden. Uten JavaScript glir den med CSS-animasjonen «mag-rull». Når siden er lastet, tar denne
- * over: glidingen kjøres som en nettleser-animasjon (Web Animations), som går jevnt på skjermkortet uansett hva resten
- * av siden holder på med. Bare mens fingeren drar i raden, og i kastet rett etterpå, flyttes den fra JavaScript.
+ * Raden med kort på forsiden. Den glir med CSS-animasjonen «mag-rull» helt til noen tar på den, så det ikke blir noe
+ * bytte av motor når siden lastes. Første gang fingeren drar i raden, leses posisjonen av, og raden følger fingeren.
+ * Etter kastet fortsetter glidingen som en nettleser-animasjon (Web Animations) fra samme sted, jevnt på skjermkortet.
  * Mus over raden stopper den, som før.
  */
 export function MagRull({ children, className, ...rest }: { children: ReactNode; className?: string; "aria-label"?: string }) {
@@ -17,10 +17,7 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
     const style = getComputedStyle(el);
     const durMs = (parseFloat(style.animationDuration) || 32) * 1000; // CSS-varigheten (ulik på mobil og PC)
     let x = 0;
-    try {
-      x = new DOMMatrixReadOnly(style.transform).m41 || 0;
-    } catch {}
-    el.style.animation = "none";
+    let cssActive = true; // CSS-animasjonen kjører fortsatt (ingen har tatt på raden ennå)
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let L = el.scrollWidth / 3; // raden består av tre kopier, så hver tredjedel viser det samme
     let anim: Animation | null = null;
@@ -44,11 +41,25 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
     };
     /** Hvor raden står akkurat nå, enten animasjonen eller fingeren styrer. */
     const currentX = () => {
+      if (cssActive) {
+        try {
+          return new DOMMatrixReadOnly(getComputedStyle(el).transform).m41 || 0;
+        } catch {
+          return 0;
+        }
+      }
       if (!anim || L <= 0) return x;
       const t = Number(anim.currentTime ?? 0);
       return animStart - ((t % durMs) / durMs) * L;
     };
     const stopAuto = () => {
+      if (cssActive) {
+        x = norm(currentX());
+        el.style.animation = "none";
+        cssActive = false;
+        place(x);
+        return;
+      }
       if (!anim) return;
       x = currentX();
       anim.cancel();
@@ -57,7 +68,7 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
     };
     /** Starter glidingen fra der raden står. Én runde fra x til x − L er sømløs, fordi innholdet gjentar seg hver L. */
     const startAuto = () => {
-      if (anim || L <= 0) return;
+      if (cssActive || anim || L <= 0) return;
       animStart = norm(x);
       el.style.transform = "";
       anim = el.animate([{ transform: `translate3d(${animStart.toFixed(2)}px, 0, 0)` }, { transform: `translate3d(${(animStart - L).toFixed(2)}px, 0, 0)` }], {
@@ -76,6 +87,10 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
     const measure = () => {
       const next = el.scrollWidth / 3;
       if (Math.abs(next - L) < 1) return;
+      if (cssActive) {
+        L = next; // CSS-animasjonen måler seg selv
+        return;
+      }
       const wasAuto = Boolean(anim);
       stopAuto();
       L = next;
@@ -172,7 +187,6 @@ export function MagRull({ children, className, ...rest }: { children: ReactNode;
     el.addEventListener("focusin", focusIn);
     el.addEventListener("focusout", focusOut);
 
-    startAuto();
     return () => {
       window.clearTimeout(timer);
       cancelAnimationFrame(raf);
