@@ -1,0 +1,8 @@
+/* Kun for testsiden /ny-forside */
+@keyframes ny-shimmer { 100% { transform: translateX(100%); } }
+@keyframes ny-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ny-shimmer { animation: ny-shimmer 1.6s infinite; }
+.ny-marquee { animation: ny-marquee 45s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ny-shimmer, .ny-marquee { animation: none; }
+}
