@@ -40,13 +40,14 @@ Les denne først i en ny sesjon. Den oppsummerer hvor prosjektet står, hvordan 
 - Forsideraden kan sveipes på mobil (`src/components/MagRull.tsx`), glir videre straks fingeren slipper.
 - Annonsekort: tittel reservert til to linjer, visninger ved prisen.
 - Tid «lagt ut for … siden» regnes i nettleseren (`TidSiden`), så mellomlagring ikke viser gammel tid.
-- E-post via SMTP hos Domene AS. SPF og DMARC finnes; **DKIM mangler** (eieren ber domene.no). Hotmail kan forsinke e-post.
+- E-post via SMTP hos Domene AS. SPF, DKIM og DMARC (p=none) er på plass i DNS per 6. nov. Hotmail kan forsinke e-post.
+- Siden er åpen (ingen passord) og indekserbar siden 5. nov («myk åpning»). Google Search Console: TXT-bekreftelse lagt i DNS 6. nov (cPanel Zone Editor hos Domene AS); eieren sender inn sitemap selv.
 - Designsystem «HOBBYSTRADA» finnes som Claude-artefakt (synket fra koden): https://claude.ai/artifact/2Q8CY4WFoM6Vs6rvtvvN3w. Et forside-testlerret ble laget 3. nov og slettet igjen på eierens ønske.
 
 ## Gjenstår (eieren selv)
 
 1. Test angring etter ett døgn med Elise (skal vise 24 av 72 timer og 26 kr), send bilder til Låvli. Refunder Elises to testbetalinger i Vipps-portalen.
-2. DKIM og databehandleravtale hos Domene AS (personvernerklæringen sier avtalen finnes).
+2. Databehandleravtale hos Domene AS (personvernerklæringen sier avtalen finnes). DKIM er gjort.
 3. Melding til skattekontoret om oppbevaring i Stockholm (utkast gitt i samtalen 1. nov).
 4. Regnskapsfører: kreditnota ved refusjon.
 5. Lese protokollen og krysse av åpne punkter.
