@@ -57,3 +57,9 @@ Rettelser mot de gamle H-/F-bildene: «Klart på 10 sekunder» og «Treff på 0,
 ## Video: «Hele markedet i lomma» med levende kortrad (8. november)
 
 `ig12/M-02-lomma-video.mp4` (1080 x 1350, 8 sek, 25 fps) viser den ekte forsiden på telefonen med kortraden i bevegelse, tatt opp fra hobbystrada.no. `M-02-lomma-reel.mp4` er samme film i 9:16 til Reels og Stories. Laget med `ig12/video.js` (200 bilder av den ekte siden, animasjonen styrt bilde for bilde) og ffmpeg. Legg ut som vanlig innlegg eller Reel; Instagram spiller den av i sløyfe.
+
+## Video: «Finn ditt neste kort» med rullende holdere (8. november)
+
+`ig12/V-01-neste-kort-hd.mp4` (2160 x 2700, 8 sek) og `V-01-neste-kort-reel-hd.mp4` (2160 x 3840). Alle åtte kortene glir forbi i hvite holdere, sømløs sløyfe (siste bilde går rett over i første). Laget med `ig12/animrender.js` (bilde-for-bilde-rendering av `V-01-neste-kort.html`) og ffmpeg. Samme oppskrift kan brukes på alle postene i M-serien.
+
+Videoene «Hele markedet i lomma» er også oppdatert til 2160 x 2700 / 2160 x 3840 med riktig telefonramme (`M-02-lomma-video-hd.mp4`, `M-02-lomma-reel-hd.mp4`).
