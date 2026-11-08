@@ -32,3 +32,23 @@ Finn ditt neste kort. Søk, filtrer og lagre favoritter, så får du beskjed nå
 - Prisarkivet (/solgt) er tomt ennå («Ingen kort er solgt ennå»). Lag en post om det først når det ligger salg der.
 - Skjermbildene er fra 8. november. Når siden endrer seg (flere ekte annonser), bør bildene tas på nytt. Det er ett skript (`ig10/shots.js` og `shotpc.js` i scratchpad) og ett byggeskript (`bygg2.py`), så det tar fem minutter.
 - Inspirasjonsbildene eieren sendte viste en app med egen bunnmeny og oppdiktede priser. Det finnes ikke; derfor er alt her hentet fra den ekte siden.
+
+## Del 2: seks poster til (R-serien, 8. november)
+
+### 7. R-01 Alt om kortet på ett sted
+Annonsesiden viser alt du trenger: store bilder, kortdata, gradering og tilstand, og selgeren med Vipps-merke rett under prisen. Still spørsmål i chatten rett fra annonsen. Kort merket «Eksempelannonse» er ikke til salgs.
+
+### 8. R-02 Gi bud, betal direkte
+Slik foregår et kjøp: gi bud i hele kroner, selgeren godtar eller avslår, og godtar selgeren får du en betalingslenke i chatten som åpner Vipps med selgeren valgt. Pengene går rett til selgeren. Samtalen og beløpet er eksempler.
+
+### 9. R-03 Frakt med sporing
+Send adressen med ett trykk. Selgeren legger inn sendingsnummeret fra Posten, og det blir en sporingslenke i chatten, så dere begge kan følge pakken. Samtalen og adressen er eksempler.
+
+### 10. R-04 Vil du selge raskere?
+Annonseløft er valgfritt og det eneste som koster noe på HOBBYSTRADA. Topp av listen 39 kr i 3 dager, Fremhevet 79 kr i 7 dager, Toppannonse 199 kr i 30 dager. Engangskjøp med Vipps, fornyes ikke automatisk.
+
+### 11. R-05 Lurer du på noe?
+Alt du lurer på om å kjøpe, selge og løfte annonser står under Spørsmål og svar på hobbystrada.no/sporsmal. Finner du ikke svaret, send oss en melding.
+
+### 12. R-06 Laget for samlere
+HOBBYSTRADA er bygget av en samler i Kongsberg, for alle som samler fotballkort i Norge. Bare fotballkort, direkte mellom samlere, og synlighet når du vil. Lenke i bio.
