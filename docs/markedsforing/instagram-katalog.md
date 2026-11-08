@@ -39,3 +39,17 @@ Tekstmal: «Erling Braut Haaland, Topps Museum UCC (MAR-EH). Ett av kortene fra 
 
 ## Når ekte annonser kommer
 Ta nye skjermbilder (skriptene `ig10/shots.js`, `shotpc.js`, `shot2.js`) og kjør `ig10/bygg3.py`, `bygg4.py` og `ig11/bygg5.py` på nytt. Da oppdateres alle postene med det ekte markedet på få minutter. Lag også poster for andres ekte annonser, med selgerens samtykke, og da gjerne med pris.
+
+## Del M: mørk «holder-stil» (12 poster, 8. november kveld)
+
+Eieren ba om mer av den mørke stilen med kort i hvite holdere, speiling og skrå telefon. Bildene ligger i `ig12/` i scratchpad. Telefonene viser ekte skjermbilder fra siden, ikke tegnede skjermer som i de gamle H-bildene.
+
+- M-01 Finn ditt neste kort (fire holdere). Tekst: Finn ditt neste kort på hobbystrada.no. Markedsplass for kjøp og salg av fotballkort. Lenke i bio.
+- M-02 Hele markedet i lomma (telefon med ekte forside, fire holdere rundt).
+- M-03 Kjøp. Selg. (delt mørk/gull).
+- M-04 til M-09: karusell «Slik fungerer det» i seks steg: Vipps, søk, chat, betal, frakt, legg ut. Tekst som karusellen K-01–K-09.
+- M-10 Alt om kortet på ett sted (annonsesiden).
+- M-11 Lagre det du liker (favoritter).
+- M-12 Fra samlere, til samlere (vifte med fem holdere). Tekst: Laget av en samler i Kongsberg, for alle som samler fotballkort i Norge. Ingen mellomledd, ingen provisjon. Lenke i bio.
+
+Rettelser mot de gamle H-/F-bildene: «Klart på 10 sekunder» og «Treff på 0,2 sekunder» er fjernet (udokumenterte påstander), chatten viser den ekte samtalen med «Bud»-merke og nøytral betalingsknapp, innloggingen viser den ekte siden med 18-års-avkryssing og vilkårslenke.
