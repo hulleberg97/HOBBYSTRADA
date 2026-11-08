@@ -56,3 +56,16 @@ HOBBYSTRADA er bygget av en samler i Kongsberg, for alle som samler fotballkort 
 ## Visuell oppgradering (8. november, kveld)
 
 Alle tolv bildene er bygget på nytt med mer dybde: lysglød og papirkorn i bakgrunnen, realistisk telefonramme med sideknapper, statuslinje og glans, skråstilt PC-vindu med gullkant, kort som stikker frem bak skjermene, og en skrå mørk flate nederst i stedet for buen. Byggeskriptet er `ig10/bygg3.py` i scratchpad.
+
+## Del 3: tre poster etter eierens inspirasjonsbilder (S-serien, 8. november)
+
+Eieren sendte tre KI-lagde inspirasjonsbilder med oppdiktet app. De er bygget på nytt med den ekte siden: forsiden er lagt inn på telefonen i hånden (perspektivtilpasset), markedet på PC er ekte skjermbilde, og «Slik fungerer det»-telefonen viser den ekte seksjonen på forsiden. Hånd- og personbildene er hentet fra eierens egne inspirasjonsbilder.
+
+### S-01 Rutenett: Den norske markedsplassen for fotballkort
+Den norske markedsplassen for fotballkort. Kjøp og selg direkte med andre samlere, på mobil eller PC. Lenke i bio. Kort merket «Eksempelannonse» er ikke til salgs.
+
+### S-02 Ingen mellomledd (pult + skrå telefon)
+Ingen mellomledd. Kjøper og selger avtaler direkte på Hobbystrada, og pengene går rett til selgeren. Ingen provisjon, ingen gebyr. Lenke i bio.
+
+### S-03 Slik funker Hobbystrada
+Slik funker det: finn kortet, avtal direkte i chatten, betal selgeren med Vipps. Ingen mellomledd. Lenke i bio.
