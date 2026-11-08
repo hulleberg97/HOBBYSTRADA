@@ -53,3 +53,7 @@ Eieren ba om mer av den mørke stilen med kort i hvite holdere, speiling og skr�
 - M-12 Fra samlere, til samlere (vifte med fem holdere). Tekst: Laget av en samler i Kongsberg, for alle som samler fotballkort i Norge. Ingen mellomledd, ingen provisjon. Lenke i bio.
 
 Rettelser mot de gamle H-/F-bildene: «Klart på 10 sekunder» og «Treff på 0,2 sekunder» er fjernet (udokumenterte påstander), chatten viser den ekte samtalen med «Bud»-merke og nøytral betalingsknapp, innloggingen viser den ekte siden med 18-års-avkryssing og vilkårslenke.
+
+## Video: «Hele markedet i lomma» med levende kortrad (8. november)
+
+`ig12/M-02-lomma-video.mp4` (1080 x 1350, 8 sek, 25 fps) viser den ekte forsiden på telefonen med kortraden i bevegelse, tatt opp fra hobbystrada.no. `M-02-lomma-reel.mp4` er samme film i 9:16 til Reels og Stories. Laget med `ig12/video.js` (200 bilder av den ekte siden, animasjonen styrt bilde for bilde) og ffmpeg. Legg ut som vanlig innlegg eller Reel; Instagram spiller den av i sløyfe.
