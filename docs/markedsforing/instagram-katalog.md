@@ -63,3 +63,17 @@ Rettelser mot de gamle H-/F-bildene: «Klart på 10 sekunder» og «Treff på 0,
 `ig12/V-01-neste-kort-hd.mp4` (2160 x 2700, 8 sek) og `V-01-neste-kort-reel-hd.mp4` (2160 x 3840). Alle åtte kortene glir forbi i hvite holdere, sømløs sløyfe (siste bilde går rett over i første). Laget med `ig12/animrender.js` (bilde-for-bilde-rendering av `V-01-neste-kort.html`) og ffmpeg. Samme oppskrift kan brukes på alle postene i M-serien.
 
 Videoene «Hele markedet i lomma» er også oppdatert til 2160 x 2700 / 2160 x 3840 med riktig telefonramme (`M-02-lomma-video-hd.mp4`, `M-02-lomma-reel-hd.mp4`).
+
+## Videoer med den ekte kortraden fra nettsiden (8. november)
+
+Alle i `ig12/`, 2160 x 2700 (`-hd.mp4`) og 2160 x 3840 (`-reel-hd.mp4`), 8 sek, sømløs sløyfe. Kortraden er tatt opp fra hobbystrada.no bilde for bilde (`video.js` for mobil, `videopc.js` for PC) og lagt inn i de ferdige postene med `livevideo.js`.
+
+- M-02-lomma-video: Hele markedet i lomma (telefon).
+- V-01-neste-kort: Finn ditt neste kort (rullende holdere, ikke nettsiden).
+- K-00-video: Nå er vi åpne (telefon).
+- Q-03-video: Ingen mellomledd (telefon).
+- S-02-video: Ingen mellomledd, pultbilde (telefon).
+- K-09-video: Gratis å legge ut, gratis å kjøpe (PC-vindu).
+- Q-06-video: Finn ditt neste kort, PC + mobil (PC-vinduet lever, telefonen står stille).
+
+Bruk videoene som vanlige innlegg der du vil ha bevegelse i feeden, og stillbildene ellers. Ikke legg ut video og stillbilde av samme motiv tett på hverandre.
