@@ -35,7 +35,7 @@ Tekstmal: «Erling Braut Haaland, Topps Museum UCC (MAR-EH). Ett av kortene fra 
 
 ## Reserve og variasjon
 - Q-04 Fotballkort på ett sted (PC), Q-05 Legg ut kortet gratis, Q-06 Finn ditt neste kort, R-01 Annonsesiden, R-04 Annonseløft, R-05 Spørsmål og svar, R-06 Laget for samlere.
-- Forklaringsserien i oppfrisket drakt: F-N-01 Hva er HOBBYSTRADA, F-N-02 Derfor, F-E-01 Du vet hvem du handler med, F-E-03 Søk, F-E-04 Markedet, F-E-05 Annonseløft, F-E-06 Legg ut, F-E-07 Chatten, F-E-08 Prisarkivet (vent til første salg).
+- Forklaringsserien i oppfrisket drakt: F-01-hva-er, F-02-derfor, F-01-verifisert, F-03-sok, F-04-marked, F-05-annonseloft, F-06-legg-ut, F-07-chat, F-08-prisarkiv (vent til første salg).
 
 ## Når ekte annonser kommer
 Ta nye skjermbilder (skriptene `ig10/shots.js`, `shotpc.js`, `shot2.js`) og kjør `ig10/bygg3.py`, `bygg4.py` og `ig11/bygg5.py` på nytt. Da oppdateres alle postene med det ekte markedet på få minutter. Lag også poster for andres ekte annonser, med selgerens samtykke, og da gjerne med pris.
