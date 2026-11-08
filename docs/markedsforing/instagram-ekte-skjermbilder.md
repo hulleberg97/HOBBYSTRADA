@@ -52,3 +52,7 @@ Alt du lurer på om å kjøpe, selge og løfte annonser står under Spørsmål o
 
 ### 12. R-06 Laget for samlere
 HOBBYSTRADA er bygget av en samler i Kongsberg, for alle som samler fotballkort i Norge. Bare fotballkort, direkte mellom samlere, og synlighet når du vil. Lenke i bio.
+
+## Visuell oppgradering (8. november, kveld)
+
+Alle tolv bildene er bygget på nytt med mer dybde: lysglød og papirkorn i bakgrunnen, realistisk telefonramme med sideknapper, statuslinje og glans, skråstilt PC-vindu med gullkant, kort som stikker frem bak skjermene, og en skrå mørk flate nederst i stedet for buen. Byggeskriptet er `ig10/bygg3.py` i scratchpad.
