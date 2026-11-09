@@ -91,3 +91,5 @@ Oppdatert 9. november: L-01 er tatt opp på nytt i 30 bilder/sek (jevnere), med 
 Oppdatert 9. november (2): startpunktet i sløyfen er flyttet slik at videoen åpner med Scholes og Mukasa, og Haaland, Ronaldo, Ronaldinho og Zidane glir inn fra høyre i de første sekundene. Bildene fra `ig12/frames-rad` roteres med startbilde 584 (`frames-rot`), ingen nytt opptak.
 
 Oppdatert 9. november (3): L-01 bygges nå fra ett stillbilde av hele raden (`ig12/strip.js`, gjennomsiktig, uten merker, valgt rekkefølge) og flyttes nøyaktig 5 px per bilde i ffmpeg (30 fps, 1144 bilder = 38,1 sek = én runde). Det fjerner hakkingen som kom av nettleserens pikselavrunding, og sløyfen er målt sømløs (steg 0→1 = 20,2, sist→først = 20,3). Viktig: alle stillbilde-innganger må ha `-framerate 30`, ellers dupliserer ffmpeg hvert femte bilde.
+
+Oppdatert 9. november (4): startbildet er låst til Scholes, Mukasa, Haaland og Ronaldo fullt synlige (crop-forskyvning 5660 i `strip`-oppskriften). Dette er den endelige L-01.
