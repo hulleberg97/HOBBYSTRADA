@@ -77,3 +77,11 @@ Alle i `ig12/`, 2160 x 2700 (`-hd.mp4`) og 2160 x 3840 (`-reel-hd.mp4`), 8 sek, 
 - Q-06-video: Finn ditt neste kort, PC + mobil (PC-vinduet lever, telefonen står stille).
 
 Bruk videoene som vanlige innlegg der du vil ha bevegelse i feeden, og stillbildene ellers. Ikke legg ut video og stillbilde av samme motiv tett på hverandre.
+
+## Video: «Finn ditt neste kort» med den ekte kortraden, uendret design (9. november)
+
+`ig12/L-01-neste-kort-hd.mp4` (2160 x 2700) og `L-01-neste-kort-reel-hd.mp4` (2160 x 3840), 32 sekunder. Designet er identisk med stillbildet M-01, men de fire faste holderne er byttet ut med den ekte kortraden fra hobbystrada.no, tatt opp med gjennomsiktig bakgrunn (`ig12/radtransp.js`). Varigheten er én hel runde av raden, så sløyfen er sømløs. «Eksempelannonse»-merkene er skjult i opptaket etter eierens valg; forbeholdet tas i bildeteksten i stedet.
+
+Bildetekst: Finn ditt neste kort på hobbystrada.no. Norsk markedsplass for kjøp og salg av fotballkort mellom samlere. Kortene i videoen er eksempler fra samlingen og ikke til salgs. Lenke i bio.
+
+Om reklamemerking: egne poster på egen profil trenger ingen «Reklame»-merking, uansett kontotype. Merking kreves først når andre får betalt for å omtale siden; da er det deres plikt.
