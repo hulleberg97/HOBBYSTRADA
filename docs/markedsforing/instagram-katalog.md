@@ -87,3 +87,5 @@ Bildetekst: Finn ditt neste kort på hobbystrada.no. Norsk markedsplass for kjø
 Om reklamemerking: egne poster på egen profil trenger ingen «Reklame»-merking, uansett kontotype. Merking kreves først når andre får betalt for å omtale siden; da er det deres plikt.
 
 Oppdatert 9. november: L-01 er tatt opp på nytt i 30 bilder/sek (jevnere), med rekkefølgen endret bare i opptaket (ikke på nettsiden): to kort først, deretter Haaland, Ronaldo, Ronaldinho og Zidane etter hverandre. Naturlig hastighet fra nettsiden (32 sek per runde), sømløs sløyfe.
+
+Oppdatert 9. november (2): startpunktet i sløyfen er flyttet slik at videoen åpner med Scholes og Mukasa, og Haaland, Ronaldo, Ronaldinho og Zidane glir inn fra høyre i de første sekundene. Bildene fra `ig12/frames-rad` roteres med startbilde 584 (`frames-rot`), ingen nytt opptak.
