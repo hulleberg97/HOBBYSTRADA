@@ -85,3 +85,5 @@ Bruk videoene som vanlige innlegg der du vil ha bevegelse i feeden, og stillbild
 Bildetekst: Finn ditt neste kort på hobbystrada.no. Norsk markedsplass for kjøp og salg av fotballkort mellom samlere. Kortene i videoen er eksempler fra samlingen og ikke til salgs. Lenke i bio.
 
 Om reklamemerking: egne poster på egen profil trenger ingen «Reklame»-merking, uansett kontotype. Merking kreves først når andre får betalt for å omtale siden; da er det deres plikt.
+
+Oppdatert 9. november: L-01 er tatt opp på nytt i 30 bilder/sek (jevnere), med rekkefølgen endret bare i opptaket (ikke på nettsiden): to kort først, deretter Haaland, Ronaldo, Ronaldinho og Zidane etter hverandre. Naturlig hastighet fra nettsiden (32 sek per runde), sømløs sløyfe.
