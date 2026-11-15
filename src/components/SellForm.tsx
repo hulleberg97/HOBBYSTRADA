@@ -137,6 +137,16 @@ export function SellForm({ user, owner = false }: { user: { name: string; email:
   const top = useRef<HTMLDivElement>(null);
   const [slug, setSlug] = useState("");
 
+  /**
+   * Første felt i et steg som mangler eller er feil utfylt. Et fieldset sier alltid at det er gyldig, så feltene sjekkes ett for ett.
+   * Gamle feilmeldinger nullstilles først, så et felt som ikke lenger er påkrevd ikke blir stående som feil.
+   */
+  const firstInvalid = (i: number) => {
+    const fields = [...(steps.current[i]?.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("input, select, textarea") ?? [])];
+    fields.forEach((el) => el.setCustomValidity(""));
+    return fields.find((el) => !el.validity.valid);
+  };
+
   // Sjekker steget før man går videre, så feil vises der feltet er
   const next = () => {
     if (step === 0 && !front) {
@@ -147,7 +157,11 @@ export function SellForm({ user, owner = false }: { user: { name: string; email:
       setError("Velg minst én type, for eksempel Autograf eller Patch.");
       return;
     }
-    if (!steps.current[step]?.reportValidity()) return;
+    const bad = firstInvalid(step);
+    if (bad) {
+      bad.reportValidity();
+      return;
+    }
     setError("");
     setStep(step + 1);
     top.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -199,6 +213,19 @@ export function SellForm({ user, owner = false }: { user: { name: string; email:
     if (!front) return;
     if (!types.length) {
       setError("Velg minst én type, for eksempel Autograf eller Patch.");
+      setStep(1);
+      return;
+    }
+    // Mangler noe i et tidligere steg, åpnes det steget med beskjed, i stedet for at innsendingen stopper uten forklaring
+    for (let i = 0; i < steps.current.length; i++) {
+      const bad = firstInvalid(i);
+      if (!bad) continue;
+      setError(i === step ? "Fyll ut feltene som mangler." : "Noe mangler i dette steget. Fyll ut feltet og gå videre.");
+      setStep(i);
+      setTimeout(() => {
+        bad.scrollIntoView({ behavior: "smooth", block: "center" });
+        bad.reportValidity();
+      }, 80);
       return;
     }
     const fd = new FormData(e.currentTarget);
@@ -255,7 +282,7 @@ export function SellForm({ user, owner = false }: { user: { name: string; email:
   }
 
   return (
-    <form className="grid scroll-mt-28 gap-8 lg:grid-cols-[1fr_340px] lg:items-start" onSubmit={submit}>
+    <form className="grid scroll-mt-28 gap-8 lg:grid-cols-[1fr_340px] lg:items-start" onSubmit={submit} noValidate>
       {cropQueue[0] && (
         <BildeBeskjaering
           key={cropQueue[0].file.name + cropQueue[0].file.lastModified + cropQueue.length}
