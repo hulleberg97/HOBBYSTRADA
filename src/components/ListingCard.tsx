@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ClockIcon, CrownIcon, EyeIcon } from "lucide-react";
 import { CardArt } from "./CardArt";
+import { ExampleBadge } from "./ExampleBadge";
 import { FavoriteButton } from "./FavoriteButton";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { TidSiden } from "./TidSiden";
@@ -43,13 +44,9 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
               </div>
             )}
           </div>
-          <div className="absolute left-2 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
+          <div className={`merke-rad absolute left-2 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3 ${listing.isExample ? "eks-rad" : ""}`}>
             {/* Eksempelannonser er ikke til salgs og merkes tydelig */}
-            {listing.isExample && (
-              <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="inline-flex items-center rounded-full bg-slate-900 px-1.5 py-1 text-[11px] font-semibold tracking-[-0.01em] text-white sm:px-2.5 sm:tracking-normal">
-                Eksempelannonse
-              </span>
-            )}
+            {listing.isExample && <ExampleBadge />}
             {/* Betalt plassering merkes tydelig (markedsføringsloven § 8). Kort admin har valgt til forsiden har ikke eget merke. */}
             {(listing.featured || listing.bumpedAt) && (
               <span

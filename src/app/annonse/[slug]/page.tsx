@@ -1,3 +1,4 @@
+import { ExampleBadge } from "@/components/ExampleBadge";
 import type { Metadata } from "next";
 import { conditionLabel } from "@/lib/conditions";
 import Link from "next/link";
@@ -126,11 +127,7 @@ export default async function ListingPage({ params }: Props) {
                   badges={
                     <>
                       <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
-                        {l.isExample && (
-                          <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white shadow-sm">
-                            Eksempelannonse
-                          </span>
-                        )}
+                        {l.isExample && <ExampleBadge size="side" />}
                         {(l.featured || l.bumpedAt) && (
                           <span title={l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "Topp av listen"} className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">
                             Annonseløft
@@ -150,11 +147,7 @@ export default async function ListingPage({ params }: Props) {
               ) : (
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50 to-slate-200 ring-1 ring-inset ring-slate-200">
                   <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5">
-                    {l.isExample && (
-                      <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white shadow-sm">
-                    Eksempelannonse
-                      </span>
-                    )}
+                    {l.isExample && <ExampleBadge size="side" />}
                     {(l.featured || l.bumpedAt) && (
                       <span title={l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "Topp av listen"} className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-sm">
                         Annonseløft

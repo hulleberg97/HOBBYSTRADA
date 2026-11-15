@@ -733,3 +733,31 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
     padding: 0 !important;
   }
 }
+
+/* Merket «Eksempelannonse» (ExampleBadge). Utkast: tre retninger velges med data-eks="a|b|c" på en forelder. */
+.eks-merke { position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 7px; overflow: hidden; white-space: nowrap; border-radius: 999px; background: #0f172a; color: #fff; font-size: 12px; font-weight: 600; line-height: 1; letter-spacing: -0.01em; }
+.eks-merke .eks-ikon, .eks-merke .eks-ikon > * { display: none; }
+.eks-merke[data-size="side"] { height: 28px; padding: 0 12px; gap: 7px; letter-spacing: 0; }
+.eks-merke[data-size="plate"] { height: auto; padding: 3px 10px; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; }
+@media (min-width: 640px) { .eks-merke { padding: 0 10px; letter-spacing: 0; } .eks-merke[data-size="plate"] { font-size: 9px; } }
+/* Symbolet vises fra nettbrett og opp på kortene (på mobil trengs plassen til teksten), og alltid på annonsesiden */
+@media (min-width: 640px) { [data-eks] .eks-merke[data-size="kort"] .eks-ikon { display: inline-flex; } }
+[data-eks] .eks-merke[data-size="side"] .eks-ikon { display: inline-flex; }
+/* A – Glass: mørkt, halvgjennomsiktig glass med gullkant og en rolig pulserende prikk */
+[data-eks="a"] .eks-merke { background: rgb(11 20 38 / 0.8); -webkit-backdrop-filter: blur(10px) saturate(160%); backdrop-filter: blur(10px) saturate(160%); color: #f7f3ea; box-shadow: inset 0 0 0 1px rgb(226 194 122 / 0.65), inset 0 1px 0 rgb(255 255 255 / 0.2), 0 8px 18px -10px rgb(11 20 38 / 0.7); }
+[data-eks="a"] .eks-prikk { display: block; width: 6px; height: 6px; border-radius: 50%; background: #e2c27a; animation: eks-puls 2.4s ease-out infinite; }
+@keyframes eks-puls { 0% { box-shadow: 0 0 0 0 rgb(226 194 122 / 0.6); } 70%, 100% { box-shadow: 0 0 0 6px rgb(226 194 122 / 0); } }
+/* B – Holo: brikke med fargespill i kanten, som folien på et refractor-kort, og et lysglimt som glir over */
+[data-eks="b"] .eks-merke { border: 1.5px solid transparent; border-radius: 7px; background: linear-gradient(#0b1426, #111f3d) padding-box, linear-gradient(115deg, #5eead4, #818cf8 35%, #f0abfc 60%, #e2c27a 85%, #5eead4) border-box; box-shadow: 0 8px 18px -10px rgb(11 20 38 / 0.7); }
+[data-eks="b"] .eks-merke::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.4) 50%, transparent 65%); transform: translateX(-120%); animation: eks-glans 4.5s ease-in-out infinite; pointer-events: none; }
+[data-eks="b"] .eks-gnist { display: block; width: 12px; height: 12px; color: #99f6e4; }
+@keyframes eks-glans { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+/* C – Flik: sitter helt inntil hjørnet av kortet, med H-symbolet og gullstrek i underkant */
+[data-eks="c"] .eks-merke { height: 26px; border-radius: 6px; background: linear-gradient(120deg, #0b1426, #1c3160); box-shadow: inset 0 -2px 0 #cfa653; padding-bottom: 1px; }
+[data-eks="c"] .eks-rad { left: 0; top: 0; }
+[data-eks="c"] .eks-rad .eks-merke { border-radius: 8px 0 12px 0; }
+[data-eks="c"] .eks-h { display: block; width: 11px; height: 13px; }
+@media (prefers-reduced-motion: reduce) { .eks-merke *, .eks-merke::after { animation: none !important; } }
+/* Smale telefoner: hjertet flyttes ned under merkeraden på kort som har et merke, så det aldri dekker teksten */
+@media (max-width: 359px) { .group:has(.merke-rad > *) > button[aria-pressed] { top: 2.5rem; } }
+@media (max-width: 389px) { .group:has(.eks-rad) > button[aria-pressed] { top: 2.5rem; } }
