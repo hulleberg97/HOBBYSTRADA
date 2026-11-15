@@ -8,6 +8,12 @@ import { TidSiden } from "./TidSiden";
 import { formatPrice } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 
+/** Typemerket på kortet holder seg på én linje: de to første typene, og «+1» for resten («Autograf + Patch +1»). Hele teksten ligger i title. */
+function shortTag(tag: string) {
+  const parts = tag.split(" + ");
+  return parts.length > 2 ? `${parts.slice(0, 2).join(" + ")} +${parts.length - 2}` : tag;
+}
+
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
 /** «eager»: kort øverst på siden lastes med en gang i stedet for når de rulles inn. */
 export function ListingCard({ listing, variant = "home", eager = false }: { listing: Listing; variant?: "home" | "market"; eager?: boolean }) {
@@ -29,7 +35,7 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
                 loading={eager ? "eager" : "lazy"}
                 fetchPriority={eager ? "high" : "auto"}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="h-full w-full rounded-md object-cover shadow-[0_18px_30px_-18px_rgba(15,23,42,0.6)]"
+                className="h-full w-full rounded-md bg-slate-200 object-cover shadow-[0_18px_30px_-18px_rgba(15,23,42,0.6)]"
               />
             ) : (
               <div className="h-full w-full shadow-[0_18px_30px_-18px_rgba(15,23,42,0.6)]">
@@ -37,10 +43,10 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
               </div>
             )}
           </div>
-          <div className="absolute left-2.5 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
+          <div className="absolute left-2 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3">
             {/* Eksempelannonser er ikke til salgs og merkes tydelig */}
             {listing.isExample && (
-              <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="inline-flex items-center rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-semibold text-white">
+              <span title="Lagt ut av HOBBYSTRADA for å vise hvordan siden fungerer. Ikke til salgs." className="inline-flex items-center rounded-full bg-slate-900 px-1.5 py-1 text-[11px] font-semibold tracking-[-0.01em] text-white sm:px-2.5 sm:tracking-normal">
                 Eksempelannonse
               </span>
             )}
@@ -48,18 +54,21 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             {(listing.featured || listing.bumpedAt) && (
               <span
                 title={listing.frontpage ? "Toppannonse" : listing.featured ? "Fremhevet" : "Topp av listen"}
-                className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground"
+                className="inline-flex items-center gap-1 rounded-full bg-accent px-1.5 py-1 text-[11px] font-semibold tracking-[-0.01em] text-accent-foreground sm:px-2.5 sm:tracking-normal"
               >
                 {listing.frontpage && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
                 Annonseløft
               </span>
             )}
             {/* Kjøperne ser bare aktive annonser, så bare «Solgt» trenger et merke */}
-            {listing.status === "sold" && <span className="rounded-full bg-slate-700 px-2.5 py-1 text-[11px] font-semibold text-white">Solgt</span>}
+            {listing.status === "sold" && <span className="rounded-full bg-slate-700 px-1.5 py-1 text-[11px] font-semibold tracking-[-0.01em] text-white sm:px-2.5 sm:tracking-normal">Solgt</span>}
           </div>
           {market && (
-            <span className="absolute bottom-2.5 right-2.5 z-10 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200 backdrop-blur sm:bottom-3 sm:right-3">
-              {listing.tag}
+            <span
+              title={listing.tag}
+              className="absolute bottom-2.5 right-2.5 z-10 max-w-[calc(100%-1.25rem)] truncate whitespace-nowrap rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200 backdrop-blur sm:bottom-3 sm:right-3"
+            >
+              {shortTag(listing.tag)}
             </span>
           )}
         </div>
