@@ -14,7 +14,7 @@ Litt om siden:
 
 - Den er helt ny, så det er foreløpig få annonser. Noen eksempelannonser med mine egne kort viser hvordan siden fungerer.
 - Det er gratis å legge ut kort. Det betalte er annonseløft for mer synlighet, og det er valgfritt.
-- Kjøper og selger avtaler alt direkte, og betalingen går mellom dem med Vipps. Siden tar ingen provisjon.
+- Kjøper og selger avtaler alt direkte, og betalingen går mellom dem med Vipps.
 - Siden er for private samlere.
 
 Er det greit, legger jeg ut innlegget én gang og følger opp spørsmål i kommentarfeltet. Har dere regler for reklame, for eksempel bestemte dager eller en egen tråd, følger jeg dem selvsagt. Vil dere at noe i teksten skal endres, eller at jeg ikke legger det ut, er det helt i orden.

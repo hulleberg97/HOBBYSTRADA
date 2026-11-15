@@ -8,7 +8,7 @@ Legg ut i denne rekkefølgen, gjerne to i uken. Avslutt alle tekster med hashtag
 Fotballkort, samler til samler. HOBBYSTRADA er en norsk markedsplass bare for fotballkort. Private samlere legger ut kortene sine, og kjøper og selger avtaler direkte. Logg inn med Vipps, legg ut gratis, avtal i chatten, betal rett til selgeren. Lenke i bio.
 
 ## 2. N-02 Derfor HOBBYSTRADA (lys)
-Ingen mellomledd. Vi tar ikke provisjon og holder ikke pengene dine. Selgeren setter prisen, du gir bud eller betaler prisen, og pengene går rett til selgeren. Gratis å legge ut, gratis å kjøpe. Eneste inntekt er frivillig annonseløft for selgere som vil synes bedre.
+Ingen mellomledd. Vi holder ikke pengene dine. Selgeren setter prisen, du gir bud eller betaler prisen, og pengene går rett til selgeren. Gratis å legge ut, gratis å kjøpe. Eneste inntekt er frivillig annonseløft for selgere som vil synes bedre.
 
 ## 3. E-01 Du vet hvem du handler med (lys)
 Alle som legger ut kort eller sender meldinger på HOBBYSTRADA har logget inn med Vipps. Fornavnet vises på annonsen, hele navnet i chatten. Det gjør det tryggere for begge parter.

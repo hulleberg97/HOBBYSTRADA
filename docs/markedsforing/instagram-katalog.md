@@ -22,7 +22,7 @@ Bildene ligger i sesjonens scratchpad: `ig11/` (K- og F-serien) og `ig10/` (Q-, 
 
 ## Uke 2–3: hva og hvorfor
 4. **S-02 Ingen mellomledd** (pult + skrå telefon).
-5. **K-19 0 kr.** Ingen provisjon, ingen gebyr, ingen mellomledd. Selgeren setter prisen, og pengene går rett til selgeren. Annonseløft er valgfritt.
+5. **K-19 0 kr.** Ingen mellomledd. Selgeren setter prisen, og pengene går rett til selgeren. Annonseløft er valgfritt.
 6. **Q-02 Slik funker Hobbystrada** eller **S-03** (velg én).
 7. **R-02 Gi bud, betal direkte.**
 8. **R-03 Frakt med sporing.**
@@ -50,7 +50,7 @@ Eieren ba om mer av den mørke stilen med kort i hvite holdere, speiling og skr�
 - M-04 til M-09: karusell «Slik fungerer det» i seks steg: Vipps, søk, chat, betal, frakt, legg ut. Tekst som karusellen K-01–K-09.
 - M-10 Alt om kortet på ett sted (annonsesiden).
 - M-11 Lagre det du liker (favoritter).
-- M-12 Fra samlere, til samlere (vifte med fem holdere). Tekst: Laget av en samler i Kongsberg, for alle som samler fotballkort i Norge. Ingen mellomledd, ingen provisjon. Lenke i bio.
+- M-12 Fra samlere, til samlere (vifte med fem holdere). Tekst: Laget av en samler i Kongsberg, for alle som samler fotballkort i Norge. Ingen mellomledd. Lenke i bio.
 
 Rettelser mot de gamle H-/F-bildene: «Klart på 10 sekunder» og «Treff på 0,2 sekunder» er fjernet (udokumenterte påstander), chatten viser den ekte samtalen med «Bud»-merke og nøytral betalingsknapp, innloggingen viser den ekte siden med 18-års-avkryssing og vilkårslenke.
 

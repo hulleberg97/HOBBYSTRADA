@@ -13,7 +13,7 @@ Den norske markedsplassen for fotballkort. Kjøp og selg direkte med andre samle
 Slik funker det: 1) Finn kortet – søk på spiller, sett eller kortnummer. 2) Avtal i chatten – still spørsmål, gi bud, avtal frakt. 3) Betal selgeren direkte med Vipps, uten mellomledd. Gratis å legge ut, gratis å kjøpe. Samtalen i bildet er et eksempel.
 
 ### 3. Q-03 Ingen mellomledd
-Ingen mellomledd. Kjøper og selger avtaler direkte, og pengene går rett til selgeren. Vi tar ikke provisjon og holder ikke pengene dine. Lenke i bio.
+Ingen mellomledd. Kjøper og selger avtaler direkte, og pengene går rett til selgeren. Vi holder ikke pengene dine. Lenke i bio.
 
 ### 4. Q-04 Fotballkort på ett sted (PC)
 Alt på ett sted. Autografer, patch, rookies og nummererte kort, med pris, sted og Vipps-merke rett på kortet. Fungerer like godt på PC som på mobil. Kort merket «Eksempelannonse» er ikke til salgs.
@@ -65,7 +65,7 @@ Eieren sendte tre KI-lagde inspirasjonsbilder med oppdiktet app. De er bygget p�
 Den norske markedsplassen for fotballkort. Kjøp og selg direkte med andre samlere, på mobil eller PC. Lenke i bio. Kort merket «Eksempelannonse» er ikke til salgs.
 
 ### S-02 Ingen mellomledd (pult + skrå telefon)
-Ingen mellomledd. Kjøper og selger avtaler direkte på Hobbystrada, og pengene går rett til selgeren. Ingen provisjon, ingen gebyr. Lenke i bio.
+Ingen mellomledd. Kjøper og selger avtaler direkte på Hobbystrada, og pengene går rett til selgeren. Lenke i bio.
 
 ### S-03 Slik funker Hobbystrada
 Slik funker det: finn kortet, avtal direkte i chatten, betal selgeren med Vipps. Ingen mellomledd. Lenke i bio.

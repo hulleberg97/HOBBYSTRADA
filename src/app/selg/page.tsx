@@ -8,7 +8,7 @@ import { VippsButton } from "@/components/VerifiedBadge";
 
 export const metadata: Metadata = {
   title: "Selg fotballkort gratis",
-  description: "Legg ut fotballkortene dine gratis på HOBBYSTRADA. Logg inn med Vipps, last opp bilder og sett pris. Kjøperne tar kontakt i chatten. Ingen provisjon.",
+  description: "Legg ut fotballkortene dine gratis på HOBBYSTRADA. Logg inn med Vipps, last opp bilder og sett pris. Kjøperne tar kontakt i chatten.",
   alternates: { canonical: "/selg" },
 };
 export const dynamic = "force-dynamic";

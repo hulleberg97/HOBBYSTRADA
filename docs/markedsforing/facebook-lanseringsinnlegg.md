@@ -19,7 +19,7 @@ Siden fungerer slik:
 
 - Du logger inn med Vipps, og må være 18 år.
 - Kjøper og selger avtaler pris, betaling og frakt i chatten på siden.
-- Betalingen går direkte mellom dere med Vipps. HOBBYSTRADA tar ingen provisjon og er ikke part i handelen.
+- Betalingen går direkte mellom dere med Vipps. HOBBYSTRADA er ikke part i handelen.
 - Siden er for private samlere.
 
 Akkurat nå ligger det noen eksempelannonser med mine egne kort. De viser hvordan siden fungerer, og er ikke til salgs. De forsvinner når det kommer flere annonser.
