@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/ui";
 import { SellForm } from "@/components/SellForm";
+import { SellGuide } from "@/components/SellGuide";
 import { getUser, getVerification, isAdmin } from "@/lib/auth";
 import { hasVippsLogin } from "@/lib/vipps-login";
 import { VippsButton } from "@/components/VerifiedBadge";
@@ -56,6 +57,8 @@ export default async function SellPage() {
           <SellForm user={user ? { name: user.name, email: user.email, location: user.location } : null} owner={isAdmin(user)} />
         )}
       </section>
+      {/* Veiledningen vises til den som ikke er klar til å legge ut ennå, ikke over skjemaet */}
+      {(!user || mustVerify) && <SellGuide />}
     </>
   );
 }
