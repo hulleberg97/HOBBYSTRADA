@@ -36,8 +36,18 @@ export default async function Home() {
   const c = categoryCounts(all);
   // Forsiden: toppannonser, så Fremhevet, så kort admin har valgt. Nyeste bare som reserve.
   const fanList = frontpageRow(all);
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no";
+  // Forteller søkemotorer hva nettstedet heter og hvilken logo det har. Bare navn, adresse til siden og logo.
+  const siteLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "WebSite", "@id": `${site}/#nettsted`, url: site, name: "HOBBYSTRADA", alternateName: "Hobbystrada", inLanguage: "nb" },
+      { "@type": "Organization", "@id": `${site}/#virksomhet`, url: site, name: "HOBBYSTRADA", logo: `${site}/icon.png` },
+    ],
+  };
   return (
     <div className="bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd).replace(/</g, "\\u003c") }} />
       {/* Forsiden: overskrift øverst og annonseraden nederst */}
       {fanList[0] && (
         <section className="vis-magasin mag flex flex-col justify-between bg-background">

@@ -1,4 +1,4 @@
-# HOBBYSTRADA – status og arbeidsmåte (oppdatert 3. november 2026)
+# HOBBYSTRADA – status og arbeidsmåte (oppdatert 15. november 2026)
 
 Les denne først i en ny sesjon. Den oppsummerer hvor prosjektet står, hvordan eieren vil jobbe, og hva som gjenstår.
 
@@ -42,6 +42,7 @@ Les denne først i en ny sesjon. Den oppsummerer hvor prosjektet står, hvordan 
 - Tid «lagt ut for … siden» regnes i nettleseren (`TidSiden`), så mellomlagring ikke viser gammel tid.
 - E-post via SMTP hos Domene AS. SPF, DKIM og DMARC (p=none) er på plass i DNS per 6. nov. Hotmail kan forsinke e-post.
 - Siden er åpen (ingen passord) og indekserbar siden 5. nov («myk åpning»). Google Search Console: TXT-bekreftelse lagt i DNS 6. nov (cPanel Zone Editor hos Domene AS); eieren sender inn sitemap selv.
+- Teknisk gjennomgang 15. nov: Next.js 16.4.6 og nodemailer 10.5.0 (lukker kritiske sikkerhetsvarsler, `npm audit` viser 0), ubrukt `three` fjernet. Eksempelannonser gir ikke lenger pris/«på lager» til Google (ingen `offers` i JSON-LD, søketekst «Eksempelannonse. Kortet tilhører HOBBYSTRADA og er ikke til salgs.»). Forsiden forteller Google navn og logo (WebSite/Organization, uten person- eller adresseopplysninger). Innloggingssidene er `noindex`. Fart målt: forside 94, marked 92, annonse 95 (mobil, median av tre). Ingen fartsendringer trengtes; to forsøk ble målt og forkastet.
 - Designsystem «HOBBYSTRADA» finnes som Claude-artefakt (synket fra koden): https://claude.ai/artifact/2Q8CY4WFoM6Vs6rvtvvN3w. Et forside-testlerret ble laget 3. nov og slettet igjen på eierens ønske.
 
 ## Gjenstår (eieren selv)

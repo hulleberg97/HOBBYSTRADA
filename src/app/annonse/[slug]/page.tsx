@@ -29,7 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!l) return { title: "Fant ikke annonsen" };
   return {
     title: l.title,
-    description: `${l.title} – ${formatPrice(l.price)}. ${l.description.split("\n")[0]}`,
+    // Eksempelannonser er ikke til salgs: ingen pris i søketeksten, og samme ordlyd som på selve annonsen
+    description: l.isExample
+      ? `${l.title}. Eksempelannonse. Kortet tilhører HOBBYSTRADA og er ikke til salgs.`
+      : `${l.title} – ${formatPrice(l.price)}. ${l.description.split("\n")[0]}`.trim(),
     openGraph: { title: l.title, images: l.image ? [l.image] : undefined },
     alternates: { canonical: `/annonse/${l.slug}` },
   };
@@ -74,14 +77,17 @@ export default async function ListingPage({ params }: Props) {
     description: l.description || l.title,
     image: l.image ? [l.image.startsWith("http") ? l.image : site + l.image] : undefined,
     brand: { "@type": "Brand", name: l.producer },
-    offers: {
-      "@type": "Offer",
-      price: l.price,
-      priceCurrency: "NOK",
-      availability: l.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
-      itemCondition: "https://schema.org/UsedCondition",
-      url: `${site}/annonse/${l.slug}`,
-    },
+    // Eksempelannonser er ikke til salgs, så de får ikke noe tilbud (pris/«på lager») i de strukturerte dataene
+    offers: l.isExample
+      ? undefined
+      : {
+          "@type": "Offer",
+          price: l.price,
+          priceCurrency: "NOK",
+          availability: l.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+          itemCondition: "https://schema.org/UsedCondition",
+          url: `${site}/annonse/${l.slug}`,
+        },
   };
 
   return (
