@@ -5,7 +5,7 @@ export function VerifiedBadge({ compact = false }: { compact?: boolean }) {
   return (
     <span
       title="Selgeren har bekreftet navnet sitt med Vipps"
-      className={`inline-flex items-center gap-1 rounded-full bg-[#ff5b24]/10 py-0.5 text-[11px] font-semibold text-[#c2410c] ring-1 ring-inset ring-[#ff5b24]/25 ${compact ? "px-0.5" : "px-2"}`}
+      className={`inline-flex items-center gap-1 rounded-full bg-[#ff5b24]/10 py-0.5 text-[11px] font-semibold text-[#b43a0a] ring-1 ring-inset ring-[#ff5b24]/25 ${compact ? "px-0.5" : "px-2"}`}
     >
       <BadgeCheckIcon className="h-3.5 w-3.5" aria-hidden="true" />
       {/* På annonsekortene vises bare haken, så stedet og tiden får plass på linja */}

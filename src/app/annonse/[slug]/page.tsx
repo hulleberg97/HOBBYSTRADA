@@ -35,6 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : `${l.title} – ${formatPrice(l.price)}. ${l.description.split("\n")[0]}`.trim(),
     openGraph: { title: l.title, images: l.image ? [l.image] : undefined },
     alternates: { canonical: `/annonse/${l.slug}` },
+    // Eksempelannonser slettes ved lansering og er ikke til salgs, så de holdes utenfor søkemotorene
+    robots: l.isExample ? { index: false } : undefined,
   };
 }
 

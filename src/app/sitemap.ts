@@ -6,6 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = ["", "/marked", "/annonseloft", "/selg", "/solgt", "/sporsmal", "/om-oss", "/kontakt", "/vilkar", "/salgsvilkar", "/personvern"].map(
     (p) => ({ url: base + p }),
   );
-  const listings = (await getListings()).map((l) => ({ url: `${base}/annonse/${l.slug}`, lastModified: l.createdAt }));
+  // Eksempelannonser er ikke med: de er ikke til salgs og slettes ved lansering
+  const listings = (await getListings()).filter((l) => !l.isExample).map((l) => ({ url: `${base}/annonse/${l.slug}`, lastModified: l.createdAt }));
   return [...pages, ...listings];
 }
