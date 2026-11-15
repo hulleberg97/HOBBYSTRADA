@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { LegalPage, List } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Informasjonskapsler", alternates: { canonical: "/informasjonskapsler" } };
+export const metadata: Metadata = {
+  title: "Informasjonskapsler",
+  description: "Hvilke informasjonskapsler HOBBYSTRADA bruker, og hva de brukes til.",
+  alternates: { canonical: "/informasjonskapsler" },
+};
 
 export default function CookiePage() {
   return (

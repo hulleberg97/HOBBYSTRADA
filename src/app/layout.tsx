@@ -15,7 +15,7 @@ const headlineFont = `${tSora.variable} ${fFraunces.variable}`;
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no"),
   title: { default: "Fotballkort – kjøp og selg direkte | HOBBYSTRADA", template: "%s | HOBBYSTRADA" },
-  description: "Kjøp og selg fotballkort direkte i Norge. Autografkort, relic, patch og nummererte kort fra Topps Chrome, Museum Collection og Inception.",
+  description: "HOBBYSTRADA er en norsk markedsplass for fotballkort. Samlere kjøper og selger direkte av hverandre. Logg inn med Vipps, legg ut gratis, ingen provisjon.",
   openGraph: { locale: "nb_NO", siteName: "HOBBYSTRADA", type: "website" },
   // Før lansering: ingen indeksering, også når passordet er tatt bort for gjennomgang
   ...(hiddenFromSearch() ? { robots: { index: false, follow: false } } : {}),

@@ -3,7 +3,11 @@ import Link from "next/link";
 import { PageHeader, SellCta, btnPrimary, btnSecondary } from "@/components/ui";
 import { BadgeCheckIcon, HandshakeIcon, ShieldCheckIcon, ZapIcon } from "lucide-react";
 
-export const metadata: Metadata = { title: "Om HOBBYSTRADA", alternates: { canonical: "/om-oss" } };
+export const metadata: Metadata = {
+  title: "Om oss",
+  description: "HOBBYSTRADA er en norsk markedsplass bare for fotballkort, der samlere kjøper og selger direkte av hverandre. Les hvordan siden fungerer.",
+  alternates: { canonical: "/om-oss" },
+};
 
 export default function AboutPage() {
   return (

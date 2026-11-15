@@ -3,7 +3,11 @@ import Link from "next/link";
 import { LegalPage, List } from "@/components/LegalPage";
 import { COMPANY } from "@/lib/company";
 
-export const metadata: Metadata = { title: "Personvern", alternates: { canonical: "/personvern" } };
+export const metadata: Metadata = {
+  title: "Personvern",
+  description: "Personvernerklæringen for HOBBYSTRADA: hvilke opplysninger vi behandler, hvorfor, og hvilke rettigheter du har.",
+  alternates: { canonical: "/personvern" },
+};
 
 /**
  * Personvernerklæring. Teksten er Låvlis reviderte utkast (andre versjon, 30. oktober 2026), lagt inn ordrett.

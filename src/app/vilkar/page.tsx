@@ -3,7 +3,11 @@ import Link from "next/link";
 import { LegalPage, List } from "@/components/LegalPage";
 import { COMPANY } from "@/lib/company";
 
-export const metadata: Metadata = { title: "Vilkår", alternates: { canonical: "/vilkar" } };
+export const metadata: Metadata = {
+  title: "Vilkår",
+  description: "Vilkårene for bruk av HOBBYSTRADA, markedsplassen for kjøp og salg av fotballkort mellom private samlere.",
+  alternates: { canonical: "/vilkar" },
+};
 
 /**
  * Brukervilkår. Teksten er Låvlis reviderte utkast av 30. oktober 2026, lagt inn ordrett.

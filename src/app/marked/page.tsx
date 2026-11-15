@@ -5,8 +5,8 @@ import { getListings } from "@/lib/listings";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "Markedet",
-  description: "Fotballkort fra samlere. Kjøp direkte fra selgeren.",
+  title: "Fotballkort til salgs – markedet",
+  description: "Se fotballkort til salgs fra samlere i Norge: autografer, patch, rookies og nummererte kort. Avtal direkte med selgeren i chatten.",
   alternates: { canonical: "/marked" },
 };
 

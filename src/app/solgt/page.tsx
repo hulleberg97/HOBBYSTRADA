@@ -5,7 +5,7 @@ import { getSoldListings } from "@/lib/listings";
 export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Solgte kort – prisarkiv",
-  description: "Se hva solgte fotballkort var lagt ut for i Norge. Søk på spiller, sett eller kortnummer.",
+  description: "Prisarkiv for fotballkort i Norge. Se hva solgte kort var lagt ut for, og søk på spiller, sett eller kortnummer før du setter pris.",
   alternates: { canonical: "/solgt" },
 };
 

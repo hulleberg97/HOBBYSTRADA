@@ -3,11 +3,16 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { BoostPicker } from "@/components/BoostPicker";
 import { PageHeader } from "@/components/ui";
-import { FRONTPAGE_SLOTS } from "@/lib/boosts";
+import { FRONTPAGE_SLOTS, BOOSTS } from "@/lib/boosts";
 import { frontpageAvailability } from "@/lib/frontpage";
 import { adminClient } from "@/lib/supabase-admin";
 
-export const metadata: Metadata = { title: "Annonseløft", alternates: { canonical: "/annonseloft" } };
+export const metadata: Metadata = {
+  title: "Annonseløft – selg fotballkortet raskere",
+  // Prisen hentes fra pakkene, så teksten i søkemotorene aldri blir feil
+  description: `Vil du selge raskere? Løft annonsen din på HOBBYSTRADA fra ${BOOSTS.top.price} kr. Engangskjøp med Vipps, fornyes ikke automatisk.`,
+  alternates: { canonical: "/annonseloft" },
+};
 
 export default async function BoostPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   // Adressen leses på serveren, så skjemaet står der fra første bilde i stedet for at siden hopper

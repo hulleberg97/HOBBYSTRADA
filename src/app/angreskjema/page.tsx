@@ -4,7 +4,11 @@ import { COMPANY } from "@/lib/company";
 import { PageHeader } from "@/components/ui";
 import { PrintButton } from "@/components/PrintButton";
 
-export const metadata: Metadata = { title: "Angreskjema", alternates: { canonical: "/angreskjema" } };
+export const metadata: Metadata = {
+  title: "Angreskjema",
+  description: "Angreskjema for kjøp av annonseløft på HOBBYSTRADA.",
+  alternates: { canonical: "/angreskjema" },
+};
 
 /** Standard angreskjema (angrerettloven § 8 og forskriftens vedlegg). Kan sendes som e-post eller skrives ut. */
 export default function Page() {

@@ -4,7 +4,11 @@ import { PageHeader, btnPrimary } from "@/components/ui";
 import { MessageCircleIcon, ShieldCheckIcon, ShoppingBagIcon, TagIcon, ZapIcon } from "lucide-react";
 import { AccordionItem } from "@/components/Accordion";
 
-export const metadata: Metadata = { title: "Spørsmål og svar", alternates: { canonical: "/sporsmal" } };
+export const metadata: Metadata = {
+  title: "Spørsmål og svar",
+  description: "Slik fungerer HOBBYSTRADA: hvordan du kjøper og selger fotballkort, hva det koster, hva Vipps-innlogging betyr og hvordan annonseløft virker.",
+  alternates: { canonical: "/sporsmal" },
+};
 
 /** Spørsmål og svar. Teksten er Låvlis reviderte utkast av 30. oktober 2026, lagt inn ordrett. */
 const SECTIONS = [

@@ -8,6 +8,8 @@ import { useEffect } from "react";
  */
 export function TellVisning({ slug }: { slug: string }) {
   useEffect(() => {
+    // Automatisk styrte nettlesere (tester og roboter) telles ikke
+    if (navigator.webdriver) return;
     fetch(`/api/visning/${slug}`, { method: "POST", keepalive: true }).catch(() => {});
   }, [slug]);
   return null;
