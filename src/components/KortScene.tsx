@@ -21,7 +21,7 @@ const STEG = 64;
  * Hvor et kort står når det er «d» plasser fra midten (d = 0 er kortet som er fremme).
  * Forskyvningen er i prosent av kortets egen bredde, så oppsettet følger kortstørrelsen på alle skjermer.
  */
-function plass(d: number) {
+function plass(d: number, vinkel = 0) {
   const a = Math.abs(d);
   // Nabokortene står litt inn bak kortet i midten, så hele kortet med rammen synes. Kortene to plasser unna synes bare på brede skjermer.
   const x = Math.sign(d) * (Math.min(a, 1) * STEG + Math.max(a - 1, 0) * 68);
@@ -29,7 +29,8 @@ function plass(d: number) {
   // På telefon tones kortene ut etter nabokortet. På brede skjermer (se .fs-kort i globals.css) synes også kortene to plasser unna.
   const bred = a <= 1 ? 1 : a <= 2 ? 1 - 0.45 * (a - 1) : Math.max(0, 0.55 * (3 - a));
   return {
-    transform: `translateX(${x.toFixed(2)}%) scale(${skala.toFixed(4)})`,
+    // «vinkel»: nabokortene dreies litt innover, så raden får dybde (brukes i den mørke varianten)
+    transform: `translateX(${x.toFixed(2)}%) scale(${skala.toFixed(4)})${vinkel ? ` rotateY(${(-Math.max(-1, Math.min(1, d)) * vinkel).toFixed(2)}deg)` : ""}`,
     smal: (a <= 1 ? 1 : Math.max(0, 2 - a)).toFixed(3),
     bred: bred.toFixed(3),
     zIndex: String(Math.round(20 - a * 4)),
@@ -52,8 +53,12 @@ function TypeIkon({ type }: { type: string }) {
  * Panelet tar farge etter kortet som er fremme, og feltet under viser sett, navn, pris, type og sted.
  * Raden kan dras sidelengs, et trykk på et sidekort henter det frem, og et trykk på kortet i midten eller på feltet åpner annonsen.
  */
-/** «lat»: scenen står lenger ned på siden, så bildene hentes først når den nærmer seg skjermen. */
-export function KortScene({ kort, lat = false }: { kort: KarusellKort[]; lat?: boolean }) {
+/**
+ * «lat»: scenen står lenger ned på siden, så bildene hentes først når den nærmer seg skjermen.
+ * «kino»: mørk variant med lyskjegle bak kortene, nabokort som står litt på skrå, og en glans som glir over kortet i midten.
+ */
+export function KortScene({ kort, lat = false, kino = false }: { kort: KarusellKort[]; lat?: boolean; kino?: boolean }) {
+  const vinkel = kino ? 18 : 0;
   const lasting = lat ? "lazy" : "eager";
   const n = kort.length;
   // Raden går rundt uten ende. Med færre enn fire kort gjentas de, så det alltid står et kort på hver side.
@@ -72,7 +77,7 @@ export function KortScene({ kort, lat = false }: { kort: KarusellKort[]; lat?: b
     for (let i = 0; i < plasser; i++) {
       const k = el.current[i];
       if (!k) continue;
-      const s = plass(wrap(i - p, plasser));
+      const s = plass(wrap(i - p, plasser), vinkel);
       k.style.transform = s.transform;
       k.style.zIndex = s.zIndex;
       k.style.setProperty("--dim", s.dim);
@@ -117,7 +122,7 @@ export function KortScene({ kort, lat = false }: { kort: KarusellKort[]; lat?: b
   if (!n) return null;
   const k = kort[aktiv];
   return (
-    <section className="fs" aria-roledescription="karusell" aria-label="Utvalgte annonser">
+    <section className="fs" data-kino={kino ? "" : undefined} aria-roledescription="karusell" aria-label="Utvalgte annonser">
       {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
       <div className="fs-farge" aria-hidden="true">
         {kort.map((x, i) => (
@@ -179,7 +184,7 @@ export function KortScene({ kort, lat = false }: { kort: KarusellKort[]; lat?: b
       >
         {Array.from({ length: plasser }, (_, i) => {
           const x = kort[i % n];
-          const s = plass(wrap(i, plasser));
+          const s = plass(wrap(i, plasser), vinkel);
           const kopi = i >= n;
           return (
             <Link
@@ -214,6 +219,7 @@ export function KortScene({ kort, lat = false }: { kort: KarusellKort[]; lat?: b
               }}
             >
               <Image src={x.src} alt="" {...BILDE} loading={lasting} preload={!lat && i === 0} fetchPriority={!lat && i === 0 ? "high" : "low"} draggable={false} />
+              {kino && <span className="fs-glans" aria-hidden="true" />}
             </Link>
           );
         })}

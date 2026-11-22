@@ -15,6 +15,59 @@ function shortTag(tag: string) {
   return parts.length > 2 ? `${parts.slice(0, 2).join(" + ")} +${parts.length - 2}` : tag;
 }
 
+/**
+ * Annonsekortet i galleriet på telefonforsiden (oppsettet «kino»): bildet står på en nøytral flate i formatet 3:4,
+ * og under står settet (liten dempet tekst), spillernavnet (fet tekst som brytes, aldri kuttes), og prisen med stedet.
+ * Visningstall, annonsealder og Vipps-merket vises ikke her; de står på annonsesiden. Merkene «Eksempelannonse» og «Annonseløft» er med som ellers.
+ */
+function StudioKort({ listing, eager }: { listing: Listing; eager: boolean }) {
+  return (
+    <div data-featured={listing.featured ? "true" : undefined} className="studio group relative">
+      <FavoriteButton slug={listing.slug} title={listing.title} />
+      <Link className="block" href={`/annonse/${listing.slug}`}>
+        <div className="studio-ramme">
+          {listing.image ? (
+            <Image
+              alt={listing.title}
+              src={listing.image}
+              width={600}
+              height={840}
+              loading={eager ? "eager" : "lazy"}
+              fetchPriority={eager ? "high" : "auto"}
+              sizes="(max-width: 640px) 40vw, 240px"
+              className="studio-bilde"
+            />
+          ) : (
+            <div className="studio-bilde">
+              <CardArt listing={listing} />
+            </div>
+          )}
+          <div className={`merke-rad absolute left-2 top-2.5 z-10 flex gap-1.5 ${listing.isExample ? "eks-rad" : ""}`}>
+            {/* Eksempelannonser er ikke til salgs og merkes tydelig */}
+            {listing.isExample && <ExampleBadge />}
+            {/* Betalt plassering merkes tydelig (markedsføringsloven § 8) */}
+            {(listing.featured || listing.bumpedAt) && (
+              <span
+                title={listing.frontpage ? "Toppannonse" : listing.featured ? "Fremhevet" : "Topp av listen"}
+                className="inline-flex items-center gap-1 rounded-full bg-accent px-1.5 py-1 text-[11px] font-semibold tracking-[-0.01em] text-accent-foreground"
+              >
+                {listing.frontpage && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
+                Annonseløft
+              </span>
+            )}
+          </div>
+        </div>
+        {listing.set && <p className="studio-sett">{listing.set}</p>}
+        <p className="studio-navn group-hover:underline">{listing.player || listing.title}</p>
+        <p className="studio-rad">
+          <strong>{formatPrice(listing.price)}</strong>
+          {listing.location && <span>{listing.location}</span>}
+        </p>
+      </Link>
+    </div>
+  );
+}
+
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
 /** «eager»: kort øverst på siden lastes med en gang i stedet for når de rulles inn. */
 /**
@@ -26,13 +79,16 @@ export function ListingCard({
   variant = "home",
   eager = false,
   rent = false,
+  studio = false,
 }: {
   listing: Listing;
   variant?: "home" | "market";
   eager?: boolean;
   rent?: boolean;
+  studio?: boolean;
 }) {
   const market = variant === "market";
+  if (studio) return <StudioKort listing={listing} eager={eager} />;
   return (
     <div data-featured={listing.featured ? "true" : undefined} className="group relative flex h-full flex-col">
       <FavoriteButton slug={listing.slug} title={listing.title} />

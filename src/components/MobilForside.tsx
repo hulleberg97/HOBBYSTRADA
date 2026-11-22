@@ -5,6 +5,7 @@ import { ForsideFaner, type Fane } from "./ForsideFaner";
 import { KortBue } from "./KortBue";
 import { KortKarusell } from "./KortKarusell";
 import { KortScene } from "./KortScene";
+import { KinoSoner } from "./KinoSoner";
 import { ListingCard } from "./ListingCard";
 import { TYPES, hasType } from "@/lib/filters";
 import { formatPrice } from "@/lib/format";
@@ -50,8 +51,11 @@ const TOPP = "scene" as "flis" | "bue" | "scene";
  * «annonser»: overskrift, søkefelt, faner og de første annonsene med en gang. Karusellen (valgt med TOPP) kommer etter de fire første
  *             annonsene som seksjonen «Utvalgte kort». Knappene «Se alle annonser» og «Legg ut kort» er ikke med (de finnes i bunnmenyen).
  * «karusell»: overskrift, karusell, søkefelt, de to knappene, og så faner og annonser (slik forsiden var til og med 22. november).
+ * «kino»:     samme rekkefølge som «annonser», i kinematisk drakt: mørk topp med lyskjegle og søkefelt i glass, annonsene som et lyst
+ *             galleri på avrundede ark, og «Utvalgte kort» som et mørkt bånd med dybde og glans. Topplinjen og bunnmenyen følger
+ *             bakgrunnen (KinoSoner). Annonsekortene bruker studio-varianten av ListingCard.
  */
-const OPPSETT = "annonser" as "annonser" | "karusell";
+const OPPSETT = "kino" as "annonser" | "karusell" | "kino";
 /** Hvor mange annonser som vises før «Utvalgte kort» i oppsettet «annonser»: to rader. */
 const FORST = 4;
 
@@ -74,7 +78,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
   const rad = (TOPP !== "bue" ? frontpageRow(all) : []).filter((l) => l.image).slice(0, I_KARUSELLEN);
   // Ekte annonser står alltid først, og eksempelannonsene sist. Eksemplene forsvinner av seg selv når det er nok ekte annonser (PER_FANE).
   // Når karusellen står midt i annonsene, vises ikke eksemplene som allerede står i den en gang til i rutenettet.
-  const iKarusell = new Set(OPPSETT === "annonser" ? rad.filter((l) => l.isExample).map((l) => l.slug) : []);
+  const iKarusell = new Set(OPPSETT !== "karusell" ? rad.filter((l) => l.isExample).map((l) => l.slug) : []);
   const rekke = [...ordnet.filter((l) => !l.isExample), ...eks.filter((l) => !iKarusell.has(l.slug))];
   const utvalg = (list: Listing[]) => list.filter((l, i) => i < PER_FANE || l.frontpage || l.featured);
 
@@ -94,7 +98,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
     .map((l, i) => ({
       id: l.slug,
       faner: iFane.get(l.slug)!,
-      node: <ListingCard listing={l} rent={OPPSETT === "annonser"} eager={(OPPSETT === "annonser" || TOPP === "flis") && i < 2} />,
+      node: <ListingCard listing={l} rent={OPPSETT === "annonser"} studio={OPPSETT === "kino"} eager={(OPPSETT !== "karusell" || TOPP === "flis") && i < 2} />,
     }));
   // Pynten i «Selg kortene dine» og buen er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
   const egne = eks.flatMap((l) => (l.image ? [{ src: l.image, href: `/annonse/${l.slug}` }] : []));
@@ -146,8 +150,8 @@ export function MobilForside({ all }: { all: Listing[] }) {
       </div>
     </div>
   );
-  const sok = (
-    <form action="/sok" role="search" className="fb-sok">
+  const sokfelt = (klasse: string) => (
+    <form action="/sok" role="search" className={klasse}>
       <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />
       <label className="contents">
         <span className="sr-only">Søk etter spiller, sett eller kortnummer</span>
@@ -158,6 +162,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
       </button>
     </form>
   );
+  const sok = sokfelt("fb-sok");
   // Seksjonen «Utvalgte kort»: karusellen, lenger ned på siden
   const utvalgte =
     karusell.length > 0 ? (
@@ -166,6 +171,38 @@ export function MobilForside({ all }: { all: Listing[] }) {
         {TOPP === "scene" ? <KortScene kort={karusell} lat /> : <KortKarusell kort={karusell} lat />}
       </div>
     ) : null;
+
+  if (OPPSETT === "kino") {
+    // «Utvalgte kort» som et mørkt bånd mellom de to lyse arkene
+    const band =
+      karusell.length > 0 ? (
+        <div className="kino-band kino-mork">
+          <h2>Utvalgte kort</h2>
+          {TOPP === "scene" ? <KortScene kort={karusell} lat kino /> : <KortKarusell kort={karusell} lat />}
+        </div>
+      ) : null;
+    return (
+      <section className="kun-mobil" data-oppsett="kino">
+        <KinoSoner />
+        <div className="kino-hero kino-mork">
+          {/* Stram grotesk med det kursive nøkkelordet i samme serif som overskriften på PC-forsiden */}
+          <h1 className="kino-h1">
+            {ord("Finn ditt", 0)} <em>{ord("neste", 2)}</em> {ord("kort", 3)}
+          </h1>
+          <p className="kino-ut">Markedsplass for kjøp og salg av fotballkort.</p>
+          {sokfelt("kino-sok")}
+        </div>
+        {kort.length > 0 ? (
+          <ForsideFaner faner={faner} kort={kort} midt={band} forst={FORST} tett ark etter={selg} />
+        ) : (
+          <>
+            {band}
+            <div className="kino-ark kino-ark-siste">{selg}</div>
+          </>
+        )}
+      </section>
+    );
+  }
 
   if (OPPSETT === "annonser")
     return (

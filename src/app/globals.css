@@ -888,3 +888,88 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 html[data-stil="pro"] .kun-mobil :is(a, button).rounded-full { border-radius: 999px; }
 /* De aller smaleste telefonene: søkefeltet og knappene på forsiden får litt mindre tekst, så den får plass. Står sist for å vinne over reglene over. */
 @media (max-width: 359px) { .fb-ut { font-size: 13.5px; } .fb-to { gap: 8px; } .fb-to a { gap: 5px; font-size: 13px; } .fb-sok { padding-left: 13px; gap: 8px; } .fb-sok input::placeholder { font-size: 13.5px; } }
+
+/* ══ Oppsettet «kino» (bryteren OPPSETT i MobilForside.tsx): mørk kinematisk topp, lyst galleri på avrundede ark, og «Utvalgte kort» som et mørkt bånd ══ */
+.kun-mobil[data-oppsett="kino"] { background: #0a0b0e; }
+/* Den mørke toppen går opp bak topplinjen (73 px høy på telefon), så glasset i topplinjen har noe mørkt å ligge over.
+   Lyskjeglen er et svakt hvitt lys ovenfra og et kjølig skjær fra høyre. */
+.kino-hero { margin-top: -73px; padding: calc(73px + 8px) 16px 13px; color: #fff; background: radial-gradient(95% 80% at 50% 0%, rgb(255 255 255 / 0.15), rgb(255 255 255 / 0) 68%), radial-gradient(55% 50% at 90% 10%, rgb(120 150 255 / 0.13), rgb(120 150 255 / 0) 70%), #0a0b0e; }
+.kino-h1 { font-size: clamp(27px, 9vw, 36px); font-weight: 800; letter-spacing: -0.05em; line-height: 1.04; color: #fff; }
+.kino-h1 em { font-family: var(--f-fraunces), serif; font-style: italic; font-weight: 700; font-size: 1.05em; letter-spacing: -0.02em; }
+.kino-h1 span { display: inline-block; animation: fb-ord 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.kino-ut { margin-top: 4px; font-size: 15px; color: rgb(255 255 255 / 0.62); text-wrap: balance; }
+/* Søkefeltet i glass, med et mykt lys når det er aktivt */
+.kino-sok { display: flex; align-items: center; gap: 10px; max-width: 560px; height: 48px; margin: 11px auto 0; padding: 0 5px 0 16px; border-radius: 999px; background: rgb(255 255 255 / 0.07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14), inset 0 1px 0 rgb(255 255 255 / 0.08); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); transition: background-color 0.25s ease, box-shadow 0.25s ease; }
+.kino-sok:focus-within { background: rgb(255 255 255 / 0.1); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.45), 0 0 0 5px rgb(255 255 255 / 0.07), 0 14px 44px -12px rgb(130 165 255 / 0.6); }
+.kino-sok > svg { color: rgb(255 255 255 / 0.7); }
+.kino-sok input { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: none; appearance: none; font-size: 16px; color: #fff; caret-color: #fff; }
+.kino-sok input::placeholder { color: rgb(255 255 255 / 0.52); font-size: 15px; text-overflow: ellipsis; }
+.kino-sok input::-webkit-search-cancel-button { display: none; }
+.kino-sok button { flex: none; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: #fff; color: #0a0b0e; transition: transform 0.15s ease; }
+.kino-sok button:active { transform: scale(0.93); }
+@media (min-width: 592px) { .kino-hero { text-align: center; } }
+/* De lyse arkene som galleriet ligger på */
+.kino-ark { position: relative; padding: 2px 0 24px; border-radius: 26px; background: #fff; }
+.kino-ark-siste { padding: 24px 0 8px; border-radius: 26px 26px 0 0; }
+.kino-ark-siste > :first-child { margin-top: 0; }
+.kino-ark > [role="group"] { margin-top: 8px; }
+.kino-ark > [role="group"] + .kino-grid { margin-top: 10px; }
+/* «Utvalgte kort» på den mørke flaten */
+.kino-band { padding: 26px 0 28px; color: #fff; }
+.kino-band h2 { padding: 0 16px; font-size: 20px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.2; }
+@media (min-width: 592px) { .kino-band h2 { text-align: center; } }
+.kino-band .fk { margin-top: 8px; padding-bottom: 10px; }
+/* Scenen i mørk drakt: lyskjegle bak kortene, nabokort på skrå, dramatisk skygge og en glans som glir over kortet i midten */
+.fs[data-kino] { margin-top: 12px; background: #111318; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.09); animation: none; }
+.fs[data-kino] .fs-farge img { filter: blur(56px) saturate(1.7) brightness(0.95); }
+.fs[data-kino] .fs-farge img[data-aktiv="true"] { opacity: 0.55; }
+.fs[data-kino] .fs-farge::after { background: radial-gradient(72% 54% at 50% 26%, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0) 70%), linear-gradient(180deg, rgb(10 11 14 / 0.5), rgb(10 11 14 / 0.9)); }
+.fs[data-kino] .fs-bane { perspective: 900px; }
+.fs[data-kino] .fs-kort img { border-width: 4px; box-shadow: 0 0 0 1px rgb(255 255 255 / 0.16), 0 36px 44px -20px rgb(0 0 0 / 0.95), 0 0 70px -18px rgb(255 255 255 / 0.24); }
+.fs[data-kino] .fs-kort::after { background: #0a0b0e; opacity: calc(var(--dim, 0) * 1.6); }
+.fs-glans { position: absolute; inset: 4px; border-radius: 10px; overflow: hidden; pointer-events: none; opacity: calc(1 - var(--dim, 0) * 8); }
+.fs-glans::after { content: ""; position: absolute; top: -20%; bottom: -20%; left: 0; width: 62%; background: linear-gradient(100deg, rgb(255 255 255 / 0) 12%, rgb(180 220 255 / 0.2) 40%, rgb(255 255 255 / 0.34) 50%, rgb(255 205 240 / 0.18) 60%, rgb(255 255 255 / 0) 88%); mix-blend-mode: screen; transform: translateX(-150%) skewX(-12deg); animation: fs-glans 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+@keyframes fs-glans { 0%, 50% { transform: translateX(-150%) skewX(-12deg); } 100% { transform: translateX(270%) skewX(-12deg); } }
+.fs[data-kino] .fs-info { background: rgb(255 255 255 / 0.06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1); color: #fff; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.fs[data-kino] .fs-rad small, .fs[data-kino] .fs-rad em, .fs[data-kino] .fk-type u { color: rgb(255 255 255 / 0.64); }
+.fs[data-kino] .fs-bunn i { background: rgb(255 255 255 / 0.12); color: #fff; }
+.fs[data-kino] .fs-merke .eks-merke { box-shadow: inset 0 -1.5px 0 #cfa653, 0 0 0 1px rgb(255 255 255 / 0.12); }
+/* Annonsekortet i galleriet: bildet på en nøytral flate i formatet 3:4, og tre rene linjer under */
+.studio > a { -webkit-tap-highlight-color: transparent; }
+.studio-ramme { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 16px; background: radial-gradient(120% 90% at 50% 28%, #fbfbfc, #eceef2); box-shadow: inset 0 0 0 1px rgb(11 20 38 / 0.06); transition: transform 0.18s ease; }
+.studio > a:active .studio-ramme { transform: scale(0.975); }
+.studio[data-featured="true"] .studio-ramme { box-shadow: inset 0 0 0 1.5px #cfa653; }
+.studio-bilde { width: auto; height: 80%; aspect-ratio: 5 / 7; object-fit: cover; border-radius: 6px; background: #e5e9f0; box-shadow: 0 2px 4px rgb(11 20 38 / 0.08), 0 20px 26px -16px rgb(11 20 38 / 0.6); }
+.studio > button[aria-pressed] { right: 8px; top: 8px; background: rgb(255 255 255 / 0.72); -webkit-backdrop-filter: blur(10px) saturate(1.4); backdrop-filter: blur(10px) saturate(1.4); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.9), 0 0 0 1px rgb(11 20 38 / 0.06), 0 6px 14px -8px rgb(11 20 38 / 0.45); }
+.studio .eks-rad .eks-merke { border-radius: 16px 0 10px 0; }
+.studio-sett { margin-top: 8px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; line-height: 1.35; text-transform: uppercase; color: #5b6472; overflow-wrap: anywhere; }
+.studio-navn { margin-top: 2px; font-size: 15.5px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: #0b1426; overflow-wrap: anywhere; }
+.studio-rad { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 8px; margin-top: 4px; }
+.studio-rad strong { font-size: 16.5px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; color: #0b1426; }
+.studio-rad span { font-size: 12.5px; color: #5b6472; }
+/* Kortene kommer inn ett og ett. De to første er synlige fra første bilde og glir bare på plass, så siden måles og oppleves som rask */
+.kino-grid > .studio { animation: kino-inn 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.kino-grid > .studio:nth-child(-n + 2) { animation-name: kino-gli; }
+.kino-grid > .studio:nth-child(2) { animation-delay: 0.05s; }
+.kino-grid > .studio:nth-child(3) { animation-delay: 0.1s; }
+.kino-grid > .studio:nth-child(4) { animation-delay: 0.15s; }
+.kino-grid > .studio:nth-child(n + 5) { animation-delay: 0.2s; }
+@keyframes kino-inn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes kino-gli { from { transform: translateY(14px); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .kino-h1 span, .kino-grid > .studio:nth-child(n) { animation: none; } .fs-glans { display: none; } }
+/* De aller smaleste telefonene: litt mindre undertekst og søketekst, så de får plass på én linje */
+@media (max-width: 359px) { .kino-ut { font-size: 13.5px; } .kino-sok { padding-left: 13px; gap: 8px; } .kino-sok input::placeholder { font-size: 13.5px; } }
+/* Topplinjen og bunnmenyen i glass, og mørke mens den mørke flaten ligger bak dem (KinoSoner.tsx). Bare på telefon og nettbrett. */
+@media (max-width: 1023px) and (pointer: coarse) {
+  html body:has([data-oppsett="kino"]) header.sticky.sticky { background: rgb(255 255 255 / 0.8) !important; -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); border-bottom: 1px solid rgb(11 20 38 / 0.08) !important; box-shadow: none; transition: background-color 0.3s ease, border-color 0.3s ease; }
+  html:not([data-lys-topp]) body:has([data-oppsett="kino"]) header.sticky.sticky:not(:has([aria-expanded="true"])) { background: rgb(10 11 14 / 0.6) !important; border-bottom: 1px solid rgb(255 255 255 / 0.08) !important; }
+  html:not([data-lys-topp]) body:has([data-oppsett="kino"]) header.sticky.sticky:not(:has([aria-expanded="true"])) img[alt="HOBBYSTRADA"] { content: url("/brand/logo-hvit.svg"); }
+  html:not([data-lys-topp]) body:has([data-oppsett="kino"]) header.sticky.sticky:not(:has([aria-expanded="true"])) > div :is(a, button):not(.bg-primary) { color: #fff !important; }
+  html:not([data-lys-topp]) body:has([data-oppsett="kino"]) header.sticky.sticky:not(:has([aria-expanded="true"])) :is(a[href="/auth/login"], a[href="/account"]) { background: rgb(255 255 255 / 0.1) !important; }
+  body:has([data-oppsett="kino"]) .bunnmeny { background: rgb(255 255 255 / 0.82) !important; -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); border-top: 1px solid rgb(11 20 38 / 0.08); transition: background-color 0.3s ease, border-color 0.3s ease; }
+  body:has([data-oppsett="kino"]) .bunnmeny a, body:has([data-oppsett="kino"]) .bm-pluss { transition: color 0.3s ease, background-color 0.3s ease; }
+  html[data-mork-bunn] body:has([data-oppsett="kino"]) .bunnmeny { background: rgb(10 11 14 / 0.72) !important; border-top-color: rgb(255 255 255 / 0.1); }
+  html[data-mork-bunn] body:has([data-oppsett="kino"]) .bunnmeny a { color: rgb(255 255 255 / 0.62); }
+  html[data-mork-bunn] body:has([data-oppsett="kino"]) .bunnmeny a[aria-current="page"] { color: #fff; }
+  html[data-mork-bunn] body:has([data-oppsett="kino"]) .bm-pluss { background: #fff; color: #0a0b0e; --tw-ring-color: #15171c; }
+}

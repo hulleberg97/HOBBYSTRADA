@@ -154,3 +154,18 @@ Nytt oppsett, «annonser»:
 5. Annonsekortene på telefonforsiden (`ListingCard` med `rent`): settet i liten dempet tekst, spillernavnet i fet tekst som brytes og aldri kuttes, så prisen. Visningstallet er borte. Markedet, søk og PC bruker kortet som før.
 
 Kvalitetssikring: `test-annonser-forst.js` (13 tester med simulert berøring og bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 84–88, på linje med de andre variantene lokalt). `film-annonser-forst.js` filmer utkastet.
+
+## Kino og galleri (22. november, natt): kinematisk drakt på telefonforsiden
+
+Eieren ba om et stilrent, moderne og kinematisk redesign (mørk «stadium spotlight»-stemning, skandinavisk minimalisme) oppå «annonsene først». Utkastet ligger på grenen `utkast-kino-galleri`. Ikke live. Eieren avviste en helmørk variant tidligere samme dag, så dette er alternativet med mørk topp som går over i et lyst galleri.
+
+Bryteren `OPPSETT = "kino"` i `MobilForside.tsx`. «annonser» og «karusell» virker som før.
+
+- **Mørk topp** (`.kino-hero`): flate #0a0b0e med svak lyskjegle ovenfra og kjølig skjær fra høyre. Overskriften er stram grotesk (800, tett sperring) med «neste» i kursiv Fraunces. Søkefeltet er en glassbar med mykt lys ved fokus. Ingen knapper i toppen.
+- **Lyst galleri på ark** (`.kino-ark`, `ForsideFaner` med `ark`): fanene og de fire første annonsene ligger på et hvitt ark med avrundede hjørner over den mørke flaten. Resten av annonsene, «Se alle» og selg-feltet ligger på et nytt ark.
+- **Annonsekortet** (`ListingCard` med `studio`): bildet på en nøytral flate i 3:4 med 16 px avrunding og hjerte i glass. Under: sett (små versaler), spillernavn (fet, brytes, kuttes aldri), pris og bare stedsnavn. Visningstall, annonsealder og Vipps-haken vises ikke i galleriet. Merkene «Eksempelannonse» og «Annonseløft» er med.
+- **«Utvalgte kort» som mørkt bånd** (`.kino-band`, `KortScene` med `kino`): lyskjegle bak kortene, nabokort dreid 18 grader, dramatisk skygge og en glans som glir over kortet i midten. Infofeltet er mørkt glass med hårlinje.
+- **Topplinje og bunnmeny** (`KinoSoner.tsx` + regler nederst i `globals.css`): glass med hårlinjer. De er mørke mens en mørk sone ligger bak dem og lyse ellers, og topplinjen blir lys når menyen åpnes. Gjelder bare forsiden på telefon og nettbrett.
+- **Bevegelse**: kortene kommer inn ett og ett, og rammen krymper litt ved trykk. Alt er ren CSS, og «mindre bevegelse» slår det av.
+
+Kvalitetssikring: `test-kino.js` (17 kontroller med simulert berøring, bredder 320–768, PC og «mindre bevegelse»), axe-core (0 brudd på forsiden, topplinjen og bunnmenyen), Lighthouse lokalt (tilgjengelighet 100, fart 85–91), typesjekk, lint og bygg uten feil. `film-kino.js` filmer utkastet.

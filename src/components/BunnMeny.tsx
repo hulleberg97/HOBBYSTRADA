@@ -95,7 +95,7 @@ export function BunnMeny() {
         Søk
       </Link>
       <Link href="/selg" prefetch={false} aria-current={her("/selg")} className={punkt}>
-        <span className="-mt-5 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-[0_8px_18px_-8px_rgb(11_20_38/0.7)] ring-4 ring-[#fff]">
+        <span className="bm-pluss -mt-5 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-[0_8px_18px_-8px_rgb(11_20_38/0.7)] ring-4 ring-[#fff]">
           <PlusIcon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
         </span>
         Selg
