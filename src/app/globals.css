@@ -716,7 +716,9 @@ html[data-pill="hver"] .mag ul li .fan-slab { -webkit-box-reflect: none; }
 html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !important; }
 
 /* Tydelig fokusramme for tastaturbrukere, uten å påvirke museklikk */
-:focus-visible { outline: 2px solid #0b1426; outline-offset: 2px; border-radius: 4px; }
+/* Unntak: tekstfelt som har sin egen fokusmarkering (ramme rundt feltet eller rundt boksen det står i) får ikke en ekstra ramme inni.
+   Nettlesere regner alltid et aktivt tekstfelt som tastaturfokus, også på telefon. */
+:focus-visible:not(:is(input, textarea, select).outline-none) { outline: 2px solid #0b1426; outline-offset: 2px; border-radius: 4px; }
 
 /* Utskrift (kvittering og angreskjema): bare selve innholdet, ikke topplinje, bunntekst og snarveier */
 @media print {
