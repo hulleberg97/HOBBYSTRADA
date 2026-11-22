@@ -204,3 +204,11 @@ Eieren svarte «samme utseende men beholde type karusell» på utkastet uten bok
 - Søkefelt, de to knappene og fanene med ikoner er som i forrige utkast.
 
 Kvalitetssikring: scenetestene er bestått (bredder 320–768), axe-core fant 0 brudd, markedet og søk er sjekket på telefon, og typesjekk og bygg går uten feil.
+
+## Skrift som hos Nike (22. november, kveld)
+
+Eieren spurte om vi kan bruke samme skrift som Nike bruker på nettsiden sin. Nike bruker «Nike Futura» (egen, smal og ekstra fet Futura) til store overskrifter og «Helvetica Now» (Monotype, betalt lisens) til resten. Ingen av dem kan brukes fritt. Utkastet ligger på grenen `utkast-nike-skrift` (bygger på `utkast-scene-holder`) og bruker de nærmeste frie skriftene. Ikke live.
+
+- Bryteren `TEKST` i `MobilForside.tsx`: «nike-a» (Inter på all tekst og Anton med store bokstaver i overskriften), «nike-b» (Inter på alt), eller `undefined` (Schibsted Grotesk som ellers).
+- Skriftene lastes i `layout.tsx` uten forhåndslasting, og gjelder bare telefonforsiden og bunnmenyen på den siden. Resten av nettstedet og PC er uendret.
+- Vil eieren ha ekte Helvetica Now, må lisens kjøpes hos Monotype. Nikes egen overskriftsskrift kan ikke lisensieres.
