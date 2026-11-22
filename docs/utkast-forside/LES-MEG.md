@@ -212,3 +212,14 @@ Eieren spurte om vi kan bruke samme skrift som Nike bruker på nettsiden sin. Ni
 - Bryteren `TEKST` i `MobilForside.tsx`: «nike-a» (Inter på all tekst og Anton med store bokstaver i overskriften), «nike-b» (Inter på alt), eller `undefined` (Schibsted Grotesk som ellers).
 - Skriftene lastes i `layout.tsx` uten forhåndslasting, og gjelder bare telefonforsiden og bunnmenyen på den siden. Resten av nettstedet og PC er uendret.
 - Vil eieren ha ekte Helvetica Now, må lisens kjøpes hos Monotype. Nikes egen overskriftsskrift kan ikke lisensieres.
+
+## Seks andre skriftforslag (22. november, kveld)
+
+Eieren ba om andre forslag til skrifttyper som passer forsiden. `skrifter.js` tegner seks frie skrifter (Google Fonts) oppå utkastet `utkast-nike-skrift` i en testnettleser og lager to ark. Ingenting av dette er bygget inn eller live.
+
+1. Plus Jakarta Sans på all tekst (vennlig og moderne).
+2. Bricolage Grotesque i overskriften (særpreget og moderne), resten som nå.
+3. Space Grotesk på all tekst (teknologisk og stram).
+4. Barlow Condensed, fet kursiv med store bokstaver, i overskriften (sporty).
+5. Archivo, ekstra fet og litt bred, i overskriften (sportsmagasin).
+6. Instrument Serif i overskriften, med «neste» i kursiv (elegant, galleri).
