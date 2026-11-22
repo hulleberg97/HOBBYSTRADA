@@ -45,6 +45,14 @@ const IKON: Record<string, React.ReactNode> = {
  *          og et felt med sett, navn, pris, type og sted under.
  */
 const TOPP = "scene" as "flis" | "bue" | "scene";
+/**
+ * BRYTER for skriften på telefonforsiden:
+ * «nike-a»: Inter på all tekst, og overskriften i Anton med store bokstaver (smal og ekstra fet, som de store overskriftene hos Nike).
+ * «nike-b»: Inter på all tekst, også overskriften (halvfet og tett).
+ * undefined: skriftene siden har ellers (Schibsted Grotesk).
+ */
+const TEKST: "nike-a" | "nike-b" | undefined = "nike-a";
+
 /** Buen har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
 const I_BUEN = 7;
 
@@ -110,7 +118,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
     ]);
 
   return (
-    <section className="kun-mobil pb-2">
+    <section className="kun-mobil pb-2" data-tekst={TEKST}>
       {/* Stor midtstilt overskrift over to linjer, som forsiden hadde med buen */}
       <div className="fb-topp" data-topp="bue">
         <h1 className="fb-h1">

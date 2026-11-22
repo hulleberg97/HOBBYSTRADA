@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Schibsted_Grotesk, Sora } from "next/font/google";
+import { Anton, Fraunces, Inter, Schibsted_Grotesk, Sora } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -11,7 +11,11 @@ import { hiddenFromSearch } from "@/lib/private";
 const schibsted = Schibsted_Grotesk({ variable: "--nf-schibsted", subsets: ["latin"] });
 const tSora = Sora({ variable: "--t-sora", subsets: ["latin"], weight: ["800"] });
 const fFraunces = Fraunces({ variable: "--f-fraunces", subsets: ["latin"], weight: ["700"], style: ["normal", "italic"] });
-const headlineFont = `${tSora.variable} ${fFraunces.variable}`;
+// Utkast til telefonforsiden (MobilForside, data-tekst): Inter er den nærmeste frie skriften til Helvetica Now, og Anton den nærmeste til
+// en smal, ekstra fet Futura. De forhåndslastes ikke, så andre sider ikke henter dem.
+const fInter = Inter({ variable: "--f-inter", subsets: ["latin"], preload: false });
+const fAnton = Anton({ variable: "--f-anton", subsets: ["latin"], weight: "400", preload: false });
+const headlineFont = `${tSora.variable} ${fFraunces.variable} ${fInter.variable} ${fAnton.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hobbystrada.no"),
