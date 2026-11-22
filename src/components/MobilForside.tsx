@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SearchIcon } from "lucide-react";
+import { ArrowRightIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { ForsideFaner, type Fane } from "./ForsideFaner";
 import { ListingCard } from "./ListingCard";
 import { TYPES, hasType } from "@/lib/filters";
@@ -17,8 +17,11 @@ const ALLE: Record<string, string> = {
   Base: "Se alle basekort",
 };
 
+/** Buen øverst har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
+const I_BUEN = 7;
+
 /**
- * Forsiden på telefon og nettbrett: overskrift, søk, faner og annonsene med en gang, slik de store markedsplassene gjør det.
+ * Forsiden på telefon og nettbrett: overskrift, en bue med kort som glir forbi, søk, faner og annonsene.
  * Rekkefølgen er den samme som i markedet (Toppannonse, Fremhevet, Topp av listen, så nyeste, eksempler sist),
  * så betalt plassering «først på forsiden» gjelder også her. PC har fortsatt annonseraden øverst.
  */
@@ -41,32 +44,76 @@ export function MobilForside({ all }: { all: Listing[] }) {
   }
   const kort = rekke
     .filter((l) => iFane.has(l.slug))
-    // De to første kortene er det første man ser på telefon, så bildene deres hentes med en gang
-    .map((l, i) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} eager={i < 2} /> }));
+    // Annonsene ligger under buen, så bildene deres hentes når de nærmer seg skjermen. Kortet midt i buen har førsteprioritet.
+    .map((l) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} /> }));
   // Pynten i «Selg kortene dine» er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
-  const bilder = eks.flatMap((l) => (l.image ? [l.image] : [])).slice(0, 2);
+  const egne = eks.flatMap((l) => (l.image ? [l.image] : []));
+  const bilder = egne.slice(0, 2);
+  // Buen er også pynt og bruker bare egne kort. Har vi færre enn sju, går de samme kortene rundt flere ganger.
+  const buen = egne.length >= 3 ? Array.from({ length: I_BUEN }, (_, i) => egne[i % Math.min(egne.length, I_BUEN)]) : [];
+  const ord = (tekst: string, start: number) =>
+    tekst.split(" ").flatMap((w, i) => [
+      i ? " " : null,
+      <span key={w} style={{ animationDelay: `${(0.05 + (start + i) * 0.08).toFixed(2)}s` }}>
+        {w}
+      </span>,
+    ]);
 
   return (
     <section className="kun-mobil pb-2">
-      <div className="px-4 pt-5 sm:px-6">
-        <h1 className="font-heading text-[26px] font-bold leading-tight tracking-[-0.03em] text-slate-950">Finn ditt neste kort</h1>
-        <p className="mt-1 text-sm text-slate-600">Markedsplass for kjøp og salg av fotballkort.</p>
-        <form action="/sok" role="search" className="mt-4">
-          <label className="relative block">
-            <span className="sr-only">Søk etter spiller, sett eller kortnummer</span>
-            <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true" />
-            <input
-              type="search"
-              name="q"
-              enterKeyHint="search"
-              autoComplete="off"
-              placeholder="Søk spiller, sett eller kortnummer"
-              className="h-12 w-full appearance-none rounded-xl bg-slate-100 pl-11 pr-4 text-base text-slate-950 outline-none placeholder:text-slate-500 focus:bg-[#fff] focus:shadow-[inset_0_0_0_2px_hsl(var(--primary))]"
-            />
-          </label>
-        </form>
+      <div className="fb-topp">
+        <p className="fb-pille fb-opp">
+          <i aria-hidden="true" />
+          Norsk markedsplass for fotballkort
+        </p>
+        <h1 className="fb-h1">
+          {ord("Finn ditt", 0)}
+          <br />
+          {ord("neste kort", 2)}
+        </h1>
       </div>
-      {kort.length > 0 && <ForsideFaner faner={faner} kort={kort} />}
+      {buen.length > 0 && (
+        <>
+          {/* Kortene glir jevnt langs en slak bue. Ren pynt: skjult for skjermlesere, og et trykk går til markedet. */}
+          <Link href="/marked" tabIndex={-1} aria-hidden="true" className="fb-bue">
+            {buen.map((src, j) => (
+              <span key={j} style={{ animationDelay: `${j * 3 - 31.5}s` }}>
+                <Image src={src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} />
+              </span>
+            ))}
+          </Link>
+          <div className="fb-spor fb-opp" style={{ animationDelay: "0.4s" }} aria-hidden="true">
+            <i />
+          </div>
+        </>
+      )}
+      <div className="fb-under fb-opp" style={{ animationDelay: "0.45s" }}>
+        <form action="/sok" role="search" className="fb-sok">
+          <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />
+          <label className="contents">
+            <span className="sr-only">Søk etter spiller, sett eller kortnummer</span>
+            <input type="search" name="q" enterKeyHint="search" autoComplete="off" placeholder="Søk spiller, sett eller nummer" />
+          </label>
+          <button type="submit" aria-label="Søk">
+            <ArrowRightIcon className="h-[17px] w-[17px]" aria-hidden="true" />
+          </button>
+        </form>
+        <div className="fb-to">
+          <Link href="/marked">
+            Se alle annonser
+            <ArrowRightIcon className="h-[17px] w-[17px]" aria-hidden="true" />
+          </Link>
+          <Link href="/selg" prefetch={false}>
+            <PlusIcon className="h-[17px] w-[17px]" aria-hidden="true" />
+            Legg ut kort
+          </Link>
+        </div>
+      </div>
+      {kort.length > 0 && (
+        <div className="pt-3">
+          <ForsideFaner faner={faner} kort={kort} />
+        </div>
+      )}
       <div className="px-4 pt-9 sm:px-6">
         <div className={`relative overflow-hidden rounded-2xl bg-[#f5f1e8] p-5 ${bilder.length ? "min-h-[140px] pr-[158px]" : ""}`}>
           <h2 className="font-heading text-xl font-bold leading-tight tracking-[-0.02em] text-slate-950">Selg kortene dine</h2>
