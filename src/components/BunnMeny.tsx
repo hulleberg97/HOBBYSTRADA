@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { CircleUserRoundIcon, HouseIcon, MessageCircleIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { useUser } from "./useUser";
 
@@ -23,6 +23,8 @@ const ikon = "h-[22px] w-[22px]";
  * Tastaturet oppdages ved at et tekstfelt er aktivt samtidig som den synlige delen av siden er blitt klart lavere.
  * Et felt som bare er aktivt uten tastatur (søkesiden setter markøren i feltet selv) skjuler ikke menyen.
  */
+const ingenLytter = () => () => {};
+
 function useSkriver() {
   const [skriver, setSkriver] = useState(false);
   useEffect(() => {
@@ -62,8 +64,11 @@ export function BunnMeny() {
   const path = usePathname();
   const user = useUser();
   const skriver = useSkriver();
+  // Hvilket punkt som er aktivt settes først i nettleseren. Forsiden lages ferdig på forhånd på serveren, og der
+  // ble «Hjem» ikke markert, og en slik forskjell rettes ikke opp av seg selv når siden blir aktiv.
+  const iNettleser = useSyncExternalStore(ingenLytter, () => true, () => false);
   if (UTEN.some((r) => r.test(path))) return null;
-  const her = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/")) ? "page" : undefined);
+  const her = (p: string) => (iNettleser && (path === p || (p !== "/" && path.startsWith(p + "/"))) ? "page" : undefined);
   return (
     <nav
       aria-label="Hurtigmeny"
