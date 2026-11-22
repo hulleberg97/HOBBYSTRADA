@@ -63,7 +63,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
     // Annonsene ligger under buen, så bildene deres hentes når de nærmer seg skjermen. Kortet midt i buen har førsteprioritet.
     .map((l) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} /> }));
   // Pynten i «Selg kortene dine» er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
-  const egne = eks.flatMap((l) => (l.image ? [{ src: l.image, href: `/annonse/${l.slug}` }] : []));
+  const egne = eks.flatMap((l) => (l.image ? [{ src: l.image, href: `/annonse/${l.slug}`, l }] : []));
   const bilder = egne.slice(0, 2).map((k) => k.src);
   // Buen bruker også bare egne kort, og et trykk på et kort åpner annonsen. Har vi færre enn sju, går de samme kortene rundt flere ganger.
   const buen = egne.length >= 3 ? Array.from({ length: I_BUEN }, (_, i) => egne[i % Math.min(egne.length, I_BUEN)]) : [];
@@ -85,7 +85,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
         </h1>
       </div>
       {/* Kortene glir jevnt langs en slak bue. Et trykk åpner annonsen, og buen kan dras sidelengs. */}
-      {buen.length > 0 && <KortBue kort={buen} />}
+      {buen.length > 0 && <KortBue kort={buen} holder />}
       <div className="fb-under fb-opp" style={{ animationDelay: "0.45s" }}>
         <form action="/sok" role="search" className="fb-sok">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />

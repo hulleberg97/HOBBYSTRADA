@@ -787,6 +787,18 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .fb-bue a { display: block; width: 100%; height: 100%; border-radius: 14px; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; animation: fb-str 21s ease-in-out infinite; animation-delay: inherit; }
 .fb-bue img { display: block; width: 100%; height: 100%; object-fit: cover; border: 5px solid #fff; border-radius: 14px; background: #eef1f6; box-shadow: 0 0 0 1.5px rgb(11 20 38 / 0.2), 0 26px 32px -20px rgb(11 20 38 / 0.6); transition: transform 0.15s ease-out; -webkit-user-drag: none; }
 .fb-bue a:active img { transform: scale(0.97); }
+/* Buen med holderen fra kortraden på PC: navneplate øverst og merket «Eksempelannonse» nederst på hvert kort */
+.fb-bue[data-ramme="holder"] { height: 344px; }
+.fb-bue[data-ramme="holder"] > span { top: 32px; height: auto; }
+.fb-bue[data-ramme="holder"] a { height: auto; border-radius: 12px; }
+.fb-bue[data-ramme="holder"] img { border: 0; border-radius: 0; background: none; box-shadow: none; transition: none; }
+.fb-bue[data-ramme="holder"] a:active img { transform: none; }
+.fb-bue[data-ramme="holder"] .fan-slab { transition: transform 0.15s ease-out; }
+.fb-bue[data-ramme="holder"] a:active .fan-slab { transform: scale(0.97); }
+html .fb-bue .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 -4px 6px -2px rgb(100 116 139 / 0.3), 0 0 0 1px rgb(11 20 38 / 0.1), 0 26px 32px -20px rgb(11 20 38 / 0.6) !important; }
+/* Valgfri speiling under kortene, som på PC */
+.fb-bue[data-speil="true"] { height: 400px; }
+.fb-bue[data-speil="true"] .fan-slab { -webkit-box-reflect: below 6px linear-gradient(transparent 72%, rgba(255, 255, 255, 0.16)); }
 .fb-under { max-width: 560px; margin: 0 auto; padding: 6px 16px 0; }
 .fb-sok { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 6px 0 16px; border-radius: 999px; background: #fff; box-shadow: 0 12px 30px -14px rgb(11 20 38 / 0.35), 0 0 0 1px rgb(11 20 38 / 0.08); }
 .fb-sok:focus-within { box-shadow: 0 12px 30px -14px rgb(11 20 38 / 0.35), 0 0 0 2px #0b1426; }

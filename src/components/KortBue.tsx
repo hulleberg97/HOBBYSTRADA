@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { Slab } from "./HeroFan";
+import type { Listing } from "@/lib/types";
 
 /** Avstanden mellom to kort i buen er 180 px, og buen bruker 3 sekunder på den. Å dra 1 px flytter buen like langt som 16,7 ms. */
 const MS_PER_PX = 3000 / 180;
@@ -13,7 +15,8 @@ const RUNDE_MS = 21000;
  * Her legges berøringen oppå: et trykk åpner annonsen, og man kan dra buen sidelengs med fingeren.
  * Mens man holder står buen stille. Slipper man i fart, glir den litt videre før den går som før.
  */
-export function KortBue({ kort }: { kort: { src: string; href: string }[] }) {
+/** «holder»: kortene vises i holderen med navneplate (samme som i kortraden på PC) i stedet for med hvit ramme. */
+export function KortBue({ kort, holder = false }: { kort: { src: string; href: string; l: Listing }[]; holder?: boolean }) {
   const boks = useRef<HTMLDivElement>(null);
   const dra = useRef<{ start: number; sist: number; tid: number; fart: number; flyttet: boolean } | null>(null);
   const dratt = useRef(false);
@@ -38,6 +41,7 @@ export function KortBue({ kort }: { kort: { src: string; href: string }[] }) {
     <div
       ref={boks}
       className="fb-bue"
+      data-ramme={holder ? "holder" : undefined}
       aria-hidden="true"
       onPointerDown={(e) => {
         if (e.pointerType === "mouse" && e.button !== 0) return;
@@ -98,7 +102,11 @@ export function KortBue({ kort }: { kort: { src: string; href: string }[] }) {
       {kort.map((k, j) => (
         <span key={j} style={{ animationDelay: `${j * 3 - 31.5}s` }}>
           <Link href={k.href} prefetch={false} tabIndex={-1} draggable={false}>
-            <Image src={k.src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} draggable={false} />
+            {holder ? (
+              <Slab l={k.l} eager={j === 0} lasting="eager" speil={false} />
+            ) : (
+              <Image src={k.src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} draggable={false} />
+            )}
           </Link>
         </span>
       ))}

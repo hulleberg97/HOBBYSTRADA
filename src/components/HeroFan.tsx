@@ -92,13 +92,26 @@ function offsetOf(i: number, shift: number, n: number) {
 /** Hvordan betalt plassering merkes på kortet i raden. «header» (hvit liten etikett i underkant) er standard. */
 export type SlabMark = "pill" | "strip" | "corner" | "header";
 
-export function Slab({ l, eager = false, mark = "header" }: { l: Listing; eager?: boolean; mark?: SlabMark }) {
+/** «lasting» og «speil» brukes av buen på telefonforsiden: der hentes bildene med en gang, og speilingen under kortet styres fra CSS. */
+export function Slab({
+  l,
+  eager = false,
+  mark = "header",
+  lasting = "lazy",
+  speil = true,
+}: {
+  l: Listing;
+  eager?: boolean;
+  mark?: SlabMark;
+  lasting?: "lazy" | "eager";
+  speil?: boolean;
+}) {
   const boosted = Boolean(l.frontpage || l.featured);
   const markTitle = l.frontpage ? "Toppannonse" : "Fremhevet";
   return (
     <div
       data-top={l.frontpage ? "true" : undefined}
-      style={{ WebkitBoxReflect: "below 8px linear-gradient(transparent 72%, rgba(255,255,255,0.16))" } as React.CSSProperties}
+      style={speil ? ({ WebkitBoxReflect: "below 8px linear-gradient(transparent 72%, rgba(255,255,255,0.16))" } as React.CSSProperties) : undefined}
       className="fan-slab relative w-full rounded-[12px] border border-white/60 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(226,232,240,0.82)_45%,rgba(255,255,255,0.94))] p-[5%] shadow-[0_30px_60px_-25px_rgba(2,6,23,0.8)] data-[top=true]:border-accent data-[top=true]:ring-2 data-[top=true]:ring-accent/70"
     >
       <div className="flex items-center gap-[6%] rounded-[6px] bg-[linear-gradient(180deg,#1a2d52,#0c1730)] px-[6%] py-[5%] ring-1 ring-inset ring-[#cfa653]/70">
@@ -115,7 +128,7 @@ export function Slab({ l, eager = false, mark = "header" }: { l: Listing; eager?
             src={l.image}
             width={400}
             height={560}
-            loading="lazy"
+            loading={lasting}
             fetchPriority={eager ? "high" : "low"}
             sizes="(max-width: 640px) 40vw, 200px"
             className="h-full w-full object-cover"
