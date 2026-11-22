@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" data-vis="magasin" data-stort="ren" data-tittel2="d" data-skrift="fraunces" className={`${schibsted.variable} ${headlineFont}`}>
+    <html lang="nb" data-stil="pro" data-tone="1" data-meny="c" data-glans="1" data-linje="s6" data-tittel="2" data-ot="u1" data-vis="magasin" data-kino="1" data-stort="ren" data-tittel2="d" data-skrift="fraunces" className={`${schibsted.variable} ${headlineFont}`}>
       <body>
         {/* Norske feilmeldinger i skjemaer, uansett språk i nettleseren */}
         <script

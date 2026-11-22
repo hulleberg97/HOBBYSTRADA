@@ -748,3 +748,41 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .eks-rad .eks-merke { border-radius: 8px 0 9px 0; }
 /* De aller smaleste telefonene: hjertet flyttes ned under merkeraden på kort som har et merke, så det aldri dekker teksten */
 @media (max-width: 359px) { .group:has(.merke-rad > *) > button[aria-pressed] { top: 2.5rem; } }
+
+/* Kino: mørk, filmatisk topp på forsiden. Bare farger, lys og skygger – oppsettet er det samme. Slås på med data-kino="1" på <html>. */
+html[data-kino="1"][data-vis="magasin"] .mag {
+  position: relative; isolation: isolate; border-bottom: 1px solid rgb(207 166 83 / 0.45);
+  background:
+    radial-gradient(58% 46% at 50% 26%, rgb(207 166 83 / 0.24), transparent 72%),
+    radial-gradient(42% 40% at 6% 92%, rgb(59 91 219 / 0.22), transparent 72%),
+    radial-gradient(36% 36% at 96% 84%, rgb(207 166 83 / 0.12), transparent 72%),
+    linear-gradient(180deg, #050a18 0%, #0b1426 46%, #0f1b36 100%);
+}
+/* Filmkorn og mørkere kanter (vignett) */
+html[data-kino="1"] .mag::before, html[data-kino="1"] .mag::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+html[data-kino="1"] .mag::before { opacity: 0.08; mix-blend-mode: screen; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+html[data-kino="1"] .mag::after { background: radial-gradient(120% 90% at 50% 38%, transparent 52%, rgb(2 5 14 / 0.62) 100%); }
+html[data-kino="1"] .mag > * { position: relative; z-index: 1; }
+/* Tekst og knapper */
+/* Smal lysstripe bak overskriften, som et linseglimt */
+html[data-kino="1"] .mag .mt-d { position: relative; }
+html[data-kino="1"] .mag .mt-d::before { content: ""; position: absolute; left: 50%; top: 40%; z-index: -1; width: min(130vw, 1200px); height: 54px; transform: translate(-50%, -50%); pointer-events: none;
+  background: radial-gradient(50% 50% at 50% 50%, rgb(255 233 184 / 0.2), transparent 72%); }
+html[data-kino="1"] .mag .mt-h { color: #f7f3ea; text-shadow: 0 2px 34px rgb(0 0 0 / 0.55); }
+html[data-kino="1"] .mag .mt-h .mt-strek { color: #e7c987; }
+html[data-kino="1"] .mag .mt-d p { color: rgb(247 243 234 / 0.74); }
+html[data-kino="1"] .mag-knapper a:first-child { background: linear-gradient(180deg, #e7c987, #cfa653); color: #0b1426; box-shadow: 0 18px 40px -16px rgb(207 166 83 / 0.75), inset 0 1px 0 rgb(255 255 255 / 0.5); }
+html[data-kino="1"] .mag-knapper a:first-child:hover { background: linear-gradient(180deg, #f0d79e, #d9b262); }
+html[data-kino="1"] .mag-knapper .knapp-selg { color: #f7f3ea; --tw-ring-color: rgb(247 243 234 / 0.4); background: rgb(255 255 255 / 0.04); }
+html[data-kino="1"] .mag-knapper .knapp-selg:hover { background: rgb(255 255 255 / 0.1); }
+/* Kortene står i et lysfelt, med dypere skygge og en tynn lyskant */
+html[data-kino="1"] .mag-rull-ramme::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 62%; z-index: -1; pointer-events: none;
+  background: radial-gradient(62% 100% at 50% 100%, rgb(207 166 83 / 0.16), transparent 72%); }
+html[data-kino="1"] .mag ul li .fan-slab { box-shadow: 0 34px 60px -22px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(255 255 255 / 0.2) !important; }
+/* Toppmenyen er mørk på forsiden, så den glir over i toppfeltet. (!important fordi glass-stilen på menyen bruker det.) */
+html[data-kino="1"]:has(.mag) header.sticky.sticky { background: #060b1a !important; border-bottom: 1px solid rgb(207 166 83 / 0.35) !important; box-shadow: none; }
+html[data-kino="1"]:has(.mag) header.sticky img[alt="HOBBYSTRADA"] { content: url("/brand/logo-hvit.svg"); }
+html[data-kino="1"]:has(.mag) header.sticky :is(a, button):not(.bg-primary) { color: #f3efe6; }
+html[data-kino="1"]:has(.mag) header.sticky :is(.bg-slate-100, [data-current="true"], [aria-expanded="true"]) { background: rgb(255 255 255 / 0.1) !important; color: #fff; }
+html[data-kino="1"]:has(.mag) header.sticky :is(a[href="/auth/login"], a[href="/account"]) { background: rgb(255 255 255 / 0.1) !important; color: #f3efe6; }
+html[data-kino="1"]:has(.mag) header.sticky a.bg-primary { background: linear-gradient(180deg, #e7c987, #cfa653); color: #0b1426; }
