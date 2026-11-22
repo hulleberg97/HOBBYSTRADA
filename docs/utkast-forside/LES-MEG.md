@@ -125,3 +125,13 @@ Eieren spurte om tekstdesignet i annonseboksen på forsiden kan endres (skriftty
 4. Prisen nederst: navn, sett, type og sted øverst, stor pris ved siden av pilknappen.
 5. Faktalinjer: ledetekstene «Sett» og «Type» foran fakta.
 6. Klubb og opplag fremhevet: klubb med skjold-ikon over navnet, type og opplag i mørk brikke under prisen.
+
+## Scenen: kombinasjon av dagens versjon og A4d (22. november)
+
+Eieren ba om et utkast som kombinerer dagens live-versjon (flis-karusellen) med A4d (Scenen), laget så grundig som mulig. Det ligger på grenen `utkast-scene` (`KortScene.tsx`, stiler `.fs*`, bryteren `TOPP = "scene"` i `MobilForside.tsx`). Ikke live.
+
+- Fra dagens versjon: serif-overskriften med linjen under, og annonseinformasjonen (sett, navn, pris, korttype med ikon og opplag, sted med nål), merket «Eksempelannonse» og «Annonseløft».
+- Fra A4d: kortene står på rekke i et panel med kortet i midten størst, panelet tar farge etter kortet som er fremme, og miniatyrer viser hvor man er.
+- Bruk: raden kan dras sidelengs og går rundt uten ende, et trykk på et sidekort henter det frem, et trykk på kortet i midten eller på feltet åpner annonsen, miniatyrene hopper til et kort. Går av seg selv hvert 3,8 s til noen tar på den.
+
+Kvalitetssikring: `test-scene.js` (12 funksjonstester med simulert berøring, tastatur, «mindre bevegelse» og bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 87–92), og en uavhengig designgjennomgang som ga ti funn. Ni er rettet: lysere og renere fargeskjær, lavere panel, samme venstrekant som overskrift og søk, lys pil i feltet, jevn radavstand, større miniatyrer, hele nabokort, undertekst på smale telefoner og bredere oppsett på nettbrett. Forslaget om å flytte søkefeltet over scenen er ikke fulgt, fordi søk alltid ligger i bunnmenyen. `film-scene.js` filmer utkastet med styrt klokke.

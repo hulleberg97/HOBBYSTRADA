@@ -4,6 +4,7 @@ import { ArrowRightIcon, BadgeCheckIcon, LayoutGridIcon, PenLineIcon, PlusIcon, 
 import { ForsideFaner, type Fane } from "./ForsideFaner";
 import { KortBue } from "./KortBue";
 import { KortKarusell } from "./KortKarusell";
+import { KortScene } from "./KortScene";
 import { ListingCard } from "./ListingCard";
 import { TYPES, hasType } from "@/lib/filters";
 import { formatPrice } from "@/lib/format";
@@ -40,8 +41,10 @@ const IKON: Record<string, React.ReactNode> = {
  * BRYTER for toppen av telefonforsiden. Bytt verdien og sett live for å bytte tilbake:
  * «flis»: serif-overskrift med forklarende linje, og en karusell av liggende fliser med kort, navn, pris, type og sted.
  * «bue»:  stor midtstilt overskrift, og en bue med kort som glir forbi (slik forsiden var før 22. november kl. 20).
+ * «scene»: samme overskrift som «flis», og en scene der kortene står på rekke i et panel som tar farge etter kortet,
+ *          med miniatyrer og et felt med sett, navn, pris, type og sted under.
  */
-const TOPP = "flis" as "flis" | "bue";
+const TOPP = "scene" as "flis" | "bue" | "scene";
 /** Buen har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
 const I_BUEN = 7;
 
@@ -81,7 +84,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
   // Har vi færre enn sju egne kort, går de samme kortene rundt flere ganger i buen
   const buen = TOPP === "bue" && egne.length >= 3 ? Array.from({ length: I_BUEN }, (_, i) => egne[i % Math.min(egne.length, I_BUEN)]) : [];
   // Karusellen øverst viser samme kort som kortraden på PC, i samme rekkefølge: betalt plassering først, så kortene admin har valgt
-  const karusell = (TOPP === "flis" ? frontpageRow(all) : [])
+  const karusell = (TOPP !== "bue" ? frontpageRow(all) : [])
     .filter((l) => l.image)
     .slice(0, I_KARUSELLEN)
     .map((l) => ({
@@ -107,7 +110,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
 
   return (
     <section className="kun-mobil pb-2">
-      {TOPP === "flis" ? (
+      {TOPP !== "bue" ? (
         <>
           <div className="fb-topp">
             {/* Samme skrift som overskriften på PC-forsiden, med «neste» i kursiv */}
@@ -119,7 +122,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
             </p>
           </div>
           {/* Liggende fliser med kort, navn og pris. Et trykk åpner annonsen, og raden sveipes sidelengs. */}
-          {karusell.length > 0 && <KortKarusell kort={karusell} />}
+          {karusell.length > 0 && (TOPP === "scene" ? <KortScene kort={karusell} /> : <KortKarusell kort={karusell} />)}
         </>
       ) : (
         <>

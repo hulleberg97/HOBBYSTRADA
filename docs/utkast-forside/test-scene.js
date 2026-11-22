@@ -1,0 +1,32 @@
+const { chromium, devices } = require("playwright");
+(async()=>{const L=process.env.L||"http://localhost:3718"; const b=await chromium.launch(L.startsWith("https")?{proxy:{server:process.env.HTTPS_PROXY}}:{});
+ const ny=async(o={})=>{ const c=await b.newContext({...devices["iPhone 13"],viewport:{width:390,height:780},deviceScaleFactor:1,locale:"nb-NO",ignoreHTTPSErrors:true,...o}); const p=await c.newPage(); const errs=[]; p.on("pageerror",e=>errs.push(e.message)); p.on("console",m=>{if(m.type()==="error")errs.push(m.text().slice(0,160))}); await p.goto(L+"/",{waitUntil:"networkidle"}); const k=p.getByRole("button",{name:"Bare nødvendige"}).first(); if (await k.count()) await k.click(); await p.waitForTimeout(500); return {c,p,errs}; };
+ const fremme=(p)=>p.$eval(".fs-hoved b",e=>e.textContent);
+ const midt=(p)=>p.$$eval(".fs-kort",ks=>{let best=null;for(const k of ks){const r=k.getBoundingClientRect();const d=Math.abs(r.left+r.width/2-innerWidth/2);if(getComputedStyle(k).opacity==="0"||getComputedStyle(k).visibility==="hidden")continue;if(!best||d<best.d)best={d,href:k.getAttribute("href"),x:r.left+r.width/2,y:r.top+r.height/2,w:r.width};}return best;});
+ let {c,p,errs}=await ny(); const cdp=await c.newCDPSession(p); const touch=(type,x,y)=>cdp.send("Input.dispatchTouchEvent",{type,touchPoints:type==="touchEnd"?[]:[{x,y}]});
+ const f0=await fremme(p); await p.waitForTimeout(4700); const f1=await fremme(p); console.log("1) går av seg selv:", f0!==f1, `(${f0} → ${f1})`);
+ let m=await midt(p); console.log("   midtkortet står midt i:", Math.round(m.d)<=1, "| bredde", Math.round(m.w));
+ // sveip mot venstre → neste kort
+ await touch("touchStart",m.x,m.y); for(let i=1;i<=10;i++){ await touch("touchMove",m.x-i*9,m.y); await p.waitForTimeout(16);} await touch("touchEnd"); await p.waitForTimeout(700); const f2=await fremme(p); m=await midt(p); console.log("2) sveip mot venstre → neste kort:", f2!==f1, `(${f2})`, "| faller på plass:", Math.round(m.d)<=1, "| fortsatt på forsiden:", p.url()===L+"/");
+ await p.waitForTimeout(4600); console.log("   stopper å gå av seg selv etter berøring:", (await fremme(p))===f2);
+ // sveip mot høyre → forrige
+ await touch("touchStart",m.x,m.y); for(let i=1;i<=10;i++){ await touch("touchMove",m.x+i*9,m.y); await p.waitForTimeout(16);} await touch("touchEnd"); await p.waitForTimeout(700); console.log("3) sveip mot høyre → forrige kort:", (await fremme(p))===f1);
+ // langsomt lite drag → tilbake til samme
+ m=await midt(p); const f3=await fremme(p); await touch("touchStart",m.x,m.y); for(let i=1;i<=6;i++){ await touch("touchMove",m.x-i*4,m.y); await p.waitForTimeout(40);} await p.waitForTimeout(200); await touch("touchEnd"); await p.waitForTimeout(600); console.log("4) lite, rolig drag faller tilbake:", (await fremme(p))===f3, "| midt i:", Math.round((await midt(p)).d)<=1);
+ // loddrett sveip ruller siden
+ await touch("touchStart",m.x,m.y); for(let i=1;i<=10;i++){ await touch("touchMove",m.x,m.y-i*20); await p.waitForTimeout(16);} await touch("touchEnd"); await p.waitForTimeout(500); console.log("5) loddrett sveip ruller siden:", await p.evaluate(()=>scrollY)>50, "| kortet står fortsatt midt i:", Math.round((await midt(p)).d)<=1); await p.evaluate(()=>scrollTo(0,0)); await p.waitForTimeout(400);
+ // trykk på sidekort henter det frem
+ const side=await p.$$eval(".fs-kort",ks=>ks.map(k=>{const r=k.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,l:r.left}}).filter(k=>k.l>230&&k.l<360)[0]); const f4=await fremme(p); await p.touchscreen.tap(Math.min(380,side.l+30),side.y); await p.waitForTimeout(800); console.log("6) trykk på kortet til høyre henter det frem:", (await fremme(p))!==f4, "| fortsatt på forsiden:", p.url()===L+"/");
+ // miniatyr
+ await p.locator(".fs-mini button").nth(4).tap(); await p.waitForTimeout(900); console.log("7) trykk på miniatyr 5:", await p.locator(".fs-mini button").nth(4).getAttribute("aria-pressed")==="true", `(${await fremme(p)})`, "| midt i:", Math.round((await midt(p)).d)<=1);
+ // feltet åpner annonsen for kortet som er fremme
+ m=await midt(p); const hInfo=await p.locator(".fs-info").getAttribute("href"); console.log("8) feltet peker på samme annonse som midtkortet:", hInfo===m.href);
+ await p.touchscreen.tap(m.x,m.y); await p.waitForURL(/\/annonse\//,{timeout:8000}); console.log("9) trykk på midtkortet åpner annonsen:", p.url().replace(L,"")===m.href);
+ await p.goBack(); await p.waitForTimeout(800); await p.locator(".fs-info").tap(); await p.waitForURL(/\/annonse\//,{timeout:8000}); console.log("10) trykk på feltet åpner annonsen:", true, "| feil:", errs.length, errs.slice(0,2)); await c.close();
+ // tastatur
+ ({c,p,errs}=await ny({hasTouch:false,isMobile:false})); await p.addStyleTag({content:".kun-mobil{display:block!important}.kun-pc{display:none!important}"}); await p.locator(".fs-kort").nth(2).focus(); await p.waitForTimeout(700); console.log("11) tastaturfokus henter kortet frem:", (await fremme(p))===await p.locator(".fs-kort").nth(2).getAttribute("aria-label").then(a=>a.split(",")[0]), "| synlig fokusramme:", await p.locator(".fs-kort").nth(2).evaluate(e=>getComputedStyle(e).outlineStyle)); await c.close();
+ // mindre bevegelse
+ ({c,p,errs}=await ny({reducedMotion:"reduce"})); const r0=await fremme(p); await p.waitForTimeout(4600); console.log("12) mindre bevegelse: går ikke av seg selv:", (await fremme(p))===r0); await p.locator(".fs-mini button").nth(2).tap(); await p.waitForTimeout(200); console.log("    miniatyr bytter kort med en gang:", (await fremme(p))!==r0); await c.close();
+ // bredder
+ for (const [w,h] of [[320,640],[360,740],[390,780],[430,900],[768,1000]]) { ({c,p,errs}=await ny({viewport:{width:w,height:h}})); const r=await p.evaluate(()=>{const f=document.querySelector(".fs").getBoundingClientRect(); const t=q=>[...document.querySelectorAll(q)].filter(e=>e.scrollWidth>e.clientWidth+1).length; return {panel:Math.round(f.height), sok:Math.round(document.querySelector(".fb-sok").getBoundingClientRect().top), kutt:{navn:t(".fs-hoved b"),sett:t(".fs-rad small"),type:t(".fs .fk-type span")}, rull:document.documentElement.scrollWidth>document.documentElement.clientWidth, kort:Math.round(document.querySelector(".fs-kort").offsetWidth)};}); console.log(String(w).padEnd(4),JSON.stringify(r),"feil:",errs.length); await p.screenshot({path:`b-${w}.png`}); await c.close(); }
+ await b.close();})().catch(e=>{console.log("FEIL",e.message.split("\n").slice(0,4).join(" | "));process.exit(1)});
