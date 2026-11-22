@@ -15,7 +15,7 @@ const BILDE = { width: 300, height: 420, sizes: "174px" } as const;
 const wrap = (d: number, n: number) => ((((d + n / 2) % n) + n) % n) - n / 2;
 const mod = (i: number, n: number) => ((i % n) + n) % n;
 /** Avstanden mellom to kort, i prosent av kortets bredde. */
-const STEG = 78;
+const STEG = 64;
 
 /**
  * Hvor et kort står når det er «d» plasser fra midten (d = 0 er kortet som er fremme).
@@ -25,7 +25,7 @@ function plass(d: number) {
   const a = Math.abs(d);
   // Nabokortene står litt inn bak kortet i midten, så hele kortet med rammen synes. Kortene to plasser unna synes bare på brede skjermer.
   const x = Math.sign(d) * (Math.min(a, 1) * STEG + Math.max(a - 1, 0) * 68);
-  const skala = 1 - 0.24 * Math.min(a, 1) - 0.08 * Math.min(Math.max(a - 1, 0), 1);
+  const skala = 1 - 0.26 * Math.min(a, 1) - 0.08 * Math.min(Math.max(a - 1, 0), 1);
   // På telefon tones kortene ut etter nabokortet. På brede skjermer (se .fs-kort i globals.css) synes også kortene to plasser unna.
   const bred = a <= 1 ? 1 : a <= 2 ? 1 - 0.45 * (a - 1) : Math.max(0, 0.55 * (3 - a));
   return {
@@ -248,7 +248,7 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
               )}
             </span>
             <i aria-hidden="true">
-              <ArrowRightIcon className="h-4 w-4" />
+              <ArrowRightIcon className="h-3.5 w-3.5" />
             </i>
           </span>
         </span>
