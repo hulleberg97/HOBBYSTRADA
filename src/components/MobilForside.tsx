@@ -111,13 +111,14 @@ export function MobilForside({ all }: { all: Listing[] }) {
 
   return (
     <section className="kun-mobil pb-2">
-      {/* Stor midtstilt overskrift over to linjer, som forsiden hadde med buen */}
-      <div className="fb-topp" data-topp="bue">
-        <h1 className="fb-h1">
-          {ord("Finn ditt", 0)}
-          <br />
-          {ord("neste kort", 2)}
+      {/* Den opprinnelige overskriften, som på PC: serif, «neste» i kursiv med gull strek under, og underteksten */}
+      <div className="fb-topp" data-topp="original">
+        <h1 className="fb-h1 fb-h1-serif">
+          {ord("Finn ditt", 0)} <em className="mt-strek">{ord("neste", 2)}</em> {ord("kort", 3)}
         </h1>
+        <p className="fb-ut fb-opp" style={{ animationDelay: "0.3s" }}>
+          Markedsplass for kjøp og salg av fotballkort.
+        </p>
       </div>
       {TOPP === "bue" ? (
         // Kortene glir jevnt langs en slak bue. Et trykk åpner annonsen, og buen kan dras sidelengs.

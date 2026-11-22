@@ -787,6 +787,10 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @media (min-width: 592px) { .fb-topp { text-align: center; } }
 /* Toppen med buen (bryteren TOPP i MobilForside.tsx): midtstilt overskrift og litt luft over søkefeltet */
 .fb-topp[data-topp="bue"] { padding-top: 30px; text-align: center; }
+/* Den opprinnelige overskriften: midtstilt, og med egen lagdeling så gullstreken under «neste» ligger bak bokstavene */
+.fb-topp[data-topp="original"] { padding-top: 24px; text-align: center; }
+.fb-topp[data-topp="original"] .fb-h1 { isolation: isolate; font-size: clamp(29px, 9.2vw, 38px); }
+.fb-topp[data-topp="original"] .fb-ut { margin-top: 8px; }
 .fb-bue + .fb-under { padding-top: 6px; }
 /* Karusellen under overskriften: liggende hvite fliser med tynn mørk kant. Vanlig sidelengs rulleliste som stopper på hver flis. */
 .fk { display: flex; gap: 12px; margin-top: 14px; padding: 4px 16px 26px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 16px; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
