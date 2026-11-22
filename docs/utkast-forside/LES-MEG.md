@@ -169,3 +169,15 @@ Bryteren `OPPSETT = "kino"` i `MobilForside.tsx`. «annonser» og «karusell» v
 - **Bevegelse**: kortene kommer inn ett og ett, og rammen krymper litt ved trykk. Alt er ren CSS, og «mindre bevegelse» slår det av.
 
 Kvalitetssikring: `test-kino.js` (17 kontroller med simulert berøring, bredder 320–768, PC og «mindre bevegelse»), axe-core (0 brudd på forsiden, topplinjen og bunnmenyen), Lighthouse lokalt (tilgjengelighet 100, fart 85–91), typesjekk, lint og bygg uten feil. `film-kino.js` filmer utkastet.
+
+## Original forside med scenen (22. november, kveld)
+
+Eieren sendte filmen av scenen uten småbilder og ba om «denne type karusell med den versjonen som var til i dag». Tolket som: forsiden slik den var på telefon før 22. november, med scenen i stedet for den rullende kortraden. Utkastet ligger på grenen `utkast-original-scene` (bygger på scenen uten småbilder, med kort på 150 px). Ikke live.
+
+- Bryteren `MOBIL_FORSIDE` i `src/lib/forside.ts`: «original» viser de samme seksjonene som PC på telefon (overskrift, knappene «Se alle annonser» og «Legg ut kort», kategoriraden, «Nyeste annonser» og resten), med `KortScene` der kortraden sto. «ny» viser `MobilForside` som før.
+- `page.tsx`: `kun-pc` tas av seksjonene i «original», kortraden får `kun-pc`, og scenen står i en `kun-mobil`-boks. PC er uendret og viser kortraden.
+- `globals.css`: på telefon fyller toppen ikke lenger hele skjermen i «original», så scenen med infofeltet synes på første skjermbilde.
+- Kortene til karusellen lages nå ett sted (`karusellKort` i `src/lib/forside.ts`), og brukes av både `page.tsx` og `MobilForside`.
+- Bunnmenyen og dagens kortstil på telefon (flat ramme, prisen først) er beholdt.
+
+Kvalitetssikring: `test-original-scene.js` (16 kontroller: scenen med simulert berøring, tastatur og «mindre bevegelse», original forside på telefon, PC i bredt og smalt vindu, bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 88–89).
