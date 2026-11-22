@@ -137,3 +137,5 @@ Eieren ba om et utkast som kombinerer dagens live-versjon (flis-karusellen) med 
 Kvalitetssikring: `test-scene.js` (12 funksjonstester med simulert berøring, tastatur, «mindre bevegelse» og bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 87–92), og en uavhengig designgjennomgang som ga ti funn. Ni er rettet: lysere og renere fargeskjær, lavere panel, samme venstrekant som overskrift og søk, lys pil i feltet, jevn radavstand, større miniatyrer, hele nabokort, undertekst på smale telefoner og bredere oppsett på nettbrett. Forslaget om å flytte søkefeltet over scenen er ikke fulgt, fordi søk alltid ligger i bunnmenyen. `film-scene.js` filmer utkastet med styrt klokke.
 
 Oppdatert samme kveld: eieren ba om å fjerne raden med småbilder (miniatyrene) under kortene. Den er tatt bort fra `KortScene.tsx`, stilene og testene.
+
+Oppdatert senere samme kveld: eieren ba om litt større kortbilder og litt mindre infofelt. Kortet i midten er nå 172 px bredt på en vanlig telefon (før 150), nabokortene står litt lenger inn bak det, og feltet er 82 px høyt (før 98) med litt mindre skrift og pil.
