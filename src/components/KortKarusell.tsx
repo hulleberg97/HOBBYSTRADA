@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRightIcon, BadgeCheckIcon, CrownIcon, MapPinIcon, PenLineIcon, ShirtIcon, StarIcon } from "lucide-react";
 import { ExampleBadge } from "./ExampleBadge";
+import type { Listing } from "@/lib/types";
 
 export type KarusellKort = {
   href: string;
@@ -19,6 +20,8 @@ export type KarusellKort = {
   eksempel: boolean;
   /** Betalt plassering: «Toppannonse», «Fremhevet» eller tom. Merkes alltid med «Annonseløft» (markedsføringsloven § 8). */
   loft: string;
+  /** Hele annonsen, når kortet skal vises i holderen med navneplate (scenen med «holder»). */
+  l?: Listing;
 };
 
 /** Ikonet følger den første korttypen, med de samme ikonene som på fanene under. */

@@ -766,19 +766,13 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
   body:has(.bunnmeny) .kake { bottom: calc(72px + env(safe-area-inset-bottom)); }
   /* Søk og meldinger ligger i bunnmenyen. På sider uten bunnmeny står de fortsatt i toppmenyen */
   body:has(.bunnmeny) header.sticky .i-bunnmeny { display: none; }
-  /* Annonsekort: flat lys flate, prisen først og tittelen under */
-  html[data-glans] .card-frame { background: #f4f4f5 !important; box-shadow: none !important; border-radius: 14px; }
-  html[data-glans] [data-featured="true"] .card-frame { box-shadow: inset 0 0 0 1.5px #cfa653 !important; }
-  .card-info { padding-top: 0.625rem; }
-  .card-pris { order: -1; margin-top: 0; }
-  html .card-title { min-height: 0; margin-top: 0.125rem; color: #475569; }
 }
 
 /* ── Forsiden på telefon og nettbrett: overskrift og en bue med kort som glir forbi ── */
 .fb-topp { padding: 24px 16px 0; text-align: left; }
 .fb-h1 { font-size: clamp(36px, 10.8vw, 44px); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; color: #0b1426; }
 .fb-h1-serif { font-family: var(--f-fraunces), serif; font-weight: 700; font-size: clamp(28px, 8.9vw, 36px); letter-spacing: -0.03em; line-height: 1.05; }
-.fb-ut { margin-top: 6px; font-size: 15px; color: #5b6472; }
+.fb-ut { margin-top: 6px; font-size: 15px; color: #5b6472; text-wrap: balance; }
 .fb-h1 span { display: inline-block; animation: fb-ord 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fb-opp { animation: fb-opp 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fb-bue { position: relative; display: block; height: 292px; margin-top: 10px; overflow: hidden; touch-action: pan-y; -webkit-user-select: none; user-select: none; animation: fb-gli 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
@@ -793,6 +787,10 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @media (min-width: 592px) { .fb-topp { text-align: center; } }
 /* Toppen med buen (bryteren TOPP i MobilForside.tsx): midtstilt overskrift og litt luft over søkefeltet */
 .fb-topp[data-topp="bue"] { padding-top: 30px; text-align: center; }
+/* Den opprinnelige overskriften: midtstilt, og med egen lagdeling så gullstreken under «neste» ligger bak bokstavene */
+.fb-topp[data-topp="original"] { padding-top: 24px; text-align: center; }
+.fb-topp[data-topp="original"] .fb-h1 { isolation: isolate; font-size: clamp(29px, 9.2vw, 38px); }
+.fb-topp[data-topp="original"] .fb-ut { margin-top: 8px; }
 .fb-bue + .fb-under { padding-top: 6px; }
 /* Karusellen under overskriften: liggende hvite fliser med tynn mørk kant. Vanlig sidelengs rulleliste som stopper på hver flis. */
 .fk { display: flex; gap: 12px; margin-top: 14px; padding: 4px 16px 26px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 16px; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
@@ -815,6 +813,60 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .fk-bunn em { display: flex; align-items: center; gap: 5px; min-width: 0; font-style: normal; font-size: 12.5px; color: #475569; white-space: nowrap; }
 .fk-bunn em span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .fk-bunn i { flex: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: #0b1426; color: #fff; }
+/* Scenen (bryteren TOPP = "scene"): kortene på rekke i et panel som tar farge etter kortet som er fremme */
+.fs { --kw: clamp(118px, 38.5vw, 150px); position: relative; isolation: isolate; max-width: 528px; margin: 14px 16px 0; padding-bottom: 12px; border-radius: 28px; overflow: hidden; background: #eef1f6; box-shadow: inset 0 0 0 1px rgb(11 20 38 / 0.06); animation: fb-gli 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; -webkit-user-select: none; user-select: none; }
+@media (min-width: 560px) { .fs { margin-inline: auto; } }
+.fs-farge { position: absolute; inset: 0; z-index: -1; overflow: hidden; border-radius: inherit; }
+.fs-farge img { position: absolute; left: -25%; top: -25%; width: 150%; height: 150%; max-width: none; object-fit: cover; filter: blur(56px) saturate(2.3) brightness(1.2); opacity: 0; transition: opacity 0.7s ease; }
+.fs-farge img[data-aktiv="true"] { opacity: 1; }
+.fs-farge::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.82)); }
+.fs-merke { position: absolute; left: 0; top: 0; z-index: 30; display: inline-flex; }
+.fs-merke .eks-merke { height: 22px; border-radius: 28px 0 10px 0; padding-left: 14px; }
+.fs-bane { position: relative; height: calc(var(--kw) * 1.4 + 44px); touch-action: pan-y; }
+.fs-kort { position: absolute; left: 50%; top: 28px; width: var(--kw); height: calc(var(--kw) * 1.4); margin-left: calc(var(--kw) / -2); border-radius: 14px; opacity: var(--o, 1); will-change: transform; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+.fs-kort img { display: block; width: 100%; height: 100%; object-fit: cover; border: 5px solid #fff; border-radius: 14px; background: #e5e9f0; box-shadow: 0 0 0 1px rgb(11 20 38 / 0.16), 0 22px 30px -18px rgb(11 20 38 / 0.65); -webkit-user-drag: none; }
+.fs-kort::after { content: ""; position: absolute; inset: 0; border-radius: 14px; background: #fff; opacity: var(--dim, 0); pointer-events: none; }
+.fs-info { position: relative; z-index: 2; display: block; margin: 6px 12px 0; padding: 11px 16px 11px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px rgb(11 20 38 / 0.08), 0 16px 24px -20px rgb(11 20 38 / 0.5); color: #0b1426; -webkit-tap-highlight-color: transparent; }
+.fs-inn { display: block; animation: fs-inn 0.32s ease both; }
+.fs-rad { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; }
+.fs-rad small { min-width: 0; font-size: 12.5px; color: #475569; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fs-rad em { flex: none; display: flex; align-items: center; gap: 4px; font-style: normal; font-size: 12.5px; color: #475569; }
+.fs-hoved { margin-top: 2px; }
+.fs-hoved b { min-width: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fs-hoved strong { flex: none; font-size: 21px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.2; }
+.fs-bunn { align-items: center; margin-top: 3px; }
+.fs-fakta { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.fs-fakta .fk-type { margin-top: 0; }
+.fs-bunn i { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #eef1f6; color: #0b1426; }
+.fs + .fb-under { padding-top: 14px; }
+@media (max-height: 700px) { .fs { --kw: clamp(104px, 33vw, 128px); } }
+/* Kort som er tonet helt ut på telefon skal ikke kunne trykkes. På brede skjermer synes også kortene to plasser unna. */
+.fs-kort[data-fjern] { pointer-events: none; }
+@media (min-width: 700px) { .fs { --kw: 170px; max-width: 688px; } .fs + .fb-under { max-width: 720px; } .fs-kort { opacity: var(--o2, 1); } .fs-kort[data-fjern] { pointer-events: auto; } }
+/* Scenen uten boks («apen»): kortene står rett på den hvite siden og går helt ut til kantene */
+.fs[data-apen] { --kw: clamp(124px, 42vw, 164px); max-width: none; margin: 6px 0 0; padding-bottom: 6px; border-radius: 0; background: none; box-shadow: none; overflow-x: clip; overflow-y: visible; }
+.fs[data-apen] .fs-bane { height: calc(var(--kw) * 1.4 + 36px); }
+.fs[data-apen] .fs-kort { top: 14px; }
+.fs[data-apen] .fs-info { max-width: 528px; margin: 2px 16px 0; box-shadow: 0 0 0 1px rgb(11 20 38 / 0.1), 0 18px 28px -22px rgb(11 20 38 / 0.5); }
+/* Merket vises på kortet som er fremme, og tones bort på kortene ved siden av */
+.fs-kortmerke { position: absolute; left: 5px; top: 5px; z-index: 1; display: inline-flex; opacity: calc(1 - var(--dim, 0) * 6); }
+.fs-kortmerke .eks-merke { border-radius: 9px 0 9px 0; }
+@media (min-width: 560px) { .fs[data-apen] .fs-info { margin-inline: auto; } }
+@media (max-height: 700px) { .fs[data-apen] { --kw: clamp(124px, 42vw, 164px); } }
+@media (max-height: 600px) { .fs[data-apen] { --kw: clamp(110px, 36vw, 140px); } }
+@media (min-width: 700px) { .fs[data-apen] { --kw: 184px; } .fs[data-apen] .fs-kort { opacity: var(--o2, 1); } }
+/* Scenen med kortene i holderen («holder»): holderen bestemmer høyden, og kortbildet har ikke egen ramme */
+.fs[data-holder] { --kw: clamp(118px, 39vw, 152px); }
+.fs[data-holder] .fs-bane { height: calc(var(--kw) * 1.61 + 34px); }
+.fs[data-holder] .fs-kort { height: auto; border-radius: 12px; }
+.fs[data-holder] .fs-kort img { border: 0; border-radius: 0; background: none; box-shadow: none; }
+.fs[data-holder] .fs-kort::after { border-radius: 12px; }
+html .fs .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 -4px 6px -2px rgb(100 116 139 / 0.3), 0 0 0 1px rgb(11 20 38 / 0.1), 0 26px 32px -20px rgb(11 20 38 / 0.6) !important; }
+@media (max-height: 700px) { .fs[data-holder] { --kw: clamp(118px, 39vw, 152px); } }
+@media (max-height: 600px) { .fs[data-holder] { --kw: clamp(104px, 34vw, 132px); } }
+@media (min-width: 700px) { .fs[data-holder] { --kw: 170px; } }
+@keyframes fs-inn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fs, .fs-inn { animation: none; } .fs-farge img { transition: none; } }
 /* De aller smaleste telefonene: mindre kortbilde og tekst, så navnet får plass */
 @media (max-width: 359px) { .fk-bilde { width: 104px; } .fk-bilde img { height: 124px; } .fk-tekst { padding: 19px 12px 14px 12px; } .fk-tekst b { font-size: 15.5px; } .fk-tekst strong { font-size: 21px; } }
 @media (prefers-reduced-motion: reduce) { .fk-flis { transition: none; } }
@@ -825,7 +877,7 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .fb-sok input::-webkit-search-cancel-button { display: none; }
 .fb-sok button { flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #0b1426; color: #fff; }
 .fb-to { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-.fb-to a { display: flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #d6d9df; font-size: 14.5px; font-weight: 600; color: #0b1426; white-space: nowrap; }
+.fb-to a { display: flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #b6bcc7; font-size: 14.5px; font-weight: 600; color: #0b1426; white-space: nowrap; }
 .fb-to a:first-child { background: #0b1426; box-shadow: none; color: #fff; }
 /* Ingen uskarphet-effekter her: Safari på iPhone kan la uskarpe rester henge igjen under teksten */
 @keyframes fb-ord { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -841,4 +893,4 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 /* Knappene på telefonforsiden er helt runde i endene, som søkefeltet og knappene i toppen */
 html[data-stil="pro"] .kun-mobil :is(a, button).rounded-full { border-radius: 999px; }
 /* De aller smaleste telefonene: søkefeltet og knappene på forsiden får litt mindre tekst, så den får plass. Står sist for å vinne over reglene over. */
-@media (max-width: 359px) { .fb-to { gap: 8px; } .fb-to a { gap: 5px; font-size: 13px; } .fb-sok { padding-left: 13px; gap: 8px; } .fb-sok input::placeholder { font-size: 13.5px; } }
+@media (max-width: 359px) { .fb-ut { font-size: 13.5px; } .fb-to { gap: 8px; } .fb-to a { gap: 5px; font-size: 13px; } .fb-sok { padding-left: 13px; gap: 8px; } .fb-sok input::placeholder { font-size: 13.5px; } }
