@@ -845,6 +845,18 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 /* Kort som er tonet helt ut på telefon skal ikke kunne trykkes. På brede skjermer synes også kortene to plasser unna. */
 .fs-kort[data-fjern] { pointer-events: none; }
 @media (min-width: 700px) { .fs { --kw: 170px; max-width: 688px; } .fs + .fb-under { max-width: 720px; } .fs-kort { opacity: var(--o2, 1); } .fs-kort[data-fjern] { pointer-events: auto; } }
+/* Scenen uten boks («apen»): kortene står rett på den hvite siden og går helt ut til kantene */
+.fs[data-apen] { --kw: clamp(124px, 42vw, 164px); max-width: none; margin: 6px 0 0; padding-bottom: 6px; border-radius: 0; background: none; box-shadow: none; overflow-x: clip; overflow-y: visible; }
+.fs[data-apen] .fs-bane { height: calc(var(--kw) * 1.4 + 36px); }
+.fs[data-apen] .fs-kort { top: 14px; }
+.fs[data-apen] .fs-info { max-width: 528px; margin: 2px 16px 0; box-shadow: 0 0 0 1px rgb(11 20 38 / 0.1), 0 18px 28px -22px rgb(11 20 38 / 0.5); }
+/* Merket vises på kortet som er fremme, og tones bort på kortene ved siden av */
+.fs-kortmerke { position: absolute; left: 5px; top: 5px; z-index: 1; display: inline-flex; opacity: calc(1 - var(--dim, 0) * 6); }
+.fs-kortmerke .eks-merke { border-radius: 9px 0 9px 0; }
+@media (min-width: 560px) { .fs[data-apen] .fs-info { margin-inline: auto; } }
+@media (max-height: 700px) { .fs[data-apen] { --kw: clamp(124px, 42vw, 164px); } }
+@media (max-height: 600px) { .fs[data-apen] { --kw: clamp(110px, 36vw, 140px); } }
+@media (min-width: 700px) { .fs[data-apen] { --kw: 184px; } .fs[data-apen] .fs-kort { opacity: var(--o2, 1); } }
 @keyframes fs-inn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fs, .fs-inn { animation: none; } .fs-farge img { transition: none; } }
 /* De aller smaleste telefonene: mindre kortbilde og tekst, så navnet får plass */

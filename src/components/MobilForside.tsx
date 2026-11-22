@@ -122,7 +122,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
             </p>
           </div>
           {/* Liggende fliser med kort, navn og pris. Et trykk åpner annonsen, og raden sveipes sidelengs. */}
-          {karusell.length > 0 && (TOPP === "scene" ? <KortScene kort={karusell} /> : <KortKarusell kort={karusell} />)}
+          {karusell.length > 0 && (TOPP === "scene" ? <KortScene kort={karusell} apen /> : <KortKarusell kort={karusell} />)}
         </>
       ) : (
         <>

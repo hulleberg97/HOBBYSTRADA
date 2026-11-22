@@ -52,7 +52,11 @@ function TypeIkon({ type }: { type: string }) {
  * Panelet tar farge etter kortet som er fremme, og feltet under viser sett, navn, pris, type og sted.
  * Raden kan dras sidelengs, et trykk på et sidekort henter det frem, og et trykk på kortet i midten eller på feltet åpner annonsen.
  */
-export function KortScene({ kort }: { kort: KarusellKort[] }) {
+/**
+ * «apen»: uten den avrundede boksen og fargeskjæret. Kortene står rett på sidens hvite bakgrunn og går helt ut til kantene,
+ * og merket «Eksempelannonse» står på hvert kort i stedet for i hjørnet av boksen.
+ */
+export function KortScene({ kort, apen = false }: { kort: KarusellKort[]; apen?: boolean }) {
   const n = kort.length;
   // Raden går rundt uten ende. Med færre enn fire kort gjentas de, så det alltid står et kort på hver side.
   const plasser = n >= 4 ? n : n * Math.ceil(4 / n);
@@ -115,17 +119,21 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
   if (!n) return null;
   const k = kort[aktiv];
   return (
-    <section className="fs" aria-roledescription="karusell" aria-label="Utvalgte annonser">
-      {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
-      <div className="fs-farge" aria-hidden="true">
-        {kort.map((x, i) => (
-          <Image key={x.href} src={x.src} alt="" {...BILDE} loading="eager" fetchPriority="low" data-aktiv={i === aktiv ? "true" : undefined} />
-        ))}
-      </div>
-      {k.eksempel && (
-        <span className="fs-merke eks-rad">
-          <ExampleBadge />
-        </span>
+    <section className="fs" data-apen={apen ? "" : undefined} aria-roledescription="karusell" aria-label="Utvalgte annonser">
+      {!apen && (
+        <>
+          {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
+          <div className="fs-farge" aria-hidden="true">
+            {kort.map((x, i) => (
+              <Image key={x.href} src={x.src} alt="" {...BILDE} loading="eager" fetchPriority="low" data-aktiv={i === aktiv ? "true" : undefined} />
+            ))}
+          </div>
+          {k.eksempel && (
+            <span className="fs-merke eks-rad">
+              <ExampleBadge />
+            </span>
+          )}
+        </>
       )}
       <div
         ref={bane}
@@ -212,6 +220,11 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
               }}
             >
               <Image src={x.src} alt="" {...BILDE} loading="eager" preload={i === 0} fetchPriority={i === 0 ? "high" : "low"} draggable={false} />
+              {apen && x.eksempel && (
+                <span className="fs-kortmerke eks-rad">
+                  <ExampleBadge />
+                </span>
+              )}
             </Link>
           );
         })}
