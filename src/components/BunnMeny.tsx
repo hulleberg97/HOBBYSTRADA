@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { CircleUserRoundIcon, HouseIcon, MessageCircleIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { useUser } from "./useUser";
 
@@ -17,15 +18,57 @@ const UTEN = [/^\/annonse\//, /^\/meldinger\/.+/, /^\/auth\//, /^\/annonseloft\/
 const punkt = "relative flex flex-col items-center justify-end gap-0.5 pb-1.5 pt-2 text-[11px] font-semibold text-slate-500 aria-[current=page]:text-primary";
 const ikon = "h-[22px] w-[22px]";
 
+/**
+ * Sann mens skjermtastaturet er oppe. Da ville menyen ellers lagt seg midt på skjermen, rett over tastaturet.
+ * Tastaturet oppdages ved at et tekstfelt er aktivt samtidig som den synlige delen av siden er blitt klart lavere.
+ * Et felt som bare er aktivt uten tastatur (søkesiden setter markøren i feltet selv) skjuler ikke menyen.
+ */
+function useSkriver() {
+  const [skriver, setSkriver] = useState(false);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    let full = window.innerHeight;
+    const sjekk = () => {
+      const el = document.activeElement as HTMLElement | null;
+      const felt =
+        !!el &&
+        (el.tagName === "TEXTAREA" ||
+          el.isContentEditable ||
+          (el.tagName === "INPUT" && !/^(checkbox|radio|button|submit|reset|file|range|color|image)$/.test((el as HTMLInputElement).type)));
+      if (!felt) full = Math.max(full, window.innerHeight);
+      setSkriver(felt && full - vv.height > 150);
+    };
+    const snudd = () => {
+      full = window.innerHeight;
+      sjekk();
+    };
+    vv.addEventListener("resize", sjekk);
+    document.addEventListener("focusin", sjekk);
+    document.addEventListener("focusout", sjekk);
+    window.addEventListener("orientationchange", snudd);
+    return () => {
+      vv.removeEventListener("resize", sjekk);
+      document.removeEventListener("focusin", sjekk);
+      document.removeEventListener("focusout", sjekk);
+      window.removeEventListener("orientationchange", snudd);
+    };
+  }, []);
+  return skriver;
+}
+
 /** Fast meny nederst på telefon og nettbrett: Hjem, Søk, Selg, Meldinger og Min side. Vises ikke på PC (mus eller pekeplate, se globals.css), der toppmenyen har det samme. */
 export function BunnMeny() {
   const path = usePathname();
   const user = useUser();
+  const skriver = useSkriver();
   if (UTEN.some((r) => r.test(path))) return null;
   const her = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/")) ? "page" : undefined);
   return (
     <nav
       aria-label="Hurtigmeny"
+      // Skjules med stil, ikke fjernes: reglene som flytter søk og meldinger hit, ser etter at menyen finnes på siden
+      style={skriver ? { display: "none" } : undefined}
       className="bunnmeny fixed inset-x-0 bottom-0 z-[35] grid grid-cols-5 border-t border-slate-200 bg-[#fff] pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
       <Link

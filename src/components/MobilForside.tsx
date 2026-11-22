@@ -91,7 +91,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />
           <label className="contents">
             <span className="sr-only">Søk etter spiller, sett eller kortnummer</span>
-            <input type="search" name="q" enterKeyHint="search" autoComplete="off" placeholder="Søk spiller, sett eller nummer" />
+            <input type="search" name="q" enterKeyHint="search" autoComplete="off" placeholder="Søk spiller, sett eller nummer" className="outline-none" />
           </label>
           <button type="submit" aria-label="Søk">
             <ArrowRightIcon className="h-[17px] w-[17px]" aria-hidden="true" />
