@@ -874,3 +874,13 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 html[data-stil="pro"] .kun-mobil :is(a, button).rounded-full { border-radius: 999px; }
 /* De aller smaleste telefonene: søkefeltet og knappene på forsiden får litt mindre tekst, så den får plass. Står sist for å vinne over reglene over. */
 @media (max-width: 359px) { .fb-ut { font-size: 13.5px; } .fb-to { gap: 8px; } .fb-to a { gap: 5px; font-size: 13px; } .fb-sok { padding-left: 13px; gap: 8px; } .fb-sok input::placeholder { font-size: 13.5px; } }
+
+/* ── Telefon og nettbrett, bryteren MOBIL_FORSIDE = "original" (src/lib/forside.ts): forsiden som før 22. november, med scenen i stedet for kortraden ──
+   Toppen fyller ikke lenger hele skjermen: overskriften står rett under topplinjen, så knappene og scenen med infofeltet synes på første skjermbilde. */
+@media (max-width: 1023px) and (pointer: coarse) {
+  html[data-vis="magasin"] [data-mobil="original"] .mag { min-height: 0; }
+  html[data-vis="magasin"] [data-mobil="original"] .mag-topp { margin-top: 0; padding-top: 1.25rem; }
+  [data-mobil="original"] .mag-knapper { margin-top: 1rem; }
+  [data-mobil="original"] .mag-scene-mobil { padding-bottom: 1.5rem; }
+  [data-mobil="original"] .mag-scene-mobil .fs { margin-top: 16px; }
+}

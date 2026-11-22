@@ -7,8 +7,7 @@ import { KortKarusell } from "./KortKarusell";
 import { KortScene } from "./KortScene";
 import { ListingCard } from "./ListingCard";
 import { TYPES, hasType } from "@/lib/filters";
-import { formatPrice } from "@/lib/format";
-import { frontpageRow } from "@/lib/frontpage-row";
+import { karusellKort } from "@/lib/forside";
 import { marketOrder } from "@/lib/listings";
 import type { Listing } from "@/lib/types";
 
@@ -48,8 +47,6 @@ const TOPP = "scene" as "flis" | "bue" | "scene";
 /** Buen har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
 const I_BUEN = 7;
 
-/** Karusellen øverst viser så mange kort fra forsideraden (Toppannonser, Fremhevet, så kortene admin har valgt). */
-const I_KARUSELLEN = 6;
 
 /**
  * Forsiden på telefon og nettbrett: overskrift, en bue med kort som glir forbi, søk, faner og annonsene.
@@ -84,22 +81,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
   // Har vi færre enn sju egne kort, går de samme kortene rundt flere ganger i buen
   const buen = TOPP === "bue" && egne.length >= 3 ? Array.from({ length: I_BUEN }, (_, i) => egne[i % Math.min(egne.length, I_BUEN)]) : [];
   // Karusellen øverst viser samme kort som kortraden på PC, i samme rekkefølge: betalt plassering først, så kortene admin har valgt
-  const karusell = (TOPP !== "bue" ? frontpageRow(all) : [])
-    .filter((l) => l.image)
-    .slice(0, I_KARUSELLEN)
-    .map((l) => ({
-      href: `/annonse/${l.slug}`,
-      src: l.image!,
-      navn: l.player,
-      sett: l.set ?? "",
-      pris: formatPrice(l.price),
-      sted: l.location ?? "",
-      // Typen uten «Nummerert» (opplaget står ved siden av), høyst to typer
-      type: l.types.filter((t) => t !== "Nummerert").slice(0, 2).join(" + "),
-      opplag: l.numbered ?? "",
-      eksempel: Boolean(l.isExample),
-      loft: l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "",
-    }));
+  const karusell = TOPP !== "bue" ? karusellKort(all) : [];
   const ord = (tekst: string, start: number) =>
     tekst.split(" ").flatMap((w, i) => [
       i ? " " : null,

@@ -16,6 +16,8 @@ import {
 import { Slab } from "@/components/HeroFan";
 import { MagRull } from "@/components/MagRull";
 import { MobilForside } from "@/components/MobilForside";
+import { KortScene } from "@/components/KortScene";
+import { MOBIL_FORSIDE, karusellKort } from "@/lib/forside";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
@@ -46,13 +48,16 @@ export default async function Home() {
       { "@type": "Organization", "@id": `${site}/#virksomhet`, url: site, name: "HOBBYSTRADA", logo: `${site}/icon.png` },
     ],
   };
+  // Telefon og nettbrett: «original» viser de samme seksjonene som PC, med scenen i stedet for kortraden. «ny» viser MobilForside.
+  const original = MOBIL_FORSIDE === "original";
+  const pc = original ? "" : "kun-pc ";
+  const scene = original ? karusellKort(all) : [];
   return (
-    <div className="bg-background">
+    <div className="bg-background" data-mobil={original ? "original" : undefined}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd).replace(/</g, "\\u003c") }} />
-      {/* Telefon og nettbrett: søk, faner og annonser med en gang. PC: overskrift og annonserad som før. */}
-      <MobilForside all={all} />
+      {!original && <MobilForside all={all} />}
       {fanList[0] && (
-        <section className="vis-magasin mag kun-pc flex flex-col justify-between bg-background">
+        <section className={`vis-magasin mag ${pc}flex flex-col justify-between bg-background`}>
           <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
               <div className="mt-d hidden">
@@ -73,8 +78,14 @@ export default async function Home() {
               </div>
             </div>
           </div>
+          {/* Telefon og nettbrett: scenen med kortene på rekke, i stedet for den rullende raden under */}
+          {scene.length > 0 && (
+            <div className="kun-mobil mag-scene-mobil">
+              <KortScene kort={scene} />
+            </div>
+          )}
           {/* Forsideraden glir sakte bortover uten stans (tre kopier, så den aldri får en synlig skjøt). Stopper når musa er over, og kan sveipes på mobil. */}
-          <div className="mag-rull-ramme relative mx-auto w-full max-w-[1320px] select-none overflow-hidden px-6 [touch-action:pan-y] sm:px-8">
+          <div className={`mag-rull-ramme ${scene.length > 0 ? "kun-pc " : ""}relative mx-auto w-full max-w-[1320px] select-none overflow-hidden px-6 [touch-action:pan-y] sm:px-8`}>
             <MagRull className="mag-rull flex w-max pt-3" aria-label="Flere kort">
               {[0, 1, 2].flatMap((k) =>
                 fanList.map((l, i) => (
@@ -100,7 +111,7 @@ export default async function Home() {
           </div>
         </section>
       )}
-      <section className="kun-pc bg-background">
+      <section className={`${pc}bg-background`}>
         <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <h2 className="sr-only">Kategorier</h2>
           <ul className="kat-rad -mx-4 flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:auto-cols-fr sm:grid-flow-col sm:gap-2 sm:overflow-visible sm:rounded-3xl sm:bg-white sm:p-2 sm:ring-1 sm:ring-slate-300/80">
@@ -205,7 +216,7 @@ export default async function Home() {
         </div>
       </section>
       {featured.length > 0 && (
-        <section className="kun-pc bg-background">
+        <section className={`${pc}bg-background`}>
           <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
             <div className="flex items-end justify-between gap-6">
               <div>
@@ -224,7 +235,7 @@ export default async function Home() {
           </div>
         </section>
       )}
-      <section className="kun-pc bg-background">
+      <section className={`${pc}bg-background`}>
         <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <div className="flex items-end justify-between gap-6">
             <div>
