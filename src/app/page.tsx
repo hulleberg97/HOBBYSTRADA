@@ -16,6 +16,7 @@ import {
 import { Slab } from "@/components/HeroFan";
 import { MagRull } from "@/components/MagRull";
 import { MobilForside } from "@/components/MobilForside";
+import { EKS_I_KARUSELL, EKS_PA_ANNONSEKORT } from "@/lib/eksempel";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
@@ -80,7 +81,7 @@ export default async function Home() {
                 fanList.map((l, i) => (
                   <li key={`${k}-${l.slug}`} data-slug={l.slug} className="relative mr-3 shrink-0 lg:mr-4" aria-hidden={k > 0 ? true : undefined}>
                     <Link href={`/annonse/${l.slug}`} className="block transition hover:opacity-90" tabIndex={k > 0 ? -1 : undefined}>
-                      <Slab l={l} eager={k === 0 && i < 6} />
+                      <Slab l={l} eager={k === 0 && i < 6} eksMerke={EKS_I_KARUSELL} />
                     </Link>
                     {/* Liten prislapp under hvert kort, glir med raden */}
                     <Link
@@ -220,7 +221,7 @@ export default async function Home() {
                 <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-            <ListingGrid listings={featured} />
+            <ListingGrid listings={featured} eksMerke={EKS_PA_ANNONSEKORT} />
           </div>
         </section>
       )}
@@ -239,7 +240,7 @@ export default async function Home() {
               <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          <ListingGrid listings={latest} />
+          <ListingGrid listings={latest} eksMerke={EKS_PA_ANNONSEKORT} />
         </div>
       </section>
       <section className="seksjon-alt bg-background">

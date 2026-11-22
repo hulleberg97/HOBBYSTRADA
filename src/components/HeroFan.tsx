@@ -99,12 +99,15 @@ export function Slab({
   mark = "header",
   lasting = "lazy",
   speil = true,
+  eksMerke = true,
 }: {
   l: Listing;
   eager?: boolean;
   mark?: SlabMark;
   lasting?: "lazy" | "eager";
   speil?: boolean;
+  /** Vis merket «Eksempelannonse» nederst på holderen. Styres av bryteren i src/lib/eksempel.ts på forsiden. */
+  eksMerke?: boolean;
 }) {
   const boosted = Boolean(l.frontpage || l.featured);
   const markTitle = l.frontpage ? "Toppannonse" : "Fremhevet";
@@ -165,7 +168,7 @@ export function Slab({
           Annonseløft
         </span>
       )}
-      {l.isExample && (
+      {l.isExample && eksMerke && (
         <span className="absolute bottom-[3%] left-1/2 inline-flex -translate-x-1/2">
           <ExampleBadge size="plate" />
         </span>

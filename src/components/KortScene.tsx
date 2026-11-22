@@ -236,7 +236,7 @@ export function KortScene({
               }}
             >
               {holder && x.l ? (
-                <Slab l={x.l} eager={i === 0} lasting="eager" speil={false} />
+                <Slab l={x.l} eager={i === 0} lasting="eager" speil={false} eksMerke={x.visEks !== false} />
               ) : (
                 <>
                   <Image src={x.src} alt="" {...BILDE} loading="eager" preload={i === 0} fetchPriority={i === 0 ? "high" : "low"} draggable={false} />
