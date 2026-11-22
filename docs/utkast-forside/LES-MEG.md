@@ -29,3 +29,10 @@ Eieren ba om flere forslag for A4.
 - **A4b – Buen:** kortene glir jevnt langs en slak bue uten å stoppe. Kortet i midten er størst.
 - **A4c – Annonsekortene:** store hvite fliser med kortbilde, navn, sett, sted og pris. Naboflisene titter inn fra kantene, og en strek under viser fremdriften. Viser både ekte annonser og eksempelannonser (med merket).
 - **A4d – Scenen:** karusellen ligger først, i et avrundet panel som skifter farge etter kortet. Navn og sett står under, og miniatyrer viser hvilket kort som er fremme. Overskriften står venstrestilt under panelet.
+
+## Runde 4 (22. november): A4b med tydeligere rammer
+
+Eieren ba om A4b (Buen) med litt tydeligere rammer.
+
+- **A4b-1 – Kortrammer:** hvit ramme og tynn mørk strek rundt hvert kort.
+- **A4b-2 – Innrammet felt:** samme kortrammer, og hele karusellen ligger i et avrundet felt med egen kant.

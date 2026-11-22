@@ -360,3 +360,12 @@ toppA4d=f"""<div class="scene opp" style="animation-delay:.1s">{lag}<em><i></i>N
 <div class="t"><h1 class="ord">{ord_("Finn ditt neste kort",0.35)}</h1><p class="opp" style="animation-delay:.6s">Kjøp og selg direkte med andre samlere.</p></div>
 <div class="under opp" style="animation-delay:.75s;padding-top:14px">{SOK}{TO}</div>"""
 open('A4d.html','w',encoding='utf-8').write(skall('A4d',cssA4d,toppA4d))
+
+# ───── A4b med tydeligere rammer ─────
+RAMME=".bue img{border:5px solid #fff;border-radius:14px;box-shadow:0 0 0 1.5px rgb(11 20 38/.2),0 26px 32px -20px rgb(11 20 38/.6)}"
+# 1: hvit ramme og mørk strek rundt hvert kort
+open('A4b1.html','w',encoding='utf-8').write(skall('A4b1',cssA4b+RAMME,toppA4b))
+# 2: samme kortrammer, og hele karusellen ligger i et innrammet felt
+FELT=""".bue{height:300px;margin:14px 12px 0;border-radius:26px;background:linear-gradient(180deg,#f7f8fb,#eef1f6);box-shadow:inset 0 0 0 1.5px #d9dee7}
+.bue::before{opacity:.7}.bue div{top:36px}.spor{margin-top:12px}"""
+open('A4b2.html','w',encoding='utf-8').write(skall('A4b2',cssA4b+RAMME+FELT,toppA4b))
