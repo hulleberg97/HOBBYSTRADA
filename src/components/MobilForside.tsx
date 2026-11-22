@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, BadgeCheckIcon, LayoutGridIcon, PenLineIcon, PlusIcon, SearchIcon, ShirtIcon, StarIcon } from "lucide-react";
 import { ForsideFaner, type Fane } from "./ForsideFaner";
-import { KortBue } from "./KortBue";
+import { KortKarusell } from "./KortKarusell";
 import { ListingCard } from "./ListingCard";
 import { TYPES, hasType } from "@/lib/filters";
+import { formatPrice } from "@/lib/format";
+import { frontpageRow } from "@/lib/frontpage-row";
 import { marketOrder } from "@/lib/listings";
 import type { Listing } from "@/lib/types";
 
@@ -33,8 +35,8 @@ const IKON: Record<string, React.ReactNode> = {
   Base: <BadgeCheckIcon className={ikon} strokeWidth={1.6} aria-hidden="true" />,
 };
 
-/** Buen øverst har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
-const I_BUEN = 7;
+/** Karusellen øverst viser så mange kort fra forsideraden (Toppannonser, Fremhevet, så kortene admin har valgt). */
+const I_KARUSELLEN = 6;
 
 /**
  * Forsiden på telefon og nettbrett: overskrift, en bue med kort som glir forbi, søk, faner og annonsene.
@@ -63,10 +65,22 @@ export function MobilForside({ all }: { all: Listing[] }) {
     // Annonsene ligger under buen, så bildene deres hentes når de nærmer seg skjermen. Kortet midt i buen har førsteprioritet.
     .map((l) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} /> }));
   // Pynten i «Selg kortene dine» er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
-  const egne = eks.flatMap((l) => (l.image ? [{ src: l.image, href: `/annonse/${l.slug}` }] : []));
-  const bilder = egne.slice(0, 2).map((k) => k.src);
-  // Buen bruker også bare egne kort, og et trykk på et kort åpner annonsen. Har vi færre enn sju, går de samme kortene rundt flere ganger.
-  const buen = egne.length >= 3 ? Array.from({ length: I_BUEN }, (_, i) => egne[i % Math.min(egne.length, I_BUEN)]) : [];
+  // Pynten i «Selg kortene dine» er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
+  const bilder = eks.flatMap((l) => (l.image ? [l.image] : [])).slice(0, 2);
+  // Karusellen øverst viser samme kort som kortraden på PC, i samme rekkefølge: betalt plassering først, så kortene admin har valgt
+  const karusell = frontpageRow(all)
+    .filter((l) => l.image)
+    .slice(0, I_KARUSELLEN)
+    .map((l) => ({
+      href: `/annonse/${l.slug}`,
+      src: l.image!,
+      navn: l.player,
+      sett: l.set ?? "",
+      pris: formatPrice(l.price),
+      sted: l.location ?? "",
+      eksempel: Boolean(l.isExample),
+      loft: l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "",
+    }));
   const ord = (tekst: string, start: number) =>
     tekst.split(" ").flatMap((w, i) => [
       i ? " " : null,
@@ -84,9 +98,9 @@ export function MobilForside({ all }: { all: Listing[] }) {
           {ord("neste kort", 2)}
         </h1>
       </div>
-      {/* Kortene glir jevnt langs en slak bue. Et trykk åpner annonsen, og buen kan dras sidelengs. */}
-      {buen.length > 0 && <KortBue kort={buen} />}
-      <div className="fb-under fb-opp" style={{ animationDelay: "0.45s" }}>
+      {/* Liggende fliser med kort, navn og pris. Et trykk åpner annonsen, og raden sveipes sidelengs. */}
+      {karusell.length > 0 && <KortKarusell kort={karusell} />}
+      <div className="fb-under fb-opp" style={{ animationDelay: "0.35s" }}>
         <form action="/sok" role="search" className="fb-sok">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />
           <label className="contents">
