@@ -223,3 +223,7 @@ Eieren ba om andre forslag til skrifttyper som passer forsiden. `skrifter.js` te
 4. Barlow Condensed, fet kursiv med store bokstaver, i overskriften (sporty).
 5. Archivo, ekstra fet og litt bred, i overskriften (sportsmagasin).
 6. Instrument Serif i overskriften, med «neste» i kursiv (elegant, galleri).
+
+## Opprinnelig overskrift (22. november, kveld)
+
+Eieren valgte ingen av skriftforslagene og ba om den opprinnelige overskriften. Grenen `utkast-scene-holder-2` bygger på `utkast-scene-holder` (uten skriftbyttet) og har overskriften fra PC-forsiden: Fraunces, «neste» i kursiv med gull strek under, og underteksten «Markedsplass for kjøp og salg av fotballkort.», midtstilt. Skriften ellers er Schibsted Grotesk som før. Ikke live.
