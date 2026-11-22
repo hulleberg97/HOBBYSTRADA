@@ -62,10 +62,6 @@ export function MobilForside({ all }: { all: Listing[] }) {
   return (
     <section className="kun-mobil pb-2">
       <div className="fb-topp">
-        <p className="fb-pille fb-opp">
-          <i aria-hidden="true" />
-          Norsk markedsplass for fotballkort
-        </p>
         <h1 className="fb-h1">
           {ord("Finn ditt", 0)}
           <br />

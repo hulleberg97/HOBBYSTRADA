@@ -192,7 +192,7 @@ export function Header() {
               <FavoriteCount />
             </Link>
             <Link
-              className="hidden h-10 items-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black lg:flex"
+              className="selg-topp hidden h-10 items-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black sm:flex"
               href="/selg"
             >
               Legg ut kort

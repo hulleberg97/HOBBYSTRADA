@@ -17,7 +17,7 @@ const UTEN = [/^\/annonse\//, /^\/meldinger\/.+/, /^\/auth\//, /^\/annonseloft\/
 const punkt = "relative flex flex-col items-center justify-end gap-0.5 pb-1.5 pt-2 text-[11px] font-semibold text-slate-500 aria-[current=page]:text-primary";
 const ikon = "h-[22px] w-[22px]";
 
-/** Fast meny nederst på telefon og nettbrett: Hjem, Søk, Selg, Meldinger og Min side. Vises ikke på PC, der toppmenyen har det samme. */
+/** Fast meny nederst på telefon og nettbrett: Hjem, Søk, Selg, Meldinger og Min side. Vises ikke på PC (mus eller pekeplate, se globals.css), der toppmenyen har det samme. */
 export function BunnMeny() {
   const path = usePathname();
   const user = useUser();
