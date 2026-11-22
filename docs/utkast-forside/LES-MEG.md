@@ -61,3 +61,12 @@ Eieren spurte om buen kan vise navn og pris. Begge er uten gullmerket.
 - **A4b1p – Under hvert kort:** navn og pris står under hvert kort og følger med langs buen. «Eksempelannonse» står som flik på kortene.
 
 I utkastene er alle kortene eksempelkort. Når dette bygges på ordentlig, hentes kortene fra annonsene, og fliken vises bare på eksempelannonser.
+
+## Runde 8 (22. november): flere varianter av A4b1n (buen med felt for navn og pris)
+
+Eieren ba om flere varianter av A4b1n. I alle ruller teksten opp når neste kort kommer, så feltet aldri står tomt.
+
+- **A4b1n1 – Glassfelt:** feltet er i frostet glass og ligger delvis over midtkortet.
+- **A4b1n2 – Uten ramme:** ingen ramme. Navn og stor pris står midtstilt under buen, med «Eksempelannonse» som liten brikke over.
+- **A4b1n3 – Mørkt felt:** mørk blå med gullstrek nederst, hvit tekst og hvit pilknapp.
+- **A4b1n4 – Søket først:** overskrift på én linje, grå undertekst og søk øverst. Buen ligger under søket, og feltet har pilknapp. Ingen knapper under, så kategoriene og de første annonsene synes.

@@ -483,3 +483,49 @@ bueP=''.join(f'<div style="animation-delay:{j*3-21-10.5:.1f}s"><span class="k">{
 toppP=toppA4b.replace(PILLE,'').replace(bue,bueP)
 assert 'class="k"' in toppP
 open('A4b1p.html','w',encoding='utf-8').write(skall('A4b1p',cssP,toppP.replace('padding-top:18px">','padding-top:14px">')))
+
+# ═════ Runde 8: flere varianter av A4b1n (buen med navn og pris i et felt) ═════
+LAPP=""".spor{display:none}.lapp{position:relative;overflow:hidden}
+.lapp p{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;gap:12px;animation:rull 21s cubic-bezier(.5,0,.3,1) infinite}
+.lapp b{display:block;font-size:16px;font-weight:700;letter-spacing:-.025em;white-space:nowrap}.lapp small{display:block;font-size:12.5px;color:#5b6472;white-space:nowrap}
+.lapp strong{flex:none;font-size:21px;font-weight:800;letter-spacing:-.035em}
+.lapp .h{display:flex;align-items:center;gap:12px}.lapp u{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#0b1426;color:#fff;text-decoration:none}.lapp u svg{width:16px;height:16px}
+@keyframes rull{0%,6.4%{transform:translateY(0)}7.9%{transform:translateY(-115%)}7.91%,92.09%{transform:translateY(115%)}93.6%,100%{transform:translateY(0)}}
+"""
+def ps(fn): return ''.join(f'<p style="animation-delay:{3*j-21}s">{fn(k(n))}</p>' for j,n in enumerate(n7))
+p_std=lambda x: f'<span><b>{x["spiller"]}</b><small>{sett(x).split(" (")[0]}</small></span><strong>{kr(x["pris"])}</strong>'
+p_pil=lambda x: f'<span><b>{x["spiller"]}</b><small>{sett(x).split(" (")[0]}</small></span><span class="h"><strong>{kr(x["pris"])}</strong><u>{I["pil"]}</u></span>'
+BUE=f'<div class="bue opp" style="animation-delay:.45s">{bue}</div>'
+H1=f'<div class="t"><h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>'
+def under(pt): return f'<div class="under opp" style="animation-delay:.7s;padding-top:{pt}px">{SOK}{TO}</div>'
+def felt(inn): return f'<div class="lapp opp" style="animation-delay:.6s">{inn}</div>'
+grunn=cssA4b+RAMME+UTEN+LAPP
+
+# n1: Glassfelt som ligger delvis over midtkortet
+css=grunn+""".bue{height:300px}
+.lapp{z-index:5;height:60px;margin:-66px 34px 0;border-radius:20px;background:rgb(255 255 255/.76);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);box-shadow:inset 0 0 0 1px rgb(255 255 255/.95),0 0 0 1px rgb(11 20 38/.13),0 20px 30px -18px rgb(11 20 38/.6)}
+.lapp p{padding:14px 16px 0}.lapp .eks{z-index:2;border-radius:20px 0 9px 0;height:18px;padding-left:10px}.lapp b{font-size:15px}.lapp small{font-size:12px}.lapp strong{font-size:19px}"""
+open('A4b1n1.html','w',encoding='utf-8').write(skall('A4b1n1',css,H1+BUE+felt(EKS+ps(p_std))+under(22)))
+
+# n2: Uten ramme, midtstilt tekst med stor pris
+css=grunn+""".bue{height:284px}
+.lapp{overflow:visible;margin:0 16px;text-align:center}.lapp .eks{position:relative;display:inline-flex;border-radius:7px;height:20px;padding:0 8px 1px}
+.lapp .r{position:relative;height:58px;margin-top:5px;overflow:hidden}.lapp p{display:block}
+.lapp b{font-size:17px}.lapp strong{display:block;margin-top:1px;font-size:28px;line-height:1.1;letter-spacing:-.04em}"""
+p_midt=lambda x: f'<b>{x["spiller"]}</b><strong>{kr(x["pris"])}</strong>'
+open('A4b1n2.html','w',encoding='utf-8').write(skall('A4b1n2',css,H1+BUE+felt(EKS+f'<div class="r">{ps(p_midt)}</div>')+under(14)))
+
+# n3: Mørkt felt med gullstrek og pilknapp
+css=grunn+""".bue{height:284px}
+.lapp{height:70px;margin:2px 16px 0;border-radius:18px;background:#0b1426;color:#fff;box-shadow:inset 0 -2px 0 #cfa653,0 20px 28px -20px rgb(11 20 38/.85)}
+.lapp .eks{z-index:2;left:16px;top:10px;height:auto;padding:0;background:none;box-shadow:none;border-radius:0;color:#e3c47c;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.lapp p{padding:21px 12px 0 16px}.lapp small{color:rgb(255 255 255/.62)}.lapp u{background:#fff;color:#0b1426}"""
+open('A4b1n3.html','w',encoding='utf-8').write(skall('A4b1n3',css,H1+BUE+felt(EKS+ps(p_pil))+under(16)))
+
+# n4: Søket først. Overskrift på én linje, buen under søket, innrammet felt med pilknapp
+css=grunn+""".t{text-align:left;padding-top:18px}h1{font-size:33px;line-height:1.02}.ut{margin-top:6px;font-size:14.5px;color:#5b6472}
+.bue{height:284px;margin-top:8px}
+.lapp{height:66px;margin:2px 16px 0;border-radius:18px;background:#fff;box-shadow:0 0 0 1.5px rgb(11 20 38/.2),0 18px 26px -22px rgb(11 20 38/.6)}
+.lapp .eks{z-index:2;border-radius:18px 0 9px 0;height:19px}.lapp p{padding:15px 12px 0 16px}"""
+topp4=f'<div class="t"><h1 class="ord">{ord_("Finn ditt neste kort",0.15)}</h1><p class="ut opp" style="animation-delay:.4s">Norsk markedsplass for fotballkort</p></div><div class="under opp" style="animation-delay:.5s;padding-top:14px">{SOK}</div>'
+open('A4b1n4.html','w',encoding='utf-8').write(skall('A4b1n4',css,topp4+BUE.replace('.45s','.6s')+felt(EKS+ps(p_pil)).replace('.6s','.7s')))
