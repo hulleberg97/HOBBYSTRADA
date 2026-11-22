@@ -9,7 +9,7 @@ import type { KarusellKort } from "./KortKarusell";
 
 /** Hvor ofte scenen går til neste kort av seg selv. Den stopper for godt når noen tar på den, og går ikke hvis besøkende har bedt om mindre bevegelse. */
 const NESTE_MS = 3800;
-/** Samme bilde brukes som kort, som miniatyr og som fargeskjær i bakgrunnen, så nettleseren henter det bare én gang. */
+/** Samme bilde brukes som kort og som fargeskjær i bakgrunnen, så nettleseren henter det bare én gang. */
 const BILDE = { width: 300, height: 420, sizes: "174px" } as const;
 
 const wrap = (d: number, n: number) => ((((d + n / 2) % n) + n) % n) - n / 2;
@@ -49,7 +49,7 @@ function TypeIkon({ type }: { type: string }) {
 
 /**
  * Scenen øverst på forsiden (telefon): kortene står på rekke i et panel, med kortet i midten størst.
- * Panelet tar farge etter kortet som er fremme, miniatyrene viser hvor man er, og feltet under viser sett, navn, pris, type og sted.
+ * Panelet tar farge etter kortet som er fremme, og feltet under viser sett, navn, pris, type og sted.
  * Raden kan dras sidelengs, et trykk på et sidekort henter det frem, og et trykk på kortet i midten eller på feltet åpner annonsen.
  */
 export function KortScene({ kort }: { kort: KarusellKort[] }) {
@@ -114,17 +114,6 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
 
   if (!n) return null;
   const k = kort[aktiv];
-  /** Går til kort nummer «i» den korteste veien. */
-  const visKort = (i: number) => {
-    brukt.current = true;
-    let best = Infinity;
-    for (let j = i; j < plasser; j += n) {
-      const d = wrap(j - pos.current, plasser);
-      if (Math.abs(d) < Math.abs(best)) best = d;
-    }
-    gaTil(Math.round(pos.current + best));
-  };
-
   return (
     <section className="fs" aria-roledescription="karusell" aria-label="Utvalgte annonser">
       {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
@@ -227,15 +216,6 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
           );
         })}
       </div>
-      {n > 1 && (
-        <div className="fs-mini" role="group" aria-label="Velg kort">
-          {kort.map((x, i) => (
-            <button key={x.href} type="button" aria-label={`Vis ${x.navn}`} aria-pressed={i === aktiv} onClick={() => visKort(i)}>
-              <Image src={x.src} alt="" {...BILDE} loading="eager" fetchPriority="low" draggable={false} />
-            </button>
-          ))}
-        </div>
-      )}
       <Link href={k.href} prefetch={false} className="fs-info">
         <span key={aktiv} className="fs-inn">
           <span className="fs-rad">

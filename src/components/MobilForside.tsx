@@ -42,7 +42,7 @@ const IKON: Record<string, React.ReactNode> = {
  * «flis»: serif-overskrift med forklarende linje, og en karusell av liggende fliser med kort, navn, pris, type og sted.
  * «bue»:  stor midtstilt overskrift, og en bue med kort som glir forbi (slik forsiden var før 22. november kl. 20).
  * «scene»: samme overskrift som «flis», og en scene der kortene står på rekke i et panel som tar farge etter kortet,
- *          med miniatyrer og et felt med sett, navn, pris, type og sted under.
+ *          og et felt med sett, navn, pris, type og sted under.
  */
 const TOPP = "scene" as "flis" | "bue" | "scene";
 /** Buen har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
