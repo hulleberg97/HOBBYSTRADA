@@ -583,3 +583,42 @@ cssd=glasscss(334,196,28,av="opacity:.7;transform:scale(.96)")+f"""
 .fl .gl div{{margin-top:auto;display:flex;align-items:center;justify-content:space-between}}.fl .gl em{{font-style:normal;font-size:12.5px;color:#475569}}"""
 def flisd(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}">{bilder(x)}<img class="k" src="{x["img"]}"><div class="gl"><small>{kort_sett(x)}</small><b>{x["spiller"]}</b><strong>{kr(x["pris"])}</strong><div><em>{x["sted"]}</em><u>{I["pil"]}</u></div></div></div>'
 bygg_c('A4c4d',cssd,flisd,glasstopp())
+
+# ═════ Runde 10: flere varianter av A4c4d (liggende glassflis) med rolig bakgrunn og tilpasset overskrift ═════
+DKORT=f"""
+.fl .k{{position:absolute;left:20px;top:50%;z-index:2;height:156px;aspect-ratio:5/7;margin-top:-78px;transform:rotate(-3deg);object-fit:cover;border-radius:7px;box-shadow:0 20px 24px -14px rgb(11 20 38/.75),0 0 0 1px rgb(255 255 255/.85)}}
+.fl .eks{{height:20px}}
+.fl .gl{{position:absolute;left:148px;right:10px;top:10px;bottom:10px;z-index:3;display:flex;flex-direction:column;padding:13px 12px 11px 15px;border-radius:18px;{GLASS}}}
+.fl .gl small{{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl b{{margin-top:2px;font-size:17.5px;line-height:1.12}}.fl .gl strong{{margin-top:7px;font-size:24px}}
+.fl .gl div{{margin-top:auto;display:flex;align-items:center;justify-content:space-between}}.fl .gl em{{font-style:normal;font-size:12.5px;color:#475569}}"""
+ENS=".fl .bg{display:none}.fl::before{display:none}"
+VENSTRE=".seg{padding:0;margin-left:16px;width:150px}"
+def dtopp(hode,pt=16): return lambda stripe: hode+f'<div class="stripe opp" style="animation-delay:.45s"><s>{stripe}</s></div><div class="seg opp" style="animation-delay:.6s">{seg}</div>'+under(pt)
+
+# d1: Rolig grå. Alle flisene har samme lyse gråblå flate. Overskriften står venstrestilt på én linje, på linje med flisen.
+css=glasscss(334,196,16,av="opacity:.75;transform:scale(.97)")+DKORT+ENS+VENSTRE+"""
+.fl{background:linear-gradient(160deg,#f2f4f8,#e3e8f0)}.fl .gl{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 0 0 1px rgb(11 20 38/.06),0 12px 22px -16px rgb(11 20 38/.4)}
+.t{text-align:left;padding-top:22px}h1{font-size:33px;line-height:1.02}.ut{margin-top:6px;font-size:15px;color:#5b6472}.stripe{margin-top:18px}"""
+hode1=f'<div class="t"><h1 class="ord">{ord_("Finn ditt neste kort",0.15)}</h1><p class="ut opp" style="animation-delay:.4s">Kjøp og selg fotballkort direkte.</p></div>'
+bygg_c('A4c4d1',css,flisd,dtopp(hode1))
+
+# d2: Dempet kortfarge. Kortets farger ligger bak som et svakt, nesten grått skjær. Overskriften er midtstilt og litt mindre.
+css=glasscss(334,196,28,"rgb(255 255 255/.74),rgb(255 255 255/.62)","opacity:.75;transform:scale(.97)")+DKORT+"""
+.fl .bg{filter:blur(30px) saturate(.5);opacity:.75}h1{font-size:34px;line-height:1}.stripe{margin-top:18px}"""
+bygg_c('A4c4d2',css,flisd,dtopp(H1))
+
+# d3: Hvit flis med kant. Ingen farge bak: hvit flis med tynn mørk kant, kortet på et lysegrått felt. Stor venstrestilt overskrift.
+css=glasscss(334,196,16,av="opacity:.6;transform:scale(.97)")+DKORT+ENS+VENSTRE+"""
+.fl{background:#fff;box-shadow:0 0 0 1.5px rgb(11 20 38/.16),0 24px 36px -26px rgb(11 20 38/.55)}
+.fl::after{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:134px;z-index:1;border-radius:19px;background:#f1f3f7}
+.fl .gl{left:150px;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.t{text-align:left;padding-top:24px}h1{font-size:42px;line-height:.98}.stripe{margin-top:18px}"""
+hode3=f'<div class="t"><h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>'
+bygg_c('A4c4d3',css,flisd,dtopp(hode3))
+
+# d4: Varm lys flate. Alle flisene har samme lyse kremfarge. Overskriften har skriften fra PC-forsiden.
+css=glasscss(334,196,28,av="opacity:.75;transform:scale(.97)")+DKORT+ENS+"""
+.fl{background:linear-gradient(160deg,#f8f5ee,#eee8da)}
+h1{font-family:"Fraunces",serif;font-weight:700;font-size:40px;letter-spacing:-.03em;line-height:1}h1 em{font-style:italic}.stripe{margin-top:18px}"""
+hode4='<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,700&display=swap"><div class="t"><h1 class="ord"><span style="animation-delay:.15s">Finn</span> <span style="animation-delay:.24s">ditt</span><br><span style="animation-delay:.33s"><em>neste</em></span> <span style="animation-delay:.42s">kort</span></h1></div>'
+bygg_c('A4c4d4',css,flisd,dtopp(hode4))

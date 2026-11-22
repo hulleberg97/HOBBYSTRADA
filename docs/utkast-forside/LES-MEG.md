@@ -92,3 +92,12 @@ Eieren ba om flere varianter av A4c4. Alle er uten gullmerket over overskriften.
 - **A4c4b – Lys og luftig:** sterkere hvitt slør så fargene blir pastell, hvit ramme rundt kortet, hvitt felt med kant i stedet for glass, og nabofliser som ikke er utvisket.
 - **A4c4c – Vippet kort:** kortet står litt på skrå med en glans som glir over. Prisen ligger i en egen glassbrikke på kortet, og glassfeltet nederst har navn, sett og pilknapp.
 - **A4c4d – Liggende glassflis:** lav og bred. Kortet står til venstre, og et glassfelt til høyre har sett, navn, stor pris, sted og pilknapp. Tar minst høyde, så fanene og de første annonsene synes.
+
+## Runde 10 (22. november): flere varianter av A4c4d (liggende glassflis)
+
+Eieren ba om flere av A4c4d, med tilpasset overskrift og færre forskjellige farger i bakgrunnen.
+
+- **A4c4d1 – Rolig grå:** alle flisene har samme lyse gråblå flate, og tekstfeltet er hvitt. Overskriften står venstrestilt på én linje, på linje med flisen, med «Kjøp og selg fotballkort direkte.» under.
+- **A4c4d2 – Dempet kortfarge:** kortets farger ligger bak som et svakt, nesten grått skjær. Overskriften er midtstilt og litt mindre.
+- **A4c4d3 – Hvit flis med kant:** ingen farge bak. Hvit flis med tynn mørk kant og kortet på et lysegrått felt. Stor venstrestilt overskrift over to linjer.
+- **A4c4d4 – Varm lys flate:** alle flisene har samme lyse kremfarge. Overskriften har Fraunces (skriften fra PC-forsiden) med «neste» i kursiv.
