@@ -122,4 +122,124 @@ def rad(start):
 toppC=f'''<div class="scene"><div class="rader">{rad(2)}{rad(6)}{rad(10)}</div>
 <div class="glass"><h1 class="ord">{ord_("Finn ditt|neste kort",0.4)}</h1><p>Markedsplass for kjøp og salg av fotballkort.</p>{SOK.replace("Søk spiller, sett eller kortnummer","Søk spiller, sett eller nummer")}<div class="to"><span>Se alle annonser {I["pil"]}</span><span>{I["pluss"]} Legg ut kort</span></div></div></div>'''
 open('C.html','w',encoding='utf-8').write(skall('C',cssC,toppC).replace('<div class="chips" style="margin-top:26px">','<div class="chips" style="margin-top:6px">'))
+
+EKS='<span class="eks">Eksempelannonse</span>'
+TO=f'<div class="to"><span>Se alle annonser {I["pil"]}</span><span>{I["pluss"]} Legg ut kort</span></div>'
+PILLE='<span class="pille opp"><i></i>Norsk markedsplass for fotballkort</span>'
+fellesA=cssA.split(".stokk{")[0]+".under{padding:6px 16px 0}"+cssA.split(".under{padding:6px 16px 0}")[1]
+
+# ───── A2: Viften ─────
+cssA2=fellesA+"""
+.vifte{position:relative;height:296px;margin-top:8px;overflow-x:clip;animation:vugg 5s ease-in-out infinite alternate;transform-origin:50% 150%}
+@keyframes vugg{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+.vifte::before{content:"";position:absolute;left:50%;top:44%;width:330px;height:250px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#fdeccd,#dfeaff 60%,transparent);filter:blur(26px);opacity:.9}
+.vifte div{position:absolute;left:50%;top:44px;width:150px;height:210px;margin-left:-75px;border-radius:10px;transform-origin:50% 150%;box-shadow:0 22px 30px -18px rgb(11 20 38/.6),0 0 0 1px rgb(255 255 255/.9);animation:vift 1.1s cubic-bezier(.2,.9,.25,1) both}
+.vifte img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}
+@keyframes vift{from{transform:rotate(0) translateY(26px);opacity:0}30%{opacity:1}to{transform:rotate(var(--a)) translateY(var(--y));opacity:1}}
+.t2{padding:6px 16px 0;text-align:center}.t2 h1{margin-top:10px}
+"""
+navn=['Scholes','Ronaldinho','Haaland','Zidane','Ronaldo']
+vifte=''.join(f'<div class="{"holo" if i==2 else ""}" style="--a:{(i-2)*15}deg;--y:{abs(i-2)*-4}px;z-index:{5-abs(i-2)};animation-delay:{.25+abs(i-2)*.08:.2f}s"><img src="{k(n)["img"]}"></div>' for i,n in enumerate(navn))
+toppA2=f"""<div class="vifte">{vifte}</div>
+<div class="t2">{PILLE}<h1 class="ord">{ord_("Finn ditt|neste kort",0.7)}</h1></div>
+<div class="under opp" style="animation-delay:1.1s;padding-top:16px">{SOK}{TO}</div>"""
+open('A2.html','w',encoding='utf-8').write(skall('A2',cssA2,toppA2))
+
+# ───── A3: Ett kort som dreier ─────
+cssA3=fellesA+"""
+.t{text-align:left;padding-top:20px}h1{font-size:44px}
+.ett{position:relative;height:330px;margin-top:6px;perspective:900px}
+.ett::before{content:"";position:absolute;left:50%;top:46%;width:300px;height:300px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 40deg,#fde8c4,#d7e6ff,#f6d9ee,#d9f3e6,#fde8c4);filter:blur(44px);opacity:.8;animation:snurr 16s linear infinite}
+@keyframes snurr{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.ett::after{content:"";position:absolute;left:50%;bottom:6px;width:170px;height:22px;margin-left:-85px;border-radius:50%;background:rgb(11 20 38/.28);filter:blur(12px);animation:skygge 5s ease-in-out infinite alternate}
+@keyframes skygge{from{transform:scaleX(.82)}50%{transform:scaleX(1.05)}to{transform:scaleX(.82)}}
+.ett .k{position:absolute;left:50%;top:10px;width:204px;height:286px;margin-left:-102px;border-radius:12px;transform-style:preserve-3d;animation:drei 5s ease-in-out infinite alternate;box-shadow:0 0 0 1px rgb(255 255 255/.9)}
+@keyframes drei{from{transform:rotateY(-24deg) rotateX(5deg)}to{transform:rotateY(24deg) rotateX(-3deg)}}
+.ett .k img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;animation:bytt 9s linear infinite}
+@keyframes bytt{0%{opacity:0}5%,33%{opacity:1}38%,100%{opacity:0}}
+.ett .eks{border-radius:12px 0 9px 0;z-index:3}
+.navn{position:relative;height:44px;margin-top:2px;text-align:center}.navn p{position:absolute;inset:0;animation:bytt 9s linear infinite}.navn b{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em}.navn small{font-size:12.5px;color:#6b7280}
+"""
+tre=[k('Haaland'),k('Ronaldinho'),k('Zidane')]
+bilder=''.join(f'<img src="{x["img"]}" style="animation-delay:{i*3-9}s">' for i,x in enumerate(tre))
+navner=''.join(f'<p style="animation-delay:{i*3-9}s"><b>{x["spiller"]}</b><small>{x["tittel"].split(" – ")[1]}</small></p>' for i,x in enumerate(tre))
+toppA3=f"""<div class="t">{PILLE}<h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>
+<div class="ett opp" style="animation-delay:.45s"><div class="k holo">{bilder}{EKS}</div></div>
+<div class="navn opp" style="animation-delay:.6s">{navner}</div>
+<div class="under opp" style="animation-delay:.75s;padding-top:10px">{SOK}{TO}</div>"""
+open('A3.html','w',encoding='utf-8').write(skall('A3',cssA3,toppA3))
+
+# ───── A4: Karusellen ─────
+cssA4=fellesA+"""
+.kar{position:relative;height:306px;margin-top:16px;overflow-x:clip}
+.kar::before{content:"";position:absolute;left:50%;top:46%;width:300px;height:260px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#e4edff,#fdeed6 62%,transparent);filter:blur(30px)}
+.kar div{position:absolute;left:50%;top:8px;width:196px;height:274px;margin-left:-98px;border-radius:12px;animation:kar 12.5s cubic-bezier(.65,0,.25,1) infinite;box-shadow:0 28px 38px -22px rgb(11 20 38/.6),0 0 0 1px rgb(255 255 255/.9)}
+.kar img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block}
+@keyframes kar{0%,14%{transform:translateX(0) scale(1);opacity:1;z-index:5;filter:none}20%,34%{transform:translateX(-158px) scale(.78);opacity:1;z-index:4;filter:brightness(.92) blur(.6px)}40%,56%{transform:translateX(-280px) scale(.6);opacity:0;z-index:3}57%,74%{transform:translateX(280px) scale(.6);opacity:0;z-index:3}80%,94%{transform:translateX(158px) scale(.78);opacity:1;z-index:4;filter:brightness(.92) blur(.6px)}100%{transform:translateX(0) scale(1);opacity:1;z-index:5;filter:none}}
+.prik{display:flex;justify-content:center;gap:6px;margin-top:2px}.prik i{width:6px;height:6px;border-radius:99px;background:rgb(11 20 38/.18);animation:prik 12.5s linear infinite}
+@keyframes prik{0%,18%{width:22px;background:#0b1426}20%,100%{width:6px;background:rgb(11 20 38/.18)}}
+"""
+kar=''.join(f'<div class="holo" style="animation-delay:-{i*2.5}s"><img src="{k(n)["img"]}"></div>' for i,n in enumerate(['Haaland','Zidane','Ronaldo','Scholes','Ronaldinho']))
+prik=''.join(f'<i style="animation-delay:{i*2.5-12.5}s"></i>' for i in range(5))
+toppA4=f"""<div class="t">{PILLE}<h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>
+<div class="kar opp" style="animation-delay:.45s">{kar}</div><div class="prik opp" style="animation-delay:.6s">{prik}</div>
+<div class="under opp" style="animation-delay:.7s;padding-top:14px">{SOK}{TO}</div>"""
+open('A4.html','w',encoding='utf-8').write(skall('A4',cssA4,toppA4))
+
+# ───── C2: Glassark nederst ─────
+GL="background:rgb(255 255 255/.7);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:0 -18px 50px -24px rgb(11 20 38/.4),inset 0 0 0 1px rgb(255 255 255/.9)"
+TOG=".to{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.to span{height:44px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-size:14px;font-weight:600;background:rgb(255 255 255/.75);box-shadow:inset 0 0 0 1px rgb(11 20 38/.14)}.to span:first-child{background:#0b1426;color:#fff;box-shadow:none}.to svg{width:16px;height:16px}"
+def rekke(start,n=7,stil=''):
+    r=''.join(f'<img src="{K[(start+i)%len(K)]["img"]}">' for i in range(n)); return f'<div style="{stil}">{r}{r}</div>'
+cssC2=f"""
+.scene{{position:relative;height:566px;overflow:hidden;background:linear-gradient(180deg,#f1f4f9,#fff)}}
+.rr{{position:absolute;left:0;right:0;top:14px;display:flex;flex-direction:column;gap:12px}}
+.rr div{{display:flex;gap:12px;width:max-content;animation:drift 50s linear infinite}}.rr div+div{{animation-direction:reverse;animation-duration:62s}}
+.rr img{{width:132px;height:185px;object-fit:cover;border-radius:10px;box-shadow:0 16px 24px -16px rgb(11 20 38/.55)}}@keyframes drift{{to{{transform:translateX(-50%)}}}}
+.ark{{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 16px 20px;border-radius:30px 30px 0 0;{GL};animation:arkinn 1s cubic-bezier(.2,.8,.2,1) .2s both}}
+.ark::before{{content:"";display:block;width:40px;height:4px;margin:-8px auto 14px;border-radius:9px;background:rgb(11 20 38/.16)}}
+@keyframes arkinn{{from{{transform:translateY(60%);opacity:0}}to{{transform:none;opacity:1}}}}
+.ark h1{{font-size:36px;font-weight:800;letter-spacing:-.045em;line-height:1}}.ark p{{margin:7px 0 14px;font-size:14.5px;color:#3f4856}}{TOG}
+"""
+toppC2=f"""<div class="scene"><div class="rr">{rekke(2)}{rekke(7)}</div>
+<div class="ark"><h1 class="ord">{ord_("Finn ditt neste kort",0.55)}</h1><p>Markedsplass for kjøp og salg av fotballkort.</p>{SOK}{TO}</div></div>"""
+open('C2.html','w',encoding='utf-8').write(skall('C2',cssC2,toppC2).replace('<div class="chips" style="margin-top:26px">','<div class="chips" style="margin-top:18px">'))
+
+# ───── C3: Søylene med glass-søk ─────
+cssC3=f"""
+.t{{padding:20px 16px 0}}h1{{font-size:38px;font-weight:800;letter-spacing:-.045em;line-height:1}}.t p{{margin-top:6px;font-size:15px;color:#5b6472}}
+.band{{position:relative;height:330px;margin-top:16px;overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}}
+.sl{{position:absolute;left:10px;right:10px;top:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}}
+.sl div{{display:flex;flex-direction:column;gap:10px;animation:opp2 38s linear infinite}}.sl div:nth-child(2){{animation-direction:reverse;animation-duration:46s}}.sl div:nth-child(3){{animation-duration:42s}}
+.sl img{{width:100%;aspect-ratio:5/7;object-fit:cover;border-radius:9px}}@keyframes opp2{{to{{transform:translateY(-50%)}}}}
+.gs{{position:absolute;left:22px;right:22px;top:50%;z-index:2;margin-top:-34px;padding:8px;border-radius:999px;background:rgb(255 255 255/.5);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 26px 50px -20px rgb(11 20 38/.55),inset 0 0 0 1px rgb(255 255 255/.85);animation:glassinn .9s cubic-bezier(.2,.8,.2,1) .5s both}}
+@keyframes glassinn{{from{{opacity:0;transform:translateY(22px) scale(.95)}}to{{opacity:1;transform:none}}}}
+.gs .sok span{{font-size:14.5px;white-space:nowrap}}
+.under{{padding:4px 16px 0}}{TOG.replace("rgb(255 255 255/.75)","#fff")}
+"""
+def soyle(start):
+    r=''.join(f'<img src="{K[(start+i)%len(K)]["img"]}">' for i in range(5)); return f'<div>{r}{r}</div>'
+toppC3=f"""<div class="t"><h1 class="ord">{ord_("Finn ditt|neste kort",0.05)}</h1><p class="opp" style="animation-delay:.3s">Markedsplass for kjøp og salg av fotballkort.</p></div>
+<div class="band opp" style="animation-delay:.35s"><div class="sl">{soyle(2)}{soyle(6)}{soyle(10)}</div><div class="gs">{SOK.replace("Søk spiller, sett eller kortnummer","Søk spiller, sett eller nummer")}</div></div>
+<div class="under opp" style="animation-delay:.6s">{TO}</div>"""
+open('C3.html','w',encoding='utf-8').write(skall('C3',cssC3,toppC3))
+
+# ───── C4: Dis – uskarp fargebakgrunn og ett skarpt kort ─────
+cssC4=f"""
+.scene{{position:relative;height:540px;overflow:hidden;background:#f6f7fa}}
+.rader{{position:absolute;left:-30%;right:-30%;top:-40px;transform:rotate(-8deg);display:flex;flex-direction:column;gap:12px;filter:blur(22px) saturate(1.5);opacity:.75}}
+.rader div{{display:flex;gap:12px;width:max-content;animation:drift 40s linear infinite}}.rader div:nth-child(2){{animation-direction:reverse;animation-duration:50s}}.rader div:nth-child(3){{animation-duration:45s}}
+.rader img{{width:130px;height:182px;object-fit:cover;border-radius:9px}}@keyframes drift{{to{{transform:translateX(-50%)}}}}
+.scene::after{{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(255 255 255/.35),rgb(255 255 255/.1) 40%,#fff 100%)}}
+.frem{{position:absolute;right:26px;top:26px;z-index:3;width:138px;height:193px;border-radius:10px;box-shadow:0 30px 40px -20px rgb(11 20 38/.6),0 0 0 1px #fff;animation:svev 5s ease-in-out infinite alternate}}
+.frem img{{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}}@keyframes svev{{from{{transform:rotate(9deg) translateY(-6px)}}to{{transform:rotate(6deg) translateY(7px)}}}}
+.glass{{position:absolute;left:16px;right:16px;top:168px;z-index:2;padding:24px 18px 18px;border-radius:28px;background:rgb(255 255 255/.72);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 30px 60px -28px rgb(11 20 38/.4),inset 0 0 0 1px rgb(255 255 255/.9);animation:glassinn .9s cubic-bezier(.2,.8,.2,1) .15s both}}
+@keyframes glassinn{{from{{opacity:0;transform:translateY(26px) scale(.96)}}to{{opacity:1;transform:none}}}}
+.glass small{{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8a6a24}}
+.glass h1{{margin-top:8px;font-size:40px;font-weight:800;letter-spacing:-.045em;line-height:.98}}.glass p{{margin:8px 0 16px;font-size:14.5px;color:#3f4856}}.glass .sok span{{font-size:14.5px;white-space:nowrap}}{TOG}
+"""
+toppC4=f"""<div class="scene"><div class="rader">{rad(2)}{rad(6)}{rad(10)}</div>
+<div class="frem holo opp" style="animation-delay:.5s"><img src="{k("Haaland")["img"]}"></div>
+<div class="glass"><small>Norsk markedsplass</small><h1 class="ord">{ord_("Finn ditt|neste kort",0.4)}</h1><p>Kjøp og selg fotballkort direkte med andre samlere.</p>{SOK.replace("Søk spiller, sett eller kortnummer","Søk spiller, sett eller nummer")}{TO}</div></div>"""
+open('C4.html','w',encoding='utf-8').write(skall('C4',cssC4,toppC4).replace('<div class="chips" style="margin-top:26px">','<div class="chips" style="margin-top:8px">'))
 print('ok')

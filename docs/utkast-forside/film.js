@@ -1,7 +1,7 @@
 // Tar opp en prototype bilde for bilde: animasjonene styres til nøyaktig tid, og siden rulles etter en fast plan.
 const { chromium, devices } = require("playwright"); const path=require("path"); const fs=require("fs");
 (async()=>{ const b=await chromium.launch({proxy:{server:process.env.HTTPS_PROXY}});
- for (const v of (process.argv[2]||"ABC").split("")) {
+ for (const v of (process.argv[2]||"A,B,C").split(",")) {
   const c=await b.newContext({...devices["iPhone 13"],viewport:{width:390,height:780},deviceScaleFactor:2,locale:"nb-NO"}); const p=await c.newPage();
   await p.goto("file://"+path.resolve(v+".html"),{waitUntil:"networkidle"}); await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(500);
   const dir="f-"+v; fs.rmSync(dir,{recursive:true,force:true}); fs.mkdirSync(dir);
