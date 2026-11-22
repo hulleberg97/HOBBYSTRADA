@@ -192,3 +192,15 @@ Eieren sendte filmen `holder-C` og ba om å fjerne «firkanten» rundt karuselle
 - Oppsettet under er uendret og er det samme som i `holder-C`: søkefelt, de to knappene, fanene med ikoner og annonsene.
 
 Kvalitetssikring: scenetestene (simulert berøring, tastatur, «mindre bevegelse», bredder 320–768) er bestått, axe-core fant 0 brudd, og typesjekk og bygg går uten feil.
+
+## Scenen i drakten fra filmen `holder-C` (22. november, kveld)
+
+Eieren svarte «samme utseende men beholde type karusell» på utkastet uten boks. Tolket som: utseendet fra filmen `holder-C`, med scenen som karusell. Utkastet ligger på grenen `utkast-scene-holder` (bygger på `utkast-scene-apen`). Ikke live. Tolkningen er ikke bekreftet.
+
+- Overskriften er den store, midtstilte over to linjer («Finn ditt / neste kort»), uten undertekst, som da buen var live.
+- Kortene i scenen står i holderen med navneplate (`Slab`, samme som kortraden på PC), med «EKSEMPELANNONSE» nederst på holderen. `KortScene` har fått `holder`, og `Slab` har fått `lasting` og `speil`.
+- Scenen virker som før: ett kort fremme, sveip, trykk på sidekort, og infofeltet med sett, navn, pris, type og sted.
+- Annonsekortene på telefon har igjen hvit ramme med skygge, tittelen først og prisen under. Reglene for flat ramme og prisen først er fjernet fra telefonblokken i `globals.css`, så dette gjelder også markedet og søk på telefon.
+- Søkefelt, de to knappene og fanene med ikoner er som i forrige utkast.
+
+Kvalitetssikring: scenetestene er bestått (bredder 320–768), axe-core fant 0 brudd, markedet og søk er sjekket på telefon, og typesjekk og bygg går uten feil.
