@@ -52,3 +52,12 @@ Eieren ba om A4b-1 uten «Norsk markedsplass for fotballkort» i gull.
 
 - **A4b1a – Uten merket:** gullmerket er fjernet helt. Overskriften står alene.
 - **A4b1b – Grå tekst under:** samme tekst står som en rolig grå linje under overskriften.
+
+## Runde 7 (22. november): A4b-1 med navn og pris
+
+Eieren spurte om buen kan vise navn og pris. Begge er uten gullmerket.
+
+- **A4b1n – Felt under buen:** et innrammet felt under buen viser navn, sett og pris for kortet som er i midten, og bytter når neste kort kommer. «Eksempelannonse» står som flik på feltet.
+- **A4b1p – Under hvert kort:** navn og pris står under hvert kort og følger med langs buen. «Eksempelannonse» står som flik på kortene.
+
+I utkastene er alle kortene eksempelkort. Når dette bygges på ordentlig, hentes kortene fra annonsene, og fliken vises bare på eksempelannonser.

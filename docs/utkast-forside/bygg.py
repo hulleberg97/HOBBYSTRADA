@@ -453,3 +453,33 @@ open('A4b1a.html','w',encoding='utf-8').write(skall('A4b1a',cssA4b+RAMME+".t{pad
 # b: teksten står som en rolig grå linje under overskriften
 UNDERT='<p class="ut opp" style="animation-delay:.4s">Norsk markedsplass for fotballkort</p>'
 open('A4b1b.html','w',encoding='utf-8').write(skall('A4b1b',cssA4b+RAMME+".t{padding-top:28px}h1{margin-top:0}.ut{margin-top:10px;font-size:15px;color:#5b6472}",toppA4b.replace(PILLE,'').replace('</h1></div>','</h1>'+UNDERT+'</div>',1)))
+
+# ───── A4b1 med navn og pris ─────
+UTEN=".t{padding-top:30px}h1{margin-top:0}"
+# n: et innrammet felt under buen viser navn, sett og pris for kortet som er i midten
+cssN=cssA4b+RAMME+UTEN+"""
+.bue{height:284px}.spor{display:none}
+.lapp{position:relative;height:66px;margin:2px 16px 0;border-radius:18px;background:#fff;box-shadow:0 0 0 1.5px rgb(11 20 38/.2),0 18px 26px -22px rgb(11 20 38/.6);overflow:hidden}
+.lapp .eks{border-radius:18px 0 9px 0;height:19px}
+.lapp p{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px 0;animation:lapp 21s linear infinite}
+.lapp b{display:block;font-size:16px;font-weight:700;letter-spacing:-.025em;white-space:nowrap}.lapp small{display:block;font-size:12.5px;color:#5b6472;white-space:nowrap}
+.lapp strong{flex:none;font-size:21px;font-weight:800;letter-spacing:-.035em}
+@keyframes lapp{0%,5.6%{opacity:1;transform:none}7.14%{opacity:0;transform:translateX(-14px)}7.15%,92.85%{opacity:0;transform:translateX(14px)}94.4%,100%{opacity:1;transform:none}}
+"""
+lapper=''.join(f'<p style="animation-delay:{3*j-21}s"><span><b>{k(n)["spiller"]}</b><small>{sett(k(n)).split(" (")[0]}</small></span><strong>{kr(k(n)["pris"])}</strong></p>' for j,n in enumerate(n7))
+toppN=toppA4b.replace(PILLE,'').replace('<div class="spor opp" style="animation-delay:.6s"><i></i></div>',f'<div class="lapp opp" style="animation-delay:.6s">{EKS}{lapper}</div>')
+assert 'lapp opp' in toppN
+open('A4b1n.html','w',encoding='utf-8').write(skall('A4b1n',cssN,toppN.replace('padding-top:18px">','padding-top:14px">')))
+
+# p: navn og pris står under hvert kort og følger med langs buen
+cssP=cssA4b+RAMME+UTEN+"""
+.bue{height:338px}.bue img{animation:none;height:210px}
+.bue .k{position:relative;display:block;transform-origin:50% 105px;animation:buestr 21s ease-in-out infinite;animation-delay:inherit}
+.bue .eks{z-index:2;border-radius:14px 0 9px 0}
+.bue em{display:block;margin-top:9px;text-align:center;font-style:normal;white-space:nowrap}.bue em b{display:block;font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#334155}.bue em strong{display:block;font-size:16px;font-weight:800;letter-spacing:-.03em}
+.spor{margin-top:2px}
+"""
+bueP=''.join(f'<div style="animation-delay:{j*3-21-10.5:.1f}s"><span class="k">{EKS}<img src="{k(n)["img"]}"><em><b>{k(n)["spiller"]}</b><strong>{kr(k(n)["pris"])}</strong></em></span></div>' for j,n in enumerate(n7))
+toppP=toppA4b.replace(PILLE,'').replace(bue,bueP)
+assert 'class="k"' in toppP
+open('A4b1p.html','w',encoding='utf-8').write(skall('A4b1p',cssP,toppP.replace('padding-top:18px">','padding-top:14px">')))
