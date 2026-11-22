@@ -41,8 +41,10 @@ export function MobilForside({ all }: { all: Listing[] }) {
   }
   const kort = rekke
     .filter((l) => iFane.has(l.slug))
-    .map((l) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} /> }));
-  const bilder = rekke.flatMap((l) => (l.image ? [l.image] : [])).slice(0, 2);
+    // De to første kortene er det første man ser på telefon, så bildene deres hentes med en gang
+    .map((l, i) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} eager={i < 2} /> }));
+  // Pynten i «Selg kortene dine» er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
+  const bilder = eks.flatMap((l) => (l.image ? [l.image] : [])).slice(0, 2);
 
   return (
     <section className="kun-mobil pb-2">
@@ -66,7 +68,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
       </div>
       {kort.length > 0 && <ForsideFaner faner={faner} kort={kort} />}
       <div className="px-4 pt-9 sm:px-6">
-        <div className="relative min-h-[140px] overflow-hidden rounded-2xl bg-[#f5f1e8] p-5 pr-[158px]">
+        <div className={`relative overflow-hidden rounded-2xl bg-[#f5f1e8] p-5 ${bilder.length ? "min-h-[140px] pr-[158px]" : ""}`}>
           <h2 className="font-heading text-xl font-bold leading-tight tracking-[-0.02em] text-slate-950">Selg kortene dine</h2>
           <p className="mt-1 text-sm leading-snug text-[#5b5648]">Gratis å legge ut. Kjøperne tar kontakt i chatten.</p>
           <Link href="/selg" prefetch={false} className="mt-3 inline-flex h-10 items-center rounded-full bg-primary px-4 text-sm font-semibold text-white">
