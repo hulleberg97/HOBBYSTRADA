@@ -68,20 +68,15 @@ export function MobilForside({ all }: { all: Listing[] }) {
           {ord("neste kort", 2)}
         </h1>
       </div>
+      {/* Kortene glir jevnt langs en slak bue. Ren pynt: skjult for skjermlesere, og et trykk går til markedet. */}
       {buen.length > 0 && (
-        <>
-          {/* Kortene glir jevnt langs en slak bue. Ren pynt: skjult for skjermlesere, og et trykk går til markedet. */}
-          <Link href="/marked" tabIndex={-1} aria-hidden="true" className="fb-bue">
-            {buen.map((src, j) => (
-              <span key={j} style={{ animationDelay: `${j * 3 - 31.5}s` }}>
-                <Image src={src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} />
-              </span>
-            ))}
-          </Link>
-          <div className="fb-spor fb-opp" style={{ animationDelay: "0.4s" }} aria-hidden="true">
-            <i />
-          </div>
-        </>
+        <Link href="/marked" tabIndex={-1} aria-hidden="true" className="fb-bue">
+          {buen.map((src, j) => (
+            <span key={j} style={{ animationDelay: `${j * 3 - 31.5}s` }}>
+              <Image src={src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} />
+            </span>
+          ))}
+        </Link>
       )}
       <div className="fb-under fb-opp" style={{ animationDelay: "0.45s" }}>
         <form action="/sok" role="search" className="fb-sok">

@@ -778,9 +778,7 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 /* Hvert kort dreier om et punkt langt under skjermen, så de følger en slak bue. Kortet i midten er størst. */
 .fb-bue > span { position: absolute; left: 50%; top: 30px; width: 150px; height: 210px; margin-left: -75px; transform-origin: 50% 1505px; animation: fb-bue 21s linear infinite; will-change: transform; }
 .fb-bue img { display: block; width: 100%; height: 100%; object-fit: cover; border: 5px solid #fff; border-radius: 14px; background: #eef1f6; box-shadow: 0 0 0 1.5px rgb(11 20 38 / 0.2), 0 26px 32px -20px rgb(11 20 38 / 0.6); animation: fb-str 21s ease-in-out infinite; animation-delay: inherit; }
-.fb-spor { height: 3px; width: 198px; margin: 8px auto 0; border-radius: 9px; background: rgb(11 20 38 / 0.1); overflow: hidden; }
-.fb-spor i { display: block; width: 34%; height: 100%; border-radius: 9px; background: #0b1426; animation: fb-spor 6s ease-in-out infinite alternate; }
-.fb-under { max-width: 560px; margin: 0 auto; padding: 18px 16px 0; }
+.fb-under { max-width: 560px; margin: 0 auto; padding: 6px 16px 0; }
 .fb-sok { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 6px 0 16px; border-radius: 999px; background: #fff; box-shadow: 0 12px 30px -14px rgb(11 20 38 / 0.35), 0 0 0 1px rgb(11 20 38 / 0.08); }
 .fb-sok:focus-within { box-shadow: 0 12px 30px -14px rgb(11 20 38 / 0.35), 0 0 0 2px #0b1426; }
 .fb-sok input { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: none; outline: none; appearance: none; font-size: 16px; color: #0b1426; }
@@ -796,10 +794,9 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @keyframes fb-opp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes fb-bue { from { transform: rotate(25.9deg); } to { transform: rotate(-25.9deg); } }
 @keyframes fb-str { 0%, 30% { transform: scale(0.86); } 50% { transform: scale(1.16); } 70%, 100% { transform: scale(0.86); } }
-@keyframes fb-spor { from { transform: translateX(0); } to { transform: translateX(194%); } }
 /* Har besøkende bedt om mindre bevegelse, står kortene stille i buen, og teksten vises med en gang */
 @media (prefers-reduced-motion: reduce) {
-  .fb-bue > span, .fb-bue img, .fb-spor i { animation-play-state: paused; }
+  .fb-bue > span, .fb-bue img { animation-play-state: paused; }
   .fb-h1 span, .fb-opp, .fb-bue { animation: none; }
 }
 /* Knappene på telefonforsiden er helt runde i endene, som søkefeltet og knappene i toppen */
