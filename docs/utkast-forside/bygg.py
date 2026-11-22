@@ -369,3 +369,79 @@ open('A4b1.html','w',encoding='utf-8').write(skall('A4b1',cssA4b+RAMME,toppA4b))
 FELT=""".bue{height:300px;margin:14px 12px 0;border-radius:26px;background:linear-gradient(180deg,#f7f8fb,#eef1f6);box-shadow:inset 0 0 0 1.5px #d9dee7}
 .bue::before{opacity:.7}.bue div{top:36px}.spor{margin-top:12px}"""
 open('A4b2.html','w',encoding='utf-8').write(skall('A4b2',cssA4b+RAMME+FELT,toppA4b))
+
+# ═════ Runde 5: flere varianter av A4c (annonsekortene) ═════
+TONE={'Haaland':'#dcebff','Karetsas':'#fbe9c6','Ronaldinho':'#ffe1c9','Williams':'#e7eaf2','Zidane':'#efe8d8'}
+def tone(x): return next(v for n,v in TONE.items() if n in x['spiller'])
+sett2=lambda x: sett(x).replace(' (',' · ').rstrip(')')
+def stripecss(br,pad,n=5,navn='stripe'):
+    return f".stripe s{{display:flex;gap:{br[1]}px;width:max-content;padding-left:{pad}px;text-decoration:none;animation:{navn} {n*S}s cubic-bezier(.65,0,.25,1) infinite}}"+steg(navn,[f'transform:translateX({-(n+i)*br[0]}px)' for i in range(n)]).replace(f'100%{{transform:translateX({-n*br[0]}px)}}',f'100%{{transform:translateX({-2*n*br[0]}px)}}')
+SEG=f""".seg{{display:flex;gap:5px;padding:0 120px;margin-top:-14px}}.seg i{{position:relative;flex:1;height:3px;border-radius:9px;background:rgb(11 20 38/.12);overflow:hidden}}
+.seg i::after{{content:"";position:absolute;inset:0;border-radius:9px;background:#0b1426;transform-origin:0 50%;animation:fyll {5*S}s linear infinite;animation-delay:inherit}}
+@keyframes fyll{{0%{{transform:scaleX(0)}}20%{{transform:scaleX(1)}}20.01%,100%{{transform:scaleX(0)}}}}"""
+HJ=f'<i class="hj">{I["hjerte"]}</i>'
+HJCSS=".hj{position:absolute;right:9px;top:9px;z-index:3;width:32px;height:32px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px -4px rgb(11 20 38/.3)}.hj svg{width:17px;height:17px}"
+def bygg_c(navn, css, flisfn, topp_fn, kopier=3):
+    stripe=''.join(flisfn(x,j) for j,x in enumerate(fem))*kopier
+    open(navn+'.html','w',encoding='utf-8').write(skall(navn,fellesA+css,topp_fn(stripe)))
+def std_topp(stripe, h="Finn ditt|neste kort"):
+    return f"""<div class="t">{PILLE}<h1 class="ord">{ord_(h,0.15)}</h1></div>
+<div class="stripe opp" style="animation-delay:.45s"><s>{stripe}</s></div><div class="seg opp" style="animation-delay:.6s">{seg}</div>
+<div class="under opp" style="animation-delay:.7s;padding-top:16px">{SOK}{TO}</div>"""
+
+# ───── A4c1: Skarp flis (fargetonet bildefelt, ingen avkuttet tekst, tydelige naboer) ─────
+css1=f"""h1{{font-size:38px}}.stripe{{margin-top:16px;padding:4px 0 30px;overflow:clip}}{stripecss((298,12),52)}
+.fl{{width:286px;flex:none;padding:8px 8px 14px;border-radius:24px;background:#fff;box-shadow:0 26px 40px -28px rgb(11 20 38/.6),0 0 0 1px rgb(11 20 38/.09);animation:akt {5*S}s cubic-bezier(.65,0,.25,1) infinite}}
+{steg('akt',['opacity:1;transform:scale(1)']+['opacity:.92;transform:scale(.95)']*4)}
+.fl .b{{position:relative;height:226px;border-radius:17px;background:linear-gradient(170deg,var(--c),#f6f7fa 120%);display:flex;align-items:center;justify-content:center;overflow:hidden}}
+.fl .b img{{height:196px;aspect-ratio:5/7;object-fit:cover;border-radius:7px;box-shadow:0 18px 24px -14px rgb(11 20 38/.6),0 0 0 1px rgb(255 255 255/.8)}}
+.fl .eks{{border-radius:17px 0 9px 0}}{HJCSS}
+.fl .i{{padding:12px 8px 0}}.fl .i b{{display:block;font-size:17px;font-weight:700;letter-spacing:-.025em;white-space:nowrap}}.fl .i small{{display:block;margin-top:1px;font-size:13px;color:#5b6472;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.fl .r{{display:flex;align-items:baseline;justify-content:space-between;margin-top:8px}}.fl .r strong{{font-size:22px;font-weight:800;letter-spacing:-.035em}}.fl .r em{{font-style:normal;font-size:13px;color:#5b6472}}
+{SEG}"""
+def flis1(x,j): return f'<div class="fl" style="--c:{tone(x)};animation-delay:{forsink(j,5)}"><div class="b">{EKS if x["eks"] else ""}<img src="{x["img"]}">{HJ}</div><div class="i"><b>{x["spiller"]}</b><small>{sett2(x)}</small><div class="r"><strong>{kr(x["pris"])}</strong><em>{x["sted"]}</em></div></div></div>'
+bygg_c('A4c1',css1,flis1,std_topp)
+
+# ───── A4c2: Hylla (søket først, så en hylle med to kort i bredden) ─────
+css2=f""".t{{text-align:left;padding-top:18px}}h1{{margin-top:0;font-size:33px;line-height:1.02}}.t p{{margin-top:6px;font-size:14.5px;color:#475569}}
+.hode{{display:flex;align-items:baseline;justify-content:space-between;padding:22px 16px 0}}.hode b{{font-size:19px;font-weight:700;letter-spacing:-.03em}}.hode span{{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600}}.hode svg{{width:15px;height:15px}}
+.stripe{{margin-top:10px;padding:2px 0 4px;overflow:clip}}{stripecss((176,10),16)}
+.fl{{width:166px;flex:none}}.fl .b{{position:relative;height:196px;border-radius:16px;background:#f4f4f5;display:flex;align-items:center;justify-content:center;overflow:hidden}}
+.fl .b img{{height:164px;aspect-ratio:5/7;object-fit:cover;border-radius:6px;box-shadow:0 16px 22px -14px rgb(11 20 38/.55)}}
+.fl .eks{{border-radius:16px 0 9px 0}}{HJCSS}.hj{{width:30px;height:30px}}
+.fl strong{{display:block;margin-top:9px;font-size:17px;font-weight:700;letter-spacing:-.02em}}.fl p{{font-size:13.5px;color:#334155;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl small{{display:block;font-size:12px;color:#6b7280}}"""
+def flis2(x,j): return f'<div class="fl"><div class="b">{EKS if x["eks"] else ""}<img src="{x["img"]}">{HJ}</div><strong>{kr(x["pris"])}</strong><p>{x["spiller"]}</p><small>{x["sted"]}</small></div>'
+def topp2(stripe): return f"""<div class="t"><h1 class="ord">{ord_("Finn ditt neste kort",0.15)}</h1><p class="opp" style="animation-delay:.4s">Kjøp og selg fotballkort direkte med andre samlere.</p></div>
+<div class="under opp" style="animation-delay:.5s;padding-top:14px">{SOK}</div>
+<div class="hode opp" style="animation-delay:.6s"><b>Utvalgte kort</b><span>Se alle {I["pil"]}</span></div>
+<div class="stripe opp" style="animation-delay:.7s"><s>{stripe}</s></div>"""
+bygg_c('A4c2',css2,flis2,topp2,kopier=4)
+
+# ───── A4c3: Liggende flis (kortet til venstre, navn og stor pris til høyre) ─────
+css3=f"""h1{{font-size:38px}}.stripe{{margin-top:18px;padding:4px 0 30px;overflow:clip}}{stripecss((340,10),16)}
+.fl{{display:flex;width:330px;height:196px;flex:none;padding:8px;border-radius:24px;background:#fff;box-shadow:0 26px 40px -28px rgb(11 20 38/.6),0 0 0 1px rgb(11 20 38/.09);animation:akt {5*S}s cubic-bezier(.65,0,.25,1) infinite}}
+{steg('akt',['opacity:1']+['opacity:.6']*4)}
+.fl .b{{position:relative;flex:none;width:136px;border-radius:17px;background:linear-gradient(170deg,var(--c),#f6f7fa 130%);display:flex;align-items:center;justify-content:center;overflow:hidden}}
+.fl .b img{{height:150px;aspect-ratio:5/7;object-fit:cover;border-radius:6px;box-shadow:0 16px 22px -14px rgb(11 20 38/.6),0 0 0 1px rgb(255 255 255/.8);transform:rotate(-3deg)}}
+.fl .eks{{border-radius:17px 0 9px 0}}
+.fl .i{{flex:1;min-width:0;display:flex;flex-direction:column;padding:8px 6px 4px 14px}}.fl .i small{{font-size:12.5px;color:#5b6472;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.fl .i b{{margin-top:3px;font-size:18px;font-weight:700;letter-spacing:-.03em;line-height:1.12}}.fl .i strong{{margin-top:8px;font-size:25px;font-weight:800;letter-spacing:-.04em}}
+.fl .r{{margin-top:auto;display:flex;align-items:center;justify-content:space-between}}.fl .r em{{font-style:normal;font-size:13px;color:#5b6472}}.fl .r u{{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#0b1426;color:#fff;text-decoration:none}}.fl .r svg{{width:17px;height:17px}}
+{SEG}"""
+def flis3(x,j): return f'<div class="fl" style="--c:{tone(x)};animation-delay:{forsink(j,5)}"><div class="b">{EKS if x["eks"] else ""}<img src="{x["img"]}"></div><div class="i"><small>{sett(x).split(" (")[0]}</small><b>{x["spiller"]}</b><strong>{kr(x["pris"])}</strong><div class="r"><em>{x["sted"]}</em><u>{I["pil"]}</u></div></div></div>'
+bygg_c('A4c3',css3,flis3,std_topp)
+
+# ───── A4c4: Glassflis (kortets egne farger som bakgrunn, navn og pris på frostet glass) ─────
+css4=f"""h1{{font-size:38px}}.stripe{{margin-top:16px;padding:4px 0 30px;overflow:clip}}{stripecss((302,12),50)}
+.fl{{position:relative;width:290px;height:326px;flex:none;border-radius:26px;overflow:hidden;background:#eef1f6;box-shadow:0 26px 40px -28px rgb(11 20 38/.65),0 0 0 1px rgb(11 20 38/.09);animation:akt {5*S}s cubic-bezier(.65,0,.25,1) infinite}}
+{steg('akt',['opacity:1;transform:scale(1)']+['opacity:.85;transform:scale(.94)']*4)}
+.fl .bg{{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(26px) saturate(1.5);opacity:.85}}
+.fl::before{{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgb(255 255 255/.5),rgb(255 255 255/.28))}}
+.fl .k{{position:absolute;left:50%;top:18px;z-index:2;height:216px;aspect-ratio:5/7;transform:translateX(-50%);object-fit:cover;border-radius:8px;box-shadow:0 22px 28px -16px rgb(11 20 38/.7),0 0 0 1px rgb(255 255 255/.85)}}
+.fl .eks{{z-index:3;border-radius:26px 0 9px 0;height:22px;padding:0 9px 1px 12px}}{HJCSS}.hj{{right:11px;top:11px}}
+.fl .gl{{position:absolute;left:9px;right:9px;bottom:9px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px 12px;border-radius:18px;background:rgb(255 255 255/.76);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);box-shadow:inset 0 0 0 1px rgb(255 255 255/.9),0 10px 20px -14px rgb(11 20 38/.5)}}
+.fl .gl p{{min-width:0}}.fl .gl b{{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.025em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl small{{display:block;font-size:12.5px;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.fl .gl strong{{flex:none;font-size:18.5px;font-weight:800;letter-spacing:-.035em}}
+{SEG}"""
+def flis4(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}"><img class="bg" src="{x["img"]}">{EKS if x["eks"] else ""}<img class="k" src="{x["img"]}">{HJ}<div class="gl"><p><b>{x["spiller"]}</b><small>{sett(x).split(" (")[0]}</small></p><strong>{kr(x["pris"])}</strong></div></div>'
+bygg_c('A4c4',css4,flis4,std_topp)

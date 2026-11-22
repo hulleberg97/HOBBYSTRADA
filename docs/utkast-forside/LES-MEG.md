@@ -36,3 +36,12 @@ Eieren ba om A4b (Buen) med litt tydeligere rammer.
 
 - **A4b-1 – Kortrammer:** hvit ramme og tynn mørk strek rundt hvert kort.
 - **A4b-2 – Innrammet felt:** samme kortrammer, og hele karusellen ligger i et avrundet felt med egen kant.
+
+## Runde 5 (22. november): flere varianter av A4c (Annonsekortene)
+
+Eieren ba om flere optimaliserte design for A4c.
+
+- **A4c-1 – Skarp flis:** bildefeltet har en svak farge som passer kortet, navn og sett står på egne linjer uten avkutting, prisen er større, og naboflisene er tydelige i stedet for utvisket.
+- **A4c-2 – Hylla:** overskrift og søk først, deretter en hylle «Utvalgte kort» med to kort i bredden som flytter seg ett kort om gangen. Ingen knapper under, så kategoriene og de første annonsene synes på første skjermbilde.
+- **A4c-3 – Liggende flis:** lav, bred flis med kortet til venstre og sett, navn, stor pris, sted og pilknapp til høyre. Tar minst høyde av flisvariantene.
+- **A4c-4 – Glassflis:** kortets egne farger ligger uskarpt som bakgrunn i flisen, og navn og pris står på et felt i frostet glass nederst.
