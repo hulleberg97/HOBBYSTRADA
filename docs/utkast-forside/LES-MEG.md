@@ -181,3 +181,14 @@ Eieren sendte filmen av scenen uten småbilder og ba om «denne type karusell me
 - Bunnmenyen og dagens kortstil på telefon (flat ramme, prisen først) er beholdt.
 
 Kvalitetssikring: `test-original-scene.js` (16 kontroller: scenen med simulert berøring, tastatur og «mindre bevegelse», original forside på telefon, PC i bredt og smalt vindu, bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 88–89).
+
+## Scenen uten boks (22. november, kveld)
+
+Eieren sendte filmen `holder-C` og ba om å fjerne «firkanten» rundt karusellen, gjøre bakgrunnen hvit som originalen, fylle hele bredden, og ha knappene som i den filmen (søkefelt, «Se alle annonser» og «Legg ut kort» side om side, så fanene). Utkastet ligger på grenen `utkast-scene-apen` (bygger på `utkast-scene-valgt`, altså den nye telefonforsiden med scenen øverst og uten småbilder). Ikke live.
+
+- `KortScene` har fått `apen`: ingen avrundet boks og ikke noe fargeskjær. Kortene står rett på den hvite siden og går ut til kantene (kortet i midten er 164 px på en vanlig telefon).
+- Merket «Eksempelannonse» står på kortet som er fremme og tones bort på kortene ved siden av, i stedet for i hjørnet av boksen.
+- Infofeltet har fått tynn kant og skygge, og står på linje med søkefeltet.
+- Oppsettet under er uendret og er det samme som i `holder-C`: søkefelt, de to knappene, fanene med ikoner og annonsene.
+
+Kvalitetssikring: scenetestene (simulert berøring, tastatur, «mindre bevegelse», bredder 320–768) er bestått, axe-core fant 0 brudd, og typesjekk og bygg går uten feil.
