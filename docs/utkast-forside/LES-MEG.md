@@ -83,3 +83,12 @@ Eieren ba om flere overskrifter og utforminger. `overskrifter.js` tegner åtte f
 6. «Finn ditt neste kort» på én linje med liten grå linje «Fra samler til samler» over.
 7. «Jakten på neste kort starter her» med Fraunces, andre linje i kursiv.
 8. «Norsk markedsplass for fotballkort» med Sora, og linjen «Kjøp og selg direkte med andre samlere.» under.
+
+## Runde 9 (22. november): flere varianter av A4c4 (Glassflisen)
+
+Eieren ba om flere varianter av A4c4. Alle er uten gullmerket over overskriften.
+
+- **A4c4a – Bred glassflis:** flisen går nesten i full bredde med større kort. Glassfeltet har navn og pris på første linje, og sett og «Se annonsen» på andre.
+- **A4c4b – Lys og luftig:** sterkere hvitt slør så fargene blir pastell, hvit ramme rundt kortet, hvitt felt med kant i stedet for glass, og nabofliser som ikke er utvisket.
+- **A4c4c – Vippet kort:** kortet står litt på skrå med en glans som glir over. Prisen ligger i en egen glassbrikke på kortet, og glassfeltet nederst har navn, sett og pilknapp.
+- **A4c4d – Liggende glassflis:** lav og bred. Kortet står til venstre, og et glassfelt til høyre har sett, navn, stor pris, sted og pilknapp. Tar minst høyde, så fanene og de første annonsene synes.

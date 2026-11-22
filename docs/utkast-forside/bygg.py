@@ -529,3 +529,57 @@ css=grunn+""".t{text-align:left;padding-top:18px}h1{font-size:33px;line-height:1
 .lapp .eks{z-index:2;border-radius:18px 0 9px 0;height:19px}.lapp p{padding:15px 12px 0 16px}"""
 topp4=f'<div class="t"><h1 class="ord">{ord_("Finn ditt neste kort",0.15)}</h1><p class="ut opp" style="animation-delay:.4s">Norsk markedsplass for fotballkort</p></div><div class="under opp" style="animation-delay:.5s;padding-top:14px">{SOK}</div>'
 open('A4b1n4.html','w',encoding='utf-8').write(skall('A4b1n4',css,topp4+BUE.replace('.45s','.6s')+felt(EKS+ps(p_pil)).replace('.6s','.7s')))
+
+# ═════ Runde 9: flere varianter av A4c4 (glassflisen). Uten gullmerket over overskriften. ═════
+GLASS="background:rgb(255 255 255/.78);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);box-shadow:inset 0 0 0 1px rgb(255 255 255/.9),0 10px 20px -14px rgb(11 20 38/.5)"
+def glasscss(W,H,pad,slor="rgb(255 255 255/.5),rgb(255 255 255/.28)",av="opacity:.85;transform:scale(.94)"):
+    return UTEN+f"""h1{{font-size:38px}}.stripe{{margin-top:16px;padding:4px 0 30px;overflow:clip}}{stripecss((W+12,12),pad)}
+.fl{{position:relative;width:{W}px;height:{H}px;flex:none;border-radius:26px;overflow:hidden;background:#eef1f6;box-shadow:0 26px 40px -28px rgb(11 20 38/.65),0 0 0 1px rgb(11 20 38/.09);animation:akt {5*S}s cubic-bezier(.65,0,.25,1) infinite}}
+{steg('akt',['opacity:1;transform:scale(1)']+[av]*4)}
+.fl .bg{{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(26px) saturate(1.5);opacity:.85}}
+.fl::before{{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,{slor})}}
+.fl .eks{{z-index:4;border-radius:26px 0 9px 0;height:22px;padding:0 9px 1px 12px}}{HJCSS}.hj{{right:11px;top:11px;z-index:4}}
+.fl b{{display:block;font-weight:700;letter-spacing:-.025em}}.fl small{{display:block;color:#475569}}.fl strong{{font-weight:800;letter-spacing:-.035em}}
+.fl u{{flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#0b1426;color:#fff;text-decoration:none}}.fl u svg{{width:16px;height:16px}}
+{SEG}"""
+def glasstopp(pt=16): return lambda stripe: H1+f'<div class="stripe opp" style="animation-delay:.45s"><s>{stripe}</s></div><div class="seg opp" style="animation-delay:.6s">{seg}</div>'+under(pt)
+def bilder(x): return f'<img class="bg" src="{x["img"]}">{EKS if x["eks"] else ""}'
+kort_sett=lambda x: sett(x).split(" (")[0]
+
+# a: Bred glassflis. Nesten full bredde, større kort, navn og pris på første linje og sett og «Se annonsen» på andre.
+cssa=glasscss(334,352,28)+f"""
+.fl .k{{position:absolute;left:50%;top:18px;z-index:2;height:232px;aspect-ratio:5/7;transform:translateX(-50%);object-fit:cover;border-radius:9px;box-shadow:0 22px 28px -16px rgb(11 20 38/.7),0 0 0 1px rgb(255 255 255/.85)}}
+.fl .gl{{position:absolute;left:10px;right:10px;bottom:10px;z-index:3;padding:11px 15px 12px;border-radius:19px;{GLASS}}}
+.fl .gl div{{display:flex;align-items:baseline;justify-content:space-between;gap:12px}}.fl .gl b{{font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl strong{{flex:none;font-size:19px}}
+.fl .gl small{{font-size:12.5px;white-space:nowrap}}.fl .gl em{{display:flex;align-items:center;gap:5px;font-style:normal;font-size:12.5px;font-weight:600;color:#0b1426}}.fl .gl em svg{{width:13px;height:13px}}"""
+def flisa(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}">{bilder(x)}<img class="k" src="{x["img"]}">{HJ}<div class="gl"><div><b>{x["spiller"]}</b><strong>{kr(x["pris"])}</strong></div><div style="margin-top:2px"><small>{kort_sett(x)}</small><em>Se annonsen {I["pil"]}</em></div></div></div>'
+bygg_c('A4c4a',cssa,flisa,glasstopp(14))
+
+# b: Lys og luftig. Sterkere hvitt slør så fargene blir pastell, hvit ramme rundt kortet, tydelige nabofliser.
+cssb=glasscss(290,330,50,"rgb(255 255 255/.7),rgb(255 255 255/.52)","opacity:1;transform:scale(.94)")+f"""
+.fl{{box-shadow:0 26px 40px -28px rgb(11 20 38/.5),0 0 0 1.5px rgb(11 20 38/.12)}}
+.fl .k{{position:absolute;left:50%;top:20px;z-index:2;height:214px;aspect-ratio:5/7;transform:translateX(-50%);object-fit:cover;border:5px solid #fff;border-radius:13px;box-shadow:0 0 0 1.5px rgb(11 20 38/.18),0 22px 28px -18px rgb(11 20 38/.6)}}
+.fl .gl{{position:absolute;left:9px;right:9px;bottom:9px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px 12px;border-radius:18px;background:#fff;box-shadow:0 0 0 1.5px rgb(11 20 38/.12)}}
+.fl .gl p{{min-width:0}}.fl .gl b{{font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl small{{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl strong{{flex:none;font-size:18.5px}}"""
+def flisb(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}">{bilder(x)}<img class="k" src="{x["img"]}">{HJ}<div class="gl"><p><b>{x["spiller"]}</b><small>{kort_sett(x)}</small></p><strong>{kr(x["pris"])}</strong></div></div>'
+bygg_c('A4c4b',cssb,flisb,glasstopp())
+
+# c: Vippet kort med glans. Kortet står litt på skrå med en glans som glir over, og prisen ligger i en egen glassbrikke på kortet.
+cssc=glasscss(290,330,50)+f"""
+.fl .k{{position:absolute;left:50%;top:20px;z-index:2;height:214px;aspect-ratio:5/7;margin-left:-76px;transform:rotate(-4deg);border-radius:9px;box-shadow:0 26px 30px -16px rgb(11 20 38/.75),0 0 0 1px rgb(255 255 255/.85)}}
+.fl .k img{{width:100%;height:100%;object-fit:cover;border-radius:9px;display:block}}
+.fl .pp{{position:absolute;right:16px;top:184px;z-index:4;padding:8px 13px 9px;border-radius:999px;{GLASS};font-size:17.5px}}
+.fl .gl{{position:absolute;left:9px;right:9px;bottom:9px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px 10px 14px;border-radius:18px;{GLASS}}}
+.fl .gl p{{min-width:0}}.fl .gl b{{font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl small{{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}"""
+def flisc(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}">{bilder(x)}<div class="k holo"><img src="{x["img"]}"></div>{HJ}<strong class="pp">{kr(x["pris"])}</strong><div class="gl"><p><b>{x["spiller"]}</b><small>{kort_sett(x)}</small></p><u>{I["pil"]}</u></div></div>'
+bygg_c('A4c4c',cssc,flisc,glasstopp())
+
+# d: Liggende glassflis. Lav og bred: kortet til venstre, glassfelt til høyre med sett, navn, stor pris og pilknapp.
+cssd=glasscss(334,196,28,av="opacity:.7;transform:scale(.96)")+f"""
+.fl .k{{position:absolute;left:20px;top:50%;z-index:2;height:156px;aspect-ratio:5/7;margin-top:-78px;transform:rotate(-3deg);object-fit:cover;border-radius:7px;box-shadow:0 20px 24px -14px rgb(11 20 38/.75),0 0 0 1px rgb(255 255 255/.85)}}
+.fl .eks{{height:20px}}
+.fl .gl{{position:absolute;left:148px;right:10px;top:10px;bottom:10px;z-index:3;display:flex;flex-direction:column;padding:13px 12px 11px 15px;border-radius:18px;{GLASS}}}
+.fl .gl small{{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .gl b{{margin-top:2px;font-size:17.5px;line-height:1.12}}.fl .gl strong{{margin-top:7px;font-size:24px}}
+.fl .gl div{{margin-top:auto;display:flex;align-items:center;justify-content:space-between}}.fl .gl em{{font-style:normal;font-size:12.5px;color:#475569}}"""
+def flisd(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}">{bilder(x)}<img class="k" src="{x["img"]}"><div class="gl"><small>{kort_sett(x)}</small><b>{x["spiller"]}</b><strong>{kr(x["pris"])}</strong><div><em>{x["sted"]}</em><u>{I["pil"]}</u></div></div></div>'
+bygg_c('A4c4d',cssd,flisd,glasstopp())
