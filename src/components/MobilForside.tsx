@@ -78,6 +78,9 @@ export function MobilForside({ all }: { all: Listing[] }) {
       sett: l.set ?? "",
       pris: formatPrice(l.price),
       sted: l.location ?? "",
+      // Typen uten «Nummerert» (opplaget står ved siden av), høyst to typer
+      type: l.types.filter((t) => t !== "Nummerert").slice(0, 2).join(" + "),
+      opplag: l.numbered ?? "",
       eksempel: Boolean(l.isExample),
       loft: l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "",
     }));

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRightIcon, CrownIcon } from "lucide-react";
+import { ArrowRightIcon, BadgeCheckIcon, CrownIcon, MapPinIcon, PenLineIcon, ShirtIcon, StarIcon } from "lucide-react";
 import { ExampleBadge } from "./ExampleBadge";
 
 export type KarusellKort = {
@@ -13,10 +13,23 @@ export type KarusellKort = {
   sett: string;
   pris: string;
   sted: string;
+  /** Korttypen som vises med ikon («Autograf», «Autograf + Patch» …), og opplaget hvis kortet er nummerert («02/10»). Begge kan være tomme. */
+  type: string;
+  opplag: string;
   eksempel: boolean;
   /** Betalt plassering: «Toppannonse», «Fremhevet» eller tom. Merkes alltid med «Annonseløft» (markedsføringsloven § 8). */
   loft: string;
 };
+
+/** Ikonet følger den første korttypen, med de samme ikonene som på fanene under. */
+function TypeIkon({ type }: { type: string }) {
+  const cls = "h-[13px] w-[13px] shrink-0";
+  if (type.startsWith("Autograf")) return <PenLineIcon className={cls} strokeWidth={1.9} aria-hidden="true" />;
+  if (type.startsWith("Patch")) return <ShirtIcon className={cls} strokeWidth={1.9} aria-hidden="true" />;
+  if (type.startsWith("Rookie")) return <StarIcon className={cls} strokeWidth={1.9} aria-hidden="true" />;
+  if (type.startsWith("Base")) return <BadgeCheckIcon className={cls} strokeWidth={1.9} aria-hidden="true" />;
+  return null;
+}
 
 /** Hvor ofte karusellen går til neste kort av seg selv, og hvor lenge den venter etter at noen har tatt på den. */
 const NESTE_MS = 3400;
@@ -88,6 +101,13 @@ export function KortKarusell({ kort }: { kort: KarusellKort[] }) {
             <small>{k.sett}</small>
             <b>{k.navn}</b>
             <strong>{k.pris}</strong>
+            {(k.type || k.opplag) && (
+              <span className="fk-type">
+                {k.type && <TypeIkon type={k.type} />}
+                {k.type && <span>{k.type}</span>}
+                {k.opplag && <u>{k.type ? `· ${k.opplag}` : `Opplag ${k.opplag}`}</u>}
+              </span>
+            )}
             {k.loft && (
               <span title={k.loft} className="mt-1.5 inline-flex items-center gap-1 self-start rounded-full bg-accent px-2 py-1 text-[11px] font-semibold text-accent-foreground">
                 {k.loft === "Toppannonse" && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
@@ -95,7 +115,10 @@ export function KortKarusell({ kort }: { kort: KarusellKort[] }) {
               </span>
             )}
             <span className="fk-bunn">
-              <em>{k.sted}</em>
+              <em>
+                {k.sted && <MapPinIcon className="h-[13px] w-[13px] shrink-0" strokeWidth={1.9} aria-hidden="true" />}
+                <span>{k.sted}</span>
+              </em>
               <i aria-hidden="true">
                 <ArrowRightIcon className="h-4 w-4" />
               </i>
