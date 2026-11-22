@@ -103,7 +103,7 @@ export function KortBue({ kort, holder = false }: { kort: { src: string; href: s
         <span key={j} style={{ animationDelay: `${j * 3 - 31.5}s` }}>
           <Link href={k.href} prefetch={false} tabIndex={-1} draggable={false}>
             {holder ? (
-              <Slab l={k.l} eager={j === 0} lasting="eager" speil={false} />
+              <Slab l={k.l} eager={j === 0} lasting="eager" speil={false} eksMerke={false} />
             ) : (
               <Image src={k.src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} draggable={false} />
             )}

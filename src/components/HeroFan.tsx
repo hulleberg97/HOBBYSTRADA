@@ -92,19 +92,21 @@ function offsetOf(i: number, shift: number, n: number) {
 /** Hvordan betalt plassering merkes på kortet i raden. «header» (hvit liten etikett i underkant) er standard. */
 export type SlabMark = "pill" | "strip" | "corner" | "header";
 
-/** «lasting» og «speil» brukes av buen på telefonforsiden: der hentes bildene med en gang, og speilingen under kortet styres fra CSS. */
+/** «lasting», «speil» og «eksMerke» brukes av buen på telefonforsiden: der hentes bildene med en gang, speilingen styres fra CSS, og merket «Eksempelannonse» vises ikke på kortet (det står på annonsesiden). */
 export function Slab({
   l,
   eager = false,
   mark = "header",
   lasting = "lazy",
   speil = true,
+  eksMerke = true,
 }: {
   l: Listing;
   eager?: boolean;
   mark?: SlabMark;
   lasting?: "lazy" | "eager";
   speil?: boolean;
+  eksMerke?: boolean;
 }) {
   const boosted = Boolean(l.frontpage || l.featured);
   const markTitle = l.frontpage ? "Toppannonse" : "Fremhevet";
@@ -165,7 +167,7 @@ export function Slab({
           Annonseløft
         </span>
       )}
-      {l.isExample && (
+      {l.isExample && eksMerke && (
         <span className="absolute bottom-[3%] left-1/2 inline-flex -translate-x-1/2">
           <ExampleBadge size="plate" />
         </span>
