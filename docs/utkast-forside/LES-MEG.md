@@ -70,3 +70,16 @@ Eieren ba om flere varianter av A4b1n. I alle ruller teksten opp når neste kort
 - **A4b1n2 – Uten ramme:** ingen ramme. Navn og stor pris står midtstilt under buen, med «Eksempelannonse» som liten brikke over.
 - **A4b1n3 – Mørkt felt:** mørk blå med gullstrek nederst, hvit tekst og hvit pilknapp.
 - **A4b1n4 – Søket først:** overskrift på én linje, grå undertekst og søk øverst. Buen ligger under søket, og feltet har pilknapp. Ingen knapper under, så kategoriene og de første annonsene synes.
+
+## Overskrifter til telefonforsiden (22. november)
+
+Eieren ba om flere overskrifter og utforminger. `overskrifter.js` tegner åtte forslag oppå den ekte telefonforsiden i en testnettleser og lager to sammenligningsark. Ingenting av dette er live.
+
+1. «Kjøp og selg fotballkort», samme stil som nå.
+2. «Finn ditt neste kort» med Fraunces (skriften fra PC-forsiden), «neste» i kursiv.
+3. «Fra samler til samler», venstrestilt og stor, med linjen «Kjøp og selg fotballkort direkte.» under.
+4. «Markedsplassen for fotballkort», der «fotballkort» har blå fargeovergang.
+5. «Kortet du mangler finnes her», første linje grå og andre mørk.
+6. «Finn ditt neste kort» på én linje med liten grå linje «Fra samler til samler» over.
+7. «Jakten på neste kort starter her» med Fraunces, andre linje i kursiv.
+8. «Norsk markedsplass for fotballkort» med Sora, og linjen «Kjøp og selg direkte med andre samlere.» under.
