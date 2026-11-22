@@ -777,6 +777,8 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 /* ── Forsiden på telefon og nettbrett: overskrift og en bue med kort som glir forbi ── */
 .fb-topp { padding: 24px 16px 0; text-align: left; }
 .fb-h1 { font-size: clamp(36px, 10.8vw, 44px); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; color: #0b1426; }
+.fb-h1-serif { font-family: var(--f-fraunces), serif; font-weight: 700; font-size: clamp(28px, 8.9vw, 36px); letter-spacing: -0.03em; line-height: 1.05; }
+.fb-ut { margin-top: 6px; font-size: 15px; color: #5b6472; }
 .fb-h1 span { display: inline-block; animation: fb-ord 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fb-opp { animation: fb-opp 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fb-bue { position: relative; display: block; height: 292px; margin-top: 10px; overflow: hidden; touch-action: pan-y; -webkit-user-select: none; user-select: none; animation: fb-gli 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }

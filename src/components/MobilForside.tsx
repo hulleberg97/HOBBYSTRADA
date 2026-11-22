@@ -92,11 +92,13 @@ export function MobilForside({ all }: { all: Listing[] }) {
   return (
     <section className="kun-mobil pb-2">
       <div className="fb-topp">
-        <h1 className="fb-h1">
-          {ord("Finn ditt", 0)}
-          <br />
-          {ord("neste kort", 2)}
+        {/* Samme skrift som overskriften på PC-forsiden, med «neste» i kursiv */}
+        <h1 className="fb-h1 fb-h1-serif">
+          {ord("Finn ditt", 0)} <em>{ord("neste", 2)}</em> {ord("kort", 3)}
         </h1>
+        <p className="fb-ut fb-opp" style={{ animationDelay: "0.3s" }}>
+          Markedsplass for kjøp og salg av fotballkort.
+        </p>
       </div>
       {/* Liggende fliser med kort, navn og pris. Et trykk åpner annonsen, og raden sveipes sidelengs. */}
       {karusell.length > 0 && <KortKarusell kort={karusell} />}
