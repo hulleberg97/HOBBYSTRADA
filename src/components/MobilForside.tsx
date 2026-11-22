@@ -48,6 +48,9 @@ const TOPP = "scene" as "flis" | "bue" | "scene";
 /** Infofeltet under scenen: «full» (sett, sted, navn, pris, type og opplag), «kompakt» (smal linje med ramme) eller «ren» (uten ramme, midtstilt). */
 const INFO = "kompakt" as "full" | "kompakt" | "ren";
 
+/** Søkefeltet på forsiden. Av: søk ligger i bunnmenyen, så forsiden går rett fra karusellen til knappene og fanene. */
+const SOKEFELT = false;
+
 /** Buen har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
 const I_BUEN = 7;
 
@@ -132,17 +135,19 @@ export function MobilForside({ all }: { all: Listing[] }) {
       ) : (
         karusell.length > 0 && <KortKarusell kort={karusell} />
       )}
-      <div className="fb-under fb-opp" style={{ animationDelay: "0.35s" }}>
-        <form action="/sok" role="search" className="fb-sok">
-          <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />
-          <label className="contents">
-            <span className="sr-only">Søk etter spiller, sett eller kortnummer</span>
-            <input type="search" name="q" enterKeyHint="search" autoComplete="off" placeholder="Søk spiller, sett eller nummer" className="outline-none" />
-          </label>
-          <button type="submit" aria-label="Søk">
-            <ArrowRightIcon className="h-[17px] w-[17px]" aria-hidden="true" />
-          </button>
-        </form>
+      <div className="fb-under fb-opp" data-sok={SOKEFELT ? undefined : "nei"} style={{ animationDelay: "0.35s" }}>
+        {SOKEFELT && (
+          <form action="/sok" role="search" className="fb-sok">
+            <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />
+            <label className="contents">
+              <span className="sr-only">Søk etter spiller, sett eller kortnummer</span>
+              <input type="search" name="q" enterKeyHint="search" autoComplete="off" placeholder="Søk spiller, sett eller nummer" className="outline-none" />
+            </label>
+            <button type="submit" aria-label="Søk">
+              <ArrowRightIcon className="h-[17px] w-[17px]" aria-hidden="true" />
+            </button>
+          </form>
+        )}
         <div className="fb-to">
           <Link href="/marked">
             Se alle annonser
