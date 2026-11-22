@@ -101,3 +101,27 @@ Eieren ba om flere av A4c4d, med tilpasset overskrift og færre forskjellige far
 - **A4c4d2 – Dempet kortfarge:** kortets farger ligger bak som et svakt, nesten grått skjær. Overskriften er midtstilt og litt mindre.
 - **A4c4d3 – Hvit flis med kant:** ingen farge bak. Hvit flis med tynn mørk kant og kortet på et lysegrått felt. Stor venstrestilt overskrift over to linjer.
 - **A4c4d4 – Varm lys flate:** alle flisene har samme lyse kremfarge. Overskriften har Fraunces (skriften fra PC-forsiden) med «neste» i kursiv.
+
+## Overskrifter til utkastet med flis-karusell (22. november)
+
+Eieren ba om flere typer overskrifter som passer til utkastet på grenen `utkast-flis`. `overskrifter-flis.js` tegner åtte venstrestilte forslag oppå utkastet (kjørt lokalt) og lager to ark. Ingenting av dette er live.
+
+1. «Finn ditt neste kort» på én linje, med «Kjøp og selg fotballkort direkte.» under.
+2. «Kjøp og selg fotballkort», stor over to linjer.
+3. «Fotballkort» stort og mørkt, «fra samler til samler» grått under.
+4. «Finn ditt neste kort» på én linje, med liten grå linje «Markedsplass for fotballkort» over.
+5. «Finn ditt neste kort» med Fraunces og «neste» i kursiv, med «Markedsplass for kjøp og salg av fotballkort.» under.
+6. «Fotballkort til salgs» som hylleoverskrift, med «Se alle» til høyre.
+7. «Norsk markedsplass» mørkt og «for fotballkort» grått, over to linjer.
+8. «Kortet du mangler» grått og «finnes her» mørkt.
+
+## Teksten inne i flisen (22. november)
+
+Eieren spurte om tekstdesignet i annonseboksen på forsiden kan endres (skrifttype eller ikoner). `flis-tekst.js` tegner seks forslag oppå første flis i utkastet `utkast-flis` (kjørt lokalt). Ingenting av dette er live.
+
+1. Ikoner: nål foran stedet, og en linje med penn-ikon, korttype og opplag under prisen.
+2. Brikker: korttype og opplag som små grå brikker mellom navn og pris.
+3. Samme skrift som overskriften: navnet i Fraunces, settet som liten etikett med store bokstaver.
+4. Prisen nederst: navn, sett, type og sted øverst, stor pris ved siden av pilknappen.
+5. Faktalinjer: ledetekstene «Sett» og «Type» foran fakta.
+6. Klubb og opplag fremhevet: klubb med skjold-ikon over navnet, type og opplag i mørk brikke under prisen.
