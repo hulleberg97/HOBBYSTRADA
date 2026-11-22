@@ -45,3 +45,10 @@ Eieren ba om flere optimaliserte design for A4c.
 - **A4c-2 – Hylla:** overskrift og søk først, deretter en hylle «Utvalgte kort» med to kort i bredden som flytter seg ett kort om gangen. Ingen knapper under, så kategoriene og de første annonsene synes på første skjermbilde.
 - **A4c-3 – Liggende flis:** lav, bred flis med kortet til venstre og sett, navn, stor pris, sted og pilknapp til høyre. Tar minst høyde av flisvariantene.
 - **A4c-4 – Glassflis:** kortets egne farger ligger uskarpt som bakgrunn i flisen, og navn og pris står på et felt i frostet glass nederst.
+
+## Runde 6 (22. november): A4b-1 uten gullmerket
+
+Eieren ba om A4b-1 uten «Norsk markedsplass for fotballkort» i gull.
+
+- **A4b1a – Uten merket:** gullmerket er fjernet helt. Overskriften står alene.
+- **A4b1b – Grå tekst under:** samme tekst står som en rolig grå linje under overskriften.

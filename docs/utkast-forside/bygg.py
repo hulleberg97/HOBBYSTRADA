@@ -445,3 +445,11 @@ css4=f"""h1{{font-size:38px}}.stripe{{margin-top:16px;padding:4px 0 30px;overflo
 {SEG}"""
 def flis4(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}"><img class="bg" src="{x["img"]}">{EKS if x["eks"] else ""}<img class="k" src="{x["img"]}">{HJ}<div class="gl"><p><b>{x["spiller"]}</b><small>{sett(x).split(" (")[0]}</small></p><strong>{kr(x["pris"])}</strong></div></div>'
 bygg_c('A4c4',css4,flis4,std_topp)
+
+# ───── A4b1 uten gullpillen ─────
+assert PILLE in toppA4b
+# a: pillen er fjernet helt
+open('A4b1a.html','w',encoding='utf-8').write(skall('A4b1a',cssA4b+RAMME+".t{padding-top:30px}h1{margin-top:0}",toppA4b.replace(PILLE,'')))
+# b: teksten står som en rolig grå linje under overskriften
+UNDERT='<p class="ut opp" style="animation-delay:.4s">Norsk markedsplass for fotballkort</p>'
+open('A4b1b.html','w',encoding='utf-8').write(skall('A4b1b',cssA4b+RAMME+".t{padding-top:28px}h1{margin-top:0}.ut{margin-top:10px;font-size:15px;color:#5b6472}",toppA4b.replace(PILLE,'').replace('</h1></div>','</h1>'+UNDERT+'</div>',1)))
