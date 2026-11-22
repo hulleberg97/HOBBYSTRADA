@@ -139,3 +139,18 @@ Kvalitetssikring: `test-scene.js` (12 funksjonstester med simulert berøring, ta
 Oppdatert samme kveld: eieren ba om å fjerne raden med småbilder (miniatyrene) under kortene. Den er tatt bort fra `KortScene.tsx`, stilene og testene.
 
 Oppdatert senere samme kveld: eieren ba om litt større kortbilder og litt mindre infofelt. Kortet i midten er nå 172 px bredt på en vanlig telefon (før 150), nabokortene står litt lenger inn bak det, og feltet er 82 px høyt (før 98) med litt mindre skrift og pil.
+
+## Annonsene først (22. november, sent): nytt oppsett for telefonforsiden
+
+Eieren ba om at søk og ekte annonser kommer raskere frem på telefon. Utkastet ligger på grenen `utkast-annonser-forst` (bygger på `utkast-scene`). Ikke live.
+
+Bryteren `OPPSETT` øverst i `MobilForside.tsx` velger rekkefølgen: «annonser» (nytt) eller «karusell» (som før). `TOPP` velger fortsatt hvilken karusell som brukes.
+
+Nytt oppsett, «annonser»:
+1. Overskrift og undertekst med mindre luft over, og søkefeltet rett under.
+2. Knappene «Se alle annonser» og «Legg ut kort» er borte fra toppen. «Se alle …» står fortsatt under annonsene, og «Legg ut kort» i selg-feltet og bunnmenyen.
+3. Fanene rett under søkefeltet, og annonsene rett under fanene. På en iPhone 13 i Safari (390 × 664) synes hele første rad med bilde, sett, navn og pris.
+4. Karusellen er flyttet ned som seksjonen «Utvalgte kort» etter de fire første annonsene (`FORST`), og henter bildene sine først når den nærmer seg skjermen (`lat`). Ekte annonser står alltid først og eksempler sist; eksemplene forsvinner når det er minst åtte ekte annonser (`PER_FANE`). Eksempler som står i karusellen vises ikke en gang til i rutenettet.
+5. Annonsekortene på telefonforsiden (`ListingCard` med `rent`): settet i liten dempet tekst, spillernavnet i fet tekst som brytes og aldri kuttes, så prisen. Visningstallet er borte. Markedet, søk og PC bruker kortet som før.
+
+Kvalitetssikring: `test-annonser-forst.js` (13 tester med simulert berøring og bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 84–88, på linje med de andre variantene lokalt). `film-annonser-forst.js` filmer utkastet.

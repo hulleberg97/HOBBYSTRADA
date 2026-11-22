@@ -40,7 +40,8 @@ const VENT_MS = 7000;
  * Hele flisen er en lenke til annonsen. Raden er en vanlig sidelengs rulleliste, så den sveipes med fingeren som ellers på telefonen.
  * Den går også til neste flis av seg selv, og venter når noen har tatt på den.
  */
-export function KortKarusell({ kort }: { kort: KarusellKort[] }) {
+/** «lat»: karusellen står lenger ned på siden, så bildene hentes først når den nærmer seg skjermen. */
+export function KortKarusell({ kort, lat = false }: { kort: KarusellKort[]; lat?: boolean }) {
   const rad = useRef<HTMLDivElement>(null);
   const [aktiv, setAktiv] = useState(0);
 
@@ -90,7 +91,7 @@ export function KortKarusell({ kort }: { kort: KarusellKort[] }) {
       {kort.map((k, i) => (
         <Link key={k.href} href={k.href} prefetch={false} role="listitem" data-nr={i} data-aktiv={i === aktiv ? "true" : undefined} className="fk-flis" draggable={false}>
           <span className="fk-bilde">
-            <Image src={k.src} alt="" width={224} height={312} sizes="112px" loading="eager" preload={i === 0} fetchPriority={i === 0 ? "high" : "low"} draggable={false} />
+            <Image src={k.src} alt="" width={224} height={312} sizes="112px" loading={lat ? "lazy" : "eager"} preload={!lat && i === 0} fetchPriority={!lat && i === 0 ? "high" : "low"} draggable={false} />
           </span>
           {k.eksempel && (
             <span className="fk-merke eks-rad">

@@ -52,7 +52,9 @@ function TypeIkon({ type }: { type: string }) {
  * Panelet tar farge etter kortet som er fremme, og feltet under viser sett, navn, pris, type og sted.
  * Raden kan dras sidelengs, et trykk på et sidekort henter det frem, og et trykk på kortet i midten eller på feltet åpner annonsen.
  */
-export function KortScene({ kort }: { kort: KarusellKort[] }) {
+/** «lat»: scenen står lenger ned på siden, så bildene hentes først når den nærmer seg skjermen. */
+export function KortScene({ kort, lat = false }: { kort: KarusellKort[]; lat?: boolean }) {
+  const lasting = lat ? "lazy" : "eager";
   const n = kort.length;
   // Raden går rundt uten ende. Med færre enn fire kort gjentas de, så det alltid står et kort på hver side.
   const plasser = n >= 4 ? n : n * Math.ceil(4 / n);
@@ -119,7 +121,7 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
       {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
       <div className="fs-farge" aria-hidden="true">
         {kort.map((x, i) => (
-          <Image key={x.href} src={x.src} alt="" {...BILDE} loading="eager" fetchPriority="low" data-aktiv={i === aktiv ? "true" : undefined} />
+          <Image key={x.href} src={x.src} alt="" {...BILDE} loading={lasting} fetchPriority="low" data-aktiv={i === aktiv ? "true" : undefined} />
         ))}
       </div>
       {k.eksempel && (
@@ -211,7 +213,7 @@ export function KortScene({ kort }: { kort: KarusellKort[] }) {
                 }
               }}
             >
-              <Image src={x.src} alt="" {...BILDE} loading="eager" preload={i === 0} fetchPriority={i === 0 ? "high" : "low"} draggable={false} />
+              <Image src={x.src} alt="" {...BILDE} loading={lasting} preload={!lat && i === 0} fetchPriority={!lat && i === 0 ? "high" : "low"} draggable={false} />
             </Link>
           );
         })}

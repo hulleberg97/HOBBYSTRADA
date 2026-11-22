@@ -848,6 +848,19 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @media (min-width: 700px) { .fs { --kw: 190px; max-width: 688px; } .fs + .fb-under { max-width: 720px; } .fs-kort { opacity: var(--o2, 1); } .fs-kort[data-fjern] { pointer-events: auto; } }
 @keyframes fs-inn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fs, .fs-inn { animation: none; } .fs-farge img { transition: none; } }
+/* Oppsettet «annonser» (bryteren OPPSETT i MobilForside.tsx): kompakt topp, søk rett under teksten, og karusellen som seksjonen «Utvalgte kort» */
+[data-oppsett="annonser"] .fb-topp { padding-top: 14px; }
+[data-oppsett="annonser"] .fb-ut { margin-top: 4px; }
+[data-oppsett="annonser"] .fb-under { padding-top: 12px; }
+.fb-utvalgte { margin-top: 30px; }
+.fb-utvalgte h2 { padding: 0 16px; font-size: 20px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; color: #0b1426; }
+.fb-utvalgte .fs { margin-top: 10px; animation: none; }
+.fb-utvalgte .fk { margin-top: 8px; padding-bottom: 10px; }
+@media (min-width: 592px) { .fb-utvalgte h2 { text-align: center; } }
+/* Annonsekortet i ren variant: settet i liten dempet tekst, spillernavnet i fet tekst (brytes, kuttes aldri), så prisen */
+.kort-sett { font-size: 12.5px; line-height: 1.3; color: #475569; overflow-wrap: anywhere; }
+.kort-navn { margin-top: 1px; font-size: 15.5px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: #0b1426; overflow-wrap: anywhere; }
+.kort-pris { margin-top: 5px; font-size: 18px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; color: #0b1426; }
 /* De aller smaleste telefonene: mindre kortbilde og tekst, så navnet får plass */
 @media (max-width: 359px) { .fk-bilde { width: 104px; } .fk-bilde img { height: 124px; } .fk-tekst { padding: 19px 12px 14px 12px; } .fk-tekst b { font-size: 15.5px; } .fk-tekst strong { font-size: 21px; } }
 @media (prefers-reduced-motion: reduce) { .fk-flis { transition: none; } }

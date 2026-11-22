@@ -17,7 +17,21 @@ function shortTag(tag: string) {
 
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
 /** «eager»: kort øverst på siden lastes med en gang i stedet for når de rulles inn. */
-export function ListingCard({ listing, variant = "home", eager = false }: { listing: Listing; variant?: "home" | "market"; eager?: boolean }) {
+/**
+ * «rent»: teksten under bildet står som i karusellen på telefonforsiden: settet i liten dempet tekst, spillernavnet i fet tekst
+ * (brytes over to linjer når det er langt, aldri kuttet med «…»), så prisen. Visningstallet vises ikke.
+ */
+export function ListingCard({
+  listing,
+  variant = "home",
+  eager = false,
+  rent = false,
+}: {
+  listing: Listing;
+  variant?: "home" | "market";
+  eager?: boolean;
+  rent?: boolean;
+}) {
   const market = variant === "market";
   return (
     <div data-featured={listing.featured ? "true" : undefined} className="group relative flex h-full flex-col">
@@ -70,20 +84,30 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
           )}
         </div>
         <div className="card-info flex flex-1 flex-col px-0.5 pt-3">
-          {/* Tittelen tar alltid plass til to linjer, så prisen står på samme høyde på alle kortene */}
-          <p className={`card-title line-clamp-2 min-h-[2.75em] text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
-            {listing.title}
-          </p>
-          {/* Pris til venstre, visninger til høyre på samme linje, så de ikke trenger plass i raden under */}
-          <div className="card-pris mt-1.5 flex items-baseline justify-between gap-2 text-lg font-bold tracking-tight text-slate-950">
-            <span className={market ? "font-heading text-lg font-semibold tracking-tight" : undefined}>{formatPrice(listing.price)}</span>
-            {!listing.soldAt && (listing.views ?? 0) > 0 && (
-              <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-slate-500" title={`${listing.views} visninger`}>
-                <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                {listing.views}
-              </span>
-            )}
-          </div>
+          {rent ? (
+            <>
+              {listing.set && <p className="kort-sett">{listing.set}</p>}
+              <p className="kort-navn group-hover:underline">{listing.player || listing.title}</p>
+              <p className="kort-pris">{formatPrice(listing.price)}</p>
+            </>
+          ) : (
+            <>
+              {/* Tittelen tar alltid plass til to linjer, så prisen står på samme høyde på alle kortene */}
+              <p className={`card-title line-clamp-2 min-h-[2.75em] text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
+                {listing.title}
+              </p>
+              {/* Pris til venstre, visninger til høyre på samme linje, så de ikke trenger plass i raden under */}
+              <div className="card-pris mt-1.5 flex items-baseline justify-between gap-2 text-lg font-bold tracking-tight text-slate-950">
+                <span className={market ? "font-heading text-lg font-semibold tracking-tight" : undefined}>{formatPrice(listing.price)}</span>
+                {!listing.soldAt && (listing.views ?? 0) > 0 && (
+                  <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-slate-500" title={`${listing.views} visninger`}>
+                    <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                    {listing.views}
+                  </span>
+                )}
+              </div>
+            </>
+          )}
           <div className={`card-meta mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1.5 text-xs ${market ? "text-slate-500" : "font-medium text-slate-700"}`}>
             {listing.location && <span className="inline-flex items-center gap-1">{listing.location}</span>}
             {/* Eksempelannonser ser ut som vanlige annonser (tid, Vipps-merke, visninger). Bare merket «Eksempelannonse» skiller dem. */}
