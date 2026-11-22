@@ -839,6 +839,8 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .fs-fakta .fk-type { margin-top: 0; }
 .fs-bunn i { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #eef1f6; color: #0b1426; }
 .fs + .fb-under { padding-top: 14px; }
+/* Uten søkefelt står knappene rett under infolinjen */
+.fb-under[data-sok="nei"] .fb-to { margin-top: 0; }
 @media (max-height: 700px) { .fs { --kw: clamp(104px, 33vw, 128px); } }
 /* Kort som er tonet helt ut på telefon skal ikke kunne trykkes. På brede skjermer synes også kortene to plasser unna. */
 .fs-kort[data-fjern] { pointer-events: none; }
