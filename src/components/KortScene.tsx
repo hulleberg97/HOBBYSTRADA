@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRightIcon, BadgeCheckIcon, CrownIcon, MapPinIcon, PenLineIcon, ShirtIcon, StarIcon } from "lucide-react";
 import { ExampleBadge } from "./ExampleBadge";
+import { Slab } from "./HeroFan";
 import type { KarusellKort } from "./KortKarusell";
 
 /** Hvor ofte scenen går til neste kort av seg selv. Den stopper for godt når noen tar på den, og går ikke hvis besøkende har bedt om mindre bevegelse. */
@@ -56,7 +57,8 @@ function TypeIkon({ type }: { type: string }) {
  * «apen»: uten den avrundede boksen og fargeskjæret. Kortene står rett på sidens hvite bakgrunn og går helt ut til kantene,
  * og merket «Eksempelannonse» står på hvert kort i stedet for i hjørnet av boksen.
  */
-export function KortScene({ kort, apen = false }: { kort: KarusellKort[]; apen?: boolean }) {
+/** «holder»: kortene vises i holderen med navneplate (samme som i kortraden på PC), med «Eksempelannonse» nederst på holderen. */
+export function KortScene({ kort, apen = false, holder = false }: { kort: KarusellKort[]; apen?: boolean; holder?: boolean }) {
   const n = kort.length;
   // Raden går rundt uten ende. Med færre enn fire kort gjentas de, så det alltid står et kort på hver side.
   const plasser = n >= 4 ? n : n * Math.ceil(4 / n);
@@ -119,7 +121,7 @@ export function KortScene({ kort, apen = false }: { kort: KarusellKort[]; apen?:
   if (!n) return null;
   const k = kort[aktiv];
   return (
-    <section className="fs" data-apen={apen ? "" : undefined} aria-roledescription="karusell" aria-label="Utvalgte annonser">
+    <section className="fs" data-apen={apen ? "" : undefined} data-holder={holder ? "" : undefined} aria-roledescription="karusell" aria-label="Utvalgte annonser">
       {!apen && (
         <>
           {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
@@ -219,11 +221,17 @@ export function KortScene({ kort, apen = false }: { kort: KarusellKort[]; apen?:
                 }
               }}
             >
-              <Image src={x.src} alt="" {...BILDE} loading="eager" preload={i === 0} fetchPriority={i === 0 ? "high" : "low"} draggable={false} />
-              {apen && x.eksempel && (
-                <span className="fs-kortmerke eks-rad">
-                  <ExampleBadge />
-                </span>
+              {holder && x.l ? (
+                <Slab l={x.l} eager={i === 0} lasting="eager" speil={false} />
+              ) : (
+                <>
+                  <Image src={x.src} alt="" {...BILDE} loading="eager" preload={i === 0} fetchPriority={i === 0 ? "high" : "low"} draggable={false} />
+                  {apen && x.eksempel && (
+                    <span className="fs-kortmerke eks-rad">
+                      <ExampleBadge />
+                    </span>
+                  )}
+                </>
               )}
             </Link>
           );

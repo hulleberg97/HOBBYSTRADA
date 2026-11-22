@@ -766,12 +766,6 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
   body:has(.bunnmeny) .kake { bottom: calc(72px + env(safe-area-inset-bottom)); }
   /* Søk og meldinger ligger i bunnmenyen. På sider uten bunnmeny står de fortsatt i toppmenyen */
   body:has(.bunnmeny) header.sticky .i-bunnmeny { display: none; }
-  /* Annonsekort: flat lys flate, prisen først og tittelen under */
-  html[data-glans] .card-frame { background: #f4f4f5 !important; box-shadow: none !important; border-radius: 14px; }
-  html[data-glans] [data-featured="true"] .card-frame { box-shadow: inset 0 0 0 1.5px #cfa653 !important; }
-  .card-info { padding-top: 0.625rem; }
-  .card-pris { order: -1; margin-top: 0; }
-  html .card-title { min-height: 0; margin-top: 0.125rem; color: #475569; }
 }
 
 /* ── Forsiden på telefon og nettbrett: overskrift og en bue med kort som glir forbi ── */
@@ -857,6 +851,16 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @media (max-height: 700px) { .fs[data-apen] { --kw: clamp(124px, 42vw, 164px); } }
 @media (max-height: 600px) { .fs[data-apen] { --kw: clamp(110px, 36vw, 140px); } }
 @media (min-width: 700px) { .fs[data-apen] { --kw: 184px; } .fs[data-apen] .fs-kort { opacity: var(--o2, 1); } }
+/* Scenen med kortene i holderen («holder»): holderen bestemmer høyden, og kortbildet har ikke egen ramme */
+.fs[data-holder] { --kw: clamp(118px, 39vw, 152px); }
+.fs[data-holder] .fs-bane { height: calc(var(--kw) * 1.61 + 34px); }
+.fs[data-holder] .fs-kort { height: auto; border-radius: 12px; }
+.fs[data-holder] .fs-kort img { border: 0; border-radius: 0; background: none; box-shadow: none; }
+.fs[data-holder] .fs-kort::after { border-radius: 12px; }
+html .fs .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inset 0 -4px 6px -2px rgb(100 116 139 / 0.3), 0 0 0 1px rgb(11 20 38 / 0.1), 0 26px 32px -20px rgb(11 20 38 / 0.6) !important; }
+@media (max-height: 700px) { .fs[data-holder] { --kw: clamp(118px, 39vw, 152px); } }
+@media (max-height: 600px) { .fs[data-holder] { --kw: clamp(104px, 34vw, 132px); } }
+@media (min-width: 700px) { .fs[data-holder] { --kw: 170px; } }
 @keyframes fs-inn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fs, .fs-inn { animation: none; } .fs-farge img { transition: none; } }
 /* De aller smaleste telefonene: mindre kortbilde og tekst, så navnet får plass */

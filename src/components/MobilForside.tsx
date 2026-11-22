@@ -99,6 +99,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
       opplag: l.numbered ?? "",
       eksempel: Boolean(l.isExample),
       loft: l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "",
+      l,
     }));
   const ord = (tekst: string, start: number) =>
     tekst.split(" ").flatMap((w, i) => [
@@ -110,32 +111,22 @@ export function MobilForside({ all }: { all: Listing[] }) {
 
   return (
     <section className="kun-mobil pb-2">
-      {TOPP !== "bue" ? (
-        <>
-          <div className="fb-topp">
-            {/* Samme skrift som overskriften på PC-forsiden, med «neste» i kursiv */}
-            <h1 className="fb-h1 fb-h1-serif">
-              {ord("Finn ditt", 0)} <em>{ord("neste", 2)}</em> {ord("kort", 3)}
-            </h1>
-            <p className="fb-ut fb-opp" style={{ animationDelay: "0.3s" }}>
-              Markedsplass for kjøp og salg av fotballkort.
-            </p>
-          </div>
-          {/* Liggende fliser med kort, navn og pris. Et trykk åpner annonsen, og raden sveipes sidelengs. */}
-          {karusell.length > 0 && (TOPP === "scene" ? <KortScene kort={karusell} apen /> : <KortKarusell kort={karusell} />)}
-        </>
+      {/* Stor midtstilt overskrift over to linjer, som forsiden hadde med buen */}
+      <div className="fb-topp" data-topp="bue">
+        <h1 className="fb-h1">
+          {ord("Finn ditt", 0)}
+          <br />
+          {ord("neste kort", 2)}
+        </h1>
+      </div>
+      {TOPP === "bue" ? (
+        // Kortene glir jevnt langs en slak bue. Et trykk åpner annonsen, og buen kan dras sidelengs.
+        buen.length > 0 && <KortBue kort={buen} />
+      ) : TOPP === "scene" ? (
+        // Scenen uten boks, med kortene i holderen: kortet i midten er fremme, raden sveipes, og feltet under viser navn og pris
+        karusell.length > 0 && <KortScene kort={karusell} apen holder />
       ) : (
-        <>
-          <div className="fb-topp" data-topp="bue">
-            <h1 className="fb-h1">
-              {ord("Finn ditt", 0)}
-              <br />
-              {ord("neste kort", 2)}
-            </h1>
-          </div>
-          {/* Kortene glir jevnt langs en slak bue. Et trykk åpner annonsen, og buen kan dras sidelengs. */}
-          {buen.length > 0 && <KortBue kort={buen} />}
-        </>
+        karusell.length > 0 && <KortKarusell kort={karusell} />
       )}
       <div className="fb-under fb-opp" style={{ animationDelay: "0.35s" }}>
         <form action="/sok" role="search" className="fb-sok">
