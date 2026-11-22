@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { ArrowRightIcon } from "lucide-react";
 
-export type Fane = { key: string; label: string; href: string; alle: string };
+export type Fane = { key: string; label: string; href: string; alle: string; ikon?: React.ReactNode };
 
 /**
  * Fanene over annonsene på forsiden (telefon): Alle, Autograf, Patch osv. Annonsekortene er tegnet ferdig på serveren;
@@ -22,8 +22,9 @@ export function ForsideFaner({ faner, kort }: { faner: Fane[]; kort: { id: strin
             type="button"
             aria-pressed={f.key === aktiv}
             onClick={() => setAktiv(f.key)}
-            className="h-10 shrink-0 whitespace-nowrap rounded-full bg-[#fff] px-4 text-sm font-semibold text-slate-900 shadow-[inset_0_0_0_1px_#e2e8f0] transition aria-pressed:bg-primary aria-pressed:text-white aria-pressed:shadow-none"
+            className="flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#fff] px-4 text-sm font-semibold text-slate-900 shadow-[inset_0_0_0_1px_#e2e8f0] transition aria-pressed:bg-primary aria-pressed:text-white aria-pressed:shadow-none"
           >
+            {f.ikon}
             {f.label}
           </button>
         ))}

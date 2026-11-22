@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, PlusIcon, SearchIcon } from "lucide-react";
+import { ArrowRightIcon, BadgeCheckIcon, LayoutGridIcon, PenLineIcon, PlusIcon, SearchIcon, ShirtIcon, StarIcon } from "lucide-react";
 import { ForsideFaner, type Fane } from "./ForsideFaner";
 import { KortBue } from "./KortBue";
 import { ListingCard } from "./ListingCard";
@@ -18,6 +18,21 @@ const ALLE: Record<string, string> = {
   Base: "Se alle basekort",
 };
 
+/** Ikonene på fanene er de samme som i kategoriraden på PC. Nummerert har «1/1» i stedet for et ikon, som der. */
+const ikon = "h-[18px] w-[18px] shrink-0";
+const IKON: Record<string, React.ReactNode> = {
+  alle: <LayoutGridIcon className={ikon} strokeWidth={1.6} aria-hidden="true" />,
+  Autograf: <PenLineIcon className={ikon} strokeWidth={1.6} aria-hidden="true" />,
+  Patch: <ShirtIcon className={ikon} strokeWidth={1.6} aria-hidden="true" />,
+  Rookie: <StarIcon className={ikon} strokeWidth={1.6} aria-hidden="true" />,
+  Nummerert: (
+    <span className="text-xs font-bold leading-none tracking-tight" aria-hidden="true">
+      1/1
+    </span>
+  ),
+  Base: <BadgeCheckIcon className={ikon} strokeWidth={1.6} aria-hidden="true" />,
+};
+
 /** Buen øverst har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
 const I_BUEN = 7;
 
@@ -33,14 +48,14 @@ export function MobilForside({ all }: { all: Listing[] }) {
   const rekke = [...ordnet.filter((l) => !l.isExample), ...eks];
   const utvalg = (list: Listing[]) => list.filter((l, i) => i < PER_FANE || l.frontpage || l.featured);
 
-  const faner: Fane[] = [{ key: "alle", label: "Alle", href: "/marked", alle: "Se alle annonser" }];
+  const faner: Fane[] = [{ key: "alle", label: "Alle", href: "/marked", alle: "Se alle annonser", ikon: IKON.alle }];
   const iFane = new Map<string, string[]>();
   const merk = (key: string, list: Listing[]) => utvalg(list).forEach((l) => iFane.set(l.slug, [...(iFane.get(l.slug) ?? []), key]));
   merk("alle", rekke);
   for (const t of TYPES) {
     const treff = rekke.filter((l) => hasType(l, t));
     if (!treff.length) continue;
-    faner.push({ key: t, label: t, href: `/marked?type=${t}`, alle: ALLE[t] ?? "Se alle" });
+    faner.push({ key: t, label: t, href: `/marked?type=${t}`, alle: ALLE[t] ?? "Se alle", ikon: IKON[t] });
     merk(t, treff);
   }
   const kort = rekke
