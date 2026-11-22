@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Slab } from "@/components/HeroFan";
 import { MagRull } from "@/components/MagRull";
+import { MobilForside } from "@/components/MobilForside";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
@@ -48,9 +49,10 @@ export default async function Home() {
   return (
     <div className="bg-background">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd).replace(/</g, "\\u003c") }} />
-      {/* Forsiden: overskrift øverst og annonseraden nederst */}
+      {/* Telefon og nettbrett: søk, faner og annonser med en gang. PC: overskrift og annonserad som før. */}
+      <MobilForside all={all} />
       {fanList[0] && (
-        <section className="vis-magasin mag flex flex-col justify-between bg-background">
+        <section className="vis-magasin mag kun-pc flex flex-col justify-between bg-background">
           <div className="mag-topp mx-auto grid w-full max-w-[1320px] grid-cols-1 items-center gap-6 px-6 pt-6 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-4 lg:pt-6">
             <div className="relative z-10">
               <div className="mt-d hidden">
@@ -98,7 +100,7 @@ export default async function Home() {
           </div>
         </section>
       )}
-      <section className="bg-background">
+      <section className="kun-pc bg-background">
         <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
           <h2 className="sr-only">Kategorier</h2>
           <ul className="kat-rad -mx-4 flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:auto-cols-fr sm:grid-flow-col sm:gap-2 sm:overflow-visible sm:rounded-3xl sm:bg-white sm:p-2 sm:ring-1 sm:ring-slate-300/80">
@@ -203,7 +205,7 @@ export default async function Home() {
         </div>
       </section>
       {featured.length > 0 && (
-        <section className="bg-background">
+        <section className="kun-pc bg-background">
           <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
             <div className="flex items-end justify-between gap-6">
               <div>
@@ -222,7 +224,7 @@ export default async function Home() {
           </div>
         </section>
       )}
-      <section className="bg-background">
+      <section className="kun-pc bg-background">
         <div className="mx-auto max-w-[1320px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <div className="flex items-end justify-between gap-6">
             <div>

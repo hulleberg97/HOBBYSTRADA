@@ -69,13 +69,13 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
             </span>
           )}
         </div>
-        <div className="flex flex-1 flex-col px-0.5 pt-3">
+        <div className="card-info flex flex-1 flex-col px-0.5 pt-3">
           {/* Tittelen tar alltid plass til to linjer, så prisen står på samme høyde på alle kortene */}
           <p className={`card-title line-clamp-2 min-h-[2.75em] text-[15px] font-medium leading-snug group-hover:underline ${market ? "text-slate-900" : "text-slate-950"}`}>
             {listing.title}
           </p>
           {/* Pris til venstre, visninger til høyre på samme linje, så de ikke trenger plass i raden under */}
-          <div className="mt-1.5 flex items-baseline justify-between gap-2 text-lg font-bold tracking-tight text-slate-950">
+          <div className="card-pris mt-1.5 flex items-baseline justify-between gap-2 text-lg font-bold tracking-tight text-slate-950">
             <span className={market ? "font-heading text-lg font-semibold tracking-tight" : undefined}>{formatPrice(listing.price)}</span>
             {!listing.soldAt && (listing.views ?? 0) > 0 && (
               <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-slate-500" title={`${listing.views} visninger`}>

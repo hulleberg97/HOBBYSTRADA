@@ -32,7 +32,7 @@ export function CookieConsent() {
     <div
       role="dialog"
       aria-label="Informasjonskapsler"
-      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-lg rounded-3xl bg-white p-5 text-sm text-slate-700 shadow-[0_20px_60px_-20px_rgba(2,6,23,0.45)] ring-1 ring-slate-200 sm:p-6"
+      className="kake fixed inset-x-3 bottom-3 z-50 mx-auto max-w-lg rounded-3xl bg-white p-5 text-sm text-slate-700 shadow-[0_20px_60px_-20px_rgba(2,6,23,0.45)] ring-1 ring-slate-200 sm:p-6"
     >
       <p className="font-heading text-lg font-bold tracking-[-0.02em] text-primary">Informasjonskapsler</p>
       <p className="mt-1.5 leading-relaxed">

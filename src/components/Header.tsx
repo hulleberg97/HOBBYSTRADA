@@ -160,7 +160,7 @@ export function Header() {
                 setSearchOpen(!searchOpen);
                 setMenu(false);
               }}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100 aria-expanded:bg-slate-100"
+              className="i-bunnmeny flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100 aria-expanded:bg-slate-100"
             >
               {searchOpen ? <XIcon className="h-5 w-5" aria-hidden="true" /> : <SearchIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />}
             </button>
@@ -168,7 +168,7 @@ export function Header() {
             <Link
               href={user ? "/meldinger" : "/auth/login?next=/meldinger"}
               aria-label="Meldinger"
-              className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
+              className="i-bunnmeny relative flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:bg-slate-100"
             >
               <MessageCircleIcon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
               {user && <UnreadBadge />}
@@ -192,7 +192,7 @@ export function Header() {
               <FavoriteCount />
             </Link>
             <Link
-              className="hidden h-10 items-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black sm:flex"
+              className="hidden h-10 items-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition hover:bg-black lg:flex"
               href="/selg"
             >
               Legg ut kort
