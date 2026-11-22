@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { ForsideFaner, type Fane } from "./ForsideFaner";
+import { KortBue } from "./KortBue";
 import { ListingCard } from "./ListingCard";
 import { TYPES, hasType } from "@/lib/filters";
 import { marketOrder } from "@/lib/listings";
@@ -47,9 +48,9 @@ export function MobilForside({ all }: { all: Listing[] }) {
     // Annonsene ligger under buen, så bildene deres hentes når de nærmer seg skjermen. Kortet midt i buen har førsteprioritet.
     .map((l) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} /> }));
   // Pynten i «Selg kortene dine» er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
-  const egne = eks.flatMap((l) => (l.image ? [l.image] : []));
-  const bilder = egne.slice(0, 2);
-  // Buen er også pynt og bruker bare egne kort. Har vi færre enn sju, går de samme kortene rundt flere ganger.
+  const egne = eks.flatMap((l) => (l.image ? [{ src: l.image, href: `/annonse/${l.slug}` }] : []));
+  const bilder = egne.slice(0, 2).map((k) => k.src);
+  // Buen bruker også bare egne kort, og et trykk på et kort åpner annonsen. Har vi færre enn sju, går de samme kortene rundt flere ganger.
   const buen = egne.length >= 3 ? Array.from({ length: I_BUEN }, (_, i) => egne[i % Math.min(egne.length, I_BUEN)]) : [];
   const ord = (tekst: string, start: number) =>
     tekst.split(" ").flatMap((w, i) => [
@@ -68,16 +69,8 @@ export function MobilForside({ all }: { all: Listing[] }) {
           {ord("neste kort", 2)}
         </h1>
       </div>
-      {/* Kortene glir jevnt langs en slak bue. Ren pynt: skjult for skjermlesere, og et trykk går til markedet. */}
-      {buen.length > 0 && (
-        <Link href="/marked" tabIndex={-1} aria-hidden="true" className="fb-bue">
-          {buen.map((src, j) => (
-            <span key={j} style={{ animationDelay: `${j * 3 - 31.5}s` }}>
-              <Image src={src} alt="" width={300} height={420} sizes="174px" loading="eager" preload={j === 0} fetchPriority={j === 0 ? "high" : "low"} />
-            </span>
-          ))}
-        </Link>
-      )}
+      {/* Kortene glir jevnt langs en slak bue. Et trykk åpner annonsen, og buen kan dras sidelengs. */}
+      {buen.length > 0 && <KortBue kort={buen} />}
       <div className="fb-under fb-opp" style={{ animationDelay: "0.45s" }}>
         <form action="/sok" role="search" className="fb-sok">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-slate-950" aria-hidden="true" />

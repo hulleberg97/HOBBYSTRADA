@@ -778,11 +778,14 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 .fb-h1 { font-size: clamp(36px, 10.8vw, 46px); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; color: #0b1426; }
 .fb-h1 span { display: inline-block; animation: fb-ord 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fb-opp { animation: fb-opp 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-.fb-bue { position: relative; display: block; height: 292px; margin-top: 10px; overflow: hidden; -webkit-tap-highlight-color: transparent; animation: fb-gli 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.fb-bue { position: relative; display: block; height: 292px; margin-top: 10px; overflow: hidden; touch-action: pan-y; -webkit-user-select: none; user-select: none; animation: fb-gli 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .fb-bue::before { content: ""; position: absolute; inset: 0; background: radial-gradient(52% 44% at 50% 46%, rgb(228 237 255 / 0.55), rgb(253 238 214 / 0.22) 55%, rgb(255 255 255 / 0) 100%); pointer-events: none; }
 /* Hvert kort dreier om et punkt langt under skjermen, så de følger en slak bue. Kortet i midten er størst. */
 .fb-bue > span { position: absolute; left: 50%; top: 30px; width: 150px; height: 210px; margin-left: -75px; transform-origin: 50% 1505px; animation: fb-bue 21s linear infinite; will-change: transform; }
-.fb-bue img { display: block; width: 100%; height: 100%; object-fit: cover; border: 5px solid #fff; border-radius: 14px; background: #eef1f6; box-shadow: 0 0 0 1.5px rgb(11 20 38 / 0.2), 0 26px 32px -20px rgb(11 20 38 / 0.6); animation: fb-str 21s ease-in-out infinite; animation-delay: inherit; }
+/* Lenken rundt kortet skalerer, så trykkflaten følger kortet. Holder man fingeren på et kort, blir det litt mindre. */
+.fb-bue a { display: block; width: 100%; height: 100%; border-radius: 14px; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; animation: fb-str 21s ease-in-out infinite; animation-delay: inherit; }
+.fb-bue img { display: block; width: 100%; height: 100%; object-fit: cover; border: 5px solid #fff; border-radius: 14px; background: #eef1f6; box-shadow: 0 0 0 1.5px rgb(11 20 38 / 0.2), 0 26px 32px -20px rgb(11 20 38 / 0.6); transition: transform 0.15s ease-out; -webkit-user-drag: none; }
+.fb-bue a:active img { transform: scale(0.97); }
 .fb-under { max-width: 560px; margin: 0 auto; padding: 6px 16px 0; }
 .fb-sok { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 6px 0 16px; border-radius: 999px; background: #fff; box-shadow: 0 12px 30px -14px rgb(11 20 38 / 0.35), 0 0 0 1px rgb(11 20 38 / 0.08); }
 .fb-sok:focus-within { box-shadow: 0 12px 30px -14px rgb(11 20 38 / 0.35), 0 0 0 2px #0b1426; }
@@ -801,7 +804,7 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @keyframes fb-str { 0%, 30% { transform: scale(0.86); } 50% { transform: scale(1.16); } 70%, 100% { transform: scale(0.86); } }
 /* Har besøkende bedt om mindre bevegelse, står kortene stille i buen, og teksten vises med en gang */
 @media (prefers-reduced-motion: reduce) {
-  .fb-bue > span, .fb-bue img { animation-play-state: paused; }
+  .fb-bue > span, .fb-bue a { animation-play-state: paused; }
   .fb-h1 span, .fb-opp, .fb-bue { animation: none; }
 }
 /* Knappene på telefonforsiden er helt runde i endene, som søkefeltet og knappene i toppen */
