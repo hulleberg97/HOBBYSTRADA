@@ -45,6 +45,9 @@ const IKON: Record<string, React.ReactNode> = {
  *          og et felt med sett, navn, pris, type og sted under.
  */
 const TOPP = "scene" as "flis" | "bue" | "scene";
+/** Infofeltet under scenen: «full» (sett, sted, navn, pris, type og opplag), «kompakt» (smal linje med ramme) eller «ren» (uten ramme, midtstilt). */
+const INFO = "kompakt" as "full" | "kompakt" | "ren";
+
 /** Buen har alltid sju kort. Færre enn tre egne kort med bilde: buen vises ikke. */
 const I_BUEN = 7;
 
@@ -125,7 +128,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
         buen.length > 0 && <KortBue kort={buen} />
       ) : TOPP === "scene" ? (
         // Scenen uten boks, med kortene i holderen: kortet i midten er fremme, raden sveipes, og feltet under viser navn og pris
-        karusell.length > 0 && <KortScene kort={karusell} apen holder />
+        karusell.length > 0 && <KortScene kort={karusell} apen holder info={INFO} />
       ) : (
         karusell.length > 0 && <KortKarusell kort={karusell} />
       )}

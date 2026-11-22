@@ -875,6 +875,21 @@ html .fs .fan-slab { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.95), inse
 .fs[data-holder] .fs-fakta .fk-type { font-size: 12px; }
 .fs[data-holder] .fs-bunn i { width: 24px; height: 24px; }
 .fs[data-holder] .fs-bunn i svg { width: 14px; height: 14px; }
+/* Kompakt infofelt («info» i KortScene): navn og sett til venstre, pris og pil til høyre, på én smal linje med tynn kant */
+.fs[data-info] .fs-info { margin-top: 0; padding: 8px 10px 8px 16px; border-radius: 14px; box-shadow: 0 0 0 1px rgb(11 20 38 / 0.1); }
+.fs-k { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "navn pris pil" "sett pris pil"; align-items: center; column-gap: 10px; }
+.fs-k b { grid-area: navn; align-self: end; font-size: 15.5px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; overflow-wrap: anywhere; }
+.fs-k small { grid-area: sett; align-self: start; display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 12px; line-height: 1.3; color: #475569; }
+.fs-k strong { grid-area: pris; font-size: 18px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.2; white-space: nowrap; }
+.fs-k i { grid-area: pil; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #eef1f6; color: #0b1426; }
+.fs-k-loft { flex: none; display: inline-flex; align-items: center; gap: 3px; padding: 1px 7px; border-radius: 999px; background: hsl(var(--accent)); font-size: 11px; font-weight: 600; color: hsl(var(--accent-foreground)); }
+/* Uten ramme («ren»): navn og pris midtstilt på én linje, settet under */
+.fs[data-info="ren"] .fs-info { padding: 0 16px 2px; background: none; box-shadow: none; }
+.fs[data-info="ren"] .fs-k { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; column-gap: 10px; }
+.fs[data-info="ren"] .fs-k b { order: 1; font-size: 16.5px; }
+.fs[data-info="ren"] .fs-k strong { order: 2; font-size: 16.5px; }
+.fs[data-info="ren"] .fs-k small { order: 3; flex-basis: 100%; justify-content: center; margin-top: 1px; }
+.fs[data-info="ren"] .fs-k i { display: none; }
 @keyframes fs-inn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fs, .fs-inn { animation: none; } .fs-farge img { transition: none; } }
 /* De aller smaleste telefonene: mindre kortbilde og tekst, så navnet får plass */
