@@ -1,0 +1,72 @@
+# Utkast til forside på telefon med effekter (22. november 2026)
+
+Tre animerte prototyper, vist til eieren som korte filmer. Ingen av dem er bygget inn i siden.
+
+- **A – Kortstokken:** stor overskrift som toner inn ord for ord, tre kort i en stokk som blar seg selv, holo-glans over kortene, søk og to knapper under.
+- **B – Flisene:** flislagt oppsett: stor flis med to svevende kort, mørk «Selg kortene dine»-flis, «Nyeste» med bilder som ruller, og et bånd med fordeler.
+- **C – Glasset:** rader med kort som driver sakte på skrå, og et frostet glasspanel med overskrift, søk og knapper oppå.
+
+Felles: lys bakgrunn, fast bunnmeny, faner og rene annonsekort som glir inn når de rulles frem (fra utkastet `utkast-mobil-torget`).
+
+`bygg.py` lager A.html, B.html og C.html. Den trenger `kort.json` og bildene i `img/`, som hentes fra den offentlige markedssiden (se STATUS.md). `film.js` tar opp hver prototype bilde for bilde med Playwright; filmene settes sammen med ffmpeg.
+
+## Runde 2 (22. november): flere varianter av A og C
+
+Eieren ba om flere utkast av A og C. B (Flisene) er lagt til side.
+
+- **A2 – Viften:** fem kort folder seg ut som en vifte øverst og vugger rolig. Overskrift og søk under.
+- **A3 – Ett kort:** ett stort kort som dreier sakte i 3D med holo-glans. Kortet og navnet under byttes hvert tredje sekund. Venstrestilt overskrift.
+- **A4 – Karusellen:** midtkortet står frem, nabokortene titter inn fra sidene, og raden flytter seg ett kort om gangen. Prikker under viser hvor man er.
+- **C2 – Glassark:** to skarpe rader med kort øverst, og et glassark som glir opp nedenfra med overskrift, søk og knapper.
+- **C3 – Søylene:** overskrift på hvit bunn, tre søyler med kort som går opp og ned, og bare søkefeltet i frostet glass oppå.
+- **C4 – Dis:** kortene er helt uskarpe og fungerer som fargebakgrunn, glasspanelet er rolig å lese, og ett skarpt kort titter frem øverst til høyre.
+
+## Runde 3 (22. november): flere varianter av A4 (Karusellen)
+
+Eieren ba om flere forslag for A4.
+
+- **A4a – Dybden:** sju kort, naboene står vinklet innover i dybden, og kortene speiler seg svakt i «gulvet». Prikker under.
+- **A4b – Buen:** kortene glir jevnt langs en slak bue uten å stoppe. Kortet i midten er størst.
+- **A4c – Annonsekortene:** store hvite fliser med kortbilde, navn, sett, sted og pris. Naboflisene titter inn fra kantene, og en strek under viser fremdriften. Viser både ekte annonser og eksempelannonser (med merket).
+- **A4d – Scenen:** karusellen ligger først, i et avrundet panel som skifter farge etter kortet. Navn og sett står under, og miniatyrer viser hvilket kort som er fremme. Overskriften står venstrestilt under panelet.
+
+## Runde 4 (22. november): A4b med tydeligere rammer
+
+Eieren ba om A4b (Buen) med litt tydeligere rammer.
+
+- **A4b-1 – Kortrammer:** hvit ramme og tynn mørk strek rundt hvert kort.
+- **A4b-2 – Innrammet felt:** samme kortrammer, og hele karusellen ligger i et avrundet felt med egen kant.
+
+## Runde 5 (22. november): flere varianter av A4c (Annonsekortene)
+
+Eieren ba om flere optimaliserte design for A4c.
+
+- **A4c-1 – Skarp flis:** bildefeltet har en svak farge som passer kortet, navn og sett står på egne linjer uten avkutting, prisen er større, og naboflisene er tydelige i stedet for utvisket.
+- **A4c-2 – Hylla:** overskrift og søk først, deretter en hylle «Utvalgte kort» med to kort i bredden som flytter seg ett kort om gangen. Ingen knapper under, så kategoriene og de første annonsene synes på første skjermbilde.
+- **A4c-3 – Liggende flis:** lav, bred flis med kortet til venstre og sett, navn, stor pris, sted og pilknapp til høyre. Tar minst høyde av flisvariantene.
+- **A4c-4 – Glassflis:** kortets egne farger ligger uskarpt som bakgrunn i flisen, og navn og pris står på et felt i frostet glass nederst.
+
+## Runde 6 (22. november): A4b-1 uten gullmerket
+
+Eieren ba om A4b-1 uten «Norsk markedsplass for fotballkort» i gull.
+
+- **A4b1a – Uten merket:** gullmerket er fjernet helt. Overskriften står alene.
+- **A4b1b – Grå tekst under:** samme tekst står som en rolig grå linje under overskriften.
+
+## Runde 7 (22. november): A4b-1 med navn og pris
+
+Eieren spurte om buen kan vise navn og pris. Begge er uten gullmerket.
+
+- **A4b1n – Felt under buen:** et innrammet felt under buen viser navn, sett og pris for kortet som er i midten, og bytter når neste kort kommer. «Eksempelannonse» står som flik på feltet.
+- **A4b1p – Under hvert kort:** navn og pris står under hvert kort og følger med langs buen. «Eksempelannonse» står som flik på kortene.
+
+I utkastene er alle kortene eksempelkort. Når dette bygges på ordentlig, hentes kortene fra annonsene, og fliken vises bare på eksempelannonser.
+
+## Runde 8 (22. november): flere varianter av A4b1n (buen med felt for navn og pris)
+
+Eieren ba om flere varianter av A4b1n. I alle ruller teksten opp når neste kort kommer, så feltet aldri står tomt.
+
+- **A4b1n1 – Glassfelt:** feltet er i frostet glass og ligger delvis over midtkortet.
+- **A4b1n2 – Uten ramme:** ingen ramme. Navn og stor pris står midtstilt under buen, med «Eksempelannonse» som liten brikke over.
+- **A4b1n3 – Mørkt felt:** mørk blå med gullstrek nederst, hvit tekst og hvit pilknapp.
+- **A4b1n4 – Søket først:** overskrift på én linje, grå undertekst og søk øverst. Buen ligger under søket, og feltet har pilknapp. Ingen knapper under, så kategoriene og de første annonsene synes.
