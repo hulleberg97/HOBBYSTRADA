@@ -88,7 +88,7 @@ function offsetOf(i: number, shift: number, n: number) {
 }
 
 /** Kortet i plastholder med HOBBYSTRADA-plakett, bevisst ulik graderingsetiketter. */
-/** «eager»: kortene som synes når siden åpnes lastes først, resten etterpå. */
+/** «eager»: kortene som synes når siden åpnes får høy prioritet. Alle lastes først når de vises, så telefoner (der raden er skjult) slipper å hente dem. */
 /** Hvordan betalt plassering merkes på kortet i raden. «header» (hvit liten etikett i underkant) er standard. */
 export type SlabMark = "pill" | "strip" | "corner" | "header";
 
@@ -115,7 +115,7 @@ export function Slab({ l, eager = false, mark = "header" }: { l: Listing; eager?
             src={l.image}
             width={400}
             height={560}
-            loading={eager ? "eager" : "lazy"}
+            loading="lazy"
             fetchPriority={eager ? "high" : "low"}
             sizes="(max-width: 640px) 40vw, 200px"
             className="h-full w-full object-cover"

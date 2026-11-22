@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieConsent } from "@/components/CookieConsent";
+import { BunnMeny } from "@/components/BunnMeny";
 import { hiddenFromSearch } from "@/lib/private";
 
 // Brødtekst og overskrifter (Schibsted), den store overskriften på forsiden (Fraunces) og tittelen i magasinvisningen (Sora)
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main id="innhold" className="site-main">{children}</main>
         <Footer />
+        <BunnMeny />
         <CookieConsent />
       </body>
     </html>
