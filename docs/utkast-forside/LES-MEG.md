@@ -114,3 +114,14 @@ Eieren ba om flere typer overskrifter som passer til utkastet på grenen `utkast
 6. «Fotballkort til salgs» som hylleoverskrift, med «Se alle» til høyre.
 7. «Norsk markedsplass» mørkt og «for fotballkort» grått, over to linjer.
 8. «Kortet du mangler» grått og «finnes her» mørkt.
+
+## Teksten inne i flisen (22. november)
+
+Eieren spurte om tekstdesignet i annonseboksen på forsiden kan endres (skrifttype eller ikoner). `flis-tekst.js` tegner seks forslag oppå første flis i utkastet `utkast-flis` (kjørt lokalt). Ingenting av dette er live.
+
+1. Ikoner: nål foran stedet, og en linje med penn-ikon, korttype og opplag under prisen.
+2. Brikker: korttype og opplag som små grå brikker mellom navn og pris.
+3. Samme skrift som overskriften: navnet i Fraunces, settet som liten etikett med store bokstaver.
+4. Prisen nederst: navn, sett, type og sted øverst, stor pris ved siden av pilknappen.
+5. Faktalinjer: ledetekstene «Sett» og «Type» foran fakta.
+6. Klubb og opplag fremhevet: klubb med skjold-ikon over navnet, type og opplag i mørk brikke under prisen.
