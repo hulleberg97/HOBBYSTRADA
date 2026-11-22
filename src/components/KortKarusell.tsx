@@ -20,6 +20,8 @@ export type KarusellKort = {
   eksempel: boolean;
   /** Betalt plassering: «Toppannonse», «Fremhevet» eller tom. Merkes alltid med «Annonseløft» (markedsføringsloven § 8). */
   loft: string;
+  /** Vis merket «Eksempelannonse» på kortet i karusellen (bryteren i src/lib/eksempel.ts). */
+  visEks?: boolean;
   /** Hele annonsen, når kortet skal vises i holderen med navneplate (scenen med «holder»). */
   l?: Listing;
 };

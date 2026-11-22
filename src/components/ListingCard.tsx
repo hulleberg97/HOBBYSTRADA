@@ -17,7 +17,18 @@ function shortTag(tag: string) {
 
 /** Annonsekort. «home» brukes på forsiden, «market» i markedet og søk. */
 /** «eager»: kort øverst på siden lastes med en gang i stedet for når de rulles inn. */
-export function ListingCard({ listing, variant = "home", eager = false }: { listing: Listing; variant?: "home" | "market"; eager?: boolean }) {
+/** «eksMerke»: vis merket «Eksempelannonse» på kortet. Bare forsiden kan slå det av (src/lib/eksempel.ts); markedet og søk viser det alltid. */
+export function ListingCard({
+  listing,
+  variant = "home",
+  eager = false,
+  eksMerke = true,
+}: {
+  listing: Listing;
+  variant?: "home" | "market";
+  eager?: boolean;
+  eksMerke?: boolean;
+}) {
   const market = variant === "market";
   return (
     <div data-featured={listing.featured ? "true" : undefined} className="group relative flex h-full flex-col">
@@ -44,9 +55,9 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
               </div>
             )}
           </div>
-          <div className={`merke-rad absolute left-2 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3 ${listing.isExample ? "eks-rad" : ""}`}>
+          <div className={`merke-rad absolute left-2 top-2.5 z-10 flex gap-1.5 sm:left-3 sm:top-3 ${listing.isExample && eksMerke ? "eks-rad" : ""}`}>
             {/* Eksempelannonser er ikke til salgs og merkes tydelig */}
-            {listing.isExample && <ExampleBadge />}
+            {listing.isExample && eksMerke && <ExampleBadge />}
             {/* Betalt plassering merkes tydelig (markedsføringsloven § 8). Kort admin har valgt til forsiden har ikke eget merke. */}
             {(listing.featured || listing.bumpedAt) && (
               <span
@@ -112,11 +123,11 @@ export function ListingCard({ listing, variant = "home", eager = false }: { list
   );
 }
 
-export function ListingGrid({ listings, variant = "home" }: { listings: Listing[]; variant?: "home" | "market" }) {
+export function ListingGrid({ listings, variant = "home", eksMerke = true }: { listings: Listing[]; variant?: "home" | "market"; eksMerke?: boolean }) {
   return (
     <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
       {listings.map((l) => (
-        <ListingCard key={l.slug} listing={l} variant={variant} />
+        <ListingCard key={l.slug} listing={l} variant={variant} eksMerke={eksMerke} />
       ))}
     </div>
   );

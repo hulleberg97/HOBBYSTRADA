@@ -16,6 +16,7 @@ import {
 import { Slab } from "@/components/HeroFan";
 import { MagRull } from "@/components/MagRull";
 import { MobilForside } from "@/components/MobilForside";
+import { EKS_PA_ANNONSEKORT } from "@/lib/eksempel";
 import { formatPrice } from "@/lib/format";
 import { Eyebrow, btnSecondary } from "@/components/ui";
 import { BOOSTS, BOOST_PERKS } from "@/lib/boosts";
@@ -220,7 +221,7 @@ export default async function Home() {
                 <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-            <ListingGrid listings={featured} />
+            <ListingGrid listings={featured} eksMerke={EKS_PA_ANNONSEKORT} />
           </div>
         </section>
       )}
@@ -239,7 +240,7 @@ export default async function Home() {
               <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          <ListingGrid listings={latest} />
+          <ListingGrid listings={latest} eksMerke={EKS_PA_ANNONSEKORT} />
         </div>
       </section>
       <section className="seksjon-alt bg-background">

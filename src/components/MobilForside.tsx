@@ -6,6 +6,7 @@ import { KortBue } from "./KortBue";
 import { KortKarusell } from "./KortKarusell";
 import { KortScene } from "./KortScene";
 import { ListingCard } from "./ListingCard";
+import { EKS_I_KARUSELL, EKS_PA_ANNONSEKORT } from "@/lib/eksempel";
 import { TYPES, hasType } from "@/lib/filters";
 import { formatPrice } from "@/lib/format";
 import { frontpageRow } from "@/lib/frontpage-row";
@@ -83,7 +84,7 @@ export function MobilForside({ all }: { all: Listing[] }) {
     .filter((l) => iFane.has(l.slug))
     // Med flisene øverst synes de to første annonsene når siden åpnes, så bildene deres hentes med en gang.
     // Med buen ligger annonsene lenger ned, og bildene hentes når de nærmer seg skjermen.
-    .map((l, i) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} eager={TOPP === "flis" && i < 2} /> }));
+    .map((l, i) => ({ id: l.slug, faner: iFane.get(l.slug)!, node: <ListingCard listing={l} eager={TOPP === "flis" && i < 2} eksMerke={EKS_PA_ANNONSEKORT} /> }));
   // Pynten i «Selg kortene dine» og buen er bare HOBBYSTRADAs egne kort (eksempelannonsene), aldri andres annonsebilder
   const egne = eks.flatMap((l) => (l.image ? [{ src: l.image, href: `/annonse/${l.slug}` }] : []));
   const bilder = egne.slice(0, 2).map((k) => k.src);
@@ -103,7 +104,8 @@ export function MobilForside({ all }: { all: Listing[] }) {
       // Typen uten «Nummerert» (opplaget står ved siden av), høyst to typer
       type: l.types.filter((t) => t !== "Nummerert").slice(0, 2).join(" + "),
       opplag: l.numbered ?? "",
-      eksempel: Boolean(l.isExample),
+      eksempel: Boolean(l.isExample) && EKS_I_KARUSELL,
+      visEks: EKS_I_KARUSELL,
       loft: l.frontpage ? "Toppannonse" : l.featured ? "Fremhevet" : "",
       l,
     }));
