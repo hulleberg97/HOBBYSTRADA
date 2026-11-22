@@ -58,7 +58,21 @@ function TypeIkon({ type }: { type: string }) {
  * og merket «Eksempelannonse» står på hvert kort i stedet for i hjørnet av boksen.
  */
 /** «holder»: kortene vises i holderen med navneplate (samme som i kortraden på PC), med «Eksempelannonse» nederst på holderen. */
-export function KortScene({ kort, apen = false, holder = false }: { kort: KarusellKort[]; apen?: boolean; holder?: boolean }) {
+/**
+ * «info»: hvor mye feltet under kortene viser. «full»: sett, sted, navn, pris, korttype og opplag.
+ * «kompakt»: én smal linje med navn og sett til venstre og pris og pil til høyre. «ren»: som kompakt, uten ramme og pil, midtstilt.
+ */
+export function KortScene({
+  kort,
+  apen = false,
+  holder = false,
+  info = "full",
+}: {
+  kort: KarusellKort[];
+  apen?: boolean;
+  holder?: boolean;
+  info?: "full" | "kompakt" | "ren";
+}) {
   const n = kort.length;
   // Raden går rundt uten ende. Med færre enn fire kort gjentas de, så det alltid står et kort på hver side.
   const plasser = n >= 4 ? n : n * Math.ceil(4 / n);
@@ -121,7 +135,7 @@ export function KortScene({ kort, apen = false, holder = false }: { kort: Karuse
   if (!n) return null;
   const k = kort[aktiv];
   return (
-    <section className="fs" data-apen={apen ? "" : undefined} data-holder={holder ? "" : undefined} aria-roledescription="karusell" aria-label="Utvalgte annonser">
+    <section className="fs" data-apen={apen ? "" : undefined} data-holder={holder ? "" : undefined} data-info={info === "full" ? undefined : info} aria-roledescription="karusell" aria-label="Utvalgte annonser">
       {!apen && (
         <>
           {/* Fargeskjæret: kortet som er fremme ligger uskarpt bak et lyst slør */}
@@ -238,41 +252,61 @@ export function KortScene({ kort, apen = false, holder = false }: { kort: Karuse
         })}
       </div>
       <Link href={k.href} prefetch={false} className="fs-info">
-        <span key={aktiv} className="fs-inn">
-          <span className="fs-rad">
-            <small>{k.sett}</small>
-            {k.sted && (
-              <em>
-                <MapPinIcon className="h-[13px] w-[13px] shrink-0" strokeWidth={1.9} aria-hidden="true" />
-                {k.sted}
-              </em>
-            )}
-          </span>
-          <span className="fs-rad fs-hoved">
-            <b>{k.navn}</b>
-            <strong>{k.pris}</strong>
-          </span>
-          <span className="fs-rad fs-bunn">
-            <span className="fs-fakta">
-              {(k.type || k.opplag) && (
-                <span className="fk-type">
-                  {k.type && <TypeIkon type={k.type} />}
-                  {k.type && <span>{k.type}</span>}
-                  {k.opplag && <u>{k.type ? `· ${k.opplag}` : `Opplag ${k.opplag}`}</u>}
-                </span>
+        {info === "full" ? (
+          <span key={aktiv} className="fs-inn">
+            <span className="fs-rad">
+              <small>{k.sett}</small>
+              {k.sted && (
+                <em>
+                  <MapPinIcon className="h-[13px] w-[13px] shrink-0" strokeWidth={1.9} aria-hidden="true" />
+                  {k.sted}
+                </em>
               )}
+            </span>
+            <span className="fs-rad fs-hoved">
+              <b>{k.navn}</b>
+              <strong>{k.pris}</strong>
+            </span>
+            <span className="fs-rad fs-bunn">
+              <span className="fs-fakta">
+                {(k.type || k.opplag) && (
+                  <span className="fk-type">
+                    {k.type && <TypeIkon type={k.type} />}
+                    {k.type && <span>{k.type}</span>}
+                    {k.opplag && <u>{k.type ? `· ${k.opplag}` : `Opplag ${k.opplag}`}</u>}
+                  </span>
+                )}
+                {k.loft && (
+                  <span title={k.loft} className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-2 py-1 text-[11px] font-semibold text-accent-foreground">
+                    {k.loft === "Toppannonse" && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
+                    Annonseløft
+                  </span>
+                )}
+              </span>
+              <i aria-hidden="true">
+                <ArrowRightIcon className="h-4 w-4" />
+              </i>
+            </span>
+          </span>
+        ) : (
+          <span key={aktiv} className="fs-inn fs-k">
+            <b>{k.navn}</b>
+            <small>
+              {k.sett}
+              {/* Betalt plassering merkes alltid (markedsføringsloven § 8) */}
               {k.loft && (
-                <span title={k.loft} className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-2 py-1 text-[11px] font-semibold text-accent-foreground">
+                <span title={k.loft} className="fs-k-loft">
                   {k.loft === "Toppannonse" && <CrownIcon className="h-3 w-3" aria-hidden="true" />}
                   Annonseløft
                 </span>
               )}
-            </span>
+            </small>
+            <strong>{k.pris}</strong>
             <i aria-hidden="true">
-              <ArrowRightIcon className="h-4 w-4" />
+              <ArrowRightIcon className="h-3.5 w-3.5" />
             </i>
           </span>
-        </span>
+        )}
       </Link>
     </section>
   );
