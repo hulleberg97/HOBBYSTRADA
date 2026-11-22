@@ -20,12 +20,17 @@ export default async function MessagesPage() {
   return (
     <div>
       <section className="border-b border-slate-300/60">
-        <div className="mx-auto max-w-[880px] px-4 py-10 sm:px-6 sm:py-14">
-          <Eyebrow>Min side</Eyebrow>
+        <div className="meld-topp mx-auto max-w-[880px] px-4 py-10 sm:px-6 sm:py-14">
+          {/* På telefon åpnes Meldinger fra bunnmenyen og står for seg selv: «Min side» og fanene vises bare på PC */}
+          <div className="kun-pc">
+            <Eyebrow>Min side</Eyebrow>
+          </div>
           <h1 className="mt-3 font-heading text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-[44px]">Meldinger</h1>
         </div>
       </section>
-      <AccountTabs active="meldinger" />
+      <div className="kun-pc">
+        <AccountTabs active="meldinger" />
+      </div>
       <div className="mx-auto max-w-[880px] px-4 pb-24 pt-8 sm:px-6">
         {conversations.length === 0 ? (
           <div className="rounded-3xl bg-white px-6 py-14 text-center ring-1 ring-inset ring-slate-300/70">

@@ -757,6 +757,9 @@ html[data-pill] .mag-rull-ramme .fan-pill { background: rgb(255 255 255 / 0.7) !
 @media (max-width: 1023px) and (pointer: coarse) {
   html .kun-pc { display: none !important; }
   body:has(.bunnmeny) header.sticky .selg-topp { display: none; }
+  /* Meldinger står for seg selv på telefon: lavere topp når «Min side» og fanene er skjult */
+  .meld-topp { padding-top: 1.5rem; padding-bottom: 1.25rem; }
+  .meld-topp h1 { margin-top: 0; }
   /* Plass til bunnmenyen under bunnteksten, og informasjonskapsel-boksen løftes over den */
   body:has(.bunnmeny) footer { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
   body:has(.bunnmeny) .kake { bottom: calc(72px + env(safe-area-inset-bottom)); }

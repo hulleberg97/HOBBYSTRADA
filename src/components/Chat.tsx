@@ -13,9 +13,16 @@ const POLL_MS = 30000;
 
 export function ListingThumb({ image, title, size = "md" }: { image: string | null; title: string; size?: "sm" | "md" }) {
   const box = size === "sm" ? "h-12 w-9 rounded-md" : "h-16 w-12 rounded-lg";
-  return image ? (
+  // Bildet kan være borte (annonsen er slettet). Da vises forbokstavene i stedet for nettleserens «ødelagt bilde»-merke.
+  const [borte, setBorte] = useState(false);
+  const bilde = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    // Feilen kan ha skjedd før siden ble aktiv, så bildet sjekkes også når komponenten starter
+    if (bilde.current?.complete && bilde.current.naturalWidth === 0) setBorte(true);
+  }, [image]);
+  return image && !borte ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={image} alt="" className={`${box} shrink-0 bg-slate-100 object-cover`} />
+    <img ref={bilde} src={image} alt="" onError={() => setBorte(true)} className={`${box} shrink-0 bg-slate-100 object-cover`} />
   ) : (
     <span className={`${box} flex shrink-0 items-center justify-center bg-primary font-heading text-xs font-semibold text-white`}>{initials(title)}</span>
   );
