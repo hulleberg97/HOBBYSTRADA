@@ -243,3 +243,120 @@ toppC4=f"""<div class="scene"><div class="rader">{rad(2)}{rad(6)}{rad(10)}</div>
 <div class="glass"><small>Norsk markedsplass</small><h1 class="ord">{ord_("Finn ditt|neste kort",0.4)}</h1><p>Kjøp og selg fotballkort direkte med andre samlere.</p>{SOK.replace("Søk spiller, sett eller kortnummer","Søk spiller, sett eller nummer")}{TO}</div></div>"""
 open('C4.html','w',encoding='utf-8').write(skall('C4',cssC4,toppC4).replace('<div class="chips" style="margin-top:26px">','<div class="chips" style="margin-top:8px">'))
 print('ok')
+
+# ═════ Runde 3: flere varianter av A4 (karusellen) ═════
+def steg(navn, pos, hold=.6):
+    N=len(pos); s='@keyframes '+navn+'{'
+    for i,p in enumerate(pos): s+=f'{i/N*100:.3f}%,{(i+hold)/N*100:.3f}%{{{p}}}'
+    return s+f'100%{{{pos[0]}}}}}'
+def blink(navn, N, pa, av, hold=.6, kant=.14):
+    # På i første felt, av i resten. Ut og inn overlapper ikke.
+    return f'@keyframes {navn}{{0%,{hold/N*100:.3f}%{{{pa}}}{(hold+kant)/N*100:.3f}%,{(N-kant)/N*100:.3f}%{{{av}}}100%{{{pa}}}}}'
+S=2.4
+def forsink(j,N): return f'{j*S-N*S:.2f}s'
+sett=lambda x: x["tittel"].split(" – ")[1]
+
+# ───── A4a: Dybden (kortene står vinklet innover, med speiling) ─────
+n7=['Haaland','Zidane','Ronaldo','Scholes','Ronaldinho','Yamal','Lewandowski']
+posA=['transform:translateX(0) translateZ(0) rotateY(0);opacity:1;z-index:7;filter:brightness(1)',
+ 'transform:translateX(-122px) translateZ(-150px) rotateY(50deg);opacity:1;z-index:6;filter:brightness(.94)',
+ 'transform:translateX(-196px) translateZ(-270px) rotateY(60deg);opacity:1;z-index:5;filter:brightness(.88)',
+ 'transform:translateX(-260px) translateZ(-380px) rotateY(64deg);opacity:0;z-index:4;filter:brightness(.88)',
+ 'transform:translateX(260px) translateZ(-380px) rotateY(-64deg);opacity:0;z-index:4;filter:brightness(.88)',
+ 'transform:translateX(196px) translateZ(-270px) rotateY(-60deg);opacity:1;z-index:5;filter:brightness(.88)',
+ 'transform:translateX(122px) translateZ(-150px) rotateY(-50deg);opacity:1;z-index:6;filter:brightness(.94)']
+cssA4a=fellesA+f"""
+.kar{{position:relative;height:334px;margin-top:14px;overflow-x:clip;perspective:1000px;perspective-origin:50% 42%}}
+.kar::before{{content:"";position:absolute;left:50%;top:40%;width:330px;height:240px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#e4edff,#fdeed6 62%,transparent);filter:blur(30px)}}
+.kar div{{position:absolute;left:50%;top:6px;width:184px;height:258px;margin-left:-92px;border-radius:11px;animation:dyp {7*S}s cubic-bezier(.65,0,.25,1) infinite;box-shadow:0 0 0 1px rgb(255 255 255/.9);-webkit-box-reflect:below 6px linear-gradient(transparent 78%,rgb(255 255 255/.26))}}
+.kar img{{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block}}
+{steg('dyp',posA)}
+.prik{{display:flex;justify-content:center;gap:6px;margin-top:6px}}.prik i{{width:6px;height:6px;border-radius:99px;animation:prik7 {7*S}s linear infinite}}
+{blink('prik7',7,'width:22px;background:#0b1426','width:6px;background:rgb(11 20 38/.18)')}
+"""
+karA=''.join(f'<div class="holo" style="animation-delay:{forsink(j,7)}"><img src="{k(n)["img"]}"></div>' for j,n in enumerate(n7))
+prikA=''.join(f'<i style="animation-delay:{forsink(j,7)}"></i>' for j in range(7))
+toppA4a=f"""<div class="t">{PILLE}<h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>
+<div class="kar opp" style="animation-delay:.45s">{karA}</div><div class="prik opp" style="animation-delay:.6s">{prikA}</div>
+<div class="under opp" style="animation-delay:.7s;padding-top:14px">{SOK}{TO}</div>"""
+open('A4a.html','w',encoding='utf-8').write(skall('A4a',cssA4a,toppA4a))
+
+# ───── A4b: Buen (kortene glir jevnt langs en bue, uten stopp) ─────
+cssA4b=fellesA+"""
+.bue{position:relative;height:292px;margin-top:10px;overflow:clip}
+.bue::before{content:"";position:absolute;left:50%;top:44%;width:340px;height:240px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#fdeed6,#e4edff 62%,transparent);filter:blur(30px)}
+.bue div{position:absolute;left:50%;top:30px;width:150px;height:210px;margin-left:-75px;transform-origin:50% 1505px;animation:bue 21s linear infinite}
+.bue img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;box-shadow:0 24px 30px -20px rgb(11 20 38/.6),0 0 0 1px rgb(255 255 255/.9);animation:buestr 21s ease-in-out infinite;animation-delay:inherit}
+@keyframes bue{from{transform:rotate(25.9deg)}to{transform:rotate(-25.9deg)}}
+@keyframes buestr{0%,30%{transform:scale(.86)}50%{transform:scale(1.16)}70%,100%{transform:scale(.86)}}
+.spor{height:3px;margin:8px 96px 0;border-radius:9px;background:rgb(11 20 38/.1);overflow:hidden}.spor i{display:block;width:34%;height:100%;border-radius:9px;background:#0b1426;animation:spor 6s ease-in-out infinite alternate}
+@keyframes spor{from{transform:translateX(0)}to{transform:translateX(194%)}}
+"""
+bue=''.join(f'<div style="animation-delay:{j*3-21-10.5:.1f}s"><img src="{k(n)["img"]}"></div>' for j,n in enumerate(n7))
+toppA4b=f"""<div class="t">{PILLE}<h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>
+<div class="bue opp" style="animation-delay:.45s">{bue}</div><div class="spor opp" style="animation-delay:.6s"><i></i></div>
+<div class="under opp" style="animation-delay:.7s;padding-top:18px">{SOK}{TO}</div>"""
+open('A4b.html','w',encoding='utf-8').write(skall('A4b',cssA4b,toppA4b))
+
+# ───── A4c: Annonsekortene (store fliser med pris, naboene titter inn) ─────
+fem=[k('Haaland'),k('Karetsas'),k('Ronaldinho'),k('Williams'),k('Zidane')]
+BR=294
+cssA4c=fellesA+f"""
+h1{{font-size:38px}}
+.stripe{{margin-top:16px;padding:4px 0 30px;overflow:clip}}
+.stripe s{{display:flex;gap:12px;width:max-content;padding-left:54px;text-decoration:none;animation:stripe {5*S}s cubic-bezier(.65,0,.25,1) infinite}}
+{steg('stripe',[f'transform:translateX({-(5+i)*BR}px)' for i in range(5)]).replace('100%{transform:translateX(-1470px)}','100%{transform:translateX(-2940px)}')}
+.fl{{width:282px;flex:none;padding:10px 10px 13px;border-radius:22px;background:#fff;box-shadow:0 24px 36px -26px rgb(11 20 38/.5),0 0 0 1px rgb(11 20 38/.07);animation:akt {5*S}s cubic-bezier(.65,0,.25,1) infinite}}
+{steg('akt',['opacity:1;transform:scale(1)']+['opacity:.5;transform:scale(.94)']*4)}
+.fl .b{{position:relative;height:226px;border-radius:14px;background:#f4f4f5;display:flex;align-items:center;justify-content:center;overflow:hidden}}
+.fl .b img{{height:194px;aspect-ratio:5/7;object-fit:cover;border-radius:7px;box-shadow:0 18px 24px -14px rgb(11 20 38/.55)}}
+.fl .b i{{position:absolute;right:9px;top:9px;width:32px;height:32px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}}.fl .b i svg{{width:17px;height:17px}}
+.fl .i{{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:11px 5px 0}}.fl .i p{{min-width:0}}
+.fl .i b{{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.fl .i small{{display:block;font-size:12.5px;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.fl .i strong{{flex:none;font-size:18px;font-weight:800;letter-spacing:-.03em}}
+.seg{{display:flex;gap:5px;padding:0 120px;margin-top:-14px}}.seg i{{position:relative;flex:1;height:3px;border-radius:9px;background:rgb(11 20 38/.12);overflow:hidden}}
+.seg i::after{{content:"";position:absolute;inset:0;border-radius:9px;background:#0b1426;transform-origin:0 50%;animation:fyll {5*S}s linear infinite;animation-delay:inherit}}
+@keyframes fyll{{0%{{transform:scaleX(0)}}20%{{transform:scaleX(1)}}20.01%,100%{{transform:scaleX(0)}}}}
+"""
+def flis(x,j): return f'<div class="fl" style="animation-delay:{forsink(j,5)}"><div class="b">{EKS if x["eks"] else ""}<img src="{x["img"]}"><i>{I["hjerte"]}</i></div><div class="i"><p><b>{x["spiller"]}</b><small>{sett(x).split(" (")[0]} · {x["sted"]}</small></p><strong>{kr(x["pris"])}</strong></div></div>'
+stripe=''.join(flis(x,j) for j,x in enumerate(fem))*3
+seg=''.join(f'<i style="animation-delay:{forsink(j,5)}"></i>' for j in range(5))
+toppA4c=f"""<div class="t">{PILLE}<h1 class="ord">{ord_("Finn ditt|neste kort",0.15)}</h1></div>
+<div class="stripe opp" style="animation-delay:.45s"><s>{stripe}</s></div><div class="seg opp" style="animation-delay:.6s">{seg}</div>
+<div class="under opp" style="animation-delay:.7s;padding-top:16px">{SOK}{TO}</div>"""
+open('A4c.html','w',encoding='utf-8').write(skall('A4c',cssA4c,toppA4c))
+
+# ───── A4d: Scenen (karusellen først, i et panel som skifter farge etter kortet) ─────
+n5=['Haaland','Zidane','Ronaldo','Scholes','Ronaldinho']
+farge=['#d6e8ff','#fbeccb','#dfe0ff','#ffdcd9','#ffe2c6']
+posD=['transform:translateX(0) scale(1);opacity:1;z-index:5;filter:brightness(1)',
+ 'transform:translateX(-146px) scale(.76);opacity:1;z-index:4;filter:brightness(.95)',
+ 'transform:translateX(-262px) scale(.6);opacity:0;z-index:3;filter:brightness(.95)',
+ 'transform:translateX(262px) scale(.6);opacity:0;z-index:3;filter:brightness(.95)',
+ 'transform:translateX(146px) scale(.76);opacity:1;z-index:4;filter:brightness(.95)']
+cssA4d=fellesA+f"""
+.scene{{position:relative;height:392px;margin:12px 12px 0;border-radius:28px;overflow:clip;background:#f3f5f9}}
+.scene>u{{position:absolute;inset:0;animation:lys {5*S}s linear infinite}}
+{steg('lys',['opacity:1']+['opacity:0']*4)}
+.scene>em{{position:absolute;left:18px;top:16px;z-index:6;display:flex;align-items:center;gap:8px;font-style:normal;font-size:12.5px;font-weight:600;color:#3f4856}}.scene>em i{{width:7px;height:7px;border-radius:50%;background:#cfa653;animation:puls 2.2s ease-out infinite}}
+.kar{{position:absolute;left:0;right:0;top:46px;height:270px}}
+.kar div{{position:absolute;left:50%;top:0;width:180px;height:252px;margin-left:-90px;border-radius:11px;animation:scn {5*S}s cubic-bezier(.65,0,.25,1) infinite;box-shadow:0 26px 34px -22px rgb(11 20 38/.6),0 0 0 1px rgb(255 255 255/.9)}}
+.kar img{{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block}}
+{steg('scn',posD)}
+.fot{{position:absolute;left:18px;right:16px;bottom:14px;z-index:6;height:50px}}
+.fot p{{position:absolute;left:0;top:7px;width:176px;animation:navn {5*S}s cubic-bezier(.3,.7,.2,1) infinite}}
+{blink('navn',5,'opacity:1;transform:none','opacity:0;transform:translateY(8px)')}
+.fot b{{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.025em;white-space:nowrap}}.fot small{{display:block;font-size:12.5px;color:#4b5563;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.mini{{position:absolute;right:0;bottom:4px;display:flex;gap:5px}}.mini i{{width:26px;height:36px;border-radius:4px;overflow:hidden;animation:mini {5*S}s cubic-bezier(.3,.7,.2,1) infinite}}.mini img{{width:100%;height:100%;object-fit:cover;display:block}}
+{steg('mini',['opacity:1;transform:translateY(-4px);box-shadow:0 0 0 2px #0b1426,0 8px 12px -6px rgb(11 20 38/.5)']+['opacity:.55;transform:none;box-shadow:0 0 0 0 #0b1426,0 0 0 0 rgb(11 20 38/0)']*4)}
+.t{{text-align:left;padding-top:16px}}h1{{margin-top:0;font-size:33px;line-height:1.02}}.t p{{margin-top:6px;font-size:14.5px;color:#475569}}
+"""
+lag=''.join(f'<u style="background:linear-gradient(165deg,{c},#f6f7fa 88%);animation-delay:{forsink(j,5)}"></u>' for j,c in enumerate(farge))
+karD=''.join(f'<div class="holo" style="animation-delay:{forsink(j,5)}"><img src="{k(n)["img"]}"></div>' for j,n in enumerate(n5))
+navnD=''.join(f'<p style="animation-delay:{forsink(j,5)}"><b>{k(n)["spiller"]}</b><small>{sett(k(n))}</small></p>' for j,n in enumerate(n5))
+miniD=''.join(f'<i style="animation-delay:{forsink(j,5)}"><img src="{k(n)["img"]}"></i>' for j,n in enumerate(n5))
+toppA4d=f"""<div class="scene opp" style="animation-delay:.1s">{lag}<em><i></i>Norsk markedsplass for fotballkort</em>
+<div class="kar">{karD}</div><div class="fot">{navnD}<div class="mini">{miniD}</div></div></div>
+<div class="t"><h1 class="ord">{ord_("Finn ditt neste kort",0.35)}</h1><p class="opp" style="animation-delay:.6s">Kjøp og selg direkte med andre samlere.</p></div>
+<div class="under opp" style="animation-delay:.75s;padding-top:14px">{SOK}{TO}</div>"""
+open('A4d.html','w',encoding='utf-8').write(skall('A4d',cssA4d,toppA4d))
