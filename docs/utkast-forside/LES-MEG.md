@@ -137,3 +137,35 @@ Eieren ba om et utkast som kombinerer dagens live-versjon (flis-karusellen) med 
 Kvalitetssikring: `test-scene.js` (12 funksjonstester med simulert berøring, tastatur, «mindre bevegelse» og bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 87–92), og en uavhengig designgjennomgang som ga ti funn. Ni er rettet: lysere og renere fargeskjær, lavere panel, samme venstrekant som overskrift og søk, lys pil i feltet, jevn radavstand, større miniatyrer, hele nabokort, undertekst på smale telefoner og bredere oppsett på nettbrett. Forslaget om å flytte søkefeltet over scenen er ikke fulgt, fordi søk alltid ligger i bunnmenyen. `film-scene.js` filmer utkastet med styrt klokke.
 
 Oppdatert samme kveld: eieren ba om å fjerne raden med småbilder (miniatyrene) under kortene. Den er tatt bort fra `KortScene.tsx`, stilene og testene.
+
+Oppdatert senere samme kveld: eieren ba om litt større kortbilder og litt mindre infofelt. Kortet i midten er nå 172 px bredt på en vanlig telefon (før 150), nabokortene står litt lenger inn bak det, og feltet er 82 px høyt (før 98) med litt mindre skrift og pil.
+
+## Annonsene først (22. november, sent): nytt oppsett for telefonforsiden
+
+Eieren ba om at søk og ekte annonser kommer raskere frem på telefon. Utkastet ligger på grenen `utkast-annonser-forst` (bygger på `utkast-scene`). Ikke live.
+
+Bryteren `OPPSETT` øverst i `MobilForside.tsx` velger rekkefølgen: «annonser» (nytt) eller «karusell» (som før). `TOPP` velger fortsatt hvilken karusell som brukes.
+
+Nytt oppsett, «annonser»:
+1. Overskrift og undertekst med mindre luft over, og søkefeltet rett under.
+2. Knappene «Se alle annonser» og «Legg ut kort» er borte fra toppen. «Se alle …» står fortsatt under annonsene, og «Legg ut kort» i selg-feltet og bunnmenyen.
+3. Fanene rett under søkefeltet, og annonsene rett under fanene. På en iPhone 13 i Safari (390 × 664) synes hele første rad med bilde, sett, navn og pris.
+4. Karusellen er flyttet ned som seksjonen «Utvalgte kort» etter de fire første annonsene (`FORST`), og henter bildene sine først når den nærmer seg skjermen (`lat`). Ekte annonser står alltid først og eksempler sist; eksemplene forsvinner når det er minst åtte ekte annonser (`PER_FANE`). Eksempler som står i karusellen vises ikke en gang til i rutenettet.
+5. Annonsekortene på telefonforsiden (`ListingCard` med `rent`): settet i liten dempet tekst, spillernavnet i fet tekst som brytes og aldri kuttes, så prisen. Visningstallet er borte. Markedet, søk og PC bruker kortet som før.
+
+Kvalitetssikring: `test-annonser-forst.js` (13 tester med simulert berøring og bredder 320–768), axe-core (0 brudd), Lighthouse lokalt (tilgjengelighet 100, fart 84–88, på linje med de andre variantene lokalt). `film-annonser-forst.js` filmer utkastet.
+
+## Kino og galleri (22. november, natt): kinematisk drakt på telefonforsiden
+
+Eieren ba om et stilrent, moderne og kinematisk redesign (mørk «stadium spotlight»-stemning, skandinavisk minimalisme) oppå «annonsene først». Utkastet ligger på grenen `utkast-kino-galleri`. Ikke live. Eieren avviste en helmørk variant tidligere samme dag, så dette er alternativet med mørk topp som går over i et lyst galleri.
+
+Bryteren `OPPSETT = "kino"` i `MobilForside.tsx`. «annonser» og «karusell» virker som før.
+
+- **Mørk topp** (`.kino-hero`): flate #0a0b0e med svak lyskjegle ovenfra og kjølig skjær fra høyre. Overskriften er stram grotesk (800, tett sperring) med «neste» i kursiv Fraunces. Søkefeltet er en glassbar med mykt lys ved fokus. Ingen knapper i toppen.
+- **Lyst galleri på ark** (`.kino-ark`, `ForsideFaner` med `ark`): fanene og de fire første annonsene ligger på et hvitt ark med avrundede hjørner over den mørke flaten. Resten av annonsene, «Se alle» og selg-feltet ligger på et nytt ark.
+- **Annonsekortet** (`ListingCard` med `studio`): bildet på en nøytral flate i 3:4 med 16 px avrunding og hjerte i glass. Under: sett (små versaler), spillernavn (fet, brytes, kuttes aldri), pris og bare stedsnavn. Visningstall, annonsealder og Vipps-haken vises ikke i galleriet. Merkene «Eksempelannonse» og «Annonseløft» er med.
+- **«Utvalgte kort» som mørkt bånd** (`.kino-band`, `KortScene` med `kino`): lyskjegle bak kortene, nabokort dreid 18 grader, dramatisk skygge og en glans som glir over kortet i midten. Infofeltet er mørkt glass med hårlinje.
+- **Topplinje og bunnmeny** (`KinoSoner.tsx` + regler nederst i `globals.css`): glass med hårlinjer. De er mørke mens en mørk sone ligger bak dem og lyse ellers, og topplinjen blir lys når menyen åpnes. Gjelder bare forsiden på telefon og nettbrett.
+- **Bevegelse**: kortene kommer inn ett og ett, og rammen krymper litt ved trykk. Alt er ren CSS, og «mindre bevegelse» slår det av.
+
+Kvalitetssikring: `test-kino.js` (17 kontroller med simulert berøring, bredder 320–768, PC og «mindre bevegelse»), axe-core (0 brudd på forsiden, topplinjen og bunnmenyen), Lighthouse lokalt (tilgjengelighet 100, fart 85–91), typesjekk, lint og bygg uten feil. `film-kino.js` filmer utkastet.
